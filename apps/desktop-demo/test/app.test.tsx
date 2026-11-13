@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "../src/renderer/src/App";
-import { isExternalUrl, windowOptions } from "../src/main/window";
+import { windowOptions } from "../src/main/window";
 
 beforeEach(() => {
   window.countify = {
@@ -13,10 +13,9 @@ beforeEach(() => {
 });
 
 describe("janela segura", () => {
-  it("renderer isolado, sem Node e em sandbox; só https abre fora", () => {
+  it("renderer isolado, sem Node e em sandbox", () => {
     const o = windowOptions("/preload.cjs", false);
     expect(o.webPreferences).toMatchObject({ contextIsolation: true, nodeIntegration: false, sandbox: true, webSecurity: true, preload: "/preload.cjs" });
-    expect([isExternalUrl("https://countify.com.br"), isExternalUrl("file:///etc/passwd"), isExternalUrl("javascript:alert(1)")]).toEqual([true, false, false]);
   });
 });
 

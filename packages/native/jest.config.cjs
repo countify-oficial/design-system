@@ -1,5 +1,7 @@
 // Testes do React Native (Jest + React Native Testing Library).
 module.exports = {
+  // o 1º teste de cada arquivo transforma o React Native inteiro; com o monorepo todo em paralelo, 5 s não bastam
+  testTimeout: 15000,
   preset: "@react-native/jest-preset",
   testMatch: ["<rootDir>/test/**/*.test.{ts,tsx}"],
   // o @countify-oficial/hooks do celular carrega o expo-clipboard; aqui ele não é usado

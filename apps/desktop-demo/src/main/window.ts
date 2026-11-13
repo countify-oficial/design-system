@@ -13,12 +13,3 @@ export function windowOptions(preload: string, escuro: boolean): BrowserWindowCo
     webPreferences: { preload, contextIsolation: true, nodeIntegration: false, sandbox: true, webSecurity: true, spellcheck: false },
   };
 }
-
-/** Só endereços https abrem fora (no navegador do sistema); o app não abre janelas novas. */
-export const isExternalUrl = (url: string): boolean => {
-  try {
-    return new URL(url).protocol === "https:";
-  } catch {
-    return false;
-  }
-};

@@ -1,8 +1,8 @@
-import { app, BrowserWindow, ipcMain, nativeTheme, shell, type IpcMainInvokeEvent } from "electron";
+import { app, BrowserWindow, ipcMain, nativeTheme, type IpcMainInvokeEvent } from "electron";
 import { writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { CANAIS, type AppInfo, type SystemScheme } from "../preload/api";
-import { isExternalUrl, windowOptions } from "./window";
+import { windowOptions } from "./window";
 
 const modo = (): SystemScheme => (nativeTheme.shouldUseDarkColors ? "dark" : "light");
 
@@ -14,25 +14,24 @@ function deJanelaNossa(e: IpcMainInvokeEvent): void {
 
 function abrirJanela(): BrowserWindow {
   const janela = new BrowserWindow(windowOptions(join(import.meta.dirname, "../preload/index.cjs"), nativeTheme.shouldUseDarkColors));
-  janela.webContents.setWindowOpenHandler(({ url }) => {
-    if (isExternalUrl(url)) void shell.openExternal(url);
-    return { action: "deny" };
-  });
-  // a página não navega para fora do app
-  janela.webContents.on("will-navigate", (e, url) => {
-    if (url !== janela.webContents.getURL()) e.preventDefault();
-  });
   janela.once("ready-to-show", () => janela.show());
   const dev = process.env["ELECTRON_RENDERER_URL"];
   if (dev) void janela.loadURL(dev);
   else void janela.loadFile(join(import.meta.dirname, "../renderer/index.html"));
-  // prova automática: COUNTIFY_SMOKE=foto.png fotografa a janela depois de carregar e fecha o app
+  // prova automática, só fora do app empacotado: COUNTIFY_SMOKE=foto.png fotografa a janela na pasta temporária
+  // (só o nome do arquivo vale; nunca sobrescreve) e fecha o app
   const foto = process.env["COUNTIFY_SMOKE"];
-  if (foto) {
+  if (foto && !app.isPackaged) {
+    const alvo = join(app.getPath("temp"), basename(foto));
     janela.webContents.once("did-finish-load", () => {
       setTimeout(() => {
         void janela.webContents.capturePage().then((img) => {
-          writeFileSync(foto, img.toPNG());
+          try {
+            writeFileSync(alvo, img.toPNG(), { flag: "wx" });
+            console.log(alvo);
+          } catch (erro) {
+            console.error(erro);
+          }
           app.quit();
         });
       }, 1500);
@@ -40,6 +39,14 @@ function abrirJanela(): BrowserWindow {
   }
   return janela;
 }
+
+// Em qualquer conteúdo web que o app criar: nenhuma janela nova e nenhuma navegação para fora da página do app
+app.on("web-contents-created", (_e, conteudo) => {
+  conteudo.setWindowOpenHandler(() => ({ action: "deny" }));
+  conteudo.on("will-frame-navigate", (e) => {
+    if (e.url !== conteudo.getURL()) e.preventDefault();
+  });
+});
 
 ipcMain.handle(CANAIS.info, (e): AppInfo => {
   deJanelaNossa(e);
