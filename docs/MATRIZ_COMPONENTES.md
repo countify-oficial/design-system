@@ -40,6 +40,10 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | SimpleGrid | ok | ok | adaptado | no celular, colunas pela largura da tela; células em porcentagem (o React Native não tem grid) |
 | Grid | ok | ok | adaptado | igual ao SimpleGrid; o `Grid.Col` lê colunas e espaço do `Grid` |
 | Container | ok | ok | adaptado | no celular, a margem segue a largura da tela (32 em tablet a partir de 768) |
+| AppShell | ok | ok | adaptado | a moldura da identidade: abas embaixo abaixo de 768; cabeçalho de 64 com o menu só com ícones de 768 a 1279 e com os nomes a partir de 1280. No celular, as margens do sistema vêm de `safeAreaInsets` (do react-native-safe-area-context, que o app já usa) |
+| Splitter | ok | ok | N/A | no celular a identidade mostra "a lista, depois o detalhe" (`X-DocNavegacao`); não há painéis lado a lado |
+| ScrollArea | ok | ok | adaptado | na web, barra fina na cor da borda forte e entra no Tab; no celular, o ScrollView com a barra do sistema |
+| Scroller | ok | ok | adaptado | na web, setas nas pontas quando há mais conteúdo; no celular, rola com o dedo |
 
 ### Botões
 
@@ -53,6 +57,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | CopyButton | ok | ok | adaptado | no celular copia pelo `expo-clipboard` |
 | FileButton | ok | ok | N/A | o React Native não tem seletor de arquivo; o app usa o `expo-document-picker` ou o `expo-image-picker` |
 | Toggle | ok | ok | adaptado | no celular, papel `togglebutton` com `accessibilityState.checked` (na web, `aria-pressed`) |
+| Toolbar | ok | ok | adaptado | na web, uma parada no Tab e setas entre os botões (padrão toolbar do WAI-ARIA); no celular, a barra com o papel toolbar |
 
 ### Feedback e superfícies
 
@@ -104,6 +109,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |
 | Collapse | ok | ok | adaptado | na web anima pela grade (CSS); no celular, a altura medida com `Animated` |
 | Accordion | ok | ok | adaptado | no celular, `accessibilityState.expanded`; sem navegação por setas (não há teclado) |
+| Marquee | ok | ok | adaptado | 50 px/s (aprovado em 13/11/2026); para com o mouse ou o foco na web e enquanto o dedo segura no celular; parada para quem pediu menos movimento |
 
 ### Campos
 

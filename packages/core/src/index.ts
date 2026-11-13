@@ -5,6 +5,7 @@ export { Affix, type AffixProps } from "./Affix/Affix";
 export { Alert, type AlertOwnProps, type AlertProps } from "./Alert/Alert";
 export { Anchor, type AnchorProps } from "./Anchor/Anchor";
 export { AngleSlider, type AngleSliderProps } from "./AngleSlider/AngleSlider";
+export { AppShell, AppShellHeader, AppShellMain, AppShellNavItem, AppShellTabBar, type AppShellHeaderProps, type AppShellMainProps, type AppShellNavItemOwnProps, type AppShellNavItemProps, type AppShellProps, type AppShellTabBarProps } from "./AppShell/AppShell";
 export { AspectRatio, type AspectRatioOwnProps, type AspectRatioProps } from "./AspectRatio/AspectRatio";
 export { Autocomplete, type AutocompleteProps } from "./Autocomplete/Autocomplete";
 export { Avatar, initials, type AvatarOwnProps, type AvatarProps } from "./Avatar/Avatar";
@@ -58,6 +59,7 @@ export { List, ListItem, type ListItemProps, type ListProps } from "./List/List"
 export { Loader, type LoaderProps } from "./Loader/Loader";
 export { LoadingOverlay, type LoadingOverlayProps } from "./LoadingOverlay/LoadingOverlay";
 export { Mark, type MarkProps } from "./Mark/Mark";
+export { Marquee, type MarqueeProps } from "./Marquee/Marquee";
 export { MaskInput, type MaskInputProps } from "./MaskInput/MaskInput";
 export { Mentions, type MentionsProps } from "./Mentions/Mentions";
 export { Menu, MenuDivider, MenuDropdown, MenuItem, MenuLabel, MenuTarget, type MenuItemProps, type MenuProps } from "./Menu/Menu";
@@ -86,6 +88,8 @@ export { Radio, RadioGroup, RadioItem, type RadioGroupProps, type RadioProps } f
 export { Rating, type RatingProps } from "./Rating/Rating";
 export { RingProgress, type RingProgressProps, type RingProgressSection } from "./RingProgress/RingProgress";
 export { RollingNumber, type RollingNumberProps } from "./RollingNumber/RollingNumber";
+export { ScrollArea, type ScrollAreaProps } from "./ScrollArea/ScrollArea";
+export { Scroller, type ScrollerProps } from "./Scroller/Scroller";
 export { SegmentedControl, type SegmentedControlItem, type SegmentedControlProps } from "./SegmentedControl/SegmentedControl";
 export { Select, type SelectProps } from "./Select/Select";
 export { SemiCircleProgress, type SemiCircleProgressProps } from "./SemiCircleProgress/SemiCircleProgress";
@@ -95,6 +99,7 @@ export { SkeletonLoader, type SkeletonLoaderProps, type SkeletonLoaderVariant } 
 export { AlphaSlider, HueSlider, RangeSlider, Slider, type AlphaSliderProps, type HueSliderProps, type RangeSliderProps, type SliderProps } from "./Slider/Slider";
 export type { SliderCommonProps, SliderMark, SliderPart } from "./Slider/SliderBase";
 export { Space, type SpaceProps } from "./Space/Space";
+export { Splitter, SplitterPanel, type SplitterPanelProps, type SplitterProps } from "./Splitter/Splitter";
 export { Spoiler, type SpoilerProps } from "./Spoiler/Spoiler";
 export { Stack, type StackOwnProps, type StackProps } from "./Stack/Stack";
 export { Stepper, StepperCompleted, StepperStep, type StepperProps, type StepperStepProps } from "./Stepper/Stepper";
@@ -110,6 +115,7 @@ export { ThemeIcon, type ThemeIconOwnProps, type ThemeIconProps } from "./ThemeI
 export { Timeline, TimelineItem, type TimelineItemProps, type TimelineProps } from "./Timeline/Timeline";
 export { Title, type TitleProps, type TitleSize } from "./Title/Title";
 export { Toggle, type ToggleOwnProps, type ToggleProps } from "./Toggle/Toggle";
+export { Toolbar, type ToolbarProps } from "./Toolbar/Toolbar";
 export { Tooltip, type TooltipProps } from "./Tooltip/Tooltip";
 export { Tour, type TourProps, type TourStep } from "./Tour/Tour";
 export { Transition, type TransitionDuration, type TransitionName, type TransitionProps } from "./Transition/Transition";

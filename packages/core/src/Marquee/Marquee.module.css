@@ -1,0 +1,54 @@
+.root {
+  display: flex;
+  overflow: hidden;
+  font-family: var(--cf-font-sans);
+}
+
+.root:focus-visible {
+  border-radius: var(--cf-radius-xs);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.track {
+  display: flex;
+  flex: none;
+  gap: var(--marquee-gap);
+  padding-inline-end: var(--marquee-gap);
+  animation: correr var(--marquee-duration) linear infinite;
+}
+
+.root[data-reverse] .track {
+  animation-direction: reverse;
+}
+
+.root[data-pause-on-hover]:hover .track,
+.root:focus-within .track {
+  animation-play-state: paused;
+}
+
+.content {
+  display: flex;
+  flex: none;
+  gap: var(--marquee-gap);
+}
+
+@keyframes correr {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    overflow-x: auto;
+  }
+
+  .track {
+    animation: none;
+  }
+
+  .track > .content + .content {
+    display: none;
+  }
+}

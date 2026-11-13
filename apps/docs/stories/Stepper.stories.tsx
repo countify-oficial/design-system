@@ -2,7 +2,7 @@ import { Button, Group, Stack, Stepper, Text } from "@countify-oficial/core";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-const meta = { title: "Navigation/Stepper", component: Stepper, args: { active: 1 } } satisfies Meta<typeof Stepper>;
+const meta = { title: "Navegação/Stepper", component: Stepper, args: { active: 1 } } satisfies Meta<typeof Stepper>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

@@ -2,7 +2,7 @@ import { Avatar, Badge, Icon, NavLink, Stack, ThemeIcon } from "@countify-oficia
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta = {
-  title: "Navigation/NavLink",
+  title: "Navegação/NavLink",
   component: NavLink,
   args: { label: "Segurança", href: "#seguranca" },
   decorators: [(S) => <div style={{ maxWidth: "var(--cf-side-panel-width)" }}><S /></div>],

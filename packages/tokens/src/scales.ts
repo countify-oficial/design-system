@@ -66,6 +66,13 @@ export const sheetHandle = { width: 36, height: 4 } as const;
 /** Painel lateral no computador (a folha vira painel a partir de 768). */
 export const sidePanelWidth = 380;
 
+// ---------- AppShell (mockup, telas W-* e M-*): cabeçalho de 64 no computador, com ícone de 20 no menu; no celular,
+// abas embaixo com itens de 56 e ícone de 24
+export const appShell = { headerHeight: 64, tabItemHeight: 56, tabIconSize: 24, menuIconSize: 20 } as const;
+
+// ---------- Marquee (aprovado em 13/11/2026): corre a 50 px por segundo
+export const marqueeSpeed = 50;
+
 // ---------- sombras: só o anel em xs–md; a sombra da identidade em lg e xl (menus, popover, painel lateral, modal)
 export type ShadowKind = "ring" | "raised";
 export const shadows: BySize<ShadowKind> = { xs: "ring", sm: "ring", md: "ring", lg: "raised", xl: "raised" };

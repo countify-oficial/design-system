@@ -192,3 +192,17 @@ Valores que a identidade já usa, agora com nome nos tokens:
     negrito na cor principal, rótulo 17/500, linha da borda). Breadcrumbs e Pagination não aparecem no mockup (ele usa
     o link "Voltar" e a linha "Ver todos"); são feitos só com esses tokens.
 
+## Passo 11
+
+27. **AppShell** (`appShell`): no computador, cabeçalho de 64 (fundo `nav`, linha da divisória embaixo, recuo de 32,
+    32 entre logo, menu e o lado direito); itens do menu de 44, recuo de 12, canto 12, ícone de 20, rótulo 15/500 na
+    cor `label`, o atual em pílula (`accent` sobre `accentTint`). No celular, abas embaixo: barra com recuo de 4, canto
+    20, fundo `card` e anel da divisória, a 16 das bordas; itens de 56, ícone de 24, rótulo 13/500 na cor `text2`, o
+    atual em pílula de canto 16. De 768 a 1279, o menu fica só com ícones (o nome continua para o leitor de tela).
+    Origem: **mockup** (`M-Hoje`, `W-Hoje`, `X-DocNavegacao`).
+28. **Velocidade do Marquee** (`marqueeSpeed`, aprovado em 13/11/2026): 50 px por segundo; para com o mouse em cima,
+    com o foco dentro e para quem pediu menos movimento.
+29. **Composto de valores da identidade** (sem valor novo): a barra de rolagem do ScrollArea é fina, na cor da borda
+    forte; a alça do Splitter tem 8 de área (`space[2]`) com a linha da divisória, que fica na cor principal no foco e
+    ao arrastar; a Toolbar separa os botões por 8, como as ações do cabeçalho da 0.1.0.
+

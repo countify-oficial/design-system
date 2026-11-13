@@ -1,0 +1,40 @@
+/* Barra de rolagem fina, na cor da borda forte */
+.root {
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--cf-color-border-strong) transparent;
+  scrollbar-width: thin;
+}
+
+.root[data-scrollbars="y"] {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.root[data-scrollbars="x"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.root[data-scrollbars="xy"] {
+  overflow: auto;
+}
+
+.root[data-type="always"][data-scrollbars="y"],
+.root[data-type="always"][data-scrollbars="xy"] {
+  overflow-y: scroll;
+}
+
+.root[data-type="always"][data-scrollbars="x"],
+.root[data-type="always"][data-scrollbars="xy"] {
+  overflow-x: scroll;
+}
+
+.root[data-type="never"] {
+  scrollbar-width: none;
+}
+
+.root:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: calc(-1 * var(--cf-focus-ring-width));
+}

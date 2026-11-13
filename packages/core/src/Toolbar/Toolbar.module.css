@@ -1,0 +1,11 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cf-space-2);
+}
+
+.root[aria-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+}

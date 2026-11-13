@@ -7,8 +7,8 @@ import { useContentColor } from "../contentColor";
 export interface IconProps {
   /** Qual ícone da Countify (close, plus, search, chevron-down…). */
   name: IconName;
-  /** Tamanho: xs 16, sm 18, md 22, lg 28, xl 32. Padrão: md. */
-  size?: Size | undefined;
+  /** Tamanho: xs 16, sm 18, md 22, lg 28, xl 32, ou um número vindo dos tokens (appShell.tabIconSize). Padrão: md. */
+  size?: Size | number | undefined;
   /** Papel de cor. Padrão: a cor do botão em volta, ou text. */
   color?: ColorRole | undefined;
   /** Nome para o leitor de tela. Sem ele, o ícone é decorativo. */
@@ -24,7 +24,7 @@ export function Icon(props: IconProps) {
   const { name, size = "md", color, label, filled, style, testID } = useComponentProps("Icon", {}, props);
   const { colors } = useCountifyTheme();
   const doBotao = useContentColor();
-  const px = iconSize[size];
+  const px = typeof size === "number" ? size : iconSize[size];
   const cor = color ? colors[color] : (doBotao ?? colors.text);
   return (
     <SvgXml

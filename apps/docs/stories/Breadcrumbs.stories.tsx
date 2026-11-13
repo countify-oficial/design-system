@@ -1,7 +1,7 @@
 import { Anchor, Breadcrumbs } from "@countify-oficial/core";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-const meta = { title: "Navigation/Breadcrumbs", component: Breadcrumbs } satisfies Meta<typeof Breadcrumbs>;
+const meta = { title: "Navegação/Breadcrumbs", component: Breadcrumbs } satisfies Meta<typeof Breadcrumbs>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

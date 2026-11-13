@@ -2,7 +2,7 @@ import { Pagination, pageLabel } from "@countify-oficial/core";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-const meta = { title: "Navigation/Pagination", component: Pagination, args: { total: 17, defaultValue: 6 } } satisfies Meta<typeof Pagination>;
+const meta = { title: "Navegação/Pagination", component: Pagination, args: { total: 17, defaultValue: 6 } } satisfies Meta<typeof Pagination>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

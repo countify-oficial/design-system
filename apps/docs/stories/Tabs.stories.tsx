@@ -1,7 +1,7 @@
 import { Badge, Icon, Tabs, Text } from "@countify-oficial/core";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-const meta = { title: "Navigation/Tabs", component: Tabs } satisfies Meta<typeof Tabs>;
+const meta = { title: "Navegação/Tabs", component: Tabs } satisfies Meta<typeof Tabs>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

@@ -1,0 +1,160 @@
+/* Mockup: abas embaixo no celular (M-Hoje); de 768, cabeçalho de 64 com o menu só com ícones; de 1280, com os nomes (W-Hoje) */
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--cf-color-bg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.header {
+  position: sticky;
+  z-index: var(--cf-z-sticky);
+  top: 0;
+  display: none;
+  align-items: center;
+  gap: var(--cf-space-8);
+  box-sizing: border-box;
+  height: var(--cf-app-shell-header-height);
+  padding-inline: var(--cf-gutter-desktop);
+  background-color: var(--cf-color-nav);
+  box-shadow: inset 0 calc(-1 * var(--cf-border-thin)) 0 var(--cf-color-divider);
+}
+
+.logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  gap: var(--cf-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.end {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  margin-inline-start: auto;
+}
+
+.main {
+  flex: 1;
+  box-sizing: border-box;
+  padding: calc(var(--cf-gutter-mobile) + env(safe-area-inset-top)) var(--cf-gutter-mobile)
+    calc(var(--cf-app-shell-tab-item-height) + var(--cf-space-1) * 2 + var(--cf-space-4) * 2 + env(safe-area-inset-bottom));
+}
+
+.tabBar {
+  position: fixed;
+  z-index: var(--cf-z-sticky);
+  right: var(--cf-space-4);
+  bottom: calc(var(--cf-space-4) + env(safe-area-inset-bottom));
+  left: var(--cf-space-4);
+  padding: var(--cf-space-1);
+  border-radius: var(--cf-radius-lg);
+  background-color: var(--cf-color-card);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-divider);
+}
+
+.tabs {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: var(--cf-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--cf-color-label);
+  font-weight: var(--cf-font-weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item[data-place="header"] {
+  gap: var(--cf-space-2);
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-3);
+  border-radius: var(--cf-radius-sm);
+  font-size: var(--cf-font-size-sm);
+}
+
+.item[data-place="header"] svg {
+  width: var(--cf-app-shell-menu-icon-size);
+  height: var(--cf-app-shell-menu-icon-size);
+}
+
+.item[data-place="tabs"] {
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--cf-space-1);
+  width: 100%;
+  min-height: var(--cf-app-shell-tab-item-height);
+  padding-inline: var(--cf-space-1);
+  border-radius: var(--cf-radius-md);
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-xs);
+}
+
+.item[data-place="tabs"] svg {
+  width: var(--cf-app-shell-tab-icon-size);
+  height: var(--cf-app-shell-tab-icon-size);
+}
+
+.item[aria-current] {
+  background-color: var(--cf-color-accent-tint);
+  color: var(--cf-color-accent);
+}
+
+@media (hover: hover) {
+  .item:not([aria-current]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.item:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* de 768 a 1279, o menu do topo só mostra os ícones */
+.item[data-place="header"] .label {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .header {
+    display: flex;
+  }
+
+  .tabBar {
+    display: none;
+  }
+
+  .main {
+    padding: var(--cf-gutter-desktop);
+  }
+}
+
+@media (min-width: 1280px) {
+  .item[data-place="header"] .label {
+    display: inline;
+  }
+}

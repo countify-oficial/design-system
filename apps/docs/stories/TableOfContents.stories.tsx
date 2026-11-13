@@ -10,7 +10,7 @@ const links = [
 ];
 
 const meta = {
-  title: "Navigation/TableOfContents",
+  title: "Navegação/TableOfContents",
   component: TableOfContents,
   args: { links, active: "cores" },
   decorators: [(S) => <div style={{ maxWidth: "var(--cf-side-panel-width)" }}><S /></div>],

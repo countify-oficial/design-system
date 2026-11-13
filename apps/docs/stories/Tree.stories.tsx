@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { redeDeLojas } from "./_arvore";
 
 const meta = {
-  title: "Navigation/Tree",
+  title: "Navegação/Tree",
   component: Tree,
   args: { data: redeDeLojas, "aria-label": "Lojas", defaultExpanded: ["ce"] },
   decorators: [(S) => <div style={{ maxWidth: "var(--cf-side-panel-width)" }}><S /></div>],

@@ -48,6 +48,13 @@ export interface CountifyMessages {
   closeMenu: string;
   /** nome do TableOfContents */
   tableOfContents: string;
+  /** setas do Scroller */
+  scrollBackward: string;
+  scrollForward: string;
+  /** nome do menu do AppShell (cabeçalho e abas embaixo) */
+  sections: string;
+  /** alça do Splitter */
+  resizePanels: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -82,4 +89,8 @@ export const defaultMessages: CountifyMessages = {
   openMenu: "Abrir menu",
   closeMenu: "Fechar menu",
   tableOfContents: "Nesta página",
+  scrollBackward: "Rolar para trás",
+  scrollForward: "Rolar para a frente",
+  sections: "Seções",
+  resizePanels: "Redimensionar painéis",
 };

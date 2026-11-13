@@ -1,0 +1,61 @@
+/* Alça de 8 com a linha da divisória; na cor principal no foco e ao arrastar */
+.root {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.root[data-orientation="vertical"] {
+  flex-direction: column;
+}
+
+.panel {
+  flex-basis: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.handle {
+  position: relative;
+  flex: none;
+  width: var(--cf-space-2);
+  cursor: col-resize;
+  touch-action: none;
+  outline: none;
+}
+
+.root[data-orientation="vertical"] > .handle {
+  width: auto;
+  height: var(--cf-space-2);
+  cursor: row-resize;
+}
+
+.handle::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  width: var(--cf-border-thin);
+  background-color: var(--cf-color-divider);
+}
+
+.root[data-orientation="vertical"] > .handle::after {
+  inset-block: auto;
+  inset-inline: 0;
+  top: 50%;
+  width: auto;
+  height: var(--cf-border-thin);
+}
+
+.handle:focus-visible::after,
+.handle[data-dragging]::after {
+  background-color: var(--cf-color-accent);
+  box-shadow: 0 0 0 var(--cf-border-thin) var(--cf-color-accent);
+}
+
+@media (hover: hover) {
+  .handle:hover::after {
+    background-color: var(--cf-color-border-strong);
+  }
+}
