@@ -1,0 +1,22 @@
+/* a altura anima pela grade (0fr → 1fr), sem medir o conteúdo; com "reduzir movimento", a duração é 0 */
+.root {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--collapse-duration) var(--cf-easing-out);
+}
+
+.root[data-open] {
+  grid-template-rows: 1fr;
+}
+
+.inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* some só depois da animação de fechar (a duração da transição é 0; só o atraso conta) */
+.root:not([data-open]) .inner {
+  visibility: hidden;
+  transition-property: visibility;
+  transition-delay: var(--collapse-duration);
+}

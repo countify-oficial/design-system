@@ -1,7 +1,7 @@
 import { useComponentProps } from "@countify-oficial/provider";
 import type { ColorRole } from "@countify-oficial/tokens";
 import type { ComponentPropsWithRef, ReactNode } from "react";
-import { kebab, useStyles, type StylesApiProps } from "../styles";
+import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import classes from "./Divider.module.css";
 
 export interface DividerProps extends StylesApiProps, Omit<ComponentPropsWithRef<"div">, "className" | "style" | "children" | "color"> {
@@ -33,7 +33,7 @@ export function Divider(props: DividerProps) {
       data-orientation={orientation}
       data-with-label={comTexto || undefined}
       data-label-position={comTexto ? labelPosition : undefined}
-      {...getStyles("root", { "--divider-style": variant, "--divider-color": `var(--cf-color-${kebab(color)})` })}
+      {...getStyles("root", { "--divider-style": variant, "--divider-color": colorVar(color) })}
     >
       {comTexto ? label : null}
     </div>

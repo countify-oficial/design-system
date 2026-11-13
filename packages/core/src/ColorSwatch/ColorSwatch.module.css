@@ -1,0 +1,13 @@
+.root {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--swatch-size);
+  height: var(--swatch-size);
+  border-radius: 50%;
+  background-color: var(--swatch-color);
+}
+
+.root[data-with-shadow] {
+  box-shadow: var(--cf-shadow-xs);
+}

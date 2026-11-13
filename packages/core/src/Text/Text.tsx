@@ -2,7 +2,7 @@ import { useComponentProps } from "@countify-oficial/provider";
 import type { ColorRole, Size, fontWeight } from "@countify-oficial/tokens";
 import type { ElementType } from "react";
 import type { PolymorphicProps } from "../polymorphic";
-import { kebab, useStyles, type StylesApiProps } from "../styles";
+import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import classes from "./Text.module.css";
 
 export type TextWeight = keyof typeof fontWeight;
@@ -44,7 +44,7 @@ export function Text<C extends ElementType = "p">(props: TextProps<C>) {
       {...getStyles("root", {
         "--text-size": `var(--cf-font-size-${size})`,
         "--text-weight": `var(--cf-font-weight-${weight})`,
-        "--text-color": color && `var(--cf-color-${kebab(color)})`,
+        "--text-color": color && colorVar(color),
         "--text-align": align,
         "--text-line-clamp": lineClamp,
       })}

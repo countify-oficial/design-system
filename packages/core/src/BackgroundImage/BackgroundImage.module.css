@@ -1,0 +1,6 @@
+.root {
+  border-radius: var(--bg-radius);
+  background-image: var(--bg-image);
+  background-position: center;
+  background-size: cover;
+}

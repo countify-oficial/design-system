@@ -1,0 +1,18 @@
+.root {
+  padding: 0 var(--cf-space-1);
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-chip);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-xs);
+}
+
+.root[data-block] {
+  display: block;
+  margin: 0;
+  padding: var(--cf-space-3) var(--cf-space-4);
+  overflow: auto;
+  border-radius: var(--cf-radius-sm);
+  line-height: var(--cf-line-height);
+  white-space: pre;
+}

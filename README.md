@@ -11,8 +11,8 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/hooks` | `useControllableState`, `useDisclosure`, `useDebounce`, `useId`, `useMediaQuery`, `useClipboard`, `useReducedMotion`; web e React Native | pronto (0.1.0) |
 | `@countify-oficial/provider` | `CountifyProvider` e `useCountifyTheme`: tema (ajustes por componente), modo claro, escuro ou automático, textos (i18n); web e React Native | pronto (0.1.0) |
 | `@countify-oficial/tsconfig`, `@countify-oficial/eslint-config` | configurações compartilhadas (privados, não publicados) | pronto |
-| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden`. Layout: `Stack`, `Group`, `Flex`, `Center`, `Space`, `AspectRatio`, `SimpleGrid`, `Grid`, `Container`. Botões: `Icon`, `Loader`, `Button`, `ActionIcon`, `CloseButton`, `CopyButton`, `FileButton`, `Toggle`. Feedback: `Paper`, `Card`, `Divider`, `Badge`, `ThemeIcon`, `Avatar`, `Indicator`, `Kbd`, `Skeleton`, `SkeletonLoader`, `Progress`, `RingProgress`, `SemiCircleProgress`, `Alert`, `Notification`, `EmptyState` | em andamento (0.1.0) |
-| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition`. Layout: os mesmos nove da web. Botões: os mesmos, menos `FileButton`. Feedback: os mesmos 16 | em andamento (0.1.0) |
+| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden`. Layout: `Stack`, `Group`, `Flex`, `Center`, `Space`, `AspectRatio`, `SimpleGrid`, `Grid`, `Container`. Botões: `Icon`, `Loader`, `Button`, `ActionIcon`, `CloseButton`, `CopyButton`, `FileButton`, `Toggle`. Feedback: `Paper`, `Card`, `Divider`, `Badge`, `ThemeIcon`, `Avatar`, `Indicator`, `Kbd`, `Skeleton`, `SkeletonLoader`, `Progress`, `RingProgress`, `SemiCircleProgress`, `Alert`, `Notification`, `EmptyState`. Tipografia: `Title`, `Code`, `Mark`, `Highlight`, `Blockquote`, `List`, `Anchor`, `Typography`. Dados: `Image`, `BackgroundImage`, `ColorSwatch`, `NumberFormatter`, `RollingNumber`, `OverflowList`, `Table`, `DataList`, `Timeline`, `Spoiler`, `Collapse`, `Accordion` | em andamento (0.1.0) |
+| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition`. Layout: os mesmos nove da web. Botões: os mesmos, menos `FileButton`. Feedback: os mesmos 16. Tipografia e dados: os mesmos, menos `Typography` e `Table` | em andamento (0.1.0) |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
 | pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |
 
@@ -46,7 +46,8 @@ const { colorScheme, colors, setColorScheme, messages } = useCountifyTheme();
 ```
 
 O mesmo import serve à web e ao React Native: o Metro pega a versão nativa sozinho (condição `react-native`).
-Textos padrão em pt-BR; para trocar, `messages={{ close: "Close" }}`.
+Textos padrão em pt-BR; para trocar, `messages={{ close: "Close" }}`. Números (e datas, depois) seguem `locale` (padrão `pt-BR`):
+`formatNumber(1284.5)` dá `1.284,5`.
 
 ## Componentes
 

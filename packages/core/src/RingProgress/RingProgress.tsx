@@ -1,7 +1,7 @@
 import { useComponentProps } from "@countify-oficial/provider";
 import { ringProgress, type ColorRole } from "@countify-oficial/tokens";
 import type { ComponentPropsWithRef, ReactNode } from "react";
-import { kebab, useStyles, type StylesApiProps } from "../styles";
+import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import classes from "./RingProgress.module.css";
 
 export interface RingProgressSection {
@@ -52,7 +52,7 @@ export function RingProgress(props: RingProgressProps) {
               strokeLinecap={roundCaps ? "round" : "butt"}
               strokeDasharray={`${comprimentos[i] ?? 0} ${volta}`}
               strokeDashoffset={-(inicios[i] ?? 0)}
-              style={{ stroke: `var(--cf-color-${kebab(s.color)})` }}
+              style={{ stroke: colorVar(s.color) }}
             >
               {s.label && <title>{s.label}</title>}
             </circle>

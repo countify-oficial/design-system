@@ -1,0 +1,38 @@
+/* As media queries repetem tokens.breakpoints (sm 768, lg 1280); o teste test/css.test.ts confere. */
+.root {
+  --_fz: var(--title-fz);
+  --_lh: var(--title-lh);
+  --_fw: var(--title-fw);
+  margin: 0;
+  color: var(--title-color);
+  font-family: var(--cf-font-sans);
+  font-size: var(--_fz);
+  font-weight: var(--_fw);
+  line-height: var(--_lh);
+  text-align: var(--title-align);
+}
+
+@media (min-width: 768px) {
+  .root {
+    --_fz: var(--title-fz-sm, var(--title-fz));
+    --_lh: var(--title-lh-sm, var(--title-lh));
+    --_fw: var(--title-fw-sm, var(--title-fw));
+  }
+}
+
+@media (min-width: 1280px) {
+  .root {
+    --_fz: var(--title-fz-lg, var(--title-fz-sm, var(--title-fz)));
+    --_lh: var(--title-lh-lg, var(--title-lh-sm, var(--title-lh)));
+    --_fw: var(--title-fw-lg, var(--title-fw-sm, var(--title-fw)));
+  }
+}
+
+.root[data-overline] {
+  letter-spacing: var(--cf-overline-tracking);
+  text-transform: uppercase;
+}
+
+.root[data-number] {
+  font-variant-numeric: tabular-nums;
+}

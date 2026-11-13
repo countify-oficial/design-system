@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--list-spacing);
+  margin: 0;
+  padding-inline-start: var(--cf-space-6);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--list-fz);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-with-icon] {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.item[data-with-icon] {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cf-space-2);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--cf-color-text2);
+}

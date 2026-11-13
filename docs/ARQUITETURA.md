@@ -47,6 +47,8 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
   `<html>` e o CSS segue. Em "auto", tira o atributo.
 - React Native: o provider lê o modo do aparelho (`useColorScheme`) e entrega `colors` do modo em uso.
 - Cores e medidas não estão no tema: vêm sempre do `@countify-oficial/tokens`.
+- `locale` (padrão pt-BR) e as funções de texto das duas plataformas (`formatNumber`, `highlighter`) também ficam no
+  provider: o core e o native usam as mesmas.
 
 ## Componentes
 
@@ -73,6 +75,8 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
   celular, `useResponsive` escolhe pela largura da tela.
 - **Grade no celular**: o React Native não tem grid. `SimpleGrid` e `Grid` usam linha com quebra, células em
   porcentagem com meio espaço de recuo de cada lado e margem negativa na grade.
+- **Cor por papel**: na web, `colorVar(papel)` monta a variável e só aceita papéis que existem nos tokens (o valor
+  pode vir de JS sem tipo ou do servidor); qualquer outro vira o de reserva.
 - **Tons**: Badge, ThemeIcon, Avatar, Alert, Indicator e Progress recebem `color` como tom (`gray`, `accent`, `up`,
   `down`, `warn`). O mapa tom → papéis (`tones`) fica nos tokens; na web vira `--tone-c`, `--tone-tint` e `--tone-fill`
   (`toneVars`), no celular as cores direto.

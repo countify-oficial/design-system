@@ -1,0 +1,18 @@
+/* cada algarismo é uma coluna de 0 a 9 que rola até o dígito; com "reduzir movimento", troca sem rolar */
+.root {
+  display: inline-flex;
+  font-variant-numeric: tabular-nums;
+}
+
+.column {
+  display: inline-block;
+  height: 1lh;
+  overflow: hidden;
+}
+
+.strip {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(calc(-1lh * var(--digit)));
+  transition: transform var(--rolling-duration) var(--cf-easing-out);
+}

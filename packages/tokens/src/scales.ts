@@ -13,6 +13,8 @@ export const fontWeight = { regular: 400, medium: 500, bold: 700 } as const;
 export type FontWeight = (typeof fontWeight)[keyof typeof fontWeight];
 /** Nada abaixo de 13. */
 export const fontSize: BySize = { xs: 13, sm: 15, md: 17, lg: 20, xl: 22 };
+/** Espaço entre letras do rótulo em maiúsculas (overline), em em. Origem: 0.1.0. */
+export const overlineTracking = 0.08;
 /** Texto de 13 a 17: 1,4. Títulos e números têm a sua em `headings`. */
 export const lineHeight = 1.4;
 export const headings = {
@@ -25,7 +27,7 @@ export const headings = {
   section: { fontSize: 20, lineHeight: 1.25, fontWeight: 700 },
   /** número de indicador, com algarismos de mesma largura */
   number: { fontSize: 28, lineHeight: 1.15, fontWeight: 700 },
-  /** rótulo de seção e eixo de gráfico, em maiúsculas */
+  /** rótulo de seção e eixo de gráfico, em maiúsculas (espaço entre letras: overlineTracking) */
   overline: { fontSize: 13, lineHeight: 1.4, fontWeight: 700 },
 } as const satisfies Record<string, { fontSize: number; lineHeight: number; fontWeight: FontWeight }>;
 
@@ -53,6 +55,8 @@ export const controlPaddingX: BySize = { xs: 12, sm: 16, md: 20, lg: 24, xl: 28 
 export const iconSize: BySize = { xs: 16, sm: 18, md: 22, lg: 28, xl: 32 };
 export const avatarSize: BySize = { xs: 24, sm: 32, md: 40, lg: 48, xl: 64 };
 export const listRowHeight = 64;
+/** Linha compacta de 56: lista com caixas, interruptor e cabeçalho do acordeão (mockup X-DocComponentes e 0.1.0). */
+export const compactRowHeight = 56;
 /** Painel lateral no computador (a folha vira painel a partir de 768). */
 export const sidePanelWidth = 380;
 

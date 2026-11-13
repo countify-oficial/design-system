@@ -1,0 +1,84 @@
+/* Texto corrido (de um CMS ou markdown) com a letra e os títulos do guia */
+.root {
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height);
+}
+
+.root :where(h1, h2, h3, h4, h5, h6) {
+  margin: var(--cf-space-6) 0 var(--cf-space-2);
+  font-weight: var(--cf-font-weight-bold);
+}
+
+.root :where(h1) {
+  font-size: var(--cf-heading-page-title-size);
+  line-height: var(--cf-heading-page-title-line-height);
+}
+
+.root :where(h2) {
+  font-size: var(--cf-heading-section-size);
+  line-height: var(--cf-heading-section-line-height);
+}
+
+.root :where(h3, h4, h5, h6) {
+  font-size: var(--cf-font-size-md);
+}
+
+.root :where(p, ul, ol, blockquote, pre, table) {
+  margin: 0 0 var(--cf-space-4);
+}
+
+.root :where(:first-child) {
+  margin-top: 0;
+}
+
+.root :where(a) {
+  color: var(--cf-color-accent);
+}
+
+.root :where(ul, ol) {
+  padding-inline-start: var(--cf-space-6);
+}
+
+.root :where(code) {
+  padding: 0 var(--cf-space-1);
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-chip);
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-xs);
+}
+
+.root :where(pre) {
+  padding: var(--cf-space-3) var(--cf-space-4);
+  overflow: auto;
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-chip);
+}
+
+.root :where(pre code) {
+  padding: 0;
+}
+
+.root :where(blockquote) {
+  padding: var(--cf-space-3) var(--cf-space-4);
+  border-inline-start: var(--cf-space-1) solid var(--cf-color-accent);
+  background-color: var(--cf-color-accent-tint);
+}
+
+.root :where(hr) {
+  margin: var(--cf-space-6) 0;
+  border: 0;
+  border-top: var(--cf-border-thin) solid var(--cf-color-divider);
+}
+
+.root :where(table) {
+  border-collapse: collapse;
+  font-size: var(--cf-font-size-sm);
+}
+
+.root :where(th, td) {
+  padding: var(--cf-space-2) var(--cf-space-3);
+  border-bottom: var(--cf-border-thin) solid var(--cf-color-divider);
+  text-align: start;
+}

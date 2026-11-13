@@ -1,7 +1,7 @@
 import { useComponentProps, useMessages } from "@countify-oficial/provider";
 import type { ColorRole, Size } from "@countify-oficial/tokens";
 import type { ComponentPropsWithRef } from "react";
-import { kebab, useStyles, type StylesApiProps } from "../styles";
+import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import classes from "./Loader.module.css";
 
 export interface LoaderProps extends StylesApiProps, Omit<ComponentPropsWithRef<"span">, "className" | "style" | "children" | "color"> {
@@ -24,7 +24,7 @@ export function Loader(props: LoaderProps) {
       {...rest}
       {...getStyles("root", {
         "--loader-size": `var(--cf-icon-size-${size})`,
-        "--loader-color": color === "currentColor" ? "currentColor" : `var(--cf-color-${kebab(color)})`,
+        "--loader-color": color === "currentColor" ? "currentColor" : colorVar(color),
       })}
     />
   );

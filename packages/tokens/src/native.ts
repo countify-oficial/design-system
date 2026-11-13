@@ -3,7 +3,7 @@
 import { colors, palette, primaryColor, primaryShade, type ColorScheme } from "./colors.js";
 import {
   avatarSize, breakpoints, controlFontSize, controlHeight, controlPaddingX, duration, fontSize, gutter, headings, iconSize,
-  lineHeight, listRowHeight, loaderStroke, radius, raisedShadow, ringProgress, skeletonStat, space, spacing, state, borderWidth, touchTarget, transition, zIndex,
+  compactRowHeight, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, ringProgress, skeletonStat, space, spacing, state, borderWidth, touchTarget, transition, zIndex,
   type FontWeight,
 } from "./scales.js";
 
@@ -57,6 +57,8 @@ export const nativeTokens = {
   iconSize,
   avatarSize,
   listRowHeight,
+  compactRowHeight,
+  overlineTracking,
   shadow: { light: nativeRaisedShadow("light"), dark: nativeRaisedShadow("dark") },
   zIndex,
   duration,

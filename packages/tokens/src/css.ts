@@ -4,7 +4,7 @@ import { colors, palette, type ColorScheme } from "./colors.js";
 import { iconGrid } from "./icons.js";
 import {
   avatarSize, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
-  headings, iconSize, lineHeight, listRowHeight, loaderStroke, radius, raisedShadow, shadows, sidePanelWidth, space, spacing, state,
+  compactRowHeight, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sidePanelWidth, space, spacing, state,
   borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
 
@@ -47,6 +47,8 @@ export function createCssVariables(): string {
     ...each("icon-size", iconSize, "px"),
     ...each("avatar-size", avatarSize, "px"),
     decl("list-row-height", `${listRowHeight}px`),
+    decl("compact-row-height", `${compactRowHeight}px`),
+    decl("overline-tracking", `${overlineTracking}em`),
     decl("side-panel-width", `${sidePanelWidth}px`),
     ...Object.entries(shadows).map(([k, kind]) => decl(`shadow-${k}`, kind === "ring" ? ring : raised)),
     ...each("z", zIndex),

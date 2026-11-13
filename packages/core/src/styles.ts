@@ -1,5 +1,5 @@
 import { useComponentTheme } from "@countify-oficial/provider";
-import { tones, type Responsive, type Spacing, type Tone } from "@countify-oficial/tokens";
+import { colors, tones, type ColorRole, type Responsive, type Spacing, type Tone } from "@countify-oficial/tokens";
 import type { CSSProperties } from "react";
 
 /** Styles API (web): classe e estilo por parte interna. className e style soltos vão para a raiz. */
@@ -13,10 +13,18 @@ export interface StylesApiProps<Part extends string = "root"> {
 /** Variáveis CSS para o style (o tipo do React não aceita "--nome"). */
 export type CssVars = Partial<Record<`--${string}`, string | number | undefined>>;
 
-const cx = (...nomes: (string | false | undefined)[]) => nomes.filter(Boolean).join(" ") || undefined;
+/** Junta nomes de classe, ignorando os vazios. */
+export const cx = (...nomes: (string | false | undefined)[]): string | undefined => nomes.filter(Boolean).join(" ") || undefined;
 
 /** "accentHover" → "accent-hover", como nas variáveis --cf-color-* */
 export const kebab = (s: string): string => s.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
+
+/**
+ * A variável CSS de um papel de cor. Só aceita papéis que existem nos tokens (o valor pode vir de JS sem tipo ou de
+ * dados do servidor); qualquer outro vira o papel de reserva.
+ */
+export const colorVar = (role: string, fallback: ColorRole = "text"): string =>
+  `var(--cf-color-${kebab(Object.hasOwn(colors.light, role) ? role : fallback)})`;
 
 /**
  * className e style de cada parte. Do mais fraco ao mais forte: CSS Module, tema (theme.components[name]), props.
@@ -58,8 +66,7 @@ export function responsiveVars<T extends string | number>(
 }
 
 /** Variáveis do tom: --tone-c (texto), --tone-tint (fundo claro), --tone-fill (fundo cheio). */
-export const toneVars = (tone: Tone): CssVars => ({
-  "--tone-c": `var(--cf-color-${kebab(tones[tone].c)})`,
-  "--tone-tint": `var(--cf-color-${kebab(tones[tone].tint)})`,
-  "--tone-fill": `var(--cf-color-${kebab(tones[tone].fill)})`,
-});
+export const toneVars = (tone: Tone): CssVars => {
+  const t = Object.hasOwn(tones, tone) ? tones[tone] : tones.gray;
+  return { "--tone-c": colorVar(t.c), "--tone-tint": colorVar(t.tint), "--tone-fill": colorVar(t.fill) };
+};

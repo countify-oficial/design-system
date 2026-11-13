@@ -17,6 +17,8 @@ export interface CountifyContextValue {
   /** as cores por papel do modo em uso */
   colors: SchemeColors;
   messages: CountifyMessages;
+  /** Idioma e região para números e datas (BCP 47). Padrão: pt-BR. */
+  locale: string;
 }
 
 export interface CountifyProviderProps {
@@ -27,6 +29,8 @@ export interface CountifyProviderProps {
   onColorSchemeChange?: ((setting: ColorSchemeSetting) => void) | undefined;
   /** troca os textos padrão (i18n) */
   messages?: Partial<CountifyMessages> | undefined;
+  /** Idioma e região para números e datas (BCP 47). Padrão: pt-BR. */
+  locale?: string | undefined;
   children?: ReactNode;
 }
 
@@ -38,11 +42,12 @@ export const CountifyContext = createContext<CountifyContextValue>({
   setColorScheme: () => undefined,
   colors: colors.light,
   messages: defaultMessages,
+  locale: "pt-BR",
 });
 
 /** O valor do contexto; cada plataforma diz qual é o modo do aparelho. */
 export function useProviderValue(props: CountifyProviderProps, systemScheme: ColorScheme): CountifyContextValue {
-  const { theme: override, messages: textos } = props;
+  const { theme: override, messages: textos, locale = "pt-BR" } = props;
   const [setting, setColorScheme] = useControllableState<ColorSchemeSetting>({
     value: props.colorScheme,
     defaultValue: props.defaultColorScheme ?? "auto",
@@ -52,8 +57,8 @@ export function useProviderValue(props: CountifyProviderProps, systemScheme: Col
   const theme = useMemo(() => mergeTheme(defaultTheme, override), [override]);
   const messages = useMemo(() => ({ ...defaultMessages, ...textos }), [textos]);
   return useMemo(
-    () => ({ theme, colorScheme, colorSchemeSetting: setting, setColorScheme, colors: colors[colorScheme], messages }),
-    [theme, colorScheme, setting, setColorScheme, messages],
+    () => ({ theme, colorScheme, colorSchemeSetting: setting, setColorScheme, colors: colors[colorScheme], messages, locale }),
+    [theme, colorScheme, setting, setColorScheme, messages, locale],
   );
 }
 

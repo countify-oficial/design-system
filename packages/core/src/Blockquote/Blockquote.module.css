@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  gap: var(--cf-space-3);
+  margin: 0;
+  padding: var(--cf-space-3) var(--cf-space-4);
+  border-inline-start: var(--cf-space-1) solid var(--tone-c);
+  border-radius: 0 var(--cf-radius-md) var(--cf-radius-md) 0;
+  background-color: var(--tone-tint);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--tone-c);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+}
+
+.cite {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+  font-style: normal;
+}

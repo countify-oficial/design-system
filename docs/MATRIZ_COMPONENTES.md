@@ -74,3 +74,33 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Alert | ok | ok | adaptado | no celular, `accessibilityLiveRegion` (Android) e papel `alert`; o contêiner não agrupa, para o botão de fechar continuar alcançável |
 | Notification | ok | ok | adaptado | igual ao Alert; a fila e a posição na tela ficam em `@countify-oficial/notifications` |
 | EmptyState | ok | ok | ok | |
+
+### Tipografia
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Title | ok | ok | adaptado | no celular, `accessibilityRole="header"` (sem h1–h6) |
+| Code | ok | ok | ok | |
+| Mark | ok | ok | ok | |
+| Highlight | ok | ok | ok | |
+| Blockquote | ok | ok | ok | |
+| List | ok | ok | adaptado | no celular, marcadores e números desenhados em Text |
+| Anchor | ok | ok | adaptado | no celular abre o endereço pelo sistema (`Linking`); sem hover, o sublinhado é sempre ou nunca |
+| Typography | ok | ok | N/A | estiliza HTML comum; o React Native não tem HTML |
+
+### Dados
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Image | ok | ok | adaptado | no celular, `Image` com `uri`; o alt vira `accessibilityLabel` |
+| BackgroundImage | ok | ok | adaptado | no celular, `View` com a `Image` cobrindo o fundo (o `ImageBackground` do React Native está obsoleto) |
+| ColorSwatch | ok | ok | ok | |
+| NumberFormatter | ok | ok | ok | o mesmo `formatNumber` (no provider) nas duas plataformas |
+| RollingNumber | ok | ok | adaptado | no celular rola com `Animated` |
+| OverflowList | ok | ok | ok | conta pelos itens (`maxVisible`), não mede a largura |
+| Table | ok | ok | N/A | a identidade troca a tabela por lista no celular (`X-DocNavegacao`: "Lista com mais de dois números → Tabela") |
+| DataList | ok | ok | ok | |
+| Timeline | ok | ok | ok | |
+| Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |
+| Collapse | ok | ok | adaptado | na web anima pela grade (CSS); no celular, a altura medida com `Animated` |
+| Accordion | ok | ok | adaptado | no celular, `accessibilityState.expanded`; sem navegação por setas (não há teclado) |

@@ -1,7 +1,7 @@
 import { useComponentProps } from "@countify-oficial/provider";
 import { ringProgress, type ColorRole } from "@countify-oficial/tokens";
 import type { ComponentPropsWithRef, ReactNode } from "react";
-import { kebab, useStyles, type StylesApiProps } from "../styles";
+import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import classes from "./SemiCircleProgress.module.css";
 
 export interface SemiCircleProgressProps
@@ -51,7 +51,7 @@ export function SemiCircleProgress(props: SemiCircleProgressProps) {
           fill="none"
           strokeWidth={espessura}
           strokeDasharray={`${(v / 100) * meio} ${meio}`}
-          style={{ stroke: `var(--cf-color-${kebab(color)})` }}
+          style={{ stroke: colorVar(color) }}
         />
       </svg>
       {label !== undefined && <div {...getStyles("label")}>{label}</div>}

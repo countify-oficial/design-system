@@ -3,7 +3,7 @@ import type { ColorRole, Size } from "@countify-oficial/tokens";
 import type { ElementType, ReactNode } from "react";
 import { Loader } from "../Loader/Loader";
 import type { PolymorphicProps } from "../polymorphic";
-import { kebab, useStyles, type StylesApiProps } from "../styles";
+import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import { UnstyledButton } from "../UnstyledButton/UnstyledButton";
 import classes from "./ActionIcon.module.css";
 
@@ -48,7 +48,7 @@ export function ActionIcon<C extends ElementType = "button">(props: ActionIconPr
       {...getStyles("root", {
         "--ai-size": `var(--cf-button-height-${size})`,
         "--ai-radius": `var(--cf-radius-${radius})`,
-        "--ai-color": `var(--cf-color-${kebab(color)})`,
+        "--ai-color": colorVar(color),
       })}
     >
       {loading ? <Loader size="sm" color="currentColor" label={false} /> : children}

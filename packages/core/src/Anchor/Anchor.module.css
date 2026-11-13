@@ -1,0 +1,16 @@
+.root {
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.root[data-underline="always"],
+.root[data-underline="hover"]:hover {
+  text-decoration: underline;
+}
+
+.root:focus-visible {
+  border-radius: var(--cf-space-1);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}

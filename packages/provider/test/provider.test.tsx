@@ -74,3 +74,12 @@ describe("CountifyProvider (web)", () => {
     expect(result.current.messages.close).toBe("Fechar");
   });
 });
+
+describe("formatNumber", () => {
+  it("formata no idioma, com casas e opções do Intl", async () => {
+    const { formatNumber } = await import("../src/index");
+    expect(formatNumber(1284.5)).toBe("1.284,5");
+    expect(formatNumber(21.4, { decimalScale: 2, fixedDecimalScale: true })).toBe("21,40");
+    expect(formatNumber(1284.5, { locale: "en-US" })).toBe("1,284.5");
+  });
+});

@@ -168,3 +168,6 @@ Valores que a identidade já usa, agora com nome nos tokens:
     da divisória e com canto de 4. Origem: **mockup** `X-DocEstados`.
 18. **Tons** (`tones`): para Badge, ThemeIcon, Avatar, Alert e Progress, cada tom junta três papéis que já existem:
     texto, fundo claro e fundo cheio. A queda não tem tinta na identidade, então o fundo claro dela é o do chip.
+19. **Linha compacta de 56** (`compactRowHeight`): lista com caixas e interruptor (**mockup** `X-DocComponentes`) e o
+    cabeçalho do acordeão (**0.1.0**).
+20. **Espaço entre letras do rótulo** (`overlineTracking`): 0,08 em no rótulo de seção em maiúsculas. Origem: **0.1.0**.

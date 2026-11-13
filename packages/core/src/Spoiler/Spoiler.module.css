@@ -1,0 +1,17 @@
+.content {
+  max-height: var(--spoiler-max-height);
+  overflow: hidden;
+}
+
+.root[data-expanded] .content {
+  max-height: none;
+}
+
+.control {
+  margin-top: var(--cf-space-1);
+  color: var(--cf-color-accent);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+}

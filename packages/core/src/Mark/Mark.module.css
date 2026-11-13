@@ -1,0 +1,5 @@
+.root {
+  border-radius: var(--cf-space-1);
+  background-color: var(--tone-tint);
+  color: inherit;
+}

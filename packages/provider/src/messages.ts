@@ -2,9 +2,15 @@
 export interface CountifyMessages {
   close: string;
   loading: string;
+  /** Spoiler fechado */
+  showMore: string;
+  /** Spoiler aberto */
+  showLess: string;
 }
 
 export const defaultMessages: CountifyMessages = {
   close: "Fechar",
   loading: "Carregando",
+  showMore: "Mostrar mais",
+  showLess: "Mostrar menos",
 };
