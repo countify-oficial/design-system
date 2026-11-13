@@ -22,6 +22,12 @@ export interface CountifyMessages {
   saturation: string;
   hue: string;
   alpha: string;
+  /** botões do Tour */
+  next: string;
+  back: string;
+  done: string;
+  /** "1 de 4" no Tour e no Stepper */
+  stepOf: (atual: number, total: number) => string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -39,4 +45,8 @@ export const defaultMessages: CountifyMessages = {
   saturation: "Saturação e brilho",
   hue: "Matiz",
   alpha: "Transparência",
+  next: "Próximo",
+  back: "Voltar",
+  done: "Concluir",
+  stepOf: (atual, total) => `${atual} de ${total}`,
 };

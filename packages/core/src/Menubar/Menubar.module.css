@@ -1,0 +1,31 @@
+/* barra de menus do aplicativo de computador (Electron): Arquivo · Editar · Ver */
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-1);
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-1);
+  border-bottom: var(--cf-border-thin) solid var(--cf-color-divider);
+  background-color: var(--cf-color-nav);
+}
+
+.trigger {
+  min-height: var(--cf-space-8);
+  padding-inline: var(--cf-space-3);
+  border-radius: var(--cf-radius-xs);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+@media (hover: hover) {
+  .trigger:hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.trigger[aria-expanded="true"] {
+  background-color: var(--cf-color-accent-tint);
+  color: var(--cf-color-accent);
+}

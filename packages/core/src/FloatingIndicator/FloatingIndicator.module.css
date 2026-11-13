@@ -1,0 +1,16 @@
+/* o destaque que corre até o item ativo (abas, segmentado próprio): a tinta e o anel do escolhido */
+.root {
+  position: absolute;
+  top: var(--fi-top);
+  left: var(--fi-left);
+  width: var(--fi-width);
+  height: var(--fi-height);
+  box-sizing: border-box;
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-accent-tint);
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-accent);
+  pointer-events: none;
+  transition-duration: var(--cf-duration-base);
+  transition-property: top, left, width, height;
+  transition-timing-function: var(--cf-easing-out);
+}

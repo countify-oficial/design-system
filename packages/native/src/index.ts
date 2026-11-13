@@ -84,6 +84,7 @@ export { Timeline, TimelineItem, type TimelineItemProps, type TimelineProps } fr
 export { Title, type TitleProps, type TitleSize } from "./Title/Title";
 export { Toggle, type ToggleOwnProps, type ToggleProps } from "./Toggle/Toggle";
 export { Tooltip, type TooltipProps } from "./Tooltip/Tooltip";
+export { Tour, type TourProps, type TourStep } from "./Tour/Tour";
 export { Transition, type TransitionDuration, type TransitionName, type TransitionProps } from "./Transition/Transition";
 export { UnstyledButton, type UnstyledButtonOwnProps, type UnstyledButtonProps } from "./UnstyledButton/UnstyledButton";
 export { useResponsive } from "./styles";

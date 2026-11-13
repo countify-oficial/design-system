@@ -153,3 +153,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | HoverCard | ok | ok | adaptado | no celular não há hover: abre numa folha com o toque longo |
 | Tooltip | ok | ok | adaptado | no celular aparece enquanto o dedo segura o alvo e vira a dica do leitor de tela |
 | ColorInput | ok | ok | adaptado | no celular o seletor abre numa folha |
+| FloatingIndicator | ok | ok | N/A | depende do tamanho medido no DOM; no celular, Tabs e SegmentedControl já desenham o escolhido |
+| FloatingWindow | ok | ok | N/A | janela que se arrasta é do computador; no celular, use Drawer |
+| Tour | ok | ok | adaptado | no celular os passos aparecem numa folha, sem recorte em volta do alvo |
+| Menubar | ok | ok | N/A | barra de menus do aplicativo de computador (Electron); no celular, a navegação é o menu de abas embaixo |

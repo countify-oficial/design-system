@@ -1,0 +1,63 @@
+/* o véu do tour com um recorte em volta do alvo (a sombra cobre a tela toda) */
+.spotlight {
+  position: fixed;
+  z-index: var(--cf-z-overlay);
+  top: var(--tour-top);
+  left: var(--tour-left);
+  width: var(--tour-width);
+  height: var(--tour-height);
+  border-radius: var(--cf-radius-sm);
+  box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--cf-color-scrim) calc(var(--cf-scrim-opacity) * 100%), transparent);
+  pointer-events: none;
+  transition-duration: var(--cf-duration-base);
+  transition-property: top, left, width, height;
+}
+
+.card {
+  z-index: var(--cf-z-tooltip);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  width: min(calc(var(--cf-side-panel-width) - var(--cf-space-8)), calc(100vw - 2 * var(--cf-gutter-mobile)));
+  padding: var(--cf-space-4);
+  border-radius: var(--cf-radius-md);
+  background-color: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-lg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+  outline: none;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cf-space-2);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-bold);
+}
+
+.description {
+  margin: 0;
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-2);
+  padding-top: var(--cf-space-2);
+}
+
+.counter {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-xs);
+}

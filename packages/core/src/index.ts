@@ -34,6 +34,8 @@ export { Fieldset, type FieldsetProps } from "./Fieldset/Fieldset";
 export { FileButton, type FileButtonProps } from "./FileButton/FileButton";
 export { FileInput, type FileInputProps } from "./FileInput/FileInput";
 export { Flex, type FlexOwnProps, type FlexProps } from "./Flex/Flex";
+export { FloatingIndicator, type FloatingIndicatorProps } from "./FloatingIndicator/FloatingIndicator";
+export { FloatingWindow, type FloatingWindowProps } from "./FloatingWindow/FloatingWindow";
 export { FocusTrap, tabbables, type FocusTrapProps } from "./FocusTrap/FocusTrap";
 export { Grid, GridCol, type GridColOwnProps, type GridColProps, type GridOwnProps, type GridProps } from "./Grid/Grid";
 export { Group, type GroupOwnProps, type GroupProps } from "./Group/Group";
@@ -51,6 +53,7 @@ export { LoadingOverlay, type LoadingOverlayProps } from "./LoadingOverlay/Loadi
 export { Mark, type MarkProps } from "./Mark/Mark";
 export { MaskInput, type MaskInputProps } from "./MaskInput/MaskInput";
 export { Menu, MenuDivider, MenuDropdown, MenuItem, MenuLabel, MenuTarget, type MenuItemProps, type MenuProps } from "./Menu/Menu";
+export { Menubar, MenubarMenu, type MenubarMenuProps, type MenubarProps } from "./Menubar/Menubar";
 export { Modal, type ModalBaseProps, type ModalProps } from "./Modal/Modal";
 export { NativeSelect, type NativeSelectItem, type NativeSelectProps } from "./NativeSelect/NativeSelect";
 export { Notification, type NotificationOwnProps, type NotificationProps } from "./Notification/Notification";
@@ -90,6 +93,7 @@ export { Timeline, TimelineItem, type TimelineItemProps, type TimelineProps } fr
 export { Title, type TitleProps, type TitleSize } from "./Title/Title";
 export { Toggle, type ToggleOwnProps, type ToggleProps } from "./Toggle/Toggle";
 export { Tooltip, type TooltipProps } from "./Tooltip/Tooltip";
+export { Tour, type TourProps, type TourStep } from "./Tour/Tour";
 export { Transition, type TransitionDuration, type TransitionName, type TransitionProps } from "./Transition/Transition";
 export { Typography, type TypographyProps } from "./Typography/Typography";
 export { UnstyledButton, type UnstyledButtonOwnProps, type UnstyledButtonProps } from "./UnstyledButton/UnstyledButton";

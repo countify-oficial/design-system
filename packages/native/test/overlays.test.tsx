@@ -1,7 +1,7 @@
 import { colors } from "@countify-oficial/tokens";
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { Text } from "react-native";
-import { ActionBar, Button, ColorInput, Drawer, LoadingOverlay, Menu, Modal, Overlay, Popover, Tooltip } from "../src";
+import { ActionBar, Button, ColorInput, Drawer, LoadingOverlay, Menu, Modal, Overlay, Popover, Tooltip, Tour } from "../src";
 import { larguraDaTela } from "./tela";
 
 const l = colors.light;
@@ -86,5 +86,17 @@ describe("popover, menu e dica (React Native)", () => {
     expect(aoMudar).toHaveBeenLastCalledWith("#225ba5");
     await fireEvent.press(screen.getByRole("button", { name: "Escolher cor" }));
     expect(screen.getByRole("adjustable", { name: "Matiz" })).toBeOnTheScreen();
+  });
+});
+
+describe("Tour (React Native)", () => {
+  it("passos na folha, com contador e Concluir", async () => {
+    const fechar = jest.fn();
+    await render(<Tour opened onClose={fechar} steps={[{ title: "Seu painel", description: "Os números de hoje" }, { title: "Filtros" }]} />);
+    expect(screen.getByText("1 de 2")).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole("button", { name: "Próximo" }));
+    expect(screen.getByRole("header", { name: "Filtros" })).toBeOnTheScreen();
+    await fireEvent.press(screen.getByRole("button", { name: "Concluir" }));
+    expect(fechar).toHaveBeenCalled();
   });
 });
