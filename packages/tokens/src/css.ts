@@ -52,7 +52,7 @@ export function createCssVariables(): string {
   ];
   const bloco = (sel: string, linhas: string[]) => `${sel} {\n  ${linhas.join("\n  ")}\n}`;
   return [
-    "/* @countify/tokens: gerado de src/; não edite à mão */",
+    "/* @countify-oficial/tokens: gerado de src/; não edite à mão */",
     bloco(":root", [...fixas, ...schemeVars("light")]),
     bloco('[data-cf-color-scheme="light"]', schemeVars("light")),
     bloco('[data-cf-color-scheme="dark"]', schemeVars("dark")),

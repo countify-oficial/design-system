@@ -1,5 +1,5 @@
 > **Legado.** Esta é a `@countify/ui` 0.1.0 (pacote único, CSS puro + React + React Native), substituída pelo monorepo
-> na raiz (`@countify/tokens`, `@countify/core`, `@countify/native`…). Fica aqui só como referência para portar os
+> na raiz (`@countify-oficial/tokens`, `@countify-oficial/core`, `@countify-oficial/native`…). Fica aqui só como referência para portar os
 > componentes; sai quando a `docs/MATRIZ_COMPONENTES.md` cobrir todos. Não está no workspace do pnpm.
 
 # @countify/ui

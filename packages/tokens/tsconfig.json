@@ -1,5 +1,5 @@
 {
-  "extends": "@countify/tsconfig/base.json",
+  "extends": "@countify-oficial/tsconfig/base.json",
   "compilerOptions": {
     "types": ["node"]
   },

@@ -7,9 +7,9 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 
 | Pacote | O que tem | Situação |
 |---|---|---|
-| `@countify/tokens` | cores (escalas de 10 tons e papéis por modo), letra, espaço, cantos, tamanhos xs–xl, sombras, camadas, movimento, pontos de quebra; em TS, variáveis CSS e objeto para React Native | pronto (0.1.0) |
-| `@countify/tsconfig`, `@countify/eslint-config` | configurações compartilhadas (privados, não publicados) | pronto |
-| `@countify/hooks`, `@countify/core`, `@countify/native` e os pacotes de extensão | componentes e hooks | próximos passos |
+| `@countify-oficial/tokens` | cores (escalas de 10 tons e papéis por modo), letra, espaço, cantos, tamanhos xs–xl, sombras, camadas, movimento, pontos de quebra; em TS, variáveis CSS e objeto para React Native | pronto (0.1.0) |
+| `@countify-oficial/tsconfig`, `@countify-oficial/eslint-config` | configurações compartilhadas (privados, não publicados) | pronto |
+| `@countify-oficial/hooks`, `@countify-oficial/core`, `@countify-oficial/native` e os pacotes de extensão | componentes e hooks | próximos passos |
 
 A origem de cada token está em [docs/TOKENS_COUNTIFY.md](docs/TOKENS_COUNTIFY.md); a organização do repositório em
 [docs/ARQUITETURA.md](docs/ARQUITETURA.md); como contribuir em [docs/CONTRIBUINDO.md](docs/CONTRIBUINDO.md).
@@ -18,9 +18,9 @@ A versão anterior (`@countify/ui` 0.1.0, pacote único) está em `legacy/ui/`, 
 ## Usar os tokens
 
 ```ts
-import { colors, palette, spacing } from "@countify/tokens";   // TS
-import "@countify/tokens/tokens.css";                           // web: variáveis --cf-*
-import { nativeTokens } from "@countify/tokens";               // React Native
+import { colors, palette, spacing } from "@countify-oficial/tokens";   // TS
+import "@countify-oficial/tokens/tokens.css";                           // web: variáveis --cf-*
+import { nativeTokens } from "@countify-oficial/tokens";               // React Native
 ```
 
 Na web, o modo segue o sistema; `data-cf-color-scheme="dark"` (ou `"light"`) num elemento força o modo dele para baixo.
@@ -54,6 +54,12 @@ react-native-gesture-handler) entram nesta tabela, com o motivo, quando o primei
 
 ## Publicar
 
-`pnpm changeset` a cada mudança; `pnpm version-packages` aplica as versões; `pnpm release` publica com acesso restrito.
-**Falta definir o registry privado** (GitHub Packages, Verdaccio ou outro): o endereço vai num `.npmrc` com
-`@countify:registry=<url>`.
+Os pacotes são privados, no GitHub Packages da organização `countify-oficial`: só os membros dela instalam. O escopo
+`@countify-oficial` é obrigatório lá (o GitHub exige o nome da organização).
+
+1. Cada pessoa cria um token no GitHub (Settings → Developer settings → Personal access tokens, tipo *classic*, com
+   `read:packages`; quem publica também precisa de `write:packages`) e grava no `~/.npmrc` dela, fora do repositório:
+   `//npm.pkg.github.com/:_authToken=<token>`.
+2. `pnpm changeset` a cada mudança; `pnpm version-packages` aplica as versões; `pnpm release` publica.
+
+Num app que usa a biblioteca, o `.npmrc` do app leva a mesma linha `@countify-oficial:registry=https://npm.pkg.github.com`.

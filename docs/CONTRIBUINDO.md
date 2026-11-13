@@ -6,7 +6,7 @@
 
 ## Tokens
 
-- **Valor visual só em `@countify/tokens`.** Hex, px de medida, fonte ou duração em outro pacote é erro.
+- **Valor visual só em `@countify-oficial/tokens`.** Hex, px de medida, fonte ou duração em outro pacote é erro.
 - **Valor novo precisa de origem.** Ou vem da identidade (guia, mockup, cores.py, marca) ou de uma proposta aprovada
   pelo dono do projeto; nos dois casos, entra em `docs/TOKENS_COUNTIFY.md` com a fonte.
 - **Contraste**: texto 4,5:1 nos dois modos. O teste do pacote confere todos os papéis; um papel novo de texto entra

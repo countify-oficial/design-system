@@ -2,9 +2,9 @@
 
 ```
 packages/
-  tokens/          @countify/tokens: a única fonte de cor, medida, letra e movimento
-  tsconfig/        @countify/tsconfig: base estrita (privado)
-  eslint-config/   @countify/eslint-config: regras comuns (privado)
+  tokens/          @countify-oficial/tokens: a única fonte de cor, medida, letra e movimento
+  tsconfig/        @countify-oficial/tsconfig: base estrita (privado)
+  eslint-config/   @countify-oficial/eslint-config: regras comuns (privado)
 apps/              (vazio por enquanto: docs, desktop-demo, mobile-demo)
 legacy/ui/         @countify/ui 0.1.0, só referência; fora do workspace
 docs/              TOKENS_COUNTIFY.md, ARQUITETURA.md, CONTRIBUINDO.md

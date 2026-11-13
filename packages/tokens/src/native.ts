@@ -34,7 +34,7 @@ export function nativeRaisedShadow(scheme: ColorScheme): NativeShadow {
   };
 }
 
-/** Tudo num objeto, para o StyleSheet do @countify/native. */
+/** Tudo num objeto, para o StyleSheet do @countify-oficial/native. */
 export const nativeTokens = {
   colors,
   palette,

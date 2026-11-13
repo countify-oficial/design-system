@@ -35,10 +35,10 @@ importers:
 
   packages/tokens:
     devDependencies:
-      '@countify/eslint-config':
+      '@countify-oficial/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@countify/tsconfig':
+      '@countify-oficial/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':

@@ -1,6 +1,6 @@
 # Tokens da Countify: origem de cada valor
 
-Fonte de cada token do `@countify/tokens` (`packages/tokens/src/`). Cada valor vem da identidade (abaixo) ou da
+Fonte de cada token do `@countify-oficial/tokens` (`packages/tokens/src/`). Cada valor vem da identidade (abaixo) ou da
 proposta aprovada em 13/11/2026 (seção "Aprovado", no fim). O teste do pacote confere o contraste de todos os papéis
 nos dois modos.
 
@@ -8,7 +8,7 @@ nos dois modos.
 |---|---|
 | Escalas de 10 tons, papéis por modo, cor principal | `colors.ts`: `palette`, `colors`, `primaryColor`, `primaryShade` |
 | Letra, espaço, cantos, tamanhos, sombras, camadas, movimento, pontos de quebra | `scales.ts` |
-| Variáveis CSS (`--cf-*`) | `css.ts`, gravado em `dist/tokens.css` (`@countify/tokens/tokens.css`) |
+| Variáveis CSS (`--cf-*`) | `css.ts`, gravado em `dist/tokens.css` (`@countify-oficial/tokens/tokens.css`) |
 | React Native (família por peso, altura de linha em px, sombra) | `native.ts`: `nativeTokens` |
 
 Abreviações das fontes (repositório Countify, pasta `docs/design/`):
