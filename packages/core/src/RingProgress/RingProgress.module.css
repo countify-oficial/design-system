@@ -1,0 +1,23 @@
+.root {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--ring-size);
+  height: var(--ring-size);
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  rotate: -90deg;
+}
+
+.track {
+  stroke: var(--cf-color-border-strong);
+}
+
+.label {
+  position: relative;
+  text-align: center;
+}

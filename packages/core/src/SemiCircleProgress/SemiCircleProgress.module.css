@@ -1,0 +1,28 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: var(--semi-width);
+  height: var(--semi-height);
+}
+
+.root[data-orientation="down"] {
+  justify-content: flex-start;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+}
+
+.track {
+  stroke: var(--cf-color-border-strong);
+}
+
+.label {
+  position: relative;
+  text-align: center;
+}

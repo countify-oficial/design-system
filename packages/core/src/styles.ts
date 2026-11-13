@@ -1,5 +1,5 @@
 import { useComponentTheme } from "@countify-oficial/provider";
-import type { Responsive, Spacing } from "@countify-oficial/tokens";
+import { tones, type Responsive, type Spacing, type Tone } from "@countify-oficial/tokens";
 import type { CSSProperties } from "react";
 
 /** Styles API (web): classe e estilo por parte interna. className e style soltos vão para a raiz. */
@@ -56,3 +56,10 @@ export function responsiveVars<T extends string | number>(
     [`${name}-lg`]: value.lg === undefined ? undefined : toCss(value.lg),
   };
 }
+
+/** Variáveis do tom: --tone-c (texto), --tone-tint (fundo claro), --tone-fill (fundo cheio). */
+export const toneVars = (tone: Tone): CssVars => ({
+  "--tone-c": `var(--cf-color-${kebab(tones[tone].c)})`,
+  "--tone-tint": `var(--cf-color-${kebab(tones[tone].tint)})`,
+  "--tone-fill": `var(--cf-color-${kebab(tones[tone].fill)})`,
+});

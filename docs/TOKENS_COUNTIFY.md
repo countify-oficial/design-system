@@ -158,3 +158,13 @@ Valores que a identidade já usa, agora com nome nos tokens:
 13. **Ícones** (`icons`, `iconGrid`): os da 0.1.0, traço de 1,8 numa caixa de 22, na cor do texto.
 14. **Letra** (`fonts.css`): a Roboto 400, 500 e 700 vem no pacote (licença OFL), como na 0.1.0, para funcionar sem
     internet e com CSP fechado.
+
+## Passo 6
+
+15. **Anel e semicírculo de progresso** (`ringProgress`, aprovado em 13/11/2026): anel de 120 e semicírculo de 200;
+    a espessura é sempre 1/5 do tamanho, a proporção do anel da marca (`X-DocMarca`: 200 com traço de 40).
+16. **Pulso do Skeleton** (`state.pulseOpacity`): vai a 0,5 no meio de cada pulso de 1400 ms. Origem: **0.1.0**.
+17. **Blocos do "Carregando"** (`skeletonStat`): o cartão de número tem blocos de 96 × 16, 140 × 32 e 112 × 16, na cor
+    da divisória e com canto de 4. Origem: **mockup** `X-DocEstados`.
+18. **Tons** (`tones`): para Badge, ThemeIcon, Avatar, Alert e Progress, cada tom junta três papéis que já existem:
+    texto, fundo claro e fundo cheio. A queda não tem tinta na identidade, então o fundo claro dela é o do chip.

@@ -1,0 +1,59 @@
+.root {
+  position: relative;
+  display: inline-flex;
+}
+
+.root[data-block] {
+  display: flex;
+}
+
+/* sem texto, bolinha de 8; com texto, o contador do menu (24, vermelho) */
+.indicator {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--cf-space-2);
+  height: var(--cf-space-2);
+  border-radius: 50%;
+  background-color: var(--tone-fill);
+  color: var(--cf-color-bg);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-bold);
+  white-space: nowrap;
+}
+
+.indicator[data-with-label] {
+  width: auto;
+  min-width: var(--cf-space-6);
+  height: var(--cf-space-6);
+  padding-inline: var(--cf-space-2);
+  border-radius: var(--cf-radius-sm);
+}
+
+.indicator[data-position="top-end"] {
+  top: 0;
+  inset-inline-end: 0;
+  translate: 50% -50%;
+}
+
+.indicator[data-position="top-start"] {
+  top: 0;
+  inset-inline-start: 0;
+  translate: -50% -50%;
+}
+
+.indicator[data-position="bottom-end"] {
+  bottom: 0;
+  inset-inline-end: 0;
+  translate: 50% 50%;
+}
+
+.indicator[data-position="bottom-start"] {
+  bottom: 0;
+  inset-inline-start: 0;
+  translate: -50% 50%;
+}

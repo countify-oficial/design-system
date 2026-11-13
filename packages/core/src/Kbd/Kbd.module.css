@@ -1,0 +1,15 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--cf-space-6);
+  padding-inline: var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-chip);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-border-strong);
+  color: var(--cf-color-label);
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-medium);
+  white-space: nowrap;
+}

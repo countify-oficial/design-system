@@ -1,0 +1,7 @@
+.root {
+  box-sizing: border-box;
+  border-radius: var(--paper-radius);
+  background-color: var(--cf-color-card);
+  box-shadow: var(--paper-shadow);
+  color: var(--cf-color-text);
+}

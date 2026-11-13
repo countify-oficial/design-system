@@ -73,6 +73,9 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
   celular, `useResponsive` escolhe pela largura da tela.
 - **Grade no celular**: o React Native não tem grid. `SimpleGrid` e `Grid` usam linha com quebra, células em
   porcentagem com meio espaço de recuo de cada lado e margem negativa na grade.
+- **Tons**: Badge, ThemeIcon, Avatar, Alert, Indicator e Progress recebem `color` como tom (`gray`, `accent`, `up`,
+  `down`, `warn`). O mapa tom → papéis (`tones`) fica nos tokens; na web vira `--tone-c`, `--tone-tint` e `--tone-fill`
+  (`toneVars`), no celular as cores direto.
 - **Cor do conteúdo (celular)**: o React Native não herda cor. `Button`, `ActionIcon` e `Toggle` publicam a cor do
   conteúdo em `ContentColor`; `Icon`, `Loader` e `Text` usam essa cor quando não recebem uma (é o `currentColor`
   da web).

@@ -1,0 +1,29 @@
+/* text e list seguem o texto (16 de altura) e a linha de lista do mockup (64, divisória a partir do recuo) */
+.root[data-variant="text"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  box-sizing: border-box;
+  min-height: var(--cf-list-row-height);
+  padding: var(--cf-space-3) var(--cf-space-4);
+}
+
+.row + .row {
+  margin-inline-start: var(--cf-space-4);
+  padding-inline-start: 0;
+  border-top: var(--cf-border-thin) solid var(--cf-color-divider);
+}
+
+.lines {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  min-width: 0;
+}

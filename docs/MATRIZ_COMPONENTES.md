@@ -53,3 +53,24 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | CopyButton | ok | ok | adaptado | no celular copia pelo `expo-clipboard` |
 | FileButton | ok | ok | N/A | o React Native não tem seletor de arquivo; o app usa o `expo-document-picker` ou o `expo-image-picker` |
 | Toggle | ok | ok | adaptado | no celular, papel `togglebutton` com `accessibilityState.checked` (na web, `aria-pressed`) |
+
+### Feedback e superfícies
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Paper | ok | ok | adaptado | no celular o anel vira borda fina (o React Native não tem sombra por dentro) |
+| Card | ok | ok | adaptado | igual ao Paper; o `Card.Section` sabe se é o primeiro ou o último pelo `Card` (não há `:first-child`) |
+| Divider | ok | ok | ok | |
+| Badge | ok | ok | ok | |
+| ThemeIcon | ok | ok | adaptado | no celular passa a cor ao ícone por `ContentColor` |
+| Avatar | ok | ok | adaptado | no celular a foto é uma `Image` (`uri`) |
+| Indicator | ok | ok | ok | |
+| Kbd | ok | ok | ok | no celular serve a teclado físico (tablet) |
+| Skeleton | ok | ok | adaptado | no celular pulsa com `Animated`; para com "reduzir movimento" |
+| SkeletonLoader | ok | ok | ok | não existe no Mantine: as formas do "Carregando" da Countify prontas (texto, cartões de número, lista, cartão) |
+| Progress | ok | ok | ok | |
+| RingProgress | ok | ok | adaptado | no celular, `react-native-svg` |
+| SemiCircleProgress | ok | ok | adaptado | no celular, `react-native-svg` |
+| Alert | ok | ok | adaptado | no celular, `accessibilityLiveRegion` (Android) e papel `alert`; o contêiner não agrupa, para o botão de fechar continuar alcançável |
+| Notification | ok | ok | adaptado | igual ao Alert; a fila e a posição na tela ficam em `@countify-oficial/notifications` |
+| EmptyState | ok | ok | ok | |

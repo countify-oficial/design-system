@@ -1,0 +1,46 @@
+/* o aviso flutuante da 0.1.0 (Toast): cores invertidas, canto de 12 e a sombra da identidade */
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  box-sizing: border-box;
+  min-height: var(--cf-input-height-md);
+  padding: var(--cf-space-2) var(--cf-space-4);
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-text);
+  box-shadow: var(--cf-shadow-lg);
+  color: var(--cf-color-bg);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-color="down"] {
+  background-color: var(--cf-color-down);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+  font-weight: var(--cf-font-weight-bold);
+}
+
+.action {
+  display: inline-flex;
+  flex: none;
+}
+
+.closeButton {
+  margin-inline-end: calc(-1 * var(--cf-space-3));
+}

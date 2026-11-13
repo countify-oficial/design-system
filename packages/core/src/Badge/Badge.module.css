@@ -1,0 +1,61 @@
+/* light é a etiqueta "parcial" do mockup; filled, o contador vermelho do menu; dot, a "Situação" */
+.root {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cf-space-1);
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: var(--cf-space-6);
+  height: var(--cf-space-6);
+  padding-inline: var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+  white-space: nowrap;
+  color: var(--tone-c);
+}
+
+.root[data-variant="light"] {
+  background-color: var(--tone-tint);
+}
+
+.root[data-variant="light"][data-color="gray"] {
+  color: var(--cf-color-label);
+}
+
+.root[data-variant="filled"] {
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--tone-fill);
+  color: var(--cf-color-bg);
+  font-weight: var(--cf-font-weight-bold);
+}
+
+.root[data-variant="outline"] {
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--tone-c);
+}
+
+.root[data-variant="dot"] {
+  gap: var(--cf-space-2);
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-regular);
+}
+
+.root[data-variant="dot"]::before {
+  content: "";
+  flex: none;
+  width: var(--cf-space-2);
+  height: var(--cf-space-2);
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.section {
+  display: inline-flex;
+}

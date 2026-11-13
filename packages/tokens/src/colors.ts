@@ -97,3 +97,14 @@ export const colors: Record<ColorScheme, SchemeColors> = { light, dark };
 
 /** Tom da cor principal no modo pedido. */
 export const primary = (scheme: ColorScheme): string => palette[primaryColor][primaryShade[scheme]];
+
+/** Tom de um componente (Badge, ThemeIcon, Alert…): cor do texto (c), fundo claro (tint) e fundo cheio (fill). */
+export type Tone = "gray" | "accent" | "up" | "down" | "warn";
+export const tones = {
+  gray: { c: "text2", tint: "chip", fill: "text2" },
+  accent: { c: "accent", tint: "accentTint", fill: "accent" },
+  up: { c: "up", tint: "upTint", fill: "up" },
+  // a identidade não tem tinta de queda: o fundo claro é o do chip
+  down: { c: "down", tint: "chip", fill: "down" },
+  warn: { c: "warn", tint: "warnTint", fill: "warn" },
+} as const satisfies Record<Tone, { c: ColorRole; tint: ColorRole; fill: ColorRole }>;

@@ -57,6 +57,7 @@ export function createCssVariables(): string {
     ...each("focus-ring", focusRing, "px"),
     decl("disabled-opacity", state.disabledOpacity),
     decl("hover-veil", state.hoverVeil),
+    decl("pulse-opacity", state.pulseOpacity),
     ...each("border", borderWidth, "px"),
     decl("loader-stroke", `${loaderStroke}px`),
     decl("icon-stroke", iconGrid.stroke),

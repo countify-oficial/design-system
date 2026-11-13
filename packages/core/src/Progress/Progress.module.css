@@ -1,0 +1,28 @@
+/* barra da 0.1.0: 8 de altura, trilho na borda forte; o marcador é a meta */
+.root {
+  position: relative;
+  height: var(--cf-space-2);
+  border-radius: var(--cf-space-1);
+  background-color: var(--cf-color-border-strong);
+}
+
+.section {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: var(--progress-value);
+  border-radius: inherit;
+  background-color: var(--tone-fill);
+  transition: width var(--cf-duration-base) var(--cf-easing-out);
+}
+
+.marker {
+  position: absolute;
+  top: calc(-1 * var(--cf-space-1));
+  inset-inline-start: var(--progress-marker);
+  width: calc(2 * var(--cf-border-thin));
+  height: var(--cf-space-4);
+  margin-inline-start: calc(-1 * var(--cf-border-thin));
+  border-radius: var(--cf-border-thin);
+  background-color: var(--cf-color-text);
+}

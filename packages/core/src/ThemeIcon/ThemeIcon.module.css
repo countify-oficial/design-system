@@ -1,0 +1,21 @@
+/* o quadrado de 40 com ícone das listas do mockup */
+.root {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--ti-size);
+  height: var(--ti-size);
+  border-radius: var(--ti-radius);
+  background-color: var(--tone-tint);
+  color: var(--tone-c);
+}
+
+.root[data-variant="filled"] {
+  background-color: var(--tone-fill);
+  color: var(--cf-color-bg);
+}
+
+.root[data-round] {
+  border-radius: 50%;
+}

@@ -1,0 +1,21 @@
+.root {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: var(--tone-tint);
+  color: var(--tone-c);
+  font-family: var(--cf-font-sans);
+  font-size: var(--avatar-fz);
+  font-weight: var(--cf-font-weight-bold);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

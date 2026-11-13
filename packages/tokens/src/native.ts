@@ -3,7 +3,7 @@
 import { colors, palette, primaryColor, primaryShade, type ColorScheme } from "./colors.js";
 import {
   avatarSize, breakpoints, controlFontSize, controlHeight, controlPaddingX, duration, fontSize, gutter, headings, iconSize,
-  lineHeight, listRowHeight, loaderStroke, radius, raisedShadow, space, spacing, state, borderWidth, touchTarget, transition, zIndex,
+  lineHeight, listRowHeight, loaderStroke, radius, raisedShadow, ringProgress, skeletonStat, space, spacing, state, borderWidth, touchTarget, transition, zIndex,
   type FontWeight,
 } from "./scales.js";
 
@@ -64,5 +64,7 @@ export const nativeTokens = {
   state,
   borderWidth,
   loaderStroke,
+  ringProgress,
+  skeletonStat,
   breakpoints,
 } as const;

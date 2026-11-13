@@ -67,7 +67,17 @@ export const raisedShadow = {
 } as const;
 
 // ---------- estados (0.1.0): apagado, véu do hover (web) e opacidade ao tocar (celular)
-export const state = { disabledOpacity: 0.4, hoverVeil: "rgb(127 127 127 / 0.1)", pressedOpacity: 0.8 } as const;
+export const state = { disabledOpacity: 0.4, hoverVeil: "rgb(127 127 127 / 0.1)", pressedOpacity: 0.8, pulseOpacity: 0.5 } as const;
+
+// ---------- "Carregando" do mockup (X-DocEstados): os três blocos do cartão de número (rótulo, número e variação)
+export const skeletonStat = {
+  label: { width: 96, height: 16 },
+  value: { width: 140, height: 32 },
+  detail: { width: 112, height: 16 },
+} as const;
+
+// ---------- anel e semicírculo de progresso (aprovado em 13/11/2026): espessura = 1/5 do tamanho, como o anel da marca
+export const ringProgress = { size: 120, semicircleSize: 200, thicknessRatio: 0.2 } as const;
 
 // ---------- linhas (mockup X-DocComponentes): fina (contorno, divisória) e grossa (escolhido, tracejado)
 export const borderWidth = { thin: 1, thick: 1.5 } as const;
