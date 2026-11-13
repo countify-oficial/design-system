@@ -11,12 +11,18 @@ export default defineConfig(
   tseslint.configs.strictTypeChecked,
   {
     languageOptions: { parserOptions: { projectService: true } },
-    // número dentro de template string é seguro (é o caso de "16px")
-    rules: { "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }] },
+    rules: {
+      // número dentro de template string é seguro (é o caso de "16px")
+      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
+      // () => setX(1) é o jeito comum de escrever um callback
+      "@typescript-eslint/no-confusing-void-expression": ["error", { ignoreArrowShorthand: true }],
+      // _nome: parâmetro que existe para manter a mesma assinatura nas duas plataformas
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
   },
   {
     // scripts de build e configs rodam no Node, sem checagem de tipos
-    files: ["**/*.js", "**/*.mjs"],
+    files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
     extends: [tseslint.configs.disableTypeChecked],
     languageOptions: { globals: globals.node },
   },

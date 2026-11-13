@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "description": "Configurações de TypeScript dos pacotes da Countify",
-  "files": ["base.json"],
+  "files": [
+    "base.json",
+    "react.json"
+  ],
   "exports": {
-    "./base.json": "./base.json"
+    "./base.json": "./base.json",
+    "./react.json": "./react.json"
   }
 }
