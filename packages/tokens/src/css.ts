@@ -3,7 +3,7 @@
 import { colors, palette, type ColorScheme } from "./colors.js";
 import { iconGrid } from "./icons.js";
 import {
-  appShell, avatarSize, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
+  appShell, avatarSize, calendar, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
   compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, switchSize, space, spacing, state,
   borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
@@ -52,6 +52,7 @@ export function createCssVariables(): string {
     decl("overline-tracking", `${overlineTracking}em`),
     decl("side-panel-width", `${sidePanelWidth}px`),
     ...each("app-shell", appShell, "px"),
+    ...each("calendar", calendar, "px"),
     decl("dialog-width", `${dialogWidth}px`),
     ...each("sheet-handle", sheetHandle, "px"),
     ...Object.entries(shadows).map(([k, kind]) => decl(`shadow-${k}`, kind === "ring" ? ring : raised)),

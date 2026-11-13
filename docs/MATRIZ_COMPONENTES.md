@@ -198,4 +198,9 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 |---|---|---|---|---|
 | notifications | ok | ok | adaptado | `notifications.show()` de qualquer lugar; um aviso por vez, some em 4 s (0.1.0). Na web, para com o mouse ou o foco; no celular, fica acima das abas e recebe `bottomInset` (área dos gestos) |
 | modals | ok | ok | ok | `modals.open()`, `openConfirmModal()` (o "Alerta no centro" do W-Confirmar e do M-Confirmar) e `openContextModal()` com janelas registradas no `ModalsProvider` |
+| dates: Calendar | ok | ok | ok | o calendário do M-Periodo nas duas plataformas (escolha de 13/11/2026); na web, `role="grid"` com setas, PageUp/PageDown e Home/End |
+| dates: DatePicker | ok | ok | adaptado | campo de 56 (M-Espaco) que abre o calendário: popover na web, folha no celular (painel de 380 no tablet). Período e atalhos usam "Aplicar"; atalhos em chips no celular e em lista ao lado a partir de 768 (W-Periodo) |
+| dates: DateInput | ok | ok | adaptado | data digitada com máscara (48, OutraData); o ícone abre o calendário (popover na web, folha no celular) |
+| dates: DateTimePicker | ok | ok | adaptado | dia e hora na mesma janela; o mockup não tem seletor de hora, então a hora é o campo de 24 h |
+| dates: TimeInput | ok | ok | ok | campo de texto de 24 h ("10:00"), como Abre e Fecha do M-Loja: sem ícone nem lista |
 

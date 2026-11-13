@@ -206,3 +206,14 @@ Valores que a identidade já usa, agora com nome nos tokens:
     forte; a alça do Splitter tem 8 de área (`space[2]`) com a linha da divisória, que fica na cor principal no foco e
     ao arrastar; a Toolbar separa os botões por 8, como as ações do cabeçalho da 0.1.0.
 
+## Passo 12
+
+30. **Aviso rápido** (`duration.notification`): some sozinho em 4 s. Origem: **0.1.0** (`Toast`). O mockup não tem aviso
+    rápido.
+31. **Calendário** (`calendar`, `colors.rangeTint`, escolha de 13/11/2026: "tudo como o celular"): o mockup desenha o
+    calendário duas vezes e as versões não batem; valem as medidas do **mockup** `M-Periodo` na web e no celular.
+    Dia em círculo de 40, número 17; setas de 44 redondas; título 17/700; iniciais "D S T Q Q S S" 13 na cor `text2`;
+    hoje com anel de 1,5 na cor do texto; dia escolhido e pontas do período em círculo cheio na cor `button` (a mesma
+    nos dois modos) com o número branco em 700; o meio do período numa faixa sem canto, `#E7F0FB` no claro (azul
+    próprio do mockup, fora da escala) e `#172F50` no escuro; dias fora do limite na cor da borda forte, sem toque.
+

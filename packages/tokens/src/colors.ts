@@ -39,6 +39,8 @@ const light = {
   accent: blue[6],
   accentHover: blue[7],
   accentTint: blue[0],
+  /** faixa do período no calendário (M-Periodo): no claro, um azul próprio do mockup */
+  rangeTint: "#E7F0FB",
   /** botão principal: o mesmo azul nos dois modos, com texto branco */
   button: blue[6],
   onButton: "#FFFFFF",
@@ -75,6 +77,7 @@ const dark: SchemeColors = {
   accent: blue[3],
   accentHover: blue[2],
   accentTint: blue[9],
+  rangeTint: blue[9],
   button: blue[6],
   onButton: "#FFFFFF",
   up: green[3],

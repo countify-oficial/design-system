@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@countify-oficial/core": "workspace:*",
+    "@countify-oficial/dates": "workspace:*",
     "@countify-oficial/eslint-config": "workspace:*",
     "@countify-oficial/modals": "workspace:*",
     "@countify-oficial/notifications": "workspace:*",

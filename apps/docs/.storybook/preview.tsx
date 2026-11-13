@@ -1,5 +1,6 @@
 import "@countify-oficial/tokens/fonts.css";
 import "@countify-oficial/tokens/tokens.css";
+import "@countify-oficial/dates/styles.css";
 import "@countify-oficial/modals/styles.css";
 import "@countify-oficial/notifications/styles.css";
 import "./preview.css";

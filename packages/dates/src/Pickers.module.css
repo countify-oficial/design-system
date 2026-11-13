@@ -1,0 +1,86 @@
+/* Campo que abre o seletor (M-Espaco, M-Meta): 56, valor 17/700, ícone do calendário na cor text2 */
+.trigger {
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.icon {
+  display: inline-flex;
+  color: var(--cf-color-text2);
+}
+
+/* No celular, atalhos em fileira de chips (M-Periodo); a partir de 768, lista ao lado do calendário (W-Periodo) */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-5);
+}
+
+.presets {
+  display: flex;
+  gap: var(--cf-space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.preset {
+  flex: none;
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-4);
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-chip);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  text-align: start;
+  white-space: nowrap;
+}
+
+.preset[aria-pressed="true"] {
+  background-color: var(--cf-color-accent-tint);
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-accent);
+  color: var(--cf-color-accent);
+}
+
+.preset:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+/* cada dia é um alvo de toque de 44 */
+.calendar {
+  width: calc(7 * var(--cf-touch-target));
+  max-width: 100%;
+}
+
+.time {
+  margin-top: var(--cf-space-4);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--cf-space-2);
+  margin-top: var(--cf-space-5);
+}
+
+@media (min-width: 768px) {
+  .body {
+    flex-direction: row;
+    gap: var(--cf-space-6);
+  }
+
+  .presets {
+    flex-direction: column;
+    gap: var(--cf-space-1);
+    overflow: visible;
+  }
+
+  .preset {
+    padding-inline: var(--cf-space-3);
+    background-color: transparent;
+    font-weight: var(--cf-font-weight-medium);
+  }
+}

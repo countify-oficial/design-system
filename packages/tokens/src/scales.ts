@@ -70,6 +70,9 @@ export const sidePanelWidth = 380;
 // abas embaixo com itens de 56 e ícone de 24
 export const appShell = { headerHeight: 64, tabItemHeight: 56, tabIconSize: 24, menuIconSize: 20 } as const;
 
+// ---------- calendário (mockup M-Periodo): o dia é um círculo de 40
+export const calendar = { daySize: 40 } as const;
+
 // ---------- Marquee (aprovado em 13/11/2026): corre a 50 px por segundo
 export const marqueeSpeed = 50;
 

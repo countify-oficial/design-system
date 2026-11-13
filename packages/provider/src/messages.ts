@@ -58,6 +58,14 @@ export interface CountifyMessages {
   /** botões da confirmação (modals.openConfirmModal) */
   confirm: string;
   cancel: string;
+  /** calendário e campos de data */
+  previousMonth: string;
+  nextMonth: string;
+  today: string;
+  apply: string;
+  shortcuts: string;
+  time: string;
+  chooseDate: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -98,4 +106,11 @@ export const defaultMessages: CountifyMessages = {
   resizePanels: "Redimensionar painéis",
   confirm: "Confirmar",
   cancel: "Cancelar",
+  previousMonth: "Mês anterior",
+  nextMonth: "Próximo mês",
+  today: "hoje",
+  apply: "Aplicar",
+  shortcuts: "Atalhos",
+  time: "Horário",
+  chooseDate: "Escolher data",
 };
