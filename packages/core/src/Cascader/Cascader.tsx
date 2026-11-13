@@ -94,6 +94,8 @@ export function Cascader(props: CascaderProps) {
         <InputBase
           {...rest}
           component="input"
+          // abre um seletor: o padrão "date picker combobox" do WAI-ARIA (textbox não aceita aria-expanded)
+          role="combobox"
           readOnly
           disabled={disabled}
           value={nos(caminho).map((n) => n.label).join(separator)}

@@ -38,6 +38,8 @@ export function TreeSelect(props: TreeSelectProps) {
         <InputBase
           {...rest}
           component="input"
+          // abre um seletor: o padrão "date picker combobox" do WAI-ARIA (textbox não aceita aria-expanded)
+          role="combobox"
           readOnly
           disabled={disabled}
           value={texto}

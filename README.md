@@ -16,6 +16,7 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/notifications` | avisos rápidos de qualquer lugar: `notifications.show()`, `update()`, `hide()`, `clean()` e o `<Notifications />` que os desenha (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/modals` | janelas abertas por função: `modals.open()`, `openConfirmModal()`, `openContextModal()` e o `ModalsProvider` (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/dates` | `Calendar` (dia e período), `DatePicker`, `DateInput`, `DateTimePicker`, `TimeInput` e as contas de datas em pt-BR (web e React Native) | em andamento (0.1.0) |
+| `@countify-oficial/charts` | gráficos em SVG sem biblioteca de terceiros: `LineChart`, `AreaChart`, `BarChart`, `BarList`, `FunnelChart`, `ScatterChart`, `Heatmap`, `PieChart`, `DonutChart`, `RadarChart`, `Sparkline` e `ChartLegend` (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/test-utils` | interno: a preparação do jsdom e o axe dos testes da web dos pacotes de extensão | privado |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
 | pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |

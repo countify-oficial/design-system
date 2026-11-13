@@ -73,6 +73,40 @@ export const appShell = { headerHeight: 64, tabItemHeight: 56, tabIconSize: 24, 
 // ---------- calendário (mockup M-Periodo): o dia é um círculo de 40
 export const calendar = { daySize: 40 } as const;
 
+// ---------- gráficos (mockup W-Hoje, W-Comparar, W-Montar, M-Montar, W-Analises; divergências web × celular: vale a web,
+// escolha de 13/11/2026). Os marcados "a confirmar" são de tipos que a identidade não desenha (aprovados em 13/11/2026).
+export const chart = {
+  /** área do gráfico de linha (W-Hoje): rótulos do y em 44 (64 com "R$ 25 mil", M-Montar), topo 16, base 28 do pé */
+  padding: { left: 44, leftWide: 64, top: 16, bottom: 28 },
+  /** o primeiro e o último ponto entram 8 na área; o rótulo do y fica 8 antes dela */
+  inset: 8,
+  /** do eixo x à linha de base do rótulo: 22 na linha (W-Hoje), 14 nas barras (W-Comparar) */
+  labelBaseline: { line: 22, bar: 14 },
+  stroke: { series: 3, line: 2, now: 1.5, grid: 1 },
+  dash: { forecast: "5 5", partial: "1 6", now: "3 3", waiting: "4 4" },
+  point: { radius: 4, scatter: 5, ring: 2 },
+  /** barras (W-Comparar): canto 2, 4 entre elas, 16 do pé ao eixo */
+  bar: { radius: 2, gap: 4, bottom: 16 },
+  /** barra deitada do ranking (canto = metade da altura) e a marca de referência */
+  barList: { height: 8, tick: 2, overhang: 4 },
+  /** hachura da lacuna: quadro de 7 girado 45°, traço de 3 */
+  hatch: { size: 7, stroke: 3 },
+  heatmap: { cellHeight: 20, radius: 3, labelWidth: 32, swatch: { width: 16, height: 12, radius: 2 }, levels: [0.18, 0.36, 0.54, 0.76, 1] },
+  /** barra de conversão (W-Indicadores) */
+  funnel: { height: 16 },
+  /** amostras da legenda: linha de 20 × 8 e quadrado de 12 com canto 2 */
+  legend: { lineWidth: 20, lineHeight: 8, square: 12 },
+  /** alturas padrão: linha (W-Datas), barras pequenas (W-Comparar), dispersão (M-Montar) */
+  height: { line: 300, bar: 96, scatter: 186 },
+  /** a confirmar com o design: área, pizza, rosca, radar e minigráfico */
+  areaOpacity: 0.18,
+  sliceGap: 2,
+  sparklineHeight: 40,
+  pieSize: 200,
+  /** a confirmar: série 1, 2, 3, 4 (degraus da escala azul) no claro e no escuro */
+  seriesShades: { light: [6, 4, 2, 8], dark: [3, 5, 1, 4] },
+} as const;
+
 // ---------- Marquee (aprovado em 13/11/2026): corre a 50 px por segundo
 export const marqueeSpeed = 50;
 

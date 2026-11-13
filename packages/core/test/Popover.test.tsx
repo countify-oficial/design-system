@@ -69,7 +69,7 @@ describe("Popover, Tooltip, HoverCard, Menu e ColorInput", () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
     render(<ColorInput label="Cor da categoria" onChange={aoMudar} />);
-    const campo = screen.getByRole("textbox", { name: "Cor da categoria" });
+    const campo = screen.getByRole("combobox", { name: "Cor da categoria" });
     await user.type(campo, "#225ba5");
     expect(aoMudar).toHaveBeenLastCalledWith("#225ba5");
     await user.click(campo);

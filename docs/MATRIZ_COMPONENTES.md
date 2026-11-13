@@ -203,4 +203,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | dates: DateInput | ok | ok | adaptado | data digitada com máscara (48, OutraData); o ícone abre o calendário (popover na web, folha no celular) |
 | dates: DateTimePicker | ok | ok | adaptado | dia e hora na mesma janela; o mockup não tem seletor de hora, então a hora é o campo de 24 h |
 | dates: TimeInput | ok | ok | ok | campo de texto de 24 h ("10:00"), como Abre e Fecha do M-Loja: sem ícone nem lista |
+| charts: LineChart, BarChart, BarList, ScatterChart, Heatmap, FunnelChart | ok | ok | ok | os gráficos do mockup (W-Hoje, W-Comparar, W-Montar, M-Montar, W-Analises, W-Indicadores), em SVG nas duas plataformas (react-native-svg no celular); a tabela de dados vai escondida na web e vira o resumo falado no celular |
+| charts: AreaChart, PieChart, DonutChart, RadarChart, Sparkline | ok | ok | ok | a identidade não desenha esses tipos; feitos com valores aprovados em 13/11/2026, **a confirmar com o design** |
+| charts: ChartLegend | ok | ok | ok | a legenda do mockup (linha de 20 × 8, quadrado de 12) |
 

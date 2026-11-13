@@ -35,6 +35,8 @@ export function ColorInput(props: ColorInputProps) {
           spellCheck={false}
           {...rest}
           component="input"
+          // campo que abre um seletor: combobox (textbox não aceita aria-expanded)
+          role="combobox"
           value={texto ?? cor}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setTexto(e.currentTarget.value);

@@ -3,7 +3,7 @@
 import { colors, palette, type ColorScheme } from "./colors.js";
 import { iconGrid } from "./icons.js";
 import {
-  appShell, avatarSize, calendar, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
+  appShell, avatarSize, calendar, chart, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
   compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, switchSize, space, spacing, state,
   borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
@@ -20,6 +20,8 @@ function schemeVars(scheme: ColorScheme): string[] {
   return [
     ...Object.entries(colors[scheme]).map(([k, v]) => decl(`color-${k}`, v)),
     decl("shadow-color", raisedShadow.color[scheme]),
+    // séries dos gráficos: degraus da escala azul por modo (--cf-chart-series-1…4)
+    ...chart.seriesShades[scheme].map((t, i) => decl(`chart-series-${String(i + 1)}`, palette.blue[t])),
     `color-scheme: ${scheme};`,
   ];
 }

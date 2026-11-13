@@ -62,7 +62,7 @@ describe("TreeSelect e Cascader", () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
     const { baseElement } = render(<TreeSelect label="Loja" data={lojas} leavesOnly onChange={aoMudar} />);
-    const campo = screen.getByRole<HTMLInputElement>("textbox", { name: "Loja" });
+    const campo = screen.getByRole<HTMLInputElement>("combobox", { name: "Loja" });
     await user.click(campo);
     await user.click(screen.getByRole("treeitem", { name: "Ceará" }));
     expect(aoMudar).not.toHaveBeenCalled();
@@ -76,7 +76,7 @@ describe("TreeSelect e Cascader", () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
     const { baseElement } = render(<Cascader label="Loja" data={lojas} onChange={aoMudar} />);
-    const campo = screen.getByRole<HTMLInputElement>("textbox", { name: "Loja" });
+    const campo = screen.getByRole<HTMLInputElement>("combobox", { name: "Loja" });
     await user.click(campo);
     await user.click(screen.getByRole("button", { name: "Ceará" }));
     await user.click(screen.getByRole("button", { name: "Fortaleza" }));

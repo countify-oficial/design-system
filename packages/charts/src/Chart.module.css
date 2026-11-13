@@ -1,0 +1,30 @@
+.root {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--cf-font-sans);
+}
+
+.svg {
+  display: block;
+  overflow: visible;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Legenda do mockup: fileira com 16 entre os itens, 8 entre a amostra e o nome, 13 na cor label */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cf-space-2) var(--cf-space-4);
+  margin: 0;
+  padding: 0;
+  color: var(--cf-color-label);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  list-style: none;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+}

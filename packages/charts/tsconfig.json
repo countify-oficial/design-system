@@ -1,0 +1,5 @@
+{
+  "extends": "@countify-oficial/tsconfig/react.json",
+  "compilerOptions": { "types": ["node", "jest"] },
+  "include": ["src", "test", "test-native", "*.ts"]
+}

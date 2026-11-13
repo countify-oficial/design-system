@@ -52,7 +52,7 @@ describe("DatePicker", () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
     const { baseElement } = render(<DatePicker label="Vale a partir de" onChange={aoMudar} />);
-    const campo = screen.getByRole<HTMLInputElement>("textbox", { name: "Vale a partir de" });
+    const campo = screen.getByRole<HTMLInputElement>("combobox", { name: "Vale a partir de" });
     await user.click(campo);
     await semViolacoes(baseElement);
     await user.click(dia(1));
@@ -65,7 +65,7 @@ describe("DatePicker", () => {
     const aoMudar = vi.fn();
     const ontem: DatesRange = [new Date(2026, 10, 10), new Date(2026, 10, 10)];
     render(<DatePicker type="range" label="Período" maxDate={new Date()} presets={[{ label: "Ontem", value: ontem }]} onChange={aoMudar} />);
-    const campo = screen.getByRole<HTMLInputElement>("textbox", { name: "Período" });
+    const campo = screen.getByRole<HTMLInputElement>("combobox", { name: "Período" });
     await user.click(campo);
     await user.click(dia(2));
     expect(screen.getByRole("button", { name: "Aplicar" })).toHaveProperty("disabled", true);
@@ -84,7 +84,7 @@ describe("DatePicker", () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
     render(<DateTimePicker label="Começa" onChange={aoMudar} />);
-    const campo = screen.getByRole<HTMLInputElement>("textbox", { name: "Começa" });
+    const campo = screen.getByRole<HTMLInputElement>("combobox", { name: "Começa" });
     await user.click(campo);
     await user.click(dia(4));
     await user.type(screen.getByRole("textbox", { name: "Horário" }), "1430");

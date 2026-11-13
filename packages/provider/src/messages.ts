@@ -66,6 +66,15 @@ export interface CountifyMessages {
   shortcuts: string;
   time: string;
   chooseDate: string;
+  /** gráficos: a hora atual, a legenda do mapa de calor e a tabela de dados escondida */
+  now: string;
+  less: string;
+  more: string;
+  closed: string;
+  /** nomes padrão das séries da linha */
+  actual: string;
+  forecast: string;
+  normalRange: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -113,4 +122,11 @@ export const defaultMessages: CountifyMessages = {
   shortcuts: "Atalhos",
   time: "Horário",
   chooseDate: "Escolher data",
+  now: "agora",
+  less: "menos",
+  more: "mais",
+  closed: "fechado",
+  actual: "Real",
+  forecast: "Previsto",
+  normalRange: "Faixa normal",
 };

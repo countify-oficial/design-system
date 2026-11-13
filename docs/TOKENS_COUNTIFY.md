@@ -216,4 +216,18 @@ Valores que a identidade já usa, agora com nome nos tokens:
     hoje com anel de 1,5 na cor do texto; dia escolhido e pontas do período em círculo cheio na cor `button` (a mesma
     nos dois modos) com o número branco em 700; o meio do período numa faixa sem canto, `#E7F0FB` no claro (azul
     próprio do mockup, fora da escala) e `#172F50` no escuro; dias fora do limite na cor da borda forte, sem toque.
+32. **Gráficos** (`chart`): o que a identidade desenha vem do **mockup** (W-Hoje, W-Datas, W-Comparar, W-Montar,
+    M-Montar, W-Analises, W-Indicadores). Rótulos 13 na cor `text2`; base na cor `border`; grade na `divider`; série na
+    `accent`; previsto na `text2`, traço 2 tracejado 5 5 (na legenda também); real com traço 3 e pontos de 4; trecho
+    em andamento pontilhado (1 6) com o último ponto vazio; faixa normal cheia na `divider`; "agora" em linha de 1,5
+    tracejada 3 3 na `text3`; lacuna hachurada (quadro de 7 girado 45°, traço de 3, cor `hatch`); barras com canto 2 e
+    4 entre elas, as comuns na `border` e o pico na `accent`; ranking com barra de 8 (trilho `divider`) e marca de 2;
+    dispersão com pontos de 5 e anel de 2 na cor do cartão; mapa de calor com células de 20, canto 3 e a série em 18,
+    36, 54, 76 e 100%; barra de conversão de 16. Onde web e celular divergem (tracejado, cor das barras comuns,
+    trilho do ranking), vale a **web** (escolha de 13/11/2026).
+33. **Tipos que a identidade não desenha** (aprovados em 13/11/2026, **a confirmar com o design**): área com a série
+    a 18% (o tom mais claro do mapa de calor); pizza e rosca de 200, com 2 de vão na cor do cartão e a espessura da
+    rosca em 1/5 (como o anel); radar com a grade na `divider` e a série como a área; minigráfico de 40 de altura com a
+    linha da série (traço 2, sem pontos); várias séries nos degraus 6, 4, 2 e 8 da escala azul no claro e 3, 5, 1 e 4 no
+    escuro.
 
