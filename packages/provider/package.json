@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/countify-oficial/DesignSystem.git",
+    "url": "git+https://github.com/countify-oficial/design-system.git",
     "directory": "packages/provider"
   },
   "type": "module",

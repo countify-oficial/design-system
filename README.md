@@ -1,4 +1,4 @@
-# DesignSystem
+# design-system
 
 Biblioteca de componentes da Countify para **web (React), Electron e React Native**, com a identidade visual da
 Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.

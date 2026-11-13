@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Hooks da Countify para web e React Native: estado controlado, abrir e fechar, debounce, id, media query e área de transferência",
   "license": "UNLICENSED",
-  "repository": { "type": "git", "url": "git+https://github.com/countify-oficial/DesignSystem.git", "directory": "packages/hooks" },
+  "repository": { "type": "git", "url": "git+https://github.com/countify-oficial/design-system.git", "directory": "packages/hooks" },
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
