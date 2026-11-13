@@ -133,3 +133,13 @@ modos, sem nenhum pixel diferente, e aprovada pelo dono do projeto. Página da p
 6. **Camadas** (`zIndex`): base 0, sticky 10, app 100, overlay 200, dropdown 300, notification 400, tooltip 500, max 9999.
 7. **Movimento** (`duration`, `easing`): fast 120, base 150, slow 200, spin 800, pulse 1400 ms (as da 0.1.0); com
    "reduzir movimento", tudo vira 0.
+
+## Aprovado em 13/11/2026 (passo 3)
+
+A identidade não tem anel de foco (os mockups só usam `outline: none`) nem distância de animação. Aprovado pelo dono
+do projeto:
+
+8. **Anel de foco** (`focusRing`): linha de 2 px na cor `accent`, a 2 px do elemento (`--cf-focus-ring-width`,
+   `--cf-focus-ring-offset`). Atende o WCAG 2.2: 2 px e contraste de 3:1 nos dois modos.
+9. **Distâncias da animação** (`transition`): `slide` desloca 8 px (o `space` 2) e `scale` cresce de 0,95; as duas com
+   fade. As durações são as do item 7.

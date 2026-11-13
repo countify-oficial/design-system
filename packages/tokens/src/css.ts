@@ -2,8 +2,9 @@
 // Modo: segue o sistema; data-cf-color-scheme="light" | "dark" num elemento força o modo dele para baixo.
 import { colors, palette, type ColorScheme } from "./colors.js";
 import {
-  avatarSize, controlFontSize, controlHeight, controlPaddingX, duration, easing, fontFamily, fontSize, gutter, headings,
-  iconSize, lineHeight, listRowHeight, radius, raisedShadow, shadows, sidePanelWidth, space, spacing, touchTarget, zIndex,
+  avatarSize, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
+  headings, iconSize, lineHeight, listRowHeight, radius, raisedShadow, shadows, sidePanelWidth, space, spacing, touchTarget, transition,
+  zIndex,
 } from "./scales.js";
 
 const kebab = (s: string) => s.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
@@ -27,6 +28,7 @@ export function createCssVariables(): string {
     ...Object.entries(palette).flatMap(([nome, tons]) => tons.map((hex, i) => decl(`${nome}-${i}`, hex))),
     decl("font-sans", fontFamily.sans),
     decl("font-mono", fontFamily.mono),
+    ...each("font-weight", fontWeight),
     ...each("font-size", fontSize, "px"),
     decl("line-height", lineHeight),
     ...Object.entries(headings).flatMap(([k, h]) => [
@@ -49,6 +51,9 @@ export function createCssVariables(): string {
     ...each("z", zIndex),
     ...each("duration", duration, "ms"),
     ...each("easing", easing),
+    decl("transition-slide", `${transition.slide}px`),
+    decl("transition-scale", transition.scale),
+    ...each("focus-ring", focusRing, "px"),
   ];
   const bloco = (sel: string, linhas: string[]) => `${sel} {\n  ${linhas.join("\n  ")}\n}`;
   return [

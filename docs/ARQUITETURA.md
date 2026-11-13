@@ -5,9 +5,12 @@ packages/
   tokens/          @countify-oficial/tokens: a única fonte de cor, medida, letra e movimento
   hooks/           @countify-oficial/hooks: hooks da web e do React Native
   provider/        @countify-oficial/provider: CountifyProvider (tema, modo, textos)
+  core/            @countify-oficial/core: componentes da web e do Electron (React + CSS Modules)
+  native/          @countify-oficial/native: componentes do React Native (mesma API do core)
   tsconfig/        @countify-oficial/tsconfig: base estrita (privado)
   eslint-config/   @countify-oficial/eslint-config: regras comuns (privado)
-apps/              (vazio por enquanto: docs, desktop-demo, mobile-demo)
+apps/
+  docs/            Storybook da web (privado); desktop-demo e mobile-demo vêm depois
 legacy/ui/         @countify/ui 0.1.0, só referência; fora do workspace
 docs/              TOKENS_COUNTIFY.md, MATRIZ_COMPONENTES.md, ARQUITETURA.md, CONTRIBUINDO.md
 ```
@@ -44,3 +47,22 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
   `<html>` e o CSS segue. Em "auto", tira o atributo.
 - React Native: o provider lê o modo do aparelho (`useColorScheme`) e entrega `colors` do modo em uso.
 - Cores e medidas não estão no tema: vêm sempre do `@countify-oficial/tokens`.
+
+## Componentes
+
+- Uma pasta por componente: `src/Text/Text.tsx` e, na web, `Text.module.css`. O `src/index.ts` exporta o componente e
+  os tipos. Os testes ficam em `test/` (um arquivo por componente); as histórias, em `apps/docs/stories/`.
+- **Polimorfismo**: `component` troca o elemento (`<Text component="label">`) e traz as props e o ref dele
+  (`PolymorphicProps` em `src/polymorphic.ts`). O ref é uma prop comum (React 19), sem `forwardRef`.
+- **Props**: `useComponentProps(nome, {}, props)` aplica os `defaultProps` do tema; o padrão do componente fica na
+  desestruturação (`size = "md"`). Ordem: padrão < tema < props.
+- **CSS (web)**: cada `.module.css` só usa variáveis `--cf-*`. O componente passa os valores das props como variáveis
+  próprias (`--text-size: var(--cf-font-size-md)`) e marca o estado em data-attributes (`data-disabled`,
+  `data-size`), que o CSS e o app podem usar. O tsup junta todos os módulos em `dist/index.css`, com classes locais
+  (`Text_root`): o app importa uma vez `@countify-oficial/core/styles.css`.
+- **Styles API (web)**: `useStyles(nome, classes, props)` monta `className` e `style` de cada parte: CSS Module < tema
+  (`classNames`/`styles`) < props. `className` e `style` soltos vão para a raiz.
+- **React Native**: mesmo nome e mesmas props; estilo com `StyleSheet` e os valores do `@countify-oficial/tokens`
+  (cores do modo em uso por `useCountifyTheme().colors`). O tema entra por `styles.root`. Botões têm alvo de toque de
+  44 no mínimo e `accessibilityRole`; o que não existe no celular está na `MATRIZ_COMPONENTES.md` com o motivo.
+- **Movimento**: as durações vêm dos tokens; com "reduzir movimento" (`useReducedMotion`), viram 0 nas duas plataformas.

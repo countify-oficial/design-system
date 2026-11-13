@@ -1,0 +1,6 @@
+{
+  "extends": "@countify-oficial/tsconfig/react.json",
+  "compilerOptions": { "types": ["node"] },
+  // pasta com ponto só entra pelo nome dos arquivos
+  "include": ["stories", ".storybook/*.ts", ".storybook/*.tsx"]
+}

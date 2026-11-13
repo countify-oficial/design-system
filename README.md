@@ -8,10 +8,13 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | Pacote | O que tem | Situação |
 |---|---|---|
 | `@countify-oficial/tokens` | cores (escalas de 10 tons e papéis por modo), letra, espaço, cantos, tamanhos xs–xl, sombras, camadas, movimento, pontos de quebra; em TS, variáveis CSS e objeto para React Native | pronto (0.1.0) |
-| `@countify-oficial/hooks` | `useControllableState`, `useDisclosure`, `useDebounce`, `useId`, `useMediaQuery`, `useClipboard`; web e React Native | pronto (0.1.0) |
+| `@countify-oficial/hooks` | `useControllableState`, `useDisclosure`, `useDebounce`, `useId`, `useMediaQuery`, `useClipboard`, `useReducedMotion`; web e React Native | pronto (0.1.0) |
 | `@countify-oficial/provider` | `CountifyProvider` e `useCountifyTheme`: tema (ajustes por componente), modo claro, escuro ou automático, textos (i18n); web e React Native | pronto (0.1.0) |
 | `@countify-oficial/tsconfig`, `@countify-oficial/eslint-config` | configurações compartilhadas (privados, não publicados) | pronto |
-| `@countify-oficial/core`, `@countify-oficial/native` e os pacotes de extensão | componentes | próximos passos |
+| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden` | em andamento (0.1.0) |
+| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition` | em andamento (0.1.0) |
+| `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
+| pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |
 
 A origem de cada token está em [docs/TOKENS_COUNTIFY.md](docs/TOKENS_COUNTIFY.md); a organização do repositório em
 [docs/ARQUITETURA.md](docs/ARQUITETURA.md); como contribuir em [docs/CONTRIBUINDO.md](docs/CONTRIBUINDO.md).
@@ -45,6 +48,27 @@ const { colorScheme, colors, setColorScheme, messages } = useCountifyTheme();
 O mesmo import serve à web e ao React Native: o Metro pega a versão nativa sozinho (condição `react-native`).
 Textos padrão em pt-BR; para trocar, `messages={{ close: "Close" }}`.
 
+## Componentes
+
+```tsx
+// web e Electron
+import "@countify-oficial/tokens/tokens.css";
+import "@countify-oficial/core/styles.css";
+import { Text, UnstyledButton } from "@countify-oficial/core";
+
+<Text size="sm" color="text2" weight="medium">Vendas de hoje</Text>
+<Text component="h2" size="xl" weight="bold" classNames={{ root: "titulo" }}>Lojas</Text>
+
+// React Native: mesmos nomes e props
+import { Text, UnstyledButton } from "@countify-oficial/native";
+```
+
+Props comuns: `size` (xs–xl), `color` (papel de cor dos tokens), `component` (troca o elemento), `disabled`; na web,
+`className`, `style`, `classNames` e `styles` por parte. O tema muda o padrão de qualquer componente:
+`createTheme({ components: { Text: { defaultProps: { size: "sm" } } } })`.
+
+Para ver todos: `pnpm build` e `pnpm --filter @countify-oficial/docs dev` (Storybook em http://localhost:6006).
+
 ## Desenvolver
 
 Node 24.11 ou mais novo. O pnpm vem pelo corepack do Node, na versão fixada no `package.json`:
@@ -57,8 +81,9 @@ pnpm check             # build, tipos, lint e testes de todos os pacotes
 
 ## Dependências e por quê
 
-De execução, os pacotes só pedem o que o app já tem (dependências "peer"): React 19, e no celular o React Native
-(0.79 ou mais novo) e o `expo-clipboard`, que o `useClipboard` usa (`npx expo install expo-clipboard`). As de
+De execução, os pacotes só pedem o que o app já tem (dependências "peer"): React 19 (e o React DOM na web), e no
+celular o React Native (0.79 ou mais novo) e o `expo-clipboard`, que o `useClipboard` usa
+(`npx expo install expo-clipboard`). As animações do celular usam o `Animated` do próprio React Native. As de
 desenvolvimento:
 
 | Dependência | Por quê |
@@ -71,7 +96,9 @@ desenvolvimento:
 | Vitest | testes rápidos em TS, sem configuração |
 | ESLint 9 + typescript-eslint | regras com tipos; ESLint 9 porque o plugin de acessibilidade (jsx-a11y) ainda não aceita o 10 |
 | eslint-plugin-react-hooks, eslint-plugin-jsx-a11y | regras dos hooks do React e de acessibilidade na web |
-| Testing Library + jsdom | testes de componente e de hook da web, como o usuário usa |
+| Testing Library + jsdom (+ `user-event`) | testes de componente e de hook da web, como o usuário usa (o `user-event` simula o teclado de verdade, para o Tab) |
+| jest-axe | testes de acessibilidade (axe-core) dos componentes da web, como a especificação pede |
+| Storybook 10 (`react-vite`, `addon-docs`, `addon-a11y`) + Vite 8 | documentação da web: as histórias de cada componente, a tabela de props lida dos comentários do código e a checagem de acessibilidade no navegador |
 | Jest + React Native Testing Library (+ `@react-native/jest-preset`, Babel 7, `test-renderer`) | testes do React Native, como a especificação pede; o Vitest não roda o React Native |
 
 Dependências de execução previstas na especificação (`@floating-ui`, react-aria ou Radix, react-native-reanimated,

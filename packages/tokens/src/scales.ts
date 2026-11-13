@@ -68,6 +68,11 @@ export const zIndex = { base: 0, sticky: 10, app: 100, overlay: 200, dropdown: 3
 // ---------- movimento (em ms). Com "reduzir movimento" ligado, tudo vira 0.
 export const duration = { fast: 120, base: 150, slow: 200, spin: 800, pulse: 1400 } as const;
 export const easing = { out: "ease-out", inOut: "ease-in-out", linear: "linear" } as const;
+/** Quanto o Transition desloca (slide, em px) e de quanto cresce (scale); aprovado em 13/11/2026. */
+export const transition = { slide: space[2], scale: 0.95 } as const;
+
+// ---------- anel de foco (teclado): linha na cor accent; aprovado em 13/11/2026
+export const focusRing = { width: 2, offset: 2 } as const;
 
 // ---------- pontos de quebra: sm = layout de computador; lg = menu superior com texto
 export const breakpoints = { sm: 768, lg: 1280 } as const;

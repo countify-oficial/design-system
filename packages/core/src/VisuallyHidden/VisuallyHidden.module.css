@@ -1,0 +1,12 @@
+/* some da tela e continua no leitor de tela. O 1px é da técnica de acessibilidade, não é medida visual. */
+.root {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,11 @@
+/* fundo, cor e letra pelos tokens, como um app faria no <body>; .cf-story também pinta os blocos da página de docs */
+body,
+.cf-story {
+  background: var(--cf-color-bg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+}
+
+.cf-story {
+  padding: var(--cf-space-4);
+}

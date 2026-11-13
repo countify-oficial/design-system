@@ -11,7 +11,18 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | useControllableState, useDisclosure, useDebounce, useId | ok | ok | ok | |
 | useMediaQuery | ok | ok | adaptado | no celular só `min-width`, `max-width` e `prefers-color-scheme`, contra a tela atual |
 | useClipboard | ok | ok | adaptado | no celular usa o `expo-clipboard`; na web pede página segura (https ou localhost) |
+| useReducedMotion | ok | ok | adaptado | na web, `prefers-reduced-motion`; no celular, o ajuste do aparelho (`AccessibilityInfo`) |
 
 ## Componentes
 
-Entram aqui a partir do passo 3 (primitivos).
+### Primitivos
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Box | ok | ok | adaptado | no celular é uma `View` |
+| UnstyledButton | ok | ok | adaptado | no celular é um `Pressable`, com alvo de toque mínimo de 44 |
+| Text | ok | ok | adaptado | no celular, `truncate` e `lineClamp` viram `numberOfLines`; a cor padrão é `text` (o React Native não herda a cor da tela) |
+| Transition | ok | ok | adaptado | na web, `children` é uma função que recebe o estilo; no celular, os filhos vão numa `Animated.View` |
+| Portal | ok | ok | N/A | o React Native não tem portal; o que fica por cima de tudo usa o `Modal` nativo |
+| FocusTrap | ok | ok | N/A | no celular não há Tab; o `Modal` nativo já prende o leitor de tela |
+| VisuallyHidden | ok | ok | N/A | no celular, o texto só para o leitor de tela vai em `accessibilityLabel` |
