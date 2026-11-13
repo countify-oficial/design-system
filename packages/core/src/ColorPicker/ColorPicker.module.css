@@ -1,0 +1,58 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-3);
+  font-family: var(--cf-font-sans);
+}
+
+/* saturação para a direita, brilho para cima, sobre o matiz escolhido. Preto e branco aqui são a conta do espaço de
+   cor (HSV), não cores da identidade. */
+.saturation {
+  position: relative;
+  aspect-ratio: 2;
+  border-radius: var(--cf-radius-sm);
+  background:
+    linear-gradient(to top, black, transparent),
+    linear-gradient(to right, white, transparent),
+    hsl(var(--picker-hue) 100% 50%);
+  touch-action: none;
+  user-select: none;
+  cursor: crosshair;
+}
+
+.thumb {
+  position: absolute;
+  left: var(--picker-s);
+  top: var(--picker-v);
+  box-sizing: border-box;
+  width: var(--cf-space-6);
+  height: var(--cf-space-6);
+  border: var(--cf-space-1) solid var(--cf-color-card);
+  border-radius: 50%;
+  background-color: var(--picker-color);
+  box-shadow: var(--cf-shadow-xs);
+  translate: -50% -50%;
+}
+
+.thumb:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cf-space-2);
+}
+
+.swatch {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--cf-touch-target);
+  min-height: var(--cf-touch-target);
+  border-radius: 50%;
+}
+
+.swatch:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+}

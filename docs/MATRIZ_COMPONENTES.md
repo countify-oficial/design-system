@@ -132,3 +132,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Chip (+ Group) | ok | ok | ok | |
 | SegmentedControl | ok | ok | adaptado | na web, setas do teclado entre as opções (são radios) |
 | Rating | ok | ok | ok | a estrela foi acrescentada ao conjunto de ícones (não existia na 0.1.0) |
+| Slider, RangeSlider | ok | ok | adaptado | no celular, papel `adjustable`: o leitor de tela aumenta e diminui deslizando o dedo |
+| HueSlider, AlphaSlider | ok | ok | adaptado | igual ao Slider; o trilho de cor é um gradiente do `react-native-svg` |
+| AngleSlider | ok | ok | adaptado | igual ao Slider |
+| ColorPicker | ok | ok | adaptado | a área de saturação e brilho é um gradiente do `react-native-svg`; no leitor de tela, ajusta a saturação |

@@ -98,3 +98,16 @@ describe("parseNumber e applyMask", () => {
     expect(applyMask("abc12", "aaa-99")).toEqual({ masked: "abc-12", raw: "abc12" });
   });
 });
+
+describe("cores (parseColor e formatColor)", () => {
+  it("lê hex, rgb e hsl e escreve de volta", async () => {
+    const { formatColor, parseColor } = await import("../src/index");
+    const azul = parseColor("#225BA5");
+    expect(azul && formatColor(azul)).toBe("#225ba5");
+    expect(formatColor(parseColor("#fff") ?? { h: 0, s: 0, v: 0, a: 0 }, "rgb")).toBe("rgb(255, 255, 255)");
+    expect(formatColor(parseColor("rgba(34, 91, 165, 0.5)") ?? { h: 0, s: 0, v: 0, a: 0 }, "hexa")).toBe("#225ba580");
+    expect(formatColor(parseColor("hsl(0, 100%, 50%)") ?? { h: 0, s: 0, v: 0, a: 0 }, "hex")).toBe("#ff0000");
+    expect(formatColor(parseColor("#ff0000") ?? { h: 0, s: 0, v: 0, a: 0 }, "hsla")).toBe("hsla(0, 100%, 50%, 1)");
+    expect([parseColor("azul"), parseColor("#12"), parseColor("rgb(1, 2)")]).toEqual([undefined, undefined, undefined]);
+  });
+});

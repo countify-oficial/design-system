@@ -1,0 +1,100 @@
+/* trilho de 8 (a barra da 0.1.0), bolinha de 24 com área de toque de 44 */
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--cf-touch-target);
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.root[data-with-marks] {
+  padding-bottom: var(--cf-space-6);
+}
+
+.root[data-disabled] {
+  opacity: var(--cf-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  height: var(--cf-space-2);
+  border-radius: var(--cf-space-1);
+  background: var(--slider-track, var(--cf-color-border-strong));
+}
+
+.bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: var(--slider-from);
+  width: calc(var(--slider-to) - var(--slider-from));
+  border-radius: inherit;
+  background-color: var(--tone-fill);
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--thumb-position);
+  box-sizing: border-box;
+  width: var(--cf-space-6);
+  height: var(--cf-space-6);
+  border: var(--cf-space-1) solid var(--thumb-ring, var(--tone-fill));
+  border-radius: 50%;
+  background: var(--thumb-color, var(--cf-color-card));
+  translate: -50% -50%;
+}
+
+/* área de toque de 44 em volta da bolinha */
+.thumb::before {
+  content: "";
+  position: absolute;
+  inset: calc((var(--cf-space-6) - var(--cf-touch-target)) / 2);
+}
+
+.thumb:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.mark {
+  position: absolute;
+  top: 50%;
+  left: var(--mark-position);
+  width: var(--cf-space-1);
+  height: var(--cf-space-1);
+  border-radius: 50%;
+  background-color: var(--cf-color-card);
+  translate: -50% -50%;
+}
+
+.markLabel {
+  position: absolute;
+  top: calc(100% + var(--cf-space-2));
+  left: var(--mark-position);
+  color: var(--cf-color-text2);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  white-space: nowrap;
+  translate: -50% 0;
+}
+
+/* matiz e transparência: o trilho é a escala de cor */
+.root[data-kind="hue"] .track {
+  background: linear-gradient(to right, hsl(0 100% 50%), hsl(60 100% 50%), hsl(120 100% 50%), hsl(180 100% 50%), hsl(240 100% 50%), hsl(300 100% 50%), hsl(360 100% 50%));
+}
+
+.root[data-kind="alpha"] .track {
+  background:
+    linear-gradient(to right, transparent, var(--slider-color)),
+    repeating-conic-gradient(var(--cf-color-chip) 0 25%, var(--cf-color-card) 0 50%) 0 0 / var(--cf-space-2) var(--cf-space-2);
+}
+
+.root[data-kind="hue"] .thumb,
+.root[data-kind="alpha"] .thumb {
+  --thumb-ring: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-xs);
+}

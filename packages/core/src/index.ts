@@ -2,6 +2,7 @@ export { Accordion, AccordionControl, AccordionItem, AccordionPanel, type Accord
 export { ActionIcon, type ActionIconOwnProps, type ActionIconProps, type ActionIconVariant } from "./ActionIcon/ActionIcon";
 export { Alert, type AlertOwnProps, type AlertProps } from "./Alert/Alert";
 export { Anchor, type AnchorProps } from "./Anchor/Anchor";
+export { AngleSlider, type AngleSliderProps } from "./AngleSlider/AngleSlider";
 export { AspectRatio, type AspectRatioOwnProps, type AspectRatioProps } from "./AspectRatio/AspectRatio";
 export { Avatar, initials, type AvatarOwnProps, type AvatarProps } from "./Avatar/Avatar";
 export { BackgroundImage, type BackgroundImageOwnProps, type BackgroundImageProps } from "./BackgroundImage/BackgroundImage";
@@ -17,6 +18,7 @@ export type { ChoiceGroupOwnProps } from "./ChoiceGroup/ChoiceGroup";
 export { CloseButton, type CloseButtonProps } from "./CloseButton/CloseButton";
 export { Code, type CodeProps } from "./Code/Code";
 export { Collapse, type CollapseProps } from "./Collapse/Collapse";
+export { ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker";
 export { ColorSwatch, type ColorSwatchOwnProps, type ColorSwatchProps } from "./ColorSwatch/ColorSwatch";
 export { Container, type ContainerProps } from "./Container/Container";
 export { CopyButton, type CopyButtonProps } from "./CopyButton/CopyButton";
@@ -61,6 +63,8 @@ export { SemiCircleProgress, type SemiCircleProgressProps } from "./SemiCirclePr
 export { SimpleGrid, type SimpleGridOwnProps, type SimpleGridProps } from "./SimpleGrid/SimpleGrid";
 export { Skeleton, type SkeletonProps } from "./Skeleton/Skeleton";
 export { SkeletonLoader, type SkeletonLoaderProps, type SkeletonLoaderVariant } from "./SkeletonLoader/SkeletonLoader";
+export { AlphaSlider, HueSlider, RangeSlider, Slider, type AlphaSliderProps, type HueSliderProps, type RangeSliderProps, type SliderProps } from "./Slider/Slider";
+export type { SliderCommonProps, SliderMark, SliderPart } from "./Slider/SliderBase";
 export { Space, type SpaceProps } from "./Space/Space";
 export { Spoiler, type SpoilerProps } from "./Spoiler/Spoiler";
 export { Stack, type StackOwnProps, type StackProps } from "./Stack/Stack";
@@ -80,4 +84,4 @@ export { VisuallyHidden, type VisuallyHiddenProps } from "./VisuallyHidden/Visua
 export type { PolymorphicProps } from "./polymorphic";
 export type { CssVars, StylesApiProps } from "./styles";
 export type { IconName, Responsive, Spacing, Tone } from "@countify-oficial/tokens";
-export { applyMask, formatNumber, highlighter, numberSeparators, parseNumber, type FormatNumberOptions } from "@countify-oficial/provider";
+export { applyMask, formatColor, formatNumber, highlighter, hsvToRgb, numberSeparators, parseColor, parseNumber, rgbToHsv, type ColorFormat, type FormatNumberOptions, type HSVA } from "@countify-oficial/provider";

@@ -1,0 +1,51 @@
+.root {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--angle-size);
+  height: var(--angle-size);
+  border-radius: 50%;
+  background-color: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-xs);
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.root:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.root[data-disabled] {
+  opacity: var(--cf-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* o ponteiro vai do centro à borda, girado no ângulo */
+.thumb {
+  position: absolute;
+  inset: var(--cf-space-1);
+  rotate: var(--angle);
+}
+
+.thumb::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--cf-space-2);
+  height: var(--cf-space-2);
+  border-radius: 50%;
+  background-color: var(--tone-fill);
+  translate: -50% 0;
+}
+
+.label {
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}

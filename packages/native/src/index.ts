@@ -2,6 +2,7 @@ export { Accordion, AccordionControl, AccordionItem, AccordionPanel, type Accord
 export { ActionIcon, type ActionIconOwnProps, type ActionIconProps, type ActionIconVariant } from "./ActionIcon/ActionIcon";
 export { Alert, type AlertProps } from "./Alert/Alert";
 export { Anchor, type AnchorProps } from "./Anchor/Anchor";
+export { AngleSlider, type AngleSliderProps } from "./AngleSlider/AngleSlider";
 export { AspectRatio, type AspectRatioOwnProps, type AspectRatioProps } from "./AspectRatio/AspectRatio";
 export { Avatar, initials, type AvatarProps } from "./Avatar/Avatar";
 export { BackgroundImage, type BackgroundImageProps } from "./BackgroundImage/BackgroundImage";
@@ -17,6 +18,7 @@ export { Chip, ChipGroup, ChipItem, type ChipGroupProps, type ChipProps } from "
 export { CloseButton, type CloseButtonProps } from "./CloseButton/CloseButton";
 export { Code, type CodeProps } from "./Code/Code";
 export { Collapse, type CollapseProps } from "./Collapse/Collapse";
+export { ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker";
 export { ColorSwatch, type ColorSwatchProps } from "./ColorSwatch/ColorSwatch";
 export { Container, type ContainerProps } from "./Container/Container";
 export { ContentColor, useContentColor } from "./contentColor";
@@ -57,6 +59,8 @@ export { SemiCircleProgress, type SemiCircleProgressProps } from "./SemiCirclePr
 export { SimpleGrid, type SimpleGridOwnProps, type SimpleGridProps } from "./SimpleGrid/SimpleGrid";
 export { Skeleton, type SkeletonProps } from "./Skeleton/Skeleton";
 export { SkeletonLoader, type SkeletonLoaderProps, type SkeletonLoaderVariant } from "./SkeletonLoader/SkeletonLoader";
+export { AlphaSlider, HueSlider, RangeSlider, Slider, type AlphaSliderProps, type HueSliderProps, type RangeSliderProps, type SliderProps } from "./Slider/Slider";
+export type { SliderCommonProps, SliderMark } from "./Slider/SliderBase";
 export { Space, type SpaceProps } from "./Space/Space";
 export { Spoiler, type SpoilerProps } from "./Spoiler/Spoiler";
 export { Stack, type StackOwnProps, type StackProps } from "./Stack/Stack";
@@ -73,4 +77,4 @@ export { Transition, type TransitionDuration, type TransitionName, type Transiti
 export { UnstyledButton, type UnstyledButtonOwnProps, type UnstyledButtonProps } from "./UnstyledButton/UnstyledButton";
 export type { PolymorphicProps } from "./polymorphic";
 export type { IconName, Responsive, Spacing, Tone } from "@countify-oficial/tokens";
-export { applyMask, formatNumber, highlighter, numberSeparators, parseNumber, type FormatNumberOptions } from "@countify-oficial/provider";
+export { applyMask, formatColor, formatNumber, highlighter, hsvToRgb, numberSeparators, parseColor, parseNumber, rgbToHsv, type ColorFormat, type FormatNumberOptions, type HSVA } from "@countify-oficial/provider";

@@ -18,6 +18,10 @@ export interface CountifyMessages {
   invalidJson: string;
   /** marca de campo obrigatório, para o leitor de tela */
   required: string;
+  /** partes do ColorPicker, para o leitor de tela */
+  saturation: string;
+  hue: string;
+  alpha: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -32,4 +36,7 @@ export const defaultMessages: CountifyMessages = {
   clear: "Limpar",
   invalidJson: "JSON inválido",
   required: "obrigatório",
+  saturation: "Saturação e brilho",
+  hue: "Matiz",
+  alpha: "Transparência",
 };
