@@ -1,0 +1,47 @@
+/* "Nesta aba" do X-DocIndice: número em negrito na cor principal, rótulo 17/500, linha da borda em cima */
+.root {
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--cf-space-3);
+  padding-block: var(--cf-space-3);
+  padding-inline-start: calc(var(--toc-depth) * var(--cf-space-4));
+  border-top: var(--cf-border-thin) solid var(--cf-color-border);
+  color: var(--cf-color-text);
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-medium);
+  text-decoration: none;
+}
+
+.link[aria-current] {
+  color: var(--cf-color-accent);
+}
+
+@media (hover: hover) {
+  .link:hover {
+    color: var(--cf-color-accent-hover);
+  }
+}
+
+.link:focus-visible {
+  border-radius: var(--cf-space-1);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.number {
+  color: var(--cf-color-accent);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}

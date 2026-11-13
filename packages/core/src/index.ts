@@ -12,6 +12,8 @@ export { BackgroundImage, type BackgroundImageOwnProps, type BackgroundImageProp
 export { Badge, type BadgeOwnProps, type BadgeProps, type BadgeVariant } from "./Badge/Badge";
 export { Blockquote, type BlockquoteProps } from "./Blockquote/Blockquote";
 export { Box, type BoxProps } from "./Box/Box";
+export { Breadcrumbs, type BreadcrumbsProps } from "./Breadcrumbs/Breadcrumbs";
+export { Burger, type BurgerProps } from "./Burger/Burger";
 export { Button, type ButtonColor, type ButtonOwnProps, type ButtonProps, type ButtonVariant } from "./Button/Button";
 export { Card, CardSection, type CardOwnProps, type CardProps, type CardSectionOwnProps, type CardSectionProps } from "./Card/Card";
 export { Cascader, type CascaderProps } from "./Cascader/Cascader";
@@ -63,11 +65,13 @@ export { Menubar, MenubarMenu, type MenubarMenuProps, type MenubarProps } from "
 export { Modal, type ModalBaseProps, type ModalProps } from "./Modal/Modal";
 export { MultiSelect, type MultiSelectProps } from "./MultiSelect/MultiSelect";
 export { NativeSelect, type NativeSelectItem, type NativeSelectProps } from "./NativeSelect/NativeSelect";
+export { NavLink, type NavLinkOwnProps, type NavLinkProps } from "./NavLink/NavLink";
 export { Notification, type NotificationOwnProps, type NotificationProps } from "./Notification/Notification";
 export { NumberFormatter, type NumberFormatterProps } from "./NumberFormatter/NumberFormatter";
 export { NumberInput, type NumberInputProps } from "./NumberInput/NumberInput";
 export { OverflowList, type OverflowListProps } from "./OverflowList/OverflowList";
 export { Overlay, type OverlayOwnProps, type OverlayProps } from "./Overlay/Overlay";
+export { Pagination, type PaginationProps } from "./Pagination/Pagination";
 export { Paper, type PaperOwnProps, type PaperProps } from "./Paper/Paper";
 export { PasswordInput, type PasswordInputProps } from "./PasswordInput/PasswordInput";
 export { PhoneInput, phoneMask, type PhoneInputProps } from "./PhoneInput/PhoneInput";
@@ -93,8 +97,11 @@ export type { SliderCommonProps, SliderMark, SliderPart } from "./Slider/SliderB
 export { Space, type SpaceProps } from "./Space/Space";
 export { Spoiler, type SpoilerProps } from "./Spoiler/Spoiler";
 export { Stack, type StackOwnProps, type StackProps } from "./Stack/Stack";
+export { Stepper, StepperCompleted, StepperStep, type StepperProps, type StepperStepProps } from "./Stepper/Stepper";
 export { Switch, SwitchGroup, SwitchItem, type SwitchGroupProps, type SwitchProps } from "./Switch/Switch";
 export { Table, TableCaption, TableScrollContainer, TableTbody, TableTd, TableTfoot, TableTh, TableThead, TableTr, type TableProps, type TableScrollContainerProps, type TableTdProps, type TableThProps } from "./Table/Table";
+export { TableOfContents, type TableOfContentsLink, type TableOfContentsProps } from "./TableOfContents/TableOfContents";
+export { Tabs, TabsList, TabsPanel, TabsTab, type TabsListProps, type TabsPanelProps, type TabsProps, type TabsTabProps, type TabsVariant } from "./Tabs/Tabs";
 export { TagsInput, type TagsInputProps } from "./TagsInput/TagsInput";
 export { Text, type TextOwnProps, type TextProps, type TextWeight } from "./Text/Text";
 export { Textarea, type TextareaProps } from "./Textarea/Textarea";
@@ -115,4 +122,4 @@ export { VisuallyHidden, type VisuallyHiddenProps } from "./VisuallyHidden/Visua
 export type { PolymorphicProps } from "./polymorphic";
 export type { CssVars, StylesApiProps } from "./styles";
 export type { IconName, Responsive, Spacing, Tone } from "@countify-oficial/tokens";
-export { applyMask, formatColor, formatNumber, highlighter, hsvToRgb, mentionQuery, numberSeparators, parseColor, parseNumber, rgbToHsv, type ColorFormat, type FormatNumberOptions, type HSVA } from "@countify-oficial/provider";
+export { applyMask, formatColor, formatNumber, highlighter, hsvToRgb, mentionQuery, numberSeparators, pageLabel, paginationRange, parseColor, parseNumber, rgbToHsv, type ColorFormat, type FormatNumberOptions, type HSVA } from "@countify-oficial/provider";

@@ -1,0 +1,60 @@
+/* Não há paginação no mockup: botões de 44 com canto 12 (as setas de mês do W-Periodo); a atual, como a pílula do menu */
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cf-space-1);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--cf-touch-target);
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-2);
+  border-radius: var(--cf-radius-sm);
+  color: var(--cf-color-text);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.control[aria-current="page"] {
+  background-color: var(--cf-color-accent-tint);
+  color: var(--cf-color-accent);
+}
+
+@media (hover: hover) {
+  .control:not(:disabled):not([aria-current="page"]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.control:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.control:disabled {
+  color: var(--cf-color-text3);
+  cursor: not-allowed;
+}
+
+.dots,
+.label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--cf-touch-target);
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  padding-inline: var(--cf-space-2);
+}

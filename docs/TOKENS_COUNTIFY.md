@@ -176,3 +176,19 @@ Valores que a identidade já usa, agora com nome nos tokens:
     identidade nem da 0.1.0: **a confirmar com o design**.
 23. **Alerta, folha e véu** (`dialogWidth`, `sheetHandle`, `state.scrimOpacity`): alerta de 440, alça da folha de
     36 × 4 na cor da borda forte, véu na cor scrim a 72%. Origem: **mockup** (`W-Confirmar`, telas M- com folha).
+
+## Passo 10
+
+24. **Ícone de menu** (`icons.menu`, aprovado em 13/11/2026): três traços iguais, no traço do conjunto (1,8 numa
+    caixa de 22), para o Burger; aberto, ele mostra o `close`. A identidade não tem menu escondido (abas embaixo no
+    celular, menu no topo no computador, `X-DocNavegacao`): **a confirmar com o design**.
+25. **Barras do Stepper**: uma barra de 4 (`space[1]`) por passo, com 4 entre elas, cheia na cor principal até o
+    passo atual e na borda forte depois; embaixo, "2 de 4 · **Nome**". Origem: **0.1.0** (`.cf-steps`); as telas do
+    mockup não têm passos.
+26. **Navegação composta de valores da identidade** (sem valor novo): as abas na página são o Segmentado e a fileira
+    de chips (`M-Instalacao`); a linha do NavLink é a "Lista: Linha de 64" (quadro de ícone 40, seta na cor `text3`) e
+    a escolhida é a da lista-detalhe (`W-Avisos`: fundo `accentTint`, canto 12); as páginas da Pagination usam o
+    botão de 44 com canto 12 das setas de mês (`W-Periodo`); o índice segue o "Nesta aba" (`X-DocIndice`: número em
+    negrito na cor principal, rótulo 17/500, linha da borda). Breadcrumbs e Pagination não aparecem no mockup (ele usa
+    o link "Voltar" e a linha "Ver todos"); são feitos só com esses tokens.
+

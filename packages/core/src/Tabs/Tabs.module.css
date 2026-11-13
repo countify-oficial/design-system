@@ -1,0 +1,120 @@
+/* Abas na página: o "Segmentado" do mockup (padrão), a pílula do menu (pills) e a fileira de chips (M-Instalacao) */
+.root {
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-orientation="vertical"] {
+  display: flex;
+  gap: var(--cf-space-4);
+}
+
+.list {
+  display: flex;
+  gap: var(--cf-space-1);
+  box-sizing: border-box;
+}
+
+.list[aria-orientation="vertical"] {
+  flex-direction: column;
+  flex: none;
+}
+
+.list[data-variant="segmented"] {
+  width: fit-content;
+  padding: var(--cf-space-1);
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-card);
+}
+
+.list[data-variant="chips"] {
+  gap: var(--cf-space-2);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.list[data-grow] {
+  width: 100%;
+}
+
+.list[data-grow] .tab {
+  flex: 1;
+}
+
+.tab {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-3);
+  border-radius: var(--cf-radius-sm);
+  color: var(--cf-color-label);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  white-space: nowrap;
+}
+
+.list[aria-orientation="vertical"] .tab {
+  justify-content: flex-start;
+}
+
+.list[data-variant="segmented"] .tab {
+  border-radius: var(--cf-radius-xs);
+  color: var(--cf-color-text);
+}
+
+.list[data-variant="chips"] .tab {
+  background-color: var(--cf-color-card);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-divider);
+  color: var(--cf-color-text2);
+}
+
+.tab[aria-selected="true"] {
+  background-color: var(--cf-color-accent-tint);
+  color: var(--cf-color-accent);
+}
+
+.list:is([data-variant="segmented"], [data-variant="chips"]) .tab[aria-selected="true"] {
+  background-color: var(--cf-color-accent-tint);
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-accent);
+  color: var(--cf-color-accent);
+}
+
+@media (hover: hover) {
+  .tab:not(:disabled):not([aria-selected="true"]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.tab:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.tab:disabled {
+  opacity: var(--cf-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.section {
+  display: inline-flex;
+}
+
+.panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.root[data-orientation="horizontal"] .panel {
+  padding-top: var(--cf-space-4);
+}
+
+.panel:focus-visible {
+  border-radius: var(--cf-radius-xs);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}

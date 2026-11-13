@@ -34,6 +34,20 @@ export interface CountifyMessages {
   nothingFound: string;
   /** botão de tirar uma etiqueta (Pill) */
   remove: (rotulo: string) => string;
+  /** Pagination: nome da navegação, setas e cada página */
+  pagination: string;
+  previousPage: string;
+  nextPage: string;
+  firstPage: string;
+  lastPage: string;
+  page: (n: number) => string;
+  /** nome da navegação dos Breadcrumbs */
+  breadcrumbs: string;
+  /** Burger fechado e aberto */
+  openMenu: string;
+  closeMenu: string;
+  /** nome do TableOfContents */
+  tableOfContents: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -58,4 +72,14 @@ export const defaultMessages: CountifyMessages = {
   search: "Buscar",
   nothingFound: "Nada encontrado",
   remove: (rotulo) => `Remover ${rotulo}`,
+  pagination: "Páginas",
+  previousPage: "Página anterior",
+  nextPage: "Próxima página",
+  firstPage: "Primeira página",
+  lastPage: "Última página",
+  page: (n) => `Página ${n}`,
+  breadcrumbs: "Caminho",
+  openMenu: "Abrir menu",
+  closeMenu: "Fechar menu",
+  tableOfContents: "Nesta página",
 };

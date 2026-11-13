@@ -178,3 +178,10 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Componente | Web | Electron | Celular | Motivo |
 |---|---|---|---|---|
 | Tree | ok | ok | adaptado | na web, `role="tree"` com setas, Home/End, direita abre, esquerda fecha ou volta ao pai; no celular, linhas de 44 que abrem e fecham ao toque (o React Native não tem papel de árvore: cada linha anuncia aberta/fechada e escolhida/marcada) |
+| Tabs | ok | ok | adaptado | variantes da identidade: segmented (o "Segmentado"), pills (a pílula do menu) e chips (a fileira de `M-Instalacao`, que rola). No celular, sem teclado: tocar abre; os chips rolam num ScrollView; sem orientação vertical |
+| NavLink | ok | ok | ok | a "Lista: Linha de 64"; com filhos, abre um nível abaixo |
+| Pagination | ok | ok | ok | não há paginação no mockup (ele usa "Ver todos" no fim da lista); botões de 44 com canto 12, como as setas de mês. `withPages={false}` é a forma compacta da 0.1.0 ("21–40 de 340") |
+| Stepper | ok | ok | ok | barras da 0.1.0 (o mockup não tem passos) e "2 de 4 · Nome"; com `onStepClick`, as barras viram botões de 44 |
+| Burger | ok | ok | ok | ícone `menu` aprovado em 13/11/2026; a identidade não esconde o menu (abas embaixo no celular, menu no topo no computador) |
+| Breadcrumbs | ok | ok | N/A | no celular, a identidade usa o cabeçalho com Voltar ("Voltar leva à tela de origem", `X-DocNavegacao`) |
+| TableOfContents | ok | ok | N/A | segue títulos com âncora (`#id`) e a rolagem da página, que não existem no React Native; no celular, use NavLink numa lista |

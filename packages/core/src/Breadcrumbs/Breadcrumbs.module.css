@@ -1,0 +1,33 @@
+/* A identidade usa o link "Voltar" (15, cor principal, alvo de 44); o caminho segue o mesmo link */
+.root {
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  line-height: var(--cf-line-height);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cf-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cf-touch-target);
+  color: var(--cf-color-accent);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+.item[aria-current="page"] {
+  color: var(--cf-color-text);
+}
+
+.separator {
+  display: inline-flex;
+  color: var(--cf-color-text3);
+}

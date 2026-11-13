@@ -54,6 +54,8 @@ export const icons = {
   table: '<rect x="3" y="4" width="16" height="14" rx="2"/><path d="M3 9h16M3 14h16M9 4v14"/>',
   // estrela: acrescentada no passo 7 para o Rating, no traço do conjunto (não estava na 0.1.0)
   star: '<path d="M11 3l2.4 5 5.4.6-4 3.7 1.1 5.4L11 15l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
+  // aprovado em 13/11/2026 para o Burger (a identidade não tem menu escondido): três traços iguais
+  menu: '<path d="M4 6h14M4 11h14M4 16h14"/>',
   logout: '<path d="M9 4H5v14h4M13 7l4 4-4 4M17 11H8"/>',
 };
 
