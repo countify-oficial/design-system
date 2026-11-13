@@ -46,15 +46,31 @@ export function LinhaDeEscolha({ controle, label, description, error, labelPosit
   );
 }
 
+/** A caixa desenhada (vazia, marcada ou meio marcada); também usada pela Tree. */
+export function CaixaDeMarcar({ estado, size = "md", disabled }: { estado: "all" | "some" | "none"; size?: Size | undefined; disabled?: boolean | undefined }) {
+  const { colors: c } = useCountifyTheme();
+  const lado = iconSize[size];
+  const cheio = estado !== "none";
+  return (
+    <ContentColor value={c.bg}>
+      <View
+        style={[
+          { width: lado, height: lado, marginTop: (lineHeightPx(fontSize.md) - lado) / 2, borderRadius: space[1], borderWidth: borderWidth.thick, alignItems: "center", justifyContent: "center", borderColor: cheio ? c.accent : c.borderStrong, backgroundColor: cheio ? c.accent : c.field },
+          disabled && { opacity: state.disabledOpacity },
+        ]}
+      >
+        {cheio && <Icon name={estado === "some" ? "minus" : "check"} size="xs" />}
+      </View>
+    </ContentColor>
+  );
+}
+
 /** Caixa de marcar com rótulo (desenhada: o React Native não tem caixa). Dentro de Checkbox.Group, marca pelo value. */
 export function CheckboxItem(props: CheckboxProps) {
   const grupo = useContext(GrupoDeCaixas);
   const { label, description, error, checked, defaultChecked, onChange, indeterminate, size = "md", labelPosition = "right", value, disabled, style } = useComponentProps("Checkbox", {}, props);
-  const { colors: c } = useCountifyTheme();
   const [proprio, setProprio] = useControllableState({ value: checked, defaultValue: defaultChecked ?? false, onChange });
   const marcado = grupo && value !== undefined ? grupo.valor.includes(value) : proprio;
-  const lado = iconSize[size];
-  const cheio = marcado || indeterminate;
   return (
     <UnstyledButton
       accessibilityRole="checkbox"
@@ -71,18 +87,7 @@ export function CheckboxItem(props: CheckboxProps) {
         description={description}
         error={error}
         disabled={disabled}
-        controle={
-          <ContentColor value={c.bg}>
-            <View
-              style={[
-                { width: lado, height: lado, marginTop: (lineHeightPx(fontSize.md) - lado) / 2, borderRadius: space[1], borderWidth: borderWidth.thick, alignItems: "center", justifyContent: "center", borderColor: cheio ? c.accent : c.borderStrong, backgroundColor: cheio ? c.accent : c.field },
-                disabled && { opacity: state.disabledOpacity },
-              ]}
-            >
-              {cheio && <Icon name={indeterminate ? "minus" : "check"} size="xs" />}
-            </View>
-          </ContentColor>
-        }
+        controle={<CaixaDeMarcar estado={indeterminate ? "some" : marcado ? "all" : "none"} size={size} disabled={disabled} />}
       />
     </UnstyledButton>
   );

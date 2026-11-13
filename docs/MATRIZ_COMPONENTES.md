@@ -169,3 +169,12 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | TagsInput | ok | ok | adaptado | no celular, o "OK" do teclado cria a etiqueta; as sugestões ficam só na web |
 | Pill, PillsInput | ok | ok | ok | |
 | ComboboxPopover | ok | ok | adaptado | no celular abre na folha (o "Chip de filtro" do mockup: "mostra a escolha e abre a folha") |
+| Cascader | ok | ok | adaptado | na web, uma coluna por camada (setas andam, direita entra, esquerda volta); no celular, a folha mostra uma camada por vez, com "Voltar" |
+| TreeSelect | ok | ok | adaptado | na web, a árvore abre embaixo do campo; no celular, numa folha. Com `multiple`, caixas de marcar (o pai fica meio marcado) |
+| Mentions | ok | ok | adaptado | na web, a lista flutua sob o campo (a caixa de texto não pode ter papel combobox: fica `aria-controls` + `aria-activedescendant`); no celular, as pessoas aparecem logo abaixo do campo e a menção é a do fim do texto quando o sistema não informa o cursor |
+
+### Navegação
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Tree | ok | ok | adaptado | na web, `role="tree"` com setas, Home/End, direita abre, esquerda fecha ou volta ao pai; no celular, linhas de 44 que abrem e fecham ao toque (o React Native não tem papel de árvore: cada linha anuncia aberta/fechada e escolhida/marcada) |

@@ -1,0 +1,56 @@
+.columns {
+  display: flex;
+  max-height: calc(6 * var(--cf-touch-target) + 2 * var(--cf-space-1));
+}
+
+.column {
+  min-width: calc(var(--cf-side-panel-width) / 2);
+  margin: 0;
+  padding: var(--cf-space-1);
+  overflow-y: auto;
+  list-style: none;
+}
+
+.column + .column {
+  border-inline-start: var(--cf-border-thin) solid var(--cf-color-divider);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-3) var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  text-align: start;
+}
+
+.option[data-open],
+.option[aria-current="true"] {
+  background-color: var(--cf-color-accent-tint);
+  color: var(--cf-color-accent);
+}
+
+@media (hover: hover) {
+  .option:not([data-disabled]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.option[data-disabled] {
+  opacity: var(--cf-disabled-opacity);
+}
+
+.optionLabel {
+  flex: 1;
+}
+
+.arrow {
+  display: inline-flex;
+  color: var(--cf-color-text2);
+}

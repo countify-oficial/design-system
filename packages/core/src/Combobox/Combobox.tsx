@@ -130,9 +130,9 @@ export function ComboboxOption(props: ComboboxOptionProps) {
       aria-selected={!!selected}
       aria-disabled={disabled || undefined}
       data-active={ativo || undefined}
+      // sem `active`: o Floating UI trocaria o id da ativa e o aria-activedescendant apontaria para um id que não existe
       {...c.getItemProps({
         ...rest,
-        active: ativo,
         selected: !!selected,
         // mantém o foco no campo ao clicar
         onMouseDown: (e: React.MouseEvent) => e.preventDefault(),
