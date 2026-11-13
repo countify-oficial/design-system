@@ -11,13 +11,17 @@
     "typecheck": "tsc"
   },
   "devDependencies": {
+    "@countify-oficial/carousel": "workspace:*",
     "@countify-oficial/charts": "workspace:*",
+    "@countify-oficial/code-highlight": "workspace:*",
     "@countify-oficial/core": "workspace:*",
     "@countify-oficial/dates": "workspace:*",
+    "@countify-oficial/dropzone": "workspace:*",
     "@countify-oficial/eslint-config": "workspace:*",
     "@countify-oficial/modals": "workspace:*",
     "@countify-oficial/notifications": "workspace:*",
     "@countify-oficial/provider": "workspace:*",
+    "@countify-oficial/spotlight": "workspace:*",
     "@countify-oficial/tokens": "workspace:*",
     "@countify-oficial/tsconfig": "workspace:*",
     "@storybook/addon-a11y": "10.6.5",

@@ -230,4 +230,16 @@ Valores que a identidade já usa, agora com nome nos tokens:
     rosca em 1/5 (como o anel); radar com a grade na `divider` e a série como a área; minigráfico de 40 de altura com a
     linha da série (traço 2, sem pontos); várias séries nos degraus 6, 4, 2 e 8 da escala azul no claro e 3, 5, 1 e 4 no
     escuro.
+34. **Código** (escolha de 13/11/2026, **a confirmar**): o mockup só mostra código em mono (`ui-monospace, Menlo,
+    Consolas`), sem fundo e com o link "Copiar". O bloco usa o fundo `field`, canto 12 e recuo 16; as cores do realce
+    são papéis que já existem: palavra-chave `accent`, texto `up`, número `warn`, comentário `text3`, propriedade
+    `label`, pontuação `text2`.
+35. **Carrossel** (escolha de 13/11/2026): os cartões rolam com encaixe e, no celular, sangram à direita como as
+    fileiras de chips (`M-Datas`); na web, as setas de 44 do Scroller; no lugar de pontos, o contador "2 de 5" das
+    fotos (`M-CadastroFoto`).
+36. **Dropzone e Spotlight**: não existem no mockup; usam só valores dele. A área de soltar é o botão tracejado de
+    enviar (`W-Integracao`: borda 1,5 tracejada na `text3`, canto 12, ícone `upload`); ao arrastar um arquivo aceito,
+    fundo `accentTint` e borda `accent`; recusado, borda e texto `down`. A busca rápida tem a largura do seletor de
+    estabelecimento (`spotlightWidth` = 460, `W-Seletor`), o campo de busca de 48 e as linhas de 56 com o quadro de
+    ícone de 40.
 

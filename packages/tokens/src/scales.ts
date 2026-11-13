@@ -107,6 +107,9 @@ export const chart = {
   seriesShades: { light: [6, 4, 2, 8], dark: [3, 5, 1, 4] },
 } as const;
 
+// ---------- busca rápida (Spotlight): a largura do seletor de estabelecimento (mockup W-Seletor)
+export const spotlightWidth = 460;
+
 // ---------- Marquee (aprovado em 13/11/2026): corre a 50 px por segundo
 export const marqueeSpeed = 50;
 

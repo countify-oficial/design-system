@@ -1,0 +1,68 @@
+/* Cartões que rolam com encaixe; no celular sangram à direita como as fileiras de chips (M-Datas) */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  min-width: 0;
+  font-family: var(--cf-font-sans);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-1);
+}
+
+.viewport {
+  display: flex;
+  flex: 1;
+  gap: var(--carousel-gap);
+  min-width: 0;
+  margin-inline-end: calc(-1 * var(--cf-gutter-mobile));
+  padding-inline-end: var(--cf-gutter-mobile);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: 0;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.viewport:focus-visible {
+  border-radius: var(--cf-radius-xs);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.slide {
+  flex: none;
+  width: var(--carousel-slide-size);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* .row na frente: o CSS do core (ActionIcon) pode carregar depois */
+.row .control {
+  display: none;
+}
+
+.row .control[data-hidden] {
+  visibility: hidden;
+}
+
+.counter {
+  align-self: flex-end;
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 768px) {
+  .viewport {
+    margin-inline-end: 0;
+    padding-inline-end: 0;
+  }
+
+  .row .control {
+    display: inline-flex;
+  }
+}

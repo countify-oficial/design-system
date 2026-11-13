@@ -1,0 +1,47 @@
+/* O botão tracejado de enviar do mockup (W-Integracao), maior: borda 1,5 tracejada na text3, canto 12 */
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  min-height: calc(2 * var(--cf-list-row-height));
+  padding: var(--cf-space-6);
+  border: var(--cf-border-thick) dashed var(--cf-color-text3);
+  border-radius: var(--cf-radius-sm);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+  text-align: center;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .root:not([data-disabled]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.root:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.root[data-accept] {
+  border-color: var(--cf-color-accent);
+  background-color: var(--cf-color-accent-tint);
+  color: var(--cf-color-accent);
+}
+
+.root[data-reject] {
+  border-color: var(--cf-color-down);
+  color: var(--cf-color-down);
+}
+
+.root[data-disabled] {
+  opacity: var(--cf-disabled-opacity);
+  cursor: not-allowed;
+}

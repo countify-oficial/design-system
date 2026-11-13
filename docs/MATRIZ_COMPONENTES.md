@@ -206,4 +206,8 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | charts: LineChart, BarChart, BarList, ScatterChart, Heatmap, FunnelChart | ok | ok | ok | os gráficos do mockup (W-Hoje, W-Comparar, W-Montar, M-Montar, W-Analises, W-Indicadores), em SVG nas duas plataformas (react-native-svg no celular); a tabela de dados vai escondida na web e vira o resumo falado no celular |
 | charts: AreaChart, PieChart, DonutChart, RadarChart, Sparkline | ok | ok | ok | a identidade não desenha esses tipos; feitos com valores aprovados em 13/11/2026, **a confirmar com o design** |
 | charts: ChartLegend | ok | ok | ok | a legenda do mockup (linha de 20 × 8, quadrado de 12) |
+| carousel | ok | ok | adaptado | cartões com encaixe que sangram à direita no celular (como as fileiras de chips do M-Datas); setas de 44 na web; o contador "2 de 5" no lugar de pontos (escolha de 13/11/2026). No celular, rola com o dedo e para no encaixe |
+| dropzone | ok | ok | N/A | arrastar e soltar arquivos não existe no celular; lá, use o FileButton ou a câmera e a galeria do sistema |
+| spotlight | ok | ok | N/A | busca rápida por teclado (Ctrl+K / ⌘K); no celular, a identidade põe a busca no topo de cada lista ("Busca no topo da lista") |
+| code-highlight | ok | ok | ok | bloco mono com realce em papéis que já existem e o link "Copiar" (escolha de 13/11/2026, a confirmar); o mockup só mostra código em mono, sem fundo |
 

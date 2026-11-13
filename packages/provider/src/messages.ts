@@ -75,6 +75,14 @@ export interface CountifyMessages {
   actual: string;
   forecast: string;
   normalRange: string;
+  /** link de copiar do CodeHighlight */
+  copy: string;
+  copied: string;
+  /** texto padrão do Dropzone */
+  dropFiles: string;
+  /** Carousel: o tipo da região e de cada item, para o leitor de tela */
+  carousel: string;
+  slide: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -129,4 +137,9 @@ export const defaultMessages: CountifyMessages = {
   actual: "Real",
   forecast: "Previsto",
   normalRange: "Faixa normal",
+  copy: "Copiar",
+  copied: "Copiado",
+  dropFiles: "Arraste os arquivos ou clique para escolher",
+  carousel: "carrossel",
+  slide: "item",
 };

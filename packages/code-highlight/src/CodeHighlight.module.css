@@ -1,0 +1,95 @@
+/* Mono do mockup em bloco (a confirmar): fundo field, canto 12, recuo 16; "Copiar" é o link de texto do W-Loja */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-1);
+  min-width: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+  color: var(--cf-color-text2);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+}
+
+/* .toolbar na frente: o CSS do core (UnstyledButton) pode carregar depois */
+.toolbar .copy {
+  min-height: var(--cf-touch-target);
+  margin-inline-start: auto;
+  color: var(--cf-color-accent);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+@media (hover: hover) {
+  .toolbar .copy:hover {
+    color: var(--cf-color-accent-hover);
+  }
+}
+
+.toolbar .copy:focus-visible {
+  border-radius: var(--cf-space-1);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.scroll {
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-field);
+}
+
+.pre {
+  display: table;
+  margin: 0;
+  padding: var(--cf-space-4);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-mono);
+  font-size: var(--cf-font-size-sm);
+  line-height: var(--cf-line-height);
+}
+
+.line {
+  display: table-row;
+}
+
+.number {
+  display: table-cell;
+  padding-inline-end: var(--cf-space-4);
+  color: var(--cf-color-text3);
+  text-align: end;
+  user-select: none;
+}
+
+.content {
+  display: table-cell;
+  white-space: pre;
+}
+
+.keyword {
+  color: var(--cf-color-accent);
+}
+
+.string {
+  color: var(--cf-color-up);
+}
+
+.number-token {
+  color: var(--cf-color-warn);
+}
+
+.comment {
+  color: var(--cf-color-text3);
+}
+
+.property {
+  color: var(--cf-color-label);
+}
+
+.punctuation {
+  color: var(--cf-color-text2);
+}

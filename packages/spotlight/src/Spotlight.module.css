@@ -1,0 +1,33 @@
+/* Linha de resultado do W-Seletor: 56, recuo 8 12, canto 12, 12 entre o ícone e o texto */
+/* .list na frente: o CSS do core (ComboboxOption) pode carregar depois */
+.list .action {
+  min-height: var(--cf-compact-row-height);
+  padding: var(--cf-space-2) var(--cf-space-3);
+  border-radius: var(--cf-radius-sm);
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+.description {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-xs);
+}
+
+.list {
+  margin-top: var(--cf-space-2);
+}

@@ -1,9 +1,13 @@
 import "@countify-oficial/tokens/fonts.css";
 import "@countify-oficial/tokens/tokens.css";
+import "@countify-oficial/carousel/styles.css";
 import "@countify-oficial/charts/styles.css";
+import "@countify-oficial/code-highlight/styles.css";
 import "@countify-oficial/dates/styles.css";
+import "@countify-oficial/dropzone/styles.css";
 import "@countify-oficial/modals/styles.css";
 import "@countify-oficial/notifications/styles.css";
+import "@countify-oficial/spotlight/styles.css";
 import "./preview.css";
 import { CountifyProvider, type ColorSchemeSetting } from "@countify-oficial/provider";
 import type { Preview } from "@storybook/react-vite";

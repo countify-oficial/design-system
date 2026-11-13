@@ -17,6 +17,10 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/modals` | janelas abertas por função: `modals.open()`, `openConfirmModal()`, `openContextModal()` e o `ModalsProvider` (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/dates` | `Calendar` (dia e período), `DatePicker`, `DateInput`, `DateTimePicker`, `TimeInput` e as contas de datas em pt-BR (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/charts` | gráficos em SVG sem biblioteca de terceiros: `LineChart`, `AreaChart`, `BarChart`, `BarList`, `FunnelChart`, `ScatterChart`, `Heatmap`, `PieChart`, `DonutChart`, `RadarChart`, `Sparkline` e `ChartLegend` (web e React Native) | em andamento (0.1.0) |
+| `@countify-oficial/carousel` | `Carousel` com `Carousel.Slide`: cartões que rolam com encaixe, setas e o contador (web e React Native) | em andamento (0.1.0) |
+| `@countify-oficial/dropzone` | `Dropzone` com `Idle`, `Accept` e `Reject`, e as regras de tipo, tamanho e quantidade (web e Electron) | em andamento (0.1.0) |
+| `@countify-oficial/spotlight` | busca rápida: `Spotlight`, `spotlight.open()` e o atalho Ctrl+K / ⌘K (web e Electron) | em andamento (0.1.0) |
+| `@countify-oficial/code-highlight` | `CodeHighlight`: bloco de código com realce próprio (TypeScript, JSON, shell, CSS) e o link Copiar (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/test-utils` | interno: a preparação do jsdom e o axe dos testes da web dos pacotes de extensão | privado |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
 | pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |
