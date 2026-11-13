@@ -1,0 +1,21 @@
+/* Confirmar (W-Confirmar, M-Confirmar): no celular, dois botões iguais lado a lado; a partir de 768, à direita, a 8 */
+.text {
+  margin: 0;
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cf-space-3);
+  margin-top: var(--cf-space-5);
+}
+
+@media (min-width: 768px) {
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--cf-space-2);
+  }
+}

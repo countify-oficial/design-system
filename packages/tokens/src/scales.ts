@@ -106,7 +106,8 @@ export const loaderStroke = 2.5;
 export const zIndex = { base: 0, sticky: 10, app: 100, overlay: 200, dropdown: 300, notification: 400, tooltip: 500, max: 9999 } as const;
 
 // ---------- movimento (em ms). Com "reduzir movimento" ligado, tudo vira 0.
-export const duration = { fast: 120, base: 150, slow: 200, spin: 800, pulse: 1400 } as const;
+// notification: o aviso rápido some sozinho em 4 s (0.1.0, Toast)
+export const duration = { fast: 120, base: 150, slow: 200, spin: 800, pulse: 1400, notification: 4000 } as const;
 export const easing = { out: "ease-out", inOut: "ease-in-out", linear: "linear" } as const;
 /** Quanto o Transition desloca (slide, em px) e de quanto cresce (scale); aprovado em 13/11/2026. */
 export const transition = { slide: space[2], scale: 0.95 } as const;

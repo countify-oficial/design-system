@@ -1,0 +1,16 @@
+{
+  "name": "@countify-oficial/test-utils",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Preparação dos testes da web (jsdom) e o axe, para os pacotes de extensão",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./setup": "./setup.ts"
+  },
+  "dependencies": {
+    "@testing-library/react": "16.3.3",
+    "jest-axe": "11.0.0",
+    "vitest": "5.1.0"
+  }
+}

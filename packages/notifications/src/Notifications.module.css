@@ -1,0 +1,31 @@
+/* Aviso da 0.1.0: no celular, no meio, acima das abas; a partir de 768, no canto de baixo à direita, a 32 das bordas */
+.root {
+  position: fixed;
+  z-index: var(--cf-z-notification);
+  right: var(--cf-gutter-mobile);
+  bottom: calc(var(--cf-app-shell-tab-item-height) + var(--cf-space-1) * 2 + var(--cf-space-4) * 2 + env(safe-area-inset-bottom));
+  left: var(--cf-gutter-mobile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cf-space-2);
+  pointer-events: none;
+}
+
+.item {
+  max-width: 100%;
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .root {
+    right: var(--cf-gutter-desktop);
+    bottom: var(--cf-gutter-desktop);
+    left: auto;
+    align-items: flex-end;
+  }
+
+  .item {
+    max-width: var(--cf-dialog-width);
+  }
+}

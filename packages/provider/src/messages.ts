@@ -55,6 +55,9 @@ export interface CountifyMessages {
   sections: string;
   /** alça do Splitter */
   resizePanels: string;
+  /** botões da confirmação (modals.openConfirmModal) */
+  confirm: string;
+  cancel: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -93,4 +96,6 @@ export const defaultMessages: CountifyMessages = {
   scrollForward: "Rolar para a frente",
   sections: "Seções",
   resizePanels: "Redimensionar painéis",
+  confirm: "Confirmar",
+  cancel: "Cancelar",
 };

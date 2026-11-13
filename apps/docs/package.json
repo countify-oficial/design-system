@@ -13,6 +13,8 @@
   "devDependencies": {
     "@countify-oficial/core": "workspace:*",
     "@countify-oficial/eslint-config": "workspace:*",
+    "@countify-oficial/modals": "workspace:*",
+    "@countify-oficial/notifications": "workspace:*",
     "@countify-oficial/provider": "workspace:*",
     "@countify-oficial/tokens": "workspace:*",
     "@countify-oficial/tsconfig": "workspace:*",

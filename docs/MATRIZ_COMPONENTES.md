@@ -191,3 +191,11 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Burger | ok | ok | ok | ícone `menu` aprovado em 13/11/2026; a identidade não esconde o menu (abas embaixo no celular, menu no topo no computador) |
 | Breadcrumbs | ok | ok | N/A | no celular, a identidade usa o cabeçalho com Voltar ("Voltar leva à tela de origem", `X-DocNavegacao`) |
 | TableOfContents | ok | ok | N/A | segue títulos com âncora (`#id`) e a rolagem da página, que não existem no React Native; no celular, use NavLink numa lista |
+
+## Pacotes de extensão
+
+| Pacote | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| notifications | ok | ok | adaptado | `notifications.show()` de qualquer lugar; um aviso por vez, some em 4 s (0.1.0). Na web, para com o mouse ou o foco; no celular, fica acima das abas e recebe `bottomInset` (área dos gestos) |
+| modals | ok | ok | ok | `modals.open()`, `openConfirmModal()` (o "Alerta no centro" do W-Confirmar e do M-Confirmar) e `openContextModal()` com janelas registradas no `ModalsProvider` |
+
