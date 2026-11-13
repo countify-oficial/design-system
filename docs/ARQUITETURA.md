@@ -65,4 +65,12 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
 - **React Native**: mesmo nome e mesmas props; estilo com `StyleSheet` e os valores do `@countify-oficial/tokens`
   (cores do modo em uso por `useCountifyTheme().colors`). O tema entra por `styles.root`. Botões têm alvo de toque de
   44 no mínimo e `accessibilityRole`; o que não existe no celular está na `MATRIZ_COMPONENTES.md` com o motivo.
+- **Espaço**: as props de espaço recebem `Spacing` (`xs`–`xl` ou um degrau da grade de 4, `3` = 12). Na web viram
+  `var(--cf-spacing-*)` ou `var(--cf-space-*)` (`spacingVar`); no celular, px (`resolveSpacing`, dos tokens).
+- **Ponto de quebra**: `Responsive<T>` é um valor ou `{ base, sm, lg }`. Na web, `responsiveVars` grava `--nome`,
+  `--nome-sm` e `--nome-lg`, e o CSS Module escolhe em `@media (min-width: 768px)` e `(min-width: 1280px)` (media
+  query não aceita variável; o `test/css.test.ts` confere que os números são os de `tokens.breakpoints`). No
+  celular, `useResponsive` escolhe pela largura da tela.
+- **Grade no celular**: o React Native não tem grid. `SimpleGrid` e `Grid` usam linha com quebra, células em
+  porcentagem com meio espaço de recuo de cada lado e margem negativa na grade.
 - **Movimento**: as durações vêm dos tokens; com "reduzir movimento" (`useReducedMotion`), viram 0 nas duas plataformas.

@@ -1,0 +1,10 @@
+/* row-gap e column-gap caem no gap: sem a variável própria, a propriedade voltaria ao valor inicial */
+.root {
+  display: flex;
+  flex-direction: var(--flex-direction);
+  flex-wrap: var(--flex-wrap);
+  row-gap: var(--flex-row-gap, var(--flex-gap));
+  column-gap: var(--flex-column-gap, var(--flex-gap));
+  align-items: var(--flex-align);
+  justify-content: var(--flex-justify);
+}

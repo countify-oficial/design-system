@@ -1,0 +1,5 @@
+.root {
+  flex-shrink: 0;
+  width: var(--space-w);
+  height: var(--space-h);
+}

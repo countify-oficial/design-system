@@ -11,8 +11,8 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/hooks` | `useControllableState`, `useDisclosure`, `useDebounce`, `useId`, `useMediaQuery`, `useClipboard`, `useReducedMotion`; web e React Native | pronto (0.1.0) |
 | `@countify-oficial/provider` | `CountifyProvider` e `useCountifyTheme`: tema (ajustes por componente), modo claro, escuro ou automático, textos (i18n); web e React Native | pronto (0.1.0) |
 | `@countify-oficial/tsconfig`, `@countify-oficial/eslint-config` | configurações compartilhadas (privados, não publicados) | pronto |
-| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden` | em andamento (0.1.0) |
-| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition` | em andamento (0.1.0) |
+| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden`. Layout: `Stack`, `Group`, `Flex`, `Center`, `Space`, `AspectRatio`, `SimpleGrid`, `Grid`, `Container` | em andamento (0.1.0) |
+| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition`. Layout: os mesmos nove da web | em andamento (0.1.0) |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
 | pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |
 
@@ -64,7 +64,9 @@ import { Text, UnstyledButton } from "@countify-oficial/native";
 ```
 
 Props comuns: `size` (xs–xl), `color` (papel de cor dos tokens), `component` (troca o elemento), `disabled`; na web,
-`className`, `style`, `classNames` e `styles` por parte. O tema muda o padrão de qualquer componente:
+`className`, `style`, `classNames` e `styles` por parte. Espaço (`gap`, `spacing`…): `xs`–`xl` ou um degrau da grade de
+4 (`3` = 12, `5` = 20). Colunas e span aceitam um valor por ponto de quebra: `cols={{ base: 1, sm: 2, lg: 4 }}`
+(`sm` a partir de 768, `lg` a partir de 1280). O tema muda o padrão de qualquer componente:
 `createTheme({ components: { Text: { defaultProps: { size: "sm" } } } })`.
 
 Para ver todos: `pnpm build` e `pnpm --filter @countify-oficial/docs dev` (Storybook em http://localhost:6006).

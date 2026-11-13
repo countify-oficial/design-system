@@ -19,7 +19,8 @@ Cada componente chega com tudo isto (é o que a especificação pede):
 
 1. Implementação em `packages/core/src/<Nome>/` (web) e, quando existe no celular, em `packages/native/src/<Nome>/`.
 2. Tipos exportados no `src/index.ts`, com um comentário em cada prop: vira a tabela de props do Storybook.
-3. CSS Module (web) só com variáveis `--cf-*`.
+3. CSS Module (web) só com variáveis `--cf-*`. O `test/css.test.ts` do core recusa hex, px, duração e fonte soltos;
+   a única medida aceita é a das media queries, e só com os números de `tokens.breakpoints`.
 4. Testes: Testing Library (web) com a checagem do axe (`semViolacoes`), e React Native Testing Library (celular).
 5. História em `apps/docs/stories/<Nome>.stories.tsx` com todas as variantes, tamanhos e estados.
 6. Uma linha na `MATRIZ_COMPONENTES.md`: ok, adaptado ou N/A nas três plataformas, com o motivo.

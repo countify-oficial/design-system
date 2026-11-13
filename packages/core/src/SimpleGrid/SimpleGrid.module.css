@@ -1,0 +1,20 @@
+/* As media queries repetem tokens.breakpoints (sm 768, lg 1280); o teste test/css.test.ts confere. */
+.root {
+  --_cols: var(--sg-cols);
+  display: grid;
+  grid-template-columns: repeat(var(--_cols), minmax(0, 1fr));
+  row-gap: var(--sg-vertical-spacing, var(--sg-spacing));
+  column-gap: var(--sg-spacing);
+}
+
+@media (min-width: 768px) {
+  .root {
+    --_cols: var(--sg-cols-sm, var(--sg-cols));
+  }
+}
+
+@media (min-width: 1280px) {
+  .root {
+    --_cols: var(--sg-cols-lg, var(--sg-cols-sm, var(--sg-cols)));
+  }
+}

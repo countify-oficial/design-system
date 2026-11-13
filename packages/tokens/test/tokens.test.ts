@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { colors, createCssVariables, duration, nativeRaisedShadow, palette, primary, type ColorRole, type ColorScheme } from "../src/index.js";
+import { colors, createCssVariables, duration, nativeRaisedShadow, palette, primary, resolveSpacing, type ColorRole, type ColorScheme } from "../src/index.js";
 
 // contraste WCAG: o guia pede 4,5:1 no texto
 function contrast(a: string, b: string): number {
@@ -69,5 +69,11 @@ describe("React Native", () => {
   it("a sombra elevada vira props de sombra", () => {
     expect(nativeRaisedShadow("light")).toEqual({ shadowColor: "#182A42", shadowOffset: { width: 0, height: 16 }, shadowOpacity: 0.16, shadowRadius: 20, elevation: 16 });
     expect(nativeRaisedShadow("dark").shadowColor).toBe("#000000");
+  });
+});
+
+describe("espaço", () => {
+  it("resolveSpacing aceita tamanho, degrau da grade de 4 e 0", () => {
+    expect([resolveSpacing("xs"), resolveSpacing("lg"), resolveSpacing(3), resolveSpacing(5), resolveSpacing(0)]).toEqual([4, 24, 12, 20, 0]);
   });
 });

@@ -1,4 +1,5 @@
 import { useComponentTheme } from "@countify-oficial/provider";
+import type { Responsive, Spacing } from "@countify-oficial/tokens";
 import type { CSSProperties } from "react";
 
 /** Styles API (web): classe e estilo por parte interna. className e style soltos vão para a raiz. */
@@ -32,4 +33,26 @@ export function useStyles<Part extends string>(name: string, css: Readonly<Recor
       ...(part === "root" ? props.style : undefined),
     },
   });
+}
+
+/** Spacing → variável dos tokens: "md" → var(--cf-spacing-md); 3 → var(--cf-space-3); 0 → 0. */
+export const spacingVar = (s: Spacing | undefined): string | undefined =>
+  s === undefined ? undefined : s === 0 ? "0" : typeof s === "number" ? `var(--cf-space-${s})` : `var(--cf-spacing-${s})`;
+
+/**
+ * Valor por ponto de quebra → --nome, --nome-sm e --nome-lg. O CSS Module escolhe pela media query
+ * (o que falta herda o menor).
+ */
+export function responsiveVars<T extends string | number>(
+  name: `--${string}`,
+  value: Responsive<T> | undefined,
+  toCss: (v: T) => string | number | undefined = (v) => v,
+): CssVars {
+  if (value === undefined) return {};
+  if (typeof value !== "object") return { [name]: toCss(value) };
+  return {
+    [name]: toCss(value.base),
+    [`${name}-sm`]: value.sm === undefined ? undefined : toCss(value.sm),
+    [`${name}-lg`]: value.lg === undefined ? undefined : toCss(value.lg),
+  };
 }

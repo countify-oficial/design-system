@@ -1,0 +1,25 @@
+/* As media queries repetem tokens.breakpoints (sm 768, lg 1280); o teste test/css.test.ts confere. */
+.root {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+/* sem span, a coluna ocupa a linha toda */
+.col {
+  --_span: var(--col-span, var(--grid-columns));
+  grid-column: span var(--_span) / span var(--_span);
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .col {
+    --_span: var(--col-span-sm, var(--col-span, var(--grid-columns)));
+  }
+}
+
+@media (min-width: 1280px) {
+  .col {
+    --_span: var(--col-span-lg, var(--col-span-sm, var(--col-span, var(--grid-columns))));
+  }
+}

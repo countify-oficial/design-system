@@ -1,0 +1,10 @@
+/* A media query repete tokens.breakpoints.sm (768); o teste test/css.test.ts confere. */
+.root {
+  padding-inline: var(--cf-gutter-mobile);
+}
+
+@media (min-width: 768px) {
+  .root {
+    padding-inline: var(--cf-gutter-desktop);
+  }
+}

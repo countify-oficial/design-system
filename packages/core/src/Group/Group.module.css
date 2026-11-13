@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--group-gap);
+  align-items: var(--group-align);
+  justify-content: var(--group-justify);
+}
+
+.root[data-nowrap] {
+  flex-wrap: nowrap;
+}
+
+.root[data-grow] > * {
+  flex-grow: 1;
+}

@@ -1,8 +1,9 @@
-import { useComponentProps, useComponentTheme, useCountifyTheme } from "@countify-oficial/provider";
+import { useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
 import { fontSize, fontWeight, lineHeightPx, nativeFontFamily, type ColorRole, type Size } from "@countify-oficial/tokens";
 import type { ElementType } from "react";
 import { Text as RNText, type StyleProp, type TextStyle } from "react-native";
 import type { PolymorphicProps } from "../polymorphic";
+import { useThemeStyle } from "../styles";
 
 export type TextWeight = keyof typeof fontWeight;
 
@@ -34,7 +35,7 @@ export function Text<C extends ElementType = typeof RNText>(props: TextProps<C>)
     component, size = "md", color, weight = "regular", align, truncate, lineClamp, inherit, style, ...rest
   } = useComponentProps("Text", {}, props);
   const { colors } = useCountifyTheme();
-  const doTema = useComponentTheme("Text").styles?.["root"] as StyleProp<TextStyle>;
+  const doTema = useThemeStyle<TextStyle>("Text");
   const Component: ElementType = component ?? RNText;
   const cor = color ?? (inherit ? undefined : "text");
   return (

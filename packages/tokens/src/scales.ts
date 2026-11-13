@@ -33,6 +33,10 @@ export const headings = {
 /** Grade de 4: a chave vezes 4 dá o valor. */
 export const space = { 1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 8: 32 } as const;
 export const spacing: BySize = { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 };
+/** Espaço das props (gap, spacing…): um tamanho xs–xl ou um degrau da grade de 4 (3 = 12, 5 = 20); 0 = sem espaço. */
+export type Spacing = Size | keyof typeof space | 0;
+/** O valor em px de um Spacing. */
+export const resolveSpacing = (s: Spacing): number => (s === 0 ? 0 : typeof s === "number" ? space[s] : spacing[s]);
 /** Margem lateral da tela. */
 export const gutter = { mobile: 20, desktop: 32 } as const;
 /** Retângulo arredondado, nunca pílula: 8 segmento, 12 controles, 16 cartões, 20 dia escolhido, 24 topo da folha. */
@@ -76,3 +80,5 @@ export const focusRing = { width: 2, offset: 2 } as const;
 
 // ---------- pontos de quebra: sm = layout de computador; lg = menu superior com texto
 export const breakpoints = { sm: 768, lg: 1280 } as const;
+/** Valor por ponto de quebra: base (celular), sm (a partir de 768) e lg (a partir de 1280); o que falta herda o menor. */
+export type Responsive<T extends string | number> = T | { base: T; sm?: T | undefined; lg?: T | undefined };
