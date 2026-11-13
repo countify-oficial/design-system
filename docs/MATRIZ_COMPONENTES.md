@@ -40,3 +40,16 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | SimpleGrid | ok | ok | adaptado | no celular, colunas pela largura da tela; células em porcentagem (o React Native não tem grid) |
 | Grid | ok | ok | adaptado | igual ao SimpleGrid; o `Grid.Col` lê colunas e espaço do `Grid` |
 | Container | ok | ok | adaptado | no celular, a margem segue a largura da tela (32 em tablet a partir de 768) |
+
+### Botões
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Icon | ok | ok | adaptado | no celular, `react-native-svg` (`SvgXml`) com o mesmo desenho; a cor padrão vem do botão em volta (`ContentColor`), porque o React Native não herda cor |
+| Loader | ok | ok | adaptado | no celular, o girador do sistema (`ActivityIndicator`): pequeno até md, grande em lg e xl |
+| Button | ok | ok | adaptado | no celular é um `Pressable`; ao tocar, opacidade 0,8 em vez do véu do hover; numa coluna ocupa a largura toda |
+| ActionIcon | ok | ok | adaptado | no celular o nome vai em `accessibilityLabel` (na web, `aria-label`) |
+| CloseButton | ok | ok | adaptado | igual ao ActionIcon |
+| CopyButton | ok | ok | adaptado | no celular copia pelo `expo-clipboard` |
+| FileButton | ok | ok | N/A | o React Native não tem seletor de arquivo; o app usa o `expo-document-picker` ou o `expo-image-picker` |
+| Toggle | ok | ok | adaptado | no celular, papel `togglebutton` com `accessibilityState.checked` (na web, `aria-pressed`) |

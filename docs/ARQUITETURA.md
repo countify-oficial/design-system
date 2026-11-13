@@ -73,4 +73,9 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
   celular, `useResponsive` escolhe pela largura da tela.
 - **Grade no celular**: o React Native não tem grid. `SimpleGrid` e `Grid` usam linha com quebra, células em
   porcentagem com meio espaço de recuo de cada lado e margem negativa na grade.
+- **Cor do conteúdo (celular)**: o React Native não herda cor. `Button`, `ActionIcon` e `Toggle` publicam a cor do
+  conteúdo em `ContentColor`; `Icon`, `Loader` e `Text` usam essa cor quando não recebem uma (é o `currentColor`
+  da web).
+- **Ícones**: o desenho (`icons`) fica nos tokens, como o resto da identidade. Na web o `Icon` é um `<svg>`; no
+  celular, `SvgXml` com o mesmo texto (`iconSvg`).
 - **Movimento**: as durações vêm dos tokens; com "reduzir movimento" (`useReducedMotion`), viram 0 nas duas plataformas.

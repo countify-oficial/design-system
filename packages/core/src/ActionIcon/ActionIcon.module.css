@@ -1,0 +1,34 @@
+.root {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--ai-size);
+  height: var(--ai-size);
+  border-radius: var(--ai-radius);
+  color: var(--ai-color);
+}
+
+.root[data-variant="default"] {
+  background-color: var(--cf-color-card);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-divider);
+}
+
+.root[data-variant="filled"] {
+  background-color: var(--cf-color-chip);
+}
+
+@media (hover: hover) {
+  .root:not([data-disabled]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.root[data-disabled]:not([data-loading]) {
+  opacity: var(--cf-disabled-opacity);
+}
+
+.root[data-loading] {
+  cursor: progress;
+}

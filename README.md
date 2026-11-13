@@ -11,8 +11,8 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/hooks` | `useControllableState`, `useDisclosure`, `useDebounce`, `useId`, `useMediaQuery`, `useClipboard`, `useReducedMotion`; web e React Native | pronto (0.1.0) |
 | `@countify-oficial/provider` | `CountifyProvider` e `useCountifyTheme`: tema (ajustes por componente), modo claro, escuro ou automático, textos (i18n); web e React Native | pronto (0.1.0) |
 | `@countify-oficial/tsconfig`, `@countify-oficial/eslint-config` | configurações compartilhadas (privados, não publicados) | pronto |
-| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden`. Layout: `Stack`, `Group`, `Flex`, `Center`, `Space`, `AspectRatio`, `SimpleGrid`, `Grid`, `Container` | em andamento (0.1.0) |
-| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition`. Layout: os mesmos nove da web | em andamento (0.1.0) |
+| `@countify-oficial/core` | componentes da web e do Electron (React + CSS Modules). Primitivos: `Box`, `UnstyledButton`, `Text`, `Portal`, `Transition`, `FocusTrap`, `VisuallyHidden`. Layout: `Stack`, `Group`, `Flex`, `Center`, `Space`, `AspectRatio`, `SimpleGrid`, `Grid`, `Container`. Botões: `Icon`, `Loader`, `Button`, `ActionIcon`, `CloseButton`, `CopyButton`, `FileButton`, `Toggle` | em andamento (0.1.0) |
+| `@countify-oficial/native` | componentes do React Native, com a API do core. Primitivos: `Box`, `UnstyledButton`, `Text`, `Transition`. Layout: os mesmos nove da web. Botões: os mesmos, menos `FileButton` | em andamento (0.1.0) |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
 | pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |
 
@@ -52,6 +52,7 @@ Textos padrão em pt-BR; para trocar, `messages={{ close: "Close" }}`.
 
 ```tsx
 // web e Electron
+import "@countify-oficial/tokens/fonts.css";    // a Roboto do pacote (sem internet, CSP fechado)
 import "@countify-oficial/tokens/tokens.css";
 import "@countify-oficial/core/styles.css";
 import { Text, UnstyledButton } from "@countify-oficial/core";
@@ -62,6 +63,9 @@ import { Text, UnstyledButton } from "@countify-oficial/core";
 // React Native: mesmos nomes e props
 import { Text, UnstyledButton } from "@countify-oficial/native";
 ```
+
+Ícones: `<Icon name="search" />`, com os ícones da Countify (lista em `@countify-oficial/tokens`, `icons`). No celular,
+o `Icon` usa o `react-native-svg` (`npx expo install react-native-svg`) e a Roboto vem do `@expo-google-fonts/roboto`.
 
 Props comuns: `size` (xs–xl), `color` (papel de cor dos tokens), `component` (troca o elemento), `disabled`; na web,
 `className`, `style`, `classNames` e `styles` por parte. Espaço (`gap`, `spacing`…): `xs`–`xl` ou um degrau da grade de
@@ -84,8 +88,9 @@ pnpm check             # build, tipos, lint e testes de todos os pacotes
 ## Dependências e por quê
 
 De execução, os pacotes só pedem o que o app já tem (dependências "peer"): React 19 (e o React DOM na web), e no
-celular o React Native (0.79 ou mais novo) e o `expo-clipboard`, que o `useClipboard` usa
-(`npx expo install expo-clipboard`). As animações do celular usam o `Animated` do próprio React Native. As de
+celular o React Native (0.79 ou mais novo), o `expo-clipboard`, que o `useClipboard` usa
+(`npx expo install expo-clipboard`), e o `react-native-svg`, que desenha os ícones (a especificação já o previa para
+os gráficos). As animações do celular usam o `Animated` do próprio React Native. As de
 desenvolvimento:
 
 | Dependência | Por quê |

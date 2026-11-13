@@ -1,0 +1,19 @@
+/* com "reduzir movimento", --cf-duration-spin vira 0 e o girador para */
+.root {
+  display: inline-block;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--loader-size);
+  height: var(--loader-size);
+  border: var(--cf-loader-stroke) solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  color: var(--loader-color);
+  animation: girar var(--cf-duration-spin) linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

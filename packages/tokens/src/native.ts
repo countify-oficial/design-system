@@ -3,7 +3,8 @@
 import { colors, palette, primaryColor, primaryShade, type ColorScheme } from "./colors.js";
 import {
   avatarSize, breakpoints, controlFontSize, controlHeight, controlPaddingX, duration, fontSize, gutter, headings, iconSize,
-  lineHeight, listRowHeight, radius, raisedShadow, space, spacing, touchTarget, transition, zIndex, type FontWeight,
+  lineHeight, listRowHeight, loaderStroke, radius, raisedShadow, space, spacing, state, borderWidth, touchTarget, transition, zIndex,
+  type FontWeight,
 } from "./scales.js";
 
 /** Nomes do @expo-google-fonts/roboto e do @expo-google-fonts/roboto-mono (o app carrega com useFonts). */
@@ -60,5 +61,8 @@ export const nativeTokens = {
   zIndex,
   duration,
   transition,
+  state,
+  borderWidth,
+  loaderStroke,
   breakpoints,
 } as const;

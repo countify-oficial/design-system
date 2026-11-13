@@ -1,10 +1,11 @@
 // Variáveis CSS (--cf-*) geradas dos tokens: o build grava em dist/tokens.css.
 // Modo: segue o sistema; data-cf-color-scheme="light" | "dark" num elemento força o modo dele para baixo.
 import { colors, palette, type ColorScheme } from "./colors.js";
+import { iconGrid } from "./icons.js";
 import {
   avatarSize, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
-  headings, iconSize, lineHeight, listRowHeight, radius, raisedShadow, shadows, sidePanelWidth, space, spacing, touchTarget, transition,
-  zIndex,
+  headings, iconSize, lineHeight, listRowHeight, loaderStroke, radius, raisedShadow, shadows, sidePanelWidth, space, spacing, state,
+  borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
 
 const kebab = (s: string) => s.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
@@ -54,6 +55,11 @@ export function createCssVariables(): string {
     decl("transition-slide", `${transition.slide}px`),
     decl("transition-scale", transition.scale),
     ...each("focus-ring", focusRing, "px"),
+    decl("disabled-opacity", state.disabledOpacity),
+    decl("hover-veil", state.hoverVeil),
+    ...each("border", borderWidth, "px"),
+    decl("loader-stroke", `${loaderStroke}px`),
+    decl("icon-stroke", iconGrid.stroke),
   ];
   const bloco = (sel: string, linhas: string[]) => `${sel} {\n  ${linhas.join("\n  ")}\n}`;
   return [

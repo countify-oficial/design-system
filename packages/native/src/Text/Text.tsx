@@ -3,6 +3,7 @@ import { fontSize, fontWeight, lineHeightPx, nativeFontFamily, type ColorRole, t
 import type { ElementType } from "react";
 import { Text as RNText, type StyleProp, type TextStyle } from "react-native";
 import type { PolymorphicProps } from "../polymorphic";
+import { useContentColor } from "../contentColor";
 import { useThemeStyle } from "../styles";
 
 export type TextWeight = keyof typeof fontWeight;
@@ -10,7 +11,7 @@ export type TextWeight = keyof typeof fontWeight;
 export interface TextOwnProps {
   /** Tamanho da letra: xs 13, sm 15, md 17, lg 20, xl 22. Padrão: md. */
   size?: Size | undefined;
-  /** Papel de cor dos tokens, no modo em uso. Padrão: text (com inherit, herda). */
+  /** Papel de cor dos tokens, no modo em uso. Padrão: a cor do botão em volta, ou text (com inherit, herda). */
   color?: ColorRole | undefined;
   /** Peso: regular 400, medium 500, bold 700 (cada um é uma família da Roboto). Padrão: regular. */
   weight?: TextWeight | undefined;
@@ -35,16 +36,17 @@ export function Text<C extends ElementType = typeof RNText>(props: TextProps<C>)
     component, size = "md", color, weight = "regular", align, truncate, lineClamp, inherit, style, ...rest
   } = useComponentProps("Text", {}, props);
   const { colors } = useCountifyTheme();
+  const doBotao = useContentColor();
   const doTema = useThemeStyle<TextStyle>("Text");
   const Component: ElementType = component ?? RNText;
-  const cor = color ?? (inherit ? undefined : "text");
+  const cor = color ? colors[color] : inherit ? undefined : (doBotao ?? colors.text);
   return (
     <Component
       numberOfLines={truncate ? 1 : lineClamp}
       {...rest}
       style={[
         !inherit && { fontFamily: nativeFontFamily[fontWeight[weight]], fontSize: fontSize[size], lineHeight: lineHeightPx(fontSize[size]) },
-        cor && { color: colors[cor] },
+        cor !== undefined && { color: cor },
         align && { textAlign: alinhamento[align] },
         doTema,
         style,

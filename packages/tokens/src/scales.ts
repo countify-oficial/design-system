@@ -66,6 +66,15 @@ export const raisedShadow = {
   color: { light: "rgba(24, 42, 66, 0.16)", dark: "rgba(0, 0, 0, 0.35)" },
 } as const;
 
+// ---------- estados (0.1.0): apagado, véu do hover (web) e opacidade ao tocar (celular)
+export const state = { disabledOpacity: 0.4, hoverVeil: "rgb(127 127 127 / 0.1)", pressedOpacity: 0.8 } as const;
+
+// ---------- linhas (mockup X-DocComponentes): fina (contorno, divisória) e grossa (escolhido, tracejado)
+export const borderWidth = { thin: 1, thick: 1.5 } as const;
+
+// ---------- girador (0.1.0): o traço; o tamanho é o do ícone (iconSize)
+export const loaderStroke = 2.5;
+
 // ---------- camadas
 export const zIndex = { base: 0, sticky: 10, app: 100, overlay: 200, dropdown: 300, notification: 400, tooltip: 500, max: 9999 } as const;
 

@@ -1,3 +1,4 @@
+import "@countify-oficial/tokens/fonts.css";
 import "@countify-oficial/tokens/tokens.css";
 import "./preview.css";
 import { CountifyProvider, type ColorSchemeSetting } from "@countify-oficial/provider";

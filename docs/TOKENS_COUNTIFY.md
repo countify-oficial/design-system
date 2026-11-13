@@ -143,3 +143,18 @@ do projeto:
    `--cf-focus-ring-offset`). Atende o WCAG 2.2: 2 px e contraste de 3:1 nos dois modos.
 9. **Distâncias da animação** (`transition`): `slide` desloca 8 px (o `space` 2) e `scale` cresce de 0,95; as duas com
    fade. As durações são as do item 7.
+
+## Vindos do mockup e da 0.1.0 (passo 5)
+
+Valores que a identidade já usa, agora com nome nos tokens:
+
+10. **Linhas** (`borderWidth`): fina 1 (contorno do Cancelar, anel do chip) e grossa 1,5 (chip escolhido, tracejado
+    do Adicionar). Origem: **mockup** `X-DocComponentes` (Botões, Chips de escolha, Segmentado).
+11. **Estados** (`state`): apagado com opacidade 0,4; no hover, véu cinza a 10% (`rgb(127 127 127 / 0.1)`) por cima do
+    fundo; no celular, opacidade 0,8 ao tocar. Origem: **0.1.0** (`legacy/ui`), que segue o "Bloqueado aparece
+    apagado" do mockup.
+12. **Girador** (`loaderStroke`): traço de 2,5 e uma volta em 800 ms (`duration.spin`); o tamanho é o do ícone.
+    Origem: **0.1.0**. Para carregar uma tela, a identidade usa blocos cinza (`X-DocEstados`, "Sem girador").
+13. **Ícones** (`icons`, `iconGrid`): os da 0.1.0, traço de 1,8 numa caixa de 22, na cor do texto.
+14. **Letra** (`fonts.css`): a Roboto 400, 500 e 700 vem no pacote (licença OFL), como na 0.1.0, para funcionar sem
+    internet e com CSP fechado.
