@@ -4,4 +4,4 @@ export {
 } from "./context";
 export { defaultMessages, type CountifyMessages } from "./messages";
 export { createTheme, defaultTheme, mergeTheme, type ComponentTheme, type CountifyTheme, type ThemeOverride } from "./theme";
-export { formatNumber, highlighter, type FormatNumberOptions } from "./format";
+export { applyMask, formatNumber, highlighter, numberSeparators, parseNumber, type FormatNumberOptions } from "./format";

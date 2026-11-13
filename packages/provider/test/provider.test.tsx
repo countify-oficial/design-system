@@ -83,3 +83,18 @@ describe("formatNumber", () => {
     expect(formatNumber(1284.5, { locale: "en-US" })).toBe("1,284.5");
   });
 });
+
+describe("parseNumber e applyMask", () => {
+  it("lê números no idioma", async () => {
+    const { parseNumber } = await import("../src/index");
+    expect([parseNumber("1.284,5"), parseNumber("-21,40"), parseNumber(""), parseNumber("abc"), parseNumber("1,284.5", "en-US")]).toEqual([1284.5, -21.4, undefined, undefined, 1284.5]);
+  });
+
+  it("aplica máscara de telefone, CPF e CEP; ignora o que não cabe", async () => {
+    const { applyMask } = await import("../src/index");
+    expect(applyMask("85999990000", "(99) 99999-9999")).toEqual({ masked: "(85) 99999-0000", raw: "85999990000" });
+    expect(applyMask("123.456.789-0", "999.999.999-99")).toEqual({ masked: "123.456.789-0", raw: "1234567890" });
+    expect(applyMask("60a1", "99999-999")).toEqual({ masked: "601", raw: "601" });
+    expect(applyMask("abc12", "aaa-99")).toEqual({ masked: "abc-12", raw: "abc12" });
+  });
+});

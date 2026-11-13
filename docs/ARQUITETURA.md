@@ -85,4 +85,9 @@ o modo e os textos. Componentes leem com `useComponentProps(nome, padrão, props
   da web).
 - **Ícones**: o desenho (`icons`) fica nos tokens, como o resto da identidade. Na web o `Icon` é um `<svg>`; no
   celular, `SvgXml` com o mesmo texto (`iconSvg`).
+- **Campos**: `InputWrapper` (rótulo, descrição, erro), `Input` (a caixa) e `InputBase` (os dois juntos, ligados por id e
+  `aria-describedby`). Os outros campos são um `InputBase` com o seu comportamento. O padrão é o do mockup (fundo de
+  campo, sem contorno); `variant="outline"` põe a borda, para campo sobre cartão.
+- **Lint do celular**: o `native` usa `@countify-oficial/eslint-config/native`, sem as regras de acessibilidade do DOM
+  (jsx-a11y); a acessibilidade do celular é conferida nos testes.
 - **Movimento**: as durações vêm dos tokens; com "reduzir movimento" (`useReducedMotion`), viram 0 nas duas plataformas.

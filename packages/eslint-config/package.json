@@ -6,11 +6,13 @@
   "type": "module",
   "files": [
     "index.js",
-    "react.js"
+    "react.js",
+    "native.js"
   ],
   "exports": {
     ".": "./index.js",
-    "./react": "./react.js"
+    "./react": "./react.js",
+    "./native": "./native.js"
   },
   "peerDependencies": {
     "eslint": "^9.39.0"

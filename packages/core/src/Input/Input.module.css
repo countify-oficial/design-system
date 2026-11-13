@@ -1,0 +1,120 @@
+/* "Campo e busca" do mockup: rótulo sempre visível, campo de 48 no fundo de campo, canto de 12, sem contorno (filled).
+   outline acrescenta o anel da borda (0.1.0), para campo sobre cartão. Foco e erro: anel de 2 (0.1.0). */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  min-width: 0;
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.label {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.required {
+  margin-inline-start: var(--cf-space-1);
+  color: var(--cf-color-down);
+}
+
+.description {
+  margin: 0;
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.error {
+  margin: 0;
+  color: var(--cf-color-down);
+  font-size: var(--cf-font-size-sm);
+}
+
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-3);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--input-height);
+  padding-inline: var(--cf-space-4);
+  border-radius: var(--input-radius);
+  background-color: var(--cf-color-field);
+  color: var(--cf-color-text2);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-variant="outline"] {
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-border);
+}
+
+.root:focus-within {
+  box-shadow: inset 0 0 0 var(--cf-focus-ring-width) var(--cf-color-accent);
+}
+
+.root[data-error] {
+  box-shadow: inset 0 0 0 var(--cf-focus-ring-width) var(--cf-color-down);
+}
+
+.root[data-disabled] {
+  opacity: var(--cf-disabled-opacity);
+}
+
+.input {
+  flex: 1;
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  appearance: none;
+  background: transparent;
+  color: var(--cf-color-text);
+  font: inherit;
+  font-size: var(--input-fz);
+  text-align: start;
+}
+
+.input::placeholder {
+  color: var(--cf-color-text3);
+  opacity: 1;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.input[data-multiline] {
+  padding-block: var(--cf-space-3);
+  resize: vertical;
+}
+
+.input[data-autosize] {
+  min-height: calc(var(--input-min-rows) * 1lh + 2 * var(--cf-space-3));
+  max-height: calc(var(--input-max-rows) * 1lh + 2 * var(--cf-space-3));
+  field-sizing: content;
+  resize: none;
+}
+
+.input[data-placeholder] {
+  color: var(--cf-color-text3);
+}
+
+.section {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--cf-color-text2);
+}
+
+/* um ActionIcon de 44 no canto encosta na borda, como o da 0.1.0 */
+.section[data-position="right"] {
+  margin-inline-end: calc(-1 * var(--cf-space-3));
+}
+
+.section[data-pointer-events="none"] {
+  pointer-events: none;
+}

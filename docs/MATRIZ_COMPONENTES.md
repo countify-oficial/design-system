@@ -104,3 +104,20 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |
 | Collapse | ok | ok | adaptado | na web anima pela grade (CSS); no celular, a altura medida com `Animated` |
 | Accordion | ok | ok | adaptado | no celular, `accessibilityState.expanded`; sem navegação por setas (não há teclado) |
+
+### Campos
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Input, InputBase | ok | ok | adaptado | no celular o foco e o erro são borda (não há anel por dentro) e o recuo diminui junto, para o texto não pular |
+| TextInput | ok | ok | ok | |
+| Textarea | ok | ok | adaptado | no celular, sem autosize (o campo de várias linhas do sistema já cresce) |
+| PasswordInput | ok | ok | ok | |
+| NumberInput | ok | ok | adaptado | no celular, teclado numérico do sistema; sem setas do teclado |
+| NativeSelect | ok | ok | N/A | o React Native não tem `<select>`; no celular, use Select (passo da Combobox), que abre a folha |
+| FileInput | ok | ok | N/A | igual ao FileButton: no celular, `expo-document-picker` |
+| JsonInput | ok | ok | ok | |
+| MaskInput | ok | ok | ok | a máscara (`applyMask`) é a mesma nas duas plataformas |
+| PhoneInput | ok | ok | ok | Brasil, com DDD; fixo e celular |
+| PinInput | ok | ok | adaptado | no celular a primeira caixa recebe o código do SMS (`oneTimeCode`, `sms-otp`) |
+| Fieldset | ok | ok | adaptado | no celular `disabled` bloqueia o toque no grupo (não há `<fieldset>`) |

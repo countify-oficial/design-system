@@ -6,6 +6,18 @@ export interface CountifyMessages {
   showMore: string;
   /** Spoiler aberto */
   showLess: string;
+  /** botão do PasswordInput */
+  showPassword: string;
+  hidePassword: string;
+  /** botões do NumberInput */
+  increment: string;
+  decrement: string;
+  /** botão de limpar (FileInput, Select…) */
+  clear: string;
+  /** erro do JsonInput */
+  invalidJson: string;
+  /** marca de campo obrigatório, para o leitor de tela */
+  required: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -13,4 +25,11 @@ export const defaultMessages: CountifyMessages = {
   loading: "Carregando",
   showMore: "Mostrar mais",
   showLess: "Mostrar menos",
+  showPassword: "Mostrar senha",
+  hidePassword: "Ocultar senha",
+  increment: "Aumentar",
+  decrement: "Diminuir",
+  clear: "Limpar",
+  invalidJson: "JSON inválido",
+  required: "obrigatório",
 };
