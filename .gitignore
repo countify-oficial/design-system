@@ -6,3 +6,4 @@ apps/*/dist/
 apps/*/out/
 *.tsbuildinfo
 .DS_Store
+.expo/

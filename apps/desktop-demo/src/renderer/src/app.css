@@ -1,0 +1,7 @@
+/* como um app faria no <body>: fundo, cor e letra pelos tokens */
+body {
+  margin: 0;
+  background: var(--cf-color-bg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+}

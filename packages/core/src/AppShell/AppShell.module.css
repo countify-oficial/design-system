@@ -78,6 +78,11 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  /* o item pode ser link ou botão (component="button"): sem a borda, o fundo e a letra do navegador */
+  margin: 0;
+  border: 0;
+  background-color: transparent;
+  font: inherit;
   color: var(--cf-color-label);
   font-weight: var(--cf-font-weight-medium);
   text-decoration: none;

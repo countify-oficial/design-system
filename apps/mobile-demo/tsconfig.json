@@ -1,0 +1,6 @@
+{
+  "extends": "@countify-oficial/tsconfig/react.json",
+  // os tipos dos pacotes da Countify vêm da entrada do React Native
+  "compilerOptions": { "types": ["jest"], "customConditions": ["react-native"] },
+  "include": ["src", "test", "*.ts"]
+}

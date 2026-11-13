@@ -1,0 +1,48 @@
+{
+  "name": "@countify-oficial/desktop-demo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Demonstração para Electron: o @countify-oficial/core num app de desktop com preload tipado, contextIsolation ligado e nodeIntegration desligado",
+  "type": "module",
+  "main": "./dist/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "smoke": "electron-vite build && electron .",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@countify-oficial/charts": "workspace:*",
+    "@countify-oficial/core": "workspace:*",
+    "@countify-oficial/dates": "workspace:*",
+    "@countify-oficial/modals": "workspace:*",
+    "@countify-oficial/notifications": "workspace:*",
+    "@countify-oficial/provider": "workspace:*",
+    "@countify-oficial/spotlight": "workspace:*",
+    "@countify-oficial/tokens": "workspace:*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@countify-oficial/eslint-config": "workspace:*",
+    "@countify-oficial/test-utils": "workspace:*",
+    "@countify-oficial/tsconfig": "workspace:*",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "electron": "45.1.0",
+    "electron-vite": "6.0.0",
+    "eslint": "9.39.5",
+    "jsdom": "31.0.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.5",
+    "vitest": "5.1.0"
+  }
+}

@@ -23,6 +23,8 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/code-highlight` | `CodeHighlight`: bloco de código com realce próprio (TypeScript, JSON, shell, CSS) e o link Copiar (web e React Native) | em andamento (0.1.0) |
 | `@countify-oficial/test-utils` | interno: a preparação do jsdom e o axe dos testes da web dos pacotes de extensão | privado |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
+| `apps/desktop-demo` | app de Electron (electron-vite) com os pacotes da web juntos: processo principal e preload em `.ts`, renderer em `.tsx`, preload tipado (`window.countify`), `contextIsolation` ligado, `nodeIntegration` desligado e sandbox | demonstração |
+| `apps/mobile-demo` | galeria em Expo (SDK 58) com o `@countify-oficial/native` e as extensões, nas quatro abas do mockup; roda também no navegador pelo react-native-web | demonstração |
 | pacotes de extensão (`dates`, `charts`…) | componentes | próximos passos |
 
 A origem de cada token está em [docs/TOKENS_COUNTIFY.md](docs/TOKENS_COUNTIFY.md); a organização do repositório em
@@ -95,6 +97,18 @@ pnpm install
 pnpm check             # build, tipos, lint e testes de todos os pacotes
 ```
 
+### Apps de demonstração
+
+```bash
+pnpm --filter @countify-oficial/desktop-demo dev     # Electron com recarga
+pnpm --filter @countify-oficial/desktop-demo smoke   # build e abre o app; COUNTIFY_SMOKE=foto.png fotografa a janela e fecha
+pnpm --filter @countify-oficial/mobile-demo start    # Expo (i: simulador iOS, a: Android, w: navegador)
+```
+
+Num terminal do VS Code, rode o Electron com `env -u ELECTRON_RUN_AS_NODE`: o VS Code deixa essa variável ligada e o
+Electron vira Node puro. Na galeria, o Metro usa a entrada `react-native` dos pacotes também na web
+(`metro.config.cjs`), para o navegador mostrar o mesmo que o celular.
+
 ## Dependências e por quê
 
 De execução, os pacotes só pedem o que o app já tem (dependências "peer"): React 19 (e o React DOM na web), e no
@@ -118,6 +132,8 @@ desenvolvimento:
 | `@floating-ui/react` (no core) | posição de Popover, Tooltip, HoverCard e Menu, com as interações acessíveis (Esc, clique fora, foco, setas); previsto na especificação |
 | Storybook 10 (`react-vite`, `addon-docs`, `addon-a11y`) + Vite 8 | documentação da web: as histórias de cada componente, a tabela de props lida dos comentários do código e a checagem de acessibilidade no navegador |
 | Jest + React Native Testing Library (+ `@react-native/jest-preset`, Babel 7, `test-renderer`) | testes do React Native, como a especificação pede; o Vitest não roda o React Native |
+| Electron 45 + electron-vite 6 + `@vitejs/plugin-react` (só no `apps/desktop-demo`) | o app de desktop que a especificação pede, com o build de processo principal, preload e renderer num comando |
+| Expo 58 (`expo-font`, `expo-status-bar`, `react-native-safe-area-context`, `react-native-web`, `@expo-google-fonts/roboto` e `roboto-mono`; `jest-expo` nos testes) (só no `apps/mobile-demo`) | a galeria do celular que a especificação pede; as fontes são as que os tokens nomeiam, e a área segura vem do sistema |
 
 Dependências de execução previstas na especificação (`@floating-ui`, react-aria ou Radix, react-native-reanimated,
 react-native-gesture-handler) entram nesta tabela, com o motivo, quando o primeiro componente precisar delas.
