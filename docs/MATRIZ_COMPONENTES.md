@@ -136,3 +136,20 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | HueSlider, AlphaSlider | ok | ok | adaptado | igual ao Slider; o trilho de cor é um gradiente do `react-native-svg` |
 | AngleSlider | ok | ok | adaptado | igual ao Slider |
 | ColorPicker | ok | ok | adaptado | a área de saturação e brilho é um gradiente do `react-native-svg`; no leitor de tela, ajusta a saturação |
+
+### Sobreposições
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Overlay | ok | ok | ok | o véu da identidade (scrim a 72%) |
+| LoadingOverlay | ok | ok | ok | |
+| Modal | ok | ok | adaptado | no celular, o `Modal` do sistema; o voltar do Android fecha; `accessibilityViewIsModal` |
+| Drawer | ok | ok | adaptado | folha que sobe no celular e painel de 380 a partir de 768 (identidade); no celular, o `Modal` do sistema |
+| Dialog | ok | ok | adaptado | no celular não há portal: ponha no topo da tela |
+| Affix | ok | ok | adaptado | igual ao Dialog |
+| ActionBar | ok | ok | adaptado | igual ao Dialog |
+| Popover | ok | ok | adaptado | no celular abre numa folha que sobe (a identidade troca popover por folha) |
+| Menu | ok | ok | adaptado | no celular, uma folha com as ações em linhas de 56 |
+| HoverCard | ok | ok | adaptado | no celular não há hover: abre numa folha com o toque longo |
+| Tooltip | ok | ok | adaptado | no celular aparece enquanto o dedo segura o alvo e vira a dica do leitor de tela |
+| ColorInput | ok | ok | adaptado | no celular o seletor abre numa folha |

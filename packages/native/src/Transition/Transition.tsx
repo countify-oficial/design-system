@@ -3,7 +3,7 @@ import { duration as duracoes, transition as distancias, type easing } from "@co
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Animated, Easing, type StyleProp, type ViewStyle } from "react-native";
 
-export type TransitionName = "fade" | "scale" | "slide-up" | "slide-down";
+export type TransitionName = "fade" | "scale" | "slide-up" | "slide-down" | "slide-left" | "slide-right";
 export type TransitionDuration = "fast" | "base" | "slow";
 
 export interface TransitionProps {
@@ -67,6 +67,8 @@ export function Transition({
     transition === "scale" ? [{ scale: de(distancias.scale) }]
     : transition === "slide-up" ? [{ translateY: de(distancias.slide) }]
     : transition === "slide-down" ? [{ translateY: de(-distancias.slide) }]
+    : transition === "slide-left" ? [{ translateX: de(distancias.slide) }]
+    : transition === "slide-right" ? [{ translateX: de(-distancias.slide) }]
     : undefined;
   return (
     <Animated.View style={[{ opacity: progresso, transform: movimento }, style, !visivel && { display: "none" }]}>{children}</Animated.View>

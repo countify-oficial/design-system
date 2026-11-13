@@ -4,7 +4,7 @@ import { colors, palette, type ColorScheme } from "./colors.js";
 import { iconGrid } from "./icons.js";
 import {
   avatarSize, controlFontSize, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
-  compactRowHeight, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sidePanelWidth, switchSize, space, spacing, state,
+  compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, switchSize, space, spacing, state,
   borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
 
@@ -51,6 +51,8 @@ export function createCssVariables(): string {
     ...each("switch", switchSize, "px"),
     decl("overline-tracking", `${overlineTracking}em`),
     decl("side-panel-width", `${sidePanelWidth}px`),
+    decl("dialog-width", `${dialogWidth}px`),
+    ...each("sheet-handle", sheetHandle, "px"),
     ...Object.entries(shadows).map(([k, kind]) => decl(`shadow-${k}`, kind === "ring" ? ring : raised)),
     ...each("z", zIndex),
     ...each("duration", duration, "ms"),
@@ -61,6 +63,7 @@ export function createCssVariables(): string {
     decl("disabled-opacity", state.disabledOpacity),
     decl("hover-veil", state.hoverVeil),
     decl("pulse-opacity", state.pulseOpacity),
+    decl("scrim-opacity", state.scrimOpacity),
     ...each("border", borderWidth, "px"),
     decl("loader-stroke", `${loaderStroke}px`),
     decl("icon-stroke", iconGrid.stroke),

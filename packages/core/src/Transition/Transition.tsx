@@ -2,13 +2,13 @@ import { useReducedMotion } from "@countify-oficial/hooks";
 import { duration as duracoes, easing as curvas } from "@countify-oficial/tokens";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
-export type TransitionName = "fade" | "scale" | "slide-up" | "slide-down";
+export type TransitionName = "fade" | "scale" | "slide-up" | "slide-down" | "slide-left" | "slide-right";
 export type TransitionDuration = "fast" | "base" | "slow";
 
 export interface TransitionProps {
   /** Mostra (true) ou esconde (false), com a animação. */
   mounted: boolean;
-  /** fade: só opacidade; scale: cresce de 0,95; slide-up e slide-down: desliza 8 px. Todas com fade. Padrão: fade. */
+  /** fade: só opacidade; scale: cresce de 0,95; slide-up, slide-down, slide-left e slide-right: desliza 8 px. Todas com fade. Padrão: fade. */
   transition?: TransitionName | undefined;
   /** fast 120, base 150 ou slow 200 ms. Padrão: base. Com "reduzir movimento" ligado, 0. */
   duration?: TransitionDuration | undefined;
@@ -31,12 +31,16 @@ const fora: Record<TransitionName, CSSProperties> = {
   scale: { opacity: 0, transform: "scale(var(--cf-transition-scale))" },
   "slide-up": { opacity: 0, transform: "translateY(var(--cf-transition-slide))" },
   "slide-down": { opacity: 0, transform: "translateY(calc(-1 * var(--cf-transition-slide)))" },
+  "slide-left": { opacity: 0, transform: "translateX(var(--cf-transition-slide))" },
+  "slide-right": { opacity: 0, transform: "translateX(calc(-1 * var(--cf-transition-slide)))" },
 };
 const dentro: Record<TransitionName, CSSProperties> = {
   fade: { opacity: 1 },
   scale: { opacity: 1, transform: "scale(1)" },
   "slide-up": { opacity: 1, transform: "translateY(0)" },
   "slide-down": { opacity: 1, transform: "translateY(0)" },
+  "slide-left": { opacity: 1, transform: "translateX(0)" },
+  "slide-right": { opacity: 1, transform: "translateX(0)" },
 };
 
 /** Anima a entrada e a saída de um elemento com as durações e curvas dos tokens. */

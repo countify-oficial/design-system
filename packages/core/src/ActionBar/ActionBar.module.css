@@ -1,0 +1,22 @@
+/* barra de ações sobre a lista (itens escolhidos): cartão com a sombra da identidade, embaixo e no centro */
+.root {
+  position: fixed;
+  z-index: var(--cf-z-app);
+  bottom: calc(var(--cf-space-6) + env(safe-area-inset-bottom));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  max-width: calc(100vw - 2 * var(--cf-gutter-mobile));
+  min-height: var(--cf-button-height-md);
+  padding: var(--cf-space-1) var(--cf-space-2) var(--cf-space-1) var(--cf-space-4);
+  border-radius: var(--cf-radius-md);
+  background-color: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-lg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  translate: -50% 0;
+}

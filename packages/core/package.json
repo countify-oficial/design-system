@@ -45,7 +45,8 @@
   "dependencies": {
     "@countify-oficial/hooks": "workspace:^",
     "@countify-oficial/provider": "workspace:^",
-    "@countify-oficial/tokens": "workspace:^"
+    "@countify-oficial/tokens": "workspace:^",
+    "@floating-ui/react": "0.27.20"
   },
   "peerDependencies": {
     "react": "^19.0.0",

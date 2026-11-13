@@ -1,0 +1,15 @@
+/* menus e popovers do computador: cartão, canto de 16, a sombra da identidade */
+.dropdown {
+  z-index: var(--cf-z-dropdown);
+  box-sizing: border-box;
+  max-width: calc(100vw - 2 * var(--cf-gutter-mobile));
+  padding: var(--cf-space-4);
+  border-radius: var(--cf-radius-md);
+  background-color: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-lg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height);
+  outline: none;
+}

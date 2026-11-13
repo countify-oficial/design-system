@@ -174,3 +174,5 @@ Valores que a identidade já usa, agora com nome nos tokens:
 21. **Interruptor** (`switchSize`): trilho de 52 × 32, bolinha de 24 (recuo de 4). Origem: **mockup** `X-DocComponentes`.
 22. **Estrela** (`icons.star`): acrescentada para o Rating, no traço do conjunto (1,8 numa caixa de 22). Não vem da
     identidade nem da 0.1.0: **a confirmar com o design**.
+23. **Alerta, folha e véu** (`dialogWidth`, `sheetHandle`, `state.scrimOpacity`): alerta de 440, alça da folha de
+    36 × 4 na cor da borda forte, véu na cor scrim a 72%. Origem: **mockup** (`W-Confirmar`, telas M- com folha).

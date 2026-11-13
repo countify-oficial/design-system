@@ -1,0 +1,30 @@
+/* o véu da identidade: a cor scrim a 72% (mockup W-Confirmar), por baixo do que está por cima */
+.root {
+  position: absolute;
+  inset: 0;
+  z-index: var(--overlay-z);
+  border-radius: var(--overlay-radius);
+}
+
+.root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--cf-color-scrim);
+  opacity: var(--overlay-opacity, var(--cf-scrim-opacity));
+}
+
+.root[data-fixed] {
+  position: fixed;
+}
+
+.root[data-center] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.root > * {
+  position: relative;
+}

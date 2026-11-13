@@ -1,0 +1,63 @@
+/* "Alerta no centro" do mockup: 440, recuo de 24, canto de 16, sobre o véu */
+.inner {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cf-z-overlay);
+  display: flex;
+  align-items: var(--modal-align);
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--cf-gutter-mobile);
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--modal-size);
+  padding: var(--cf-space-6);
+  border-radius: var(--cf-radius-md);
+  background-color: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-lg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height);
+}
+
+.inner[data-full-screen] {
+  padding: 0;
+}
+
+.inner[data-full-screen] .content {
+  max-width: none;
+  min-height: 100%;
+  border-radius: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--cf-heading-section-size);
+  font-weight: var(--cf-font-weight-bold);
+  line-height: var(--cf-heading-section-line-height);
+}
+
+.close {
+  margin: calc(-1 * var(--cf-space-3)) calc(-1 * var(--cf-space-3)) 0 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-3);
+}

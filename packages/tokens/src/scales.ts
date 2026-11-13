@@ -59,6 +59,10 @@ export const listRowHeight = 64;
 export const switchSize = { width: 52, height: 32, thumb: 24 } as const;
 /** Linha compacta de 56: lista com caixas, interruptor e cabeçalho do acordeão (mockup X-DocComponentes e 0.1.0). */
 export const compactRowHeight = 56;
+/** Alerta no centro (mockup W-Confirmar): 440 de largura. */
+export const dialogWidth = 440;
+/** Alça da folha que sobe (mockup, telas M- com folha): 36 × 4, na cor da borda forte. */
+export const sheetHandle = { width: 36, height: 4 } as const;
 /** Painel lateral no computador (a folha vira painel a partir de 768). */
 export const sidePanelWidth = 380;
 
@@ -73,7 +77,7 @@ export const raisedShadow = {
 } as const;
 
 // ---------- estados (0.1.0): apagado, véu do hover (web) e opacidade ao tocar (celular)
-export const state = { disabledOpacity: 0.4, hoverVeil: "rgb(127 127 127 / 0.1)", pressedOpacity: 0.8, pulseOpacity: 0.5 } as const;
+export const state = { disabledOpacity: 0.4, hoverVeil: "rgb(127 127 127 / 0.1)", pressedOpacity: 0.8, pulseOpacity: 0.5, scrimOpacity: 0.72 } as const;
 
 // ---------- "Carregando" do mockup (X-DocEstados): os três blocos do cartão de número (rótulo, número e variação)
 export const skeletonStat = {

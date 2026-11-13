@@ -1,5 +1,5 @@
 import { cleanup } from "@testing-library/react";
-import { axe } from "jest-axe";
+import { configureAxe } from "jest-axe";
 import { afterEach, expect } from "vitest";
 
 afterEach(cleanup);
@@ -20,6 +20,12 @@ if (typeof window !== "undefined") {
   window.matchMedia = (query: string) =>
     ({ matches: false, media: query, onchange: null, addEventListener() {}, removeEventListener() {}, dispatchEvent: () => false }) as unknown as MediaQueryList;
 }
+
+// As guardas de foco do Floating UI (Popover, Menu…) são <span role="button"> invisíveis e sem nome que só passam o
+// foco adiante; é o jeito da biblioteca. A regra aria-command-name continua valendo para todo o resto.
+const axe = configureAxe({
+  globalOptions: { rules: [{ id: "aria-command-name", selector: '[role="link"], [role="button"]:not([data-floating-ui-focus-guard]), [role="menuitem"]' }] },
+});
 
 /** Acessibilidade pelo axe-core: nenhuma violação no que foi desenhado. */
 export async function semViolacoes(container: Element) {

@@ -1,0 +1,15 @@
+/* cores invertidas, como o aviso flutuante */
+.tooltip {
+  z-index: var(--cf-z-tooltip);
+  box-sizing: border-box;
+  max-width: var(--tooltip-width, calc(var(--cf-side-panel-width) - 2 * var(--cf-space-6)));
+  padding: var(--cf-space-1) var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-text);
+  color: var(--cf-color-bg);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+  pointer-events: none;
+}

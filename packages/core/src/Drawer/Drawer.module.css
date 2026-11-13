@@ -1,0 +1,119 @@
+/* "Folha que sobe" no celular (topo de 24, alça, folha) e "Painel lateral de 380 px à direita" no computador.
+   A media query repete tokens.breakpoints.sm (768); o teste test/css.test.ts confere. */
+.inner {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cf-z-overlay);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-5);
+  box-sizing: border-box;
+  max-height: calc(100dvh - var(--cf-touch-target));
+  overflow-y: auto;
+  padding: var(--cf-space-2) var(--cf-gutter-mobile) calc(var(--cf-space-5) + env(safe-area-inset-bottom));
+  border-radius: var(--cf-radius-xl) var(--cf-radius-xl) 0 0;
+  background-color: var(--cf-color-sheet);
+  box-shadow: var(--cf-shadow-lg);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height);
+}
+
+/* a alça da folha */
+.content::before {
+  content: "";
+  flex: none;
+  align-self: center;
+  width: var(--cf-sheet-handle-width);
+  height: var(--cf-sheet-handle-height);
+  border-radius: calc(var(--cf-sheet-handle-height) / 2);
+  background-color: var(--cf-color-border-strong);
+}
+
+.inner[data-position="right"],
+.inner[data-position="left"] {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.inner[data-position="left"] {
+  justify-content: flex-start;
+}
+
+.inner[data-position="right"] .content,
+.inner[data-position="left"] .content {
+  width: var(--drawer-size);
+  max-width: 100%;
+  max-height: none;
+  padding: var(--cf-space-6);
+  border-radius: 0;
+  box-shadow: var(--cf-shadow-lg);
+}
+
+.inner[data-position="right"] .content::before,
+.inner[data-position="left"] .content::before {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .inner[data-position-sm="right"],
+  .inner[data-position-sm="left"] {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .inner[data-position-sm="left"] {
+    justify-content: flex-start;
+  }
+
+  .inner[data-position-sm="right"] .content,
+  .inner[data-position-sm="left"] .content {
+    width: var(--drawer-size);
+    max-width: 100%;
+    max-height: none;
+    padding: var(--cf-space-6);
+    border-radius: 0;
+  }
+
+  .inner[data-position-sm="right"] .content::before,
+  .inner[data-position-sm="left"] .content::before {
+    display: none;
+  }
+
+  .inner[data-position-sm="bottom"] {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--cf-heading-screen-title-size);
+  font-weight: var(--cf-font-weight-bold);
+  line-height: var(--cf-heading-screen-title-line-height);
+}
+
+.close {
+  margin: calc(-1 * var(--cf-space-3)) calc(-1 * var(--cf-space-3)) 0 0;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--cf-space-4);
+}
