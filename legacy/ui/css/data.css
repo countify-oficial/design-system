@@ -1,0 +1,91 @@
+/* Dados: número, lista, blocos de ícone, pessoa, etiquetas, situação, termos, tabela, progresso, ranking, acordeão, passos, paginação. */
+.cf-stat { gap: 4px; padding: 16px; }
+.cf-stat__label { display: flex; align-items: center; gap: 4px; min-height: 22px; font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-stat__value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
+.cf-stat__number { font-size: var(--cf-font-size-number); font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.cf-stat__unit { font-size: var(--cf-font-size-body); color: var(--cf-text2); }
+.cf-stat__detail { font-size: var(--cf-font-size-label); color: var(--cf-text2); font-variant-numeric: tabular-nums; }
+.cf-change { font-size: var(--cf-font-size-label); font-weight: 500; font-variant-numeric: tabular-nums; }
+.cf-change--up { color: var(--cf-up); }
+.cf-change--down { color: var(--cf-down); }
+.cf-change--flat { color: var(--cf-text2); }
+.cf-change__base { font-weight: 400; color: var(--cf-text2); }
+
+/* lista em cartão; linhas de 64 com divisória recuada */
+.cf-list { margin: 0; padding: 0; overflow: hidden; list-style: none; border-radius: var(--cf-radius-card); background: var(--cf-card); box-shadow: inset 0 0 0 1px var(--cf-divider); }
+.cf-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: var(--cf-size-row); padding: 12px 16px; border: 0; background: none; color: var(--cf-text); font: inherit; text-align: left; text-decoration: none; }
+:is(a, button).cf-row { cursor: pointer; }
+.cf-list > li + li > :is(.cf-row, .cf-check) { width: calc(100% - 16px); margin-left: 16px; padding-left: 0; border-top: 1px solid var(--cf-divider); }
+.cf-row-text { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.cf-row-title { font-size: var(--cf-font-size-body); font-weight: 500; }
+.cf-row-title--accent { color: var(--cf-accent); }
+.cf-row-title--down { color: var(--cf-down); }
+.cf-row-sub { font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-row-trailing { flex: none; font-size: var(--cf-font-size-label); color: var(--cf-text2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cf-row-chevron { color: var(--cf-text3); }
+
+.cf-tile { display: grid; flex: none; place-items: center; width: var(--cf-size-tile); height: var(--cf-size-tile); border-radius: var(--cf-radius-control); background: var(--cf-accent-tint); color: var(--cf-accent); }
+.cf-tile--neutral { background: var(--cf-chip); color: var(--cf-text2); }
+.cf-tile--up { background: var(--cf-up-tint); color: var(--cf-up); }
+.cf-tile--down { background: var(--cf-chip); color: var(--cf-down); }
+.cf-tile--round { border-radius: 50%; }
+
+.cf-avatar { display: grid; flex: none; place-items: center; width: var(--cf-avatar, 40px); height: var(--cf-avatar, 40px); overflow: hidden; border-radius: 50%; background: var(--cf-accent-tint); color: var(--cf-accent); font-size: var(--cf-font-size-label); font-weight: 700; }
+.cf-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.cf-badge { display: inline-flex; flex: none; width: fit-content; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 8px; border-radius: var(--cf-radius-segment); background: var(--cf-chip); color: var(--cf-label); font-size: var(--cf-font-size-small); font-weight: 500; white-space: nowrap; }
+.cf-badge--accent { background: var(--cf-accent-tint); color: var(--cf-accent); }
+.cf-badge--danger { border-radius: 12px; background: var(--cf-down); color: var(--cf-bg); font-weight: 700; }
+
+.cf-status { display: inline-flex; align-items: center; gap: 8px; font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-status::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.cf-status--ok { color: var(--cf-up); }
+.cf-status--danger { color: var(--cf-down); }
+
+.cf-details { display: flex; flex-direction: column; margin: 0; }
+.cf-details > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: var(--cf-size-field); }
+.cf-details > div + div { border-top: 1px solid var(--cf-divider); }
+.cf-details dt { font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-details dd { margin: 0; font-size: var(--cf-font-size-body); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.cf-details dd.cf-tone-up { color: var(--cf-up); } .cf-details dd.cf-tone-down { color: var(--cf-down); } .cf-details dd.cf-tone-accent { color: var(--cf-accent); }
+
+/* tabela: cabeçalho e primeira coluna fixos, rola de lado quando não cabe */
+.cf-table-wrap { overflow: auto; border: 1px solid var(--cf-divider); border-radius: var(--cf-radius-card); background: var(--cf-card); }
+.cf-table { width: 100%; border-collapse: collapse; font-size: var(--cf-font-size-label); font-variant-numeric: tabular-nums; }
+.cf-table :is(th, td) { padding: 12px 16px; text-align: left; white-space: nowrap; }
+.cf-table thead th { position: sticky; top: 0; z-index: 1; background: var(--cf-card); border-bottom: 1px solid var(--cf-divider); color: var(--cf-text2); font-size: var(--cf-font-size-small); font-weight: 700; }
+.cf-table thead th[aria-sort] { color: var(--cf-accent); }
+.cf-table thead button { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.cf-table tbody th { font-weight: 500; }
+.cf-table tbody tr + tr > * { border-top: 1px solid var(--cf-divider); }
+.cf-table :is(tbody th, thead th:first-child) { position: sticky; left: 0; background: var(--cf-card); }
+.cf-table thead th:first-child { z-index: 2; }
+.cf-table .cf-num { text-align: right; }
+
+.cf-progress { position: relative; height: 8px; border-radius: 4px; background: var(--cf-border-strong); }
+.cf-progress__fill { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--cf-accent); }
+.cf-progress__marker { position: absolute; top: -4px; width: 2px; height: 16px; margin-left: -1px; border-radius: 1px; background: var(--cf-text); }
+
+.cf-barlist { margin: 0; padding: 0; list-style: none; border-radius: var(--cf-radius-card); background: var(--cf-card); box-shadow: inset 0 0 0 1px var(--cf-divider); }
+.cf-barlist > li { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+.cf-barlist > li + li { border-top: 1px solid var(--cf-divider); }
+.cf-barlist__head, .cf-barlist__foot { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cf-barlist__name { min-width: 0; font-size: var(--cf-font-size-body); font-weight: 500; }
+.cf-barlist__value { font-size: var(--cf-font-size-page-title); font-weight: 700; font-variant-numeric: tabular-nums; }
+.cf-barlist__detail { font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+
+.cf-accordion { border-radius: var(--cf-radius-card); background: var(--cf-card); box-shadow: inset 0 0 0 1px var(--cf-divider); }
+.cf-accordion > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 16px; border-radius: var(--cf-radius-card); font-size: var(--cf-font-size-body); font-weight: 500; list-style: none; cursor: pointer; }
+.cf-accordion > summary::-webkit-details-marker { display: none; }
+.cf-accordion > summary .cf-svg { color: var(--cf-text2); transition: transform 0.15s; }
+.cf-accordion[open] > summary .cf-svg { transform: rotate(180deg); }
+.cf-accordion__body { display: flex; flex-direction: column; gap: 12px; padding: 0 16px 16px; }
+
+.cf-steps { display: flex; flex-direction: column; gap: 8px; }
+.cf-steps__bars { display: grid; grid-template-columns: repeat(var(--cf-n, 2), minmax(0, 1fr)); gap: 4px; }
+.cf-steps__bar { height: 4px; border-radius: 2px; background: var(--cf-border-strong); }
+.cf-steps__bar[data-done] { background: var(--cf-accent); }
+.cf-steps__label { font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-steps__label b { font-weight: 500; color: var(--cf-text); }
+
+.cf-pagination { display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: var(--cf-font-size-label); color: var(--cf-text2); font-variant-numeric: tabular-nums; }

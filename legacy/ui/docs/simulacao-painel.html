@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel com a proposta</title>
+<link rel="stylesheet" href="../dist/countify.css">
+<style>
+  body { background: var(--cf-bg); }
+  main { max-width: 1240px; margin: 0 auto; padding: 32px 20px 64px; display: flex; flex-direction: column; gap: 20px; }
+  h1 { margin: 0; font-size: 28px; line-height: 1.2; } p { margin: 0; color: var(--cf-text2); font-size: 15px; line-height: 1.4; }
+  .abas { display: flex; flex-wrap: wrap; gap: 8px; }
+  .abas button { font: inherit; font-size: 15px; font-weight: 500; min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--cf-divider); background: var(--cf-card); color: var(--cf-text2); cursor: pointer; }
+  .abas button[aria-pressed="true"] { border: 1.5px solid var(--cf-accent); background: var(--cf-accent-tint); color: var(--cf-accent); }
+  .lado { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 767px) { .lado { grid-template-columns: 1fr; } }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  figcaption { font-size: 15px; font-weight: 700; } figcaption span { font-weight: 400; color: var(--cf-text2); }
+  .moldura { overflow: hidden; border-radius: 16px; box-shadow: inset 0 0 0 1px var(--cf-divider); background: var(--cf-card); }
+  .moldura iframe { border: 0; display: block; transform-origin: 0 0; }
+  .ok { padding: 16px; border-radius: 16px; background: var(--cf-up-tint); color: var(--cf-up); font-weight: 500; }
+</style>
+</head>
+<body>
+<main>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span class="cf-page-header__eyebrow">Simulação · tela 4, Painel</span>
+    <h1>O Painel com a proposta de tokens</h1>
+    <p>À esquerda, o mockup original (Countify/docs/design/mockup). À direita, o mesmo Painel com toda cor trocada pelo token da proposta
+    (var(--t-accent), var(--t-text2)…; os papéis apontam para os degraus das escalas de 10 tons).</p>
+  </div>
+  <div class="ok">Resultado: 0 pixel diferente nas quatro telas (celular e computador, claro e escuro). A proposta não muda nada do que o mockup já define:
+  ela só acrescenta o que falta (escalas, aviso, tamanhos xs–xl, camadas, durações, letra de largura fixa).</div>
+  <div class="abas" role="group" aria-label="Tela">
+    <button type="button" data-t="M-Hoje-claro" aria-pressed="true">Celular · claro</button>
+    <button type="button" data-t="M-Hoje-escuro" aria-pressed="false">Celular · escuro</button>
+    <button type="button" data-t="W-Hoje-claro" aria-pressed="false">Computador · claro</button>
+    <button type="button" data-t="W-Hoje-escuro" aria-pressed="false">Computador · escuro</button>
+  </div>
+  <div class="lado">
+    <figure><figcaption>Mockup <span>· hoje</span></figcaption><div class="moldura"><iframe id="a" title="Mockup"></iframe></div></figure>
+    <figure><figcaption>Proposta <span>· cores vindas dos tokens</span></figcaption><div class="moldura"><iframe id="b" title="Proposta"></iframe></div></figure>
+  </div>
+</main>
+<script>
+  const TAM = { M: [390, 1632], W: [1440, 1060] };
+  function mostra(t) {
+    const [w, h] = TAM[t[0]];
+    for (const [id, v] of [["a", "mockup"], ["b", "proposta"]]) {
+      const f = document.getElementById(id), caixa = f.parentElement;
+      const esc = Math.min(1, caixa.clientWidth / w);
+      f.src = `simulacao/${t}.${v}.html`; f.width = w; f.height = h;
+      f.style.transform = `scale(${esc})`; caixa.style.height = h * esc + "px";
+    }
+    for (const b of document.querySelectorAll(".abas button")) b.setAttribute("aria-pressed", b.dataset.t === t);
+  }
+  let atual = "M-Hoje-claro";
+  for (const b of document.querySelectorAll(".abas button")) b.onclick = () => mostra((atual = b.dataset.t));
+  addEventListener("resize", () => mostra(atual));
+  mostra(atual);
+</script>
+</body>
+</html>

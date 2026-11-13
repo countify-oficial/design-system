@@ -1,0 +1,25 @@
+/* Ações: botão, botão de ícone, ajuda (?) e link de ação. */
+.cf-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--cf-size-button); padding: 0 20px;
+  border: 0; border-radius: var(--cf-radius-control); background: transparent; color: var(--cf-text);
+  font: inherit; font-size: var(--cf-font-size-body); font-weight: 500; line-height: 1.2; white-space: nowrap; text-decoration: none; cursor: pointer;
+}
+.cf-button--primary { background-color: var(--cf-button); color: var(--cf-on-button); font-weight: 700; }
+.cf-button--secondary { box-shadow: inset 0 0 0 1px var(--cf-border-strong); }
+.cf-button--danger { background-color: var(--cf-down); color: var(--cf-bg); font-weight: 700; }
+.cf-button--danger-text { min-height: var(--cf-size-touch); padding: 0 12px; color: var(--cf-down); }
+.cf-button--dashed { border: 1.5px dashed var(--cf-text3); }
+.cf-button--block { display: flex; width: 100%; }
+.cf-button--sm { min-height: var(--cf-size-touch); padding: 0 16px; font-size: var(--cf-font-size-label); }
+.cf-button:disabled, .cf-button[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; }
+.cf-button[aria-busy="true"] { opacity: 1; cursor: progress; }
+.cf-button .cf-spinner { color: inherit; width: 18px; height: 18px; }
+@media (min-width: 768px) { .cf-button:not(.cf-button--block) { min-height: var(--cf-size-touch); padding: 0 16px; font-size: var(--cf-font-size-label); } }
+
+.cf-icon-button { display: inline-flex; flex: none; align-items: center; justify-content: center; width: var(--cf-size-touch); height: var(--cf-size-touch); padding: 0; border: 0; border-radius: var(--cf-radius-control); background: none; color: var(--cf-text); cursor: pointer; }
+.cf-icon-button--filled { background-color: var(--cf-chip); }
+.cf-icon-button:disabled { opacity: 0.4; cursor: not-allowed; }
+/* o "?" não aumenta a altura da linha */
+.cf-help { margin: -10px 0; border-radius: 50%; color: var(--cf-text2); }
+
+.cf-action-link { display: inline-flex; width: fit-content; align-items: center; gap: 4px; min-height: var(--cf-size-touch); padding: 0; border: 0; background: none; color: var(--cf-accent); font: inherit; font-size: var(--cf-font-size-body); font-weight: 500; text-decoration: none; cursor: pointer; }

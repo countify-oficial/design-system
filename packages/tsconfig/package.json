@@ -1,0 +1,10 @@
+{
+  "name": "@countify/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Configurações de TypeScript dos pacotes da Countify",
+  "files": ["base.json"],
+  "exports": {
+    "./base.json": "./base.json"
+  }
+}

@@ -1,0 +1,105 @@
+export declare const colors: {
+    light: {
+        bg: string;
+        card: string;
+        sheet: string;
+        field: string;
+        chip: string;
+        nav: string;
+        text: string;
+        text2: string;
+        text3: string;
+        label: string;
+        accent: string;
+        accentHover: string;
+        accentTint: string;
+        button: string;
+        onButton: string;
+        up: string;
+        upTint: string;
+        down: string;
+        divider: string;
+        border: string;
+        borderStrong: string;
+        hatch: string;
+        scrim: string;
+        logoTile: string;
+        logoRing: string;
+        logoArc: string;
+        logoWord: string;
+    };
+    dark: {
+        bg: string;
+        card: string;
+        sheet: string;
+        field: string;
+        chip: string;
+        nav: string;
+        text: string;
+        text2: string;
+        text3: string;
+        label: string;
+        accent: string;
+        accentHover: string;
+        accentTint: string;
+        button: string;
+        onButton: string;
+        up: string;
+        upTint: string;
+        down: string;
+        divider: string;
+        border: string;
+        borderStrong: string;
+        hatch: string;
+        scrim: string;
+        logoTile: string;
+        logoRing: string;
+        logoArc: string;
+        logoWord: string;
+    };
+};
+export declare const space: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+    6: number;
+    8: number;
+};
+export declare const radius: {
+    segment: number;
+    control: number;
+    card: number;
+    dialog: number;
+    sheet: number;
+};
+export declare const size: {
+    touch: number;
+    field: number;
+    button: number;
+    row: number;
+    tile: number;
+    gutter: number;
+    gutterDesktop: number;
+    panel: number;
+};
+export declare const fontSize: {
+    pageTitleDesktop: number;
+    number: number;
+    pageTitle: number;
+    section: number;
+    body: number;
+    label: number;
+    small: number;
+};
+export declare const font: {
+    web: string;
+    native: {
+        400: string;
+        500: string;
+        700: string;
+    };
+};
+export declare const breakpoint = 768;
+export type Colors = typeof colors.light;

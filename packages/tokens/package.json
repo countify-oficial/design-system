@@ -1,0 +1,38 @@
+{
+  "name": "@countify/tokens",
+  "version": "0.1.0",
+  "description": "Tokens da Countify (cores, letra, espaço, cantos, tamanhos, sombras, camadas, movimento): TS, variáveis CSS e objeto para React Native",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "tsup && node scripts/build-css.mjs",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@countify/eslint-config": "workspace:*",
+    "@countify/tsconfig": "workspace:*",
+    "@types/node": "24.19.2",
+    "eslint": "9.39.5",
+    "tsup": "9.0.0",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

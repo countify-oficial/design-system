@@ -1,0 +1,7 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+
+# só estes podem rodar script na instalação
+onlyBuiltDependencies:
+  - esbuild

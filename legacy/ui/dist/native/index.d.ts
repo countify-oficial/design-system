@@ -1,0 +1,73 @@
+import { type StyleProp, type TextStyle, type ViewStyle } from "react-native";
+import { type Colors } from "../tokens.js";
+import type * as T from "../types.js";
+export type * from "../types.js";
+/** nativo: style vai para a View (ou o Text) raiz; o resto das props vem do contrato */
+type P<X, S = ViewStyle> = X & {
+    style?: StyleProp<S>;
+};
+export declare function ThemeProvider({ scheme, children }: T.ThemeProviderProps): import("react").JSX.Element;
+/** nativo: cores do modo atual, para estilos próprios do app. */
+export declare function useColors(): Colors;
+export declare function Icon({ name, size, color, label, style, testID }: P<T.IconProps>): import("react").JSX.Element;
+export declare function Logo({ variant, height, label, style, testID }: P<T.LogoProps>): import("react").JSX.Element;
+export declare function Text({ variant, tone, weight, numberOfLines, children, style, testID }: P<T.TextProps, TextStyle>): import("react").JSX.Element;
+export declare function Screen({ scroll, children, style, testID }: P<T.ScreenProps>): import("react").JSX.Element;
+export declare function Grid({ columns, gap, children, style, testID }: P<T.GridProps>): import("react").JSX.Element;
+export declare function Card({ padding, gap, children, style, testID }: P<T.CardProps>): import("react").JSX.Element;
+export declare function Divider({ style, testID }: P<T.DividerProps>): import("react").JSX.Element;
+export declare function SectionTitle({ children, help, action, style, testID }: P<T.SectionTitleProps>): import("react").JSX.Element;
+export declare function SectionLabel({ children, style, testID }: P<T.SectionLabelProps, TextStyle>): import("react").JSX.Element;
+export declare function PageHeader({ title, subtitle, eyebrow, back, onTitlePress, titleLabel, actions, style, testID }: P<T.PageHeaderProps>): import("react").JSX.Element;
+export declare function NavBar({ items, label, style, testID }: P<T.NavBarProps>): import("react").JSX.Element;
+export declare function Button({ variant, size, block, icon, loading, disabled, onPress, children, style, testID }: P<T.ButtonProps>): import("react").JSX.Element;
+export declare function IconButton({ icon, label, variant, onPress, disabled, color, size, style, testID }: P<T.IconButtonProps> & {
+    color?: string;
+    size?: number;
+}): import("react").JSX.Element;
+export declare function HelpButton({ topic, onPress, disabled, style, testID }: P<T.HelpButtonProps>): import("react").JSX.Element;
+export declare function ActionLink({ children, chevron, onPress, disabled, style, testID }: P<T.ActionLinkProps>): import("react").JSX.Element;
+export declare function TextField({ label, value, onChange, type, placeholder, suffix, icon, hint, error, disabled, multiline, maxLength, autoComplete, style, testID }: P<T.TextFieldProps>): import("react").JSX.Element;
+export declare function SearchField({ value, onChange, placeholder, label, style, testID }: P<T.SearchFieldProps>): import("react").JSX.Element;
+export declare function Select({ label, options, value, onChange, multiple, placeholder, disabled, style, testID }: P<T.SelectProps>): import("react").JSX.Element;
+export declare function Checkbox({ label, description, checked, onChange, disabled, style, testID }: P<T.CheckboxProps>): import("react").JSX.Element;
+export declare function CheckList({ items, selected, onChange, allLabel, label, style, testID }: P<T.CheckListProps>): import("react").JSX.Element;
+export declare function RadioList({ options, value, onChange, label, style, testID }: P<T.RadioListProps>): import("react").JSX.Element;
+export declare function Switch({ label, description, checked, onChange, disabled, style, testID }: P<T.SwitchProps>): import("react").JSX.Element;
+export declare function Segmented({ options, value, onChange, label, style, testID }: P<T.SegmentedProps>): import("react").JSX.Element;
+export declare function Chip({ selected, dashed, icon, onRemove, removeLabel, filter, children, onPress, disabled, style, testID }: P<T.ChipProps> & {
+    filter?: boolean;
+}): import("react").JSX.Element;
+export declare function FilterChip(p: P<T.FilterChipProps>): import("react").JSX.Element;
+export declare function ChipGroup({ label, layout, children, style, testID }: P<T.ChipGroupProps>): import("react").JSX.Element;
+export declare function Calendar({ start, end, onChange, min, max, style, testID }: P<T.CalendarProps>): import("react").JSX.Element;
+export declare function Stat({ label, value, unit, detail, change, trend, base, help, badge, style, testID }: P<T.StatProps>): import("react").JSX.Element;
+export declare function List({ label, children, style, testID }: P<T.ListProps>): import("react").JSX.Element;
+export declare function ListItem({ title, subtitle, leading, trailing, chevron, tone, onPress, disabled, inset: after, style, testID }: P<T.ListItemProps> & {
+    inset?: boolean;
+}): import("react").JSX.Element;
+export declare function IconTile({ icon, tone, round, style, testID }: P<T.IconTileProps>): import("react").JSX.Element;
+export declare function Avatar({ initials, src, size, label, style, testID }: P<T.AvatarProps>): import("react").JSX.Element;
+export declare function Badge({ tone, children, style, testID }: P<T.BadgeProps>): import("react").JSX.Element;
+export declare function Status({ tone, children, style, testID }: P<T.StatusProps>): import("react").JSX.Element;
+export declare function DetailList({ items, style, testID }: P<T.DetailListProps>): import("react").JSX.Element;
+export declare function Table({ caption, columns, rows, sort, onSort, style, testID }: P<T.TableProps>): import("react").JSX.Element;
+export declare function ProgressBar({ value, marker, label, style, testID }: P<T.ProgressBarProps>): import("react").JSX.Element;
+export declare function BarList({ items, numbered, label, style, testID }: P<T.BarListProps>): import("react").JSX.Element;
+export declare function Accordion({ title, defaultOpen, children, style, testID }: P<T.AccordionProps>): import("react").JSX.Element;
+export declare function Steps({ steps, current, style, testID }: P<T.StepsProps>): import("react").JSX.Element;
+export declare function Pagination({ page, pageSize, total, onChange, style, testID }: P<T.PaginationProps>): import("react").JSX.Element;
+export declare function LineChart(p: P<T.LineChartProps>): import("react").JSX.Element;
+export declare function BarChart(p: P<T.BarChartProps>): import("react").JSX.Element;
+export declare function ScatterChart(p: P<T.ScatterChartProps>): import("react").JSX.Element;
+export declare function Heatmap(p: P<T.HeatmapProps>): import("react").JSX.Element;
+export declare function Legend({ items, style, testID }: P<T.LegendProps>): import("react").JSX.Element;
+export declare function Sheet({ open, onClose, title, subtitle, footer, children, style, testID }: P<T.SheetProps>): import("react").JSX.Element;
+export declare function Dialog({ open, onClose, title, footer, children, style, testID }: P<T.DialogProps>): import("react").JSX.Element;
+export declare function ConfirmDialog({ open, title, message, confirmLabel, cancelLabel, danger, onConfirm, onCancel, style, testID }: P<T.ConfirmDialogProps>): import("react").JSX.Element;
+export declare function Popover({ open, onClose, title, children, style, testID }: P<T.PopoverProps>): import("react").JSX.Element;
+export declare function Toast({ open, onClose, message, tone, duration, action, style, testID }: P<T.ToastProps>): import("react").JSX.Element | null;
+export declare function Notice({ tone, title, children, action, style, testID }: P<T.NoticeProps>): import("react").JSX.Element;
+export declare function EmptyState({ icon, title, description, action, style, testID }: P<T.EmptyStateProps>): import("react").JSX.Element;
+export declare function Skeleton({ width, height, radius, style, testID }: P<T.SkeletonProps>): import("react").JSX.Element;
+export declare function Spinner({ size, label, style, testID }: P<T.SpinnerProps>): import("react").JSX.Element;

@@ -1,0 +1,31 @@
+/* Estados: faixa de aviso, vazio, carregando, giro; gráficos e legenda. */
+.cf-notice { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 16px; border-radius: var(--cf-radius-card); background: var(--cf-card); box-shadow: inset 0 0 0 1px var(--cf-divider); }
+.cf-notice > .cf-svg { color: var(--cf-accent); }
+.cf-notice--danger > .cf-svg { color: var(--cf-down); }
+.cf-notice--offline > .cf-svg { color: var(--cf-text2); }
+.cf-notice__text { display: flex; flex: 1 1 200px; flex-direction: column; gap: 2px; min-width: 0; }
+.cf-notice__text strong { font-size: var(--cf-font-size-body); font-weight: 500; }
+.cf-notice__text span { font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-notice > .cf-button { align-self: center; }
+
+.cf-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 32px 16px; text-align: center; }
+.cf-empty__title { margin: 4px 0 0; font-size: var(--cf-font-size-body); font-weight: 500; }
+.cf-empty__text { margin: 0; font-size: var(--cf-font-size-label); color: var(--cf-text2); }
+.cf-empty > .cf-button { margin-top: 8px; }
+
+.cf-skeleton { display: block; height: 16px; border-radius: var(--cf-radius-segment); background: var(--cf-chip); animation: cf-pulse 1.4s ease-in-out infinite; }
+
+.cf-spinner { display: inline-block; flex: none; width: 20px; height: 20px; border: 2.5px solid currentColor; border-right-color: transparent; border-radius: 50%; color: var(--cf-accent); animation: cf-spin 0.8s linear infinite; }
+
+.cf-chart { width: 100%; min-width: 0; }
+.cf-chart svg { display: block; overflow: visible; font-family: inherit; }
+
+.cf-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: var(--cf-font-size-small); color: var(--cf-text2); }
+.cf-legend__item { display: inline-flex; align-items: center; gap: 8px; }
+.cf-legend__swatch { flex: none; width: 20px; border-top: 3px solid var(--cf-accent); border-radius: 2px; }
+.cf-legend__swatch--dashed { border-top: 2px dashed var(--cf-text2); }
+.cf-legend__swatch--bar, .cf-legend__swatch--highlight, .cf-legend__swatch--band, .cf-legend__swatch--gap { width: 12px; height: 12px; border: 0; }
+.cf-legend__swatch--bar { background: var(--cf-text); }
+.cf-legend__swatch--highlight { background: var(--cf-accent); }
+.cf-legend__swatch--band { background: var(--cf-divider); box-shadow: inset 0 0 0 1px var(--cf-border); }
+.cf-legend__swatch--gap { background: repeating-linear-gradient(45deg, var(--cf-hatch) 0 3px, transparent 3px 7px); }
