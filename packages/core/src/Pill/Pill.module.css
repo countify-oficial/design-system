@@ -1,0 +1,49 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-1);
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: calc(var(--cf-space-6) + var(--cf-space-1));
+  padding-inline: var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-chip);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  line-height: var(--cf-line-height);
+  white-space: nowrap;
+}
+
+.root[data-with-remove] {
+  padding-inline-end: 0;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* botão de 24 com área de toque de 44 */
+.remove {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--cf-space-6);
+  height: var(--cf-space-6);
+  border-radius: var(--cf-radius-xs);
+  color: var(--cf-color-text2);
+}
+
+.remove::before {
+  content: "";
+  position: absolute;
+  inset: calc((var(--cf-space-6) - var(--cf-touch-target)) / 2);
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cf-space-1);
+}

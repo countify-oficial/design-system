@@ -28,6 +28,12 @@ export interface CountifyMessages {
   done: string;
   /** "1 de 4" no Tour e no Stepper */
   stepOf: (atual: number, total: number) => string;
+  /** busca dos campos de escolha */
+  search: string;
+  /** lista vazia da busca */
+  nothingFound: string;
+  /** botão de tirar uma etiqueta (Pill) */
+  remove: (rotulo: string) => string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -49,4 +55,7 @@ export const defaultMessages: CountifyMessages = {
   back: "Voltar",
   done: "Concluir",
   stepOf: (atual, total) => `${atual} de ${total}`,
+  search: "Buscar",
+  nothingFound: "Nada encontrado",
+  remove: (rotulo) => `Remover ${rotulo}`,
 };

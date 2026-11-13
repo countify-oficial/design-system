@@ -25,7 +25,10 @@ if (typeof window !== "undefined") {
 
 // As guardas de foco do Floating UI (Popover, Menu…) são <span role="button"> invisíveis e sem nome que só passam o
 // foco adiante; é o jeito da biblioteca. A regra aria-command-name continua valendo para todo o resto.
+// A regra region (conteúdo dentro de landmarks: main, nav…) é da página, não do componente: nos testes, o que vai para
+// o portal fica fora de qualquer landmark por construção. Na página do app, os landmarks são dela.
 const axe = configureAxe({
+  rules: { region: { enabled: false } },
   globalOptions: { rules: [{ id: "aria-command-name", selector: '[role="link"], [role="button"]:not([data-floating-ui-focus-guard]), [role="menuitem"]' }] },
 });
 

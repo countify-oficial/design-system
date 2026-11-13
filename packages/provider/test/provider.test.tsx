@@ -111,3 +111,13 @@ describe("cores (parseColor e formatColor)", () => {
     expect([parseColor("azul"), parseColor("#12"), parseColor("rgb(1, 2)")]).toEqual([undefined, undefined, undefined]);
   });
 });
+
+describe("dados das opções (Combobox)", () => {
+  it("grupos, busca sem acento e limite", async () => {
+    const { filterCombobox, parseComboboxData } = await import("../src/index");
+    const g = parseComboboxData(["São Paulo", { group: "Ceará", items: ["Fortaleza", { value: "sob", label: "Sobral" }] }]);
+    expect(g.map((x) => x.group)).toEqual([null, "Ceará"]);
+    expect(filterCombobox(g, "SAO").flatMap((x) => x.items.map((i) => i.value))).toEqual(["São Paulo"]);
+    expect(filterCombobox(g, "", 2).flatMap((x) => x.items)).toHaveLength(2);
+  });
+});

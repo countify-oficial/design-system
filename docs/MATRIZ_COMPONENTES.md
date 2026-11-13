@@ -157,3 +157,15 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | FloatingWindow | ok | ok | N/A | janela que se arrasta é do computador; no celular, use Drawer |
 | Tour | ok | ok | adaptado | no celular os passos aparecem numa folha, sem recorte em volta do alvo |
 | Menubar | ok | ok | N/A | barra de menus do aplicativo de computador (Electron); no celular, a navegação é o menu de abas embaixo |
+
+### Combobox
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Combobox | ok | ok | adaptado | na web, o padrão WAI-ARIA 1.2 (o foco fica no campo; `aria-activedescendant`); no celular, as opções abrem numa folha |
+| Select | ok | ok | adaptado | no celular, o campo abre a folha com as opções (e a busca, com searchable) |
+| MultiSelect | ok | ok | adaptado | igual ao Select; a folha marca e desmarca sem fechar |
+| Autocomplete | ok | ok | adaptado | no celular, as sugestões aparecem logo abaixo do campo (não flutuam) |
+| TagsInput | ok | ok | adaptado | no celular, o "OK" do teclado cria a etiqueta; as sugestões ficam só na web |
+| Pill, PillsInput | ok | ok | ok | |
+| ComboboxPopover | ok | ok | adaptado | no celular abre na folha (o "Chip de filtro" do mockup: "mostra a escolha e abre a folha") |
