@@ -1,0 +1,83 @@
+/* o interruptor do mockup: trilho 52 × 32 (borda desligado, destaque ligado), bolinha de 24 na cor da folha */
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-4);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-label-position="left"] {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.track {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  box-sizing: border-box;
+  width: var(--cf-switch-width);
+  height: var(--cf-switch-height);
+  padding: 0 calc((var(--cf-switch-height) - var(--cf-switch-thumb)) / 2);
+  border-radius: calc(var(--cf-switch-height) / 2);
+  background-color: var(--cf-color-border);
+  transition: background-color var(--cf-duration-base) var(--cf-easing-out);
+}
+
+.thumb {
+  width: var(--cf-switch-thumb);
+  height: var(--cf-switch-thumb);
+  border-radius: 50%;
+  background-color: var(--cf-color-sheet);
+  transition: translate var(--cf-duration-base) var(--cf-easing-out);
+}
+
+/* o input fica por cima do trilho, invisível: recebe o clique, o foco e o teclado */
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.input:checked + .thumb {
+  translate: calc(var(--cf-switch-width) - var(--cf-switch-height)) 0;
+}
+
+.track:has(.input:checked) {
+  background-color: var(--cf-color-accent);
+}
+
+.track:has(.input:focus-visible) {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.root[data-disabled] .track {
+  opacity: var(--cf-disabled-opacity);
+}
+
+.root[data-disabled] .input {
+  cursor: not-allowed;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  color: var(--cf-color-text);
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+.description {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}

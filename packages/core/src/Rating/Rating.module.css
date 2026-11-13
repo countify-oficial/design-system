@@ -1,0 +1,38 @@
+.root {
+  display: inline-flex;
+  gap: var(--cf-space-1);
+  color: var(--rating-color);
+}
+
+.symbol {
+  position: relative;
+  display: inline-flex;
+  color: var(--cf-color-border-strong);
+  cursor: pointer;
+}
+
+.symbol[data-full] {
+  color: var(--rating-color);
+}
+
+.symbol[data-full] svg {
+  fill: currentColor;
+}
+
+.root[data-read-only] .symbol {
+  cursor: default;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.symbol:has(.input:focus-visible) {
+  border-radius: var(--cf-space-1);
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}

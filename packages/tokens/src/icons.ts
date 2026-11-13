@@ -52,11 +52,13 @@ export const icons = {
   heatmap: '<rect x="3" y="3" width="4.5" height="4.5" rx="1"/><rect x="8.75" y="3" width="4.5" height="4.5" rx="1"/><rect x="14.5" y="3" width="4.5" height="4.5" rx="1"/><rect x="3" y="8.75" width="4.5" height="4.5" rx="1"/><rect x="8.75" y="8.75" width="4.5" height="4.5" rx="1"/><rect x="14.5" y="8.75" width="4.5" height="4.5" rx="1"/><rect x="3" y="14.5" width="4.5" height="4.5" rx="1"/><rect x="8.75" y="14.5" width="4.5" height="4.5" rx="1"/><rect x="14.5" y="14.5" width="4.5" height="4.5" rx="1"/>',
   funnel: '<path d="M3 4h16l-6 7v6l-4 2v-8z"/>',
   table: '<rect x="3" y="4" width="16" height="14" rx="2"/><path d="M3 9h16M3 14h16M9 4v14"/>',
+  // estrela: acrescentada no passo 7 para o Rating, no traço do conjunto (não estava na 0.1.0)
+  star: '<path d="M11 3l2.4 5 5.4.6-4 3.7 1.1 5.4L11 15l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
   logout: '<path d="M9 4H5v14h4M13 7l4 4-4 4M17 11H8"/>',
 };
 
 export type IconName = keyof typeof icons;
 
-/** O <svg> completo de um ícone, com a cor pedida (padrão: currentColor). */
-export const iconSvg = (name: IconName, color = "currentColor"): string =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${iconGrid.box} ${iconGrid.box}" fill="none" stroke="${color}" stroke-width="${iconGrid.stroke}" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</svg>`;
+/** O <svg> completo de um ícone, com a cor pedida (padrão: currentColor) e, se pedido, o preenchimento (a estrela cheia). */
+export const iconSvg = (name: IconName, color = "currentColor", fill = "none"): string =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${iconGrid.box} ${iconGrid.box}" fill="${fill}" stroke="${color}" stroke-width="${iconGrid.stroke}" stroke-linecap="round" stroke-linejoin="round">${icons[name]}</svg>`;

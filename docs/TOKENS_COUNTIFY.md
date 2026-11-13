@@ -171,3 +171,6 @@ Valores que a identidade já usa, agora com nome nos tokens:
 19. **Linha compacta de 56** (`compactRowHeight`): lista com caixas e interruptor (**mockup** `X-DocComponentes`) e o
     cabeçalho do acordeão (**0.1.0**).
 20. **Espaço entre letras do rótulo** (`overlineTracking`): 0,08 em no rótulo de seção em maiúsculas. Origem: **0.1.0**.
+21. **Interruptor** (`switchSize`): trilho de 52 × 32, bolinha de 24 (recuo de 4). Origem: **mockup** `X-DocComponentes`.
+22. **Estrela** (`icons.star`): acrescentada para o Rating, no traço do conjunto (1,8 numa caixa de 22). Não vem da
+    identidade nem da 0.1.0: **a confirmar com o design**.

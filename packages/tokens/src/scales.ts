@@ -55,6 +55,8 @@ export const controlPaddingX: BySize = { xs: 12, sm: 16, md: 20, lg: 24, xl: 28 
 export const iconSize: BySize = { xs: 16, sm: 18, md: 22, lg: 28, xl: 32 };
 export const avatarSize: BySize = { xs: 24, sm: 32, md: 40, lg: 48, xl: 64 };
 export const listRowHeight = 64;
+/** Interruptor do mockup (X-DocComponentes): trilho 52 × 32, bolinha de 24 (recuo de 4). */
+export const switchSize = { width: 52, height: 32, thumb: 24 } as const;
 /** Linha compacta de 56: lista com caixas, interruptor e cabeçalho do acordeão (mockup X-DocComponentes e 0.1.0). */
 export const compactRowHeight = 56;
 /** Painel lateral no computador (a folha vira painel a partir de 768). */

@@ -1,0 +1,32 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  min-width: 0;
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.label {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.description {
+  margin: 0;
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.error {
+  margin: 0;
+  color: var(--cf-color-down);
+  font-size: var(--cf-font-size-sm);
+}
+
+.items {
+  display: flex;
+  flex-direction: var(--group-direction);
+  flex-wrap: wrap;
+  gap: var(--group-gap);
+}

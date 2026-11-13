@@ -1,0 +1,58 @@
+/* a caixa do mockup ("Lista com caixas"): a do sistema, 22, na cor de destaque */
+.root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cf-space-3);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-label-position="left"] {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.input {
+  flex: none;
+  width: var(--check-size);
+  height: var(--check-size);
+  margin: calc((1lh - var(--check-size)) / 2) 0 0;
+  accent-color: var(--cf-color-accent);
+  cursor: pointer;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.input:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  color: var(--cf-color-text);
+  font-size: var(--cf-font-size-md);
+  cursor: pointer;
+}
+
+.root[data-disabled] .label {
+  color: var(--cf-color-text2);
+  cursor: not-allowed;
+}
+
+.description {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.error {
+  color: var(--cf-color-down);
+  font-size: var(--cf-font-size-sm);
+}

@@ -1,0 +1,67 @@
+/* "Segmentado" do mockup: 2 a 4 opções, recuo de 4, canto 12 por fora e 8 por dentro, 44 de altura */
+.root {
+  display: grid;
+  grid-template-columns: repeat(var(--seg-count), minmax(0, 1fr));
+  gap: var(--cf-space-1);
+  box-sizing: border-box;
+  padding: var(--cf-space-1);
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-card);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.root:not([data-full-width]) {
+  width: fit-content;
+}
+
+.control {
+  position: relative;
+  display: flex;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-3);
+  border-radius: var(--cf-radius-xs);
+  color: var(--cf-color-text);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.input:checked + .label {
+  background-color: var(--cf-color-accent-tint);
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-accent);
+  color: var(--cf-color-accent);
+}
+
+.input:focus-visible + .label {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+@media (hover: hover) {
+  .input:not(:disabled):not(:checked):hover + .label {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.input:disabled + .label {
+  opacity: var(--cf-disabled-opacity);
+  cursor: not-allowed;
+}

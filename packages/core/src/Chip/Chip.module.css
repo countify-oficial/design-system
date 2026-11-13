@@ -1,0 +1,54 @@
+/* "Chips de escolha" do mockup: 44 de altura, canto 12, letra 15; escolhido com a tinta e o anel grosso do destaque */
+.root {
+  position: relative;
+  display: inline-flex;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-3);
+  border-radius: var(--chip-radius);
+  background-color: var(--cf-color-card);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-divider);
+  color: var(--cf-color-text2);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.input:checked + .label {
+  background-color: var(--cf-color-accent-tint);
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-accent);
+  color: var(--cf-color-accent);
+}
+
+.input:focus-visible + .label {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+@media (hover: hover) {
+  .input:not(:disabled):hover + .label {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.input:disabled + .label {
+  opacity: var(--cf-disabled-opacity);
+  cursor: not-allowed;
+}

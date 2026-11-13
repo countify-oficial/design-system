@@ -121,3 +121,14 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | PhoneInput | ok | ok | ok | Brasil, com DDD; fixo e celular |
 | PinInput | ok | ok | adaptado | no celular a primeira caixa recebe o código do SMS (`oneTimeCode`, `sms-otp`) |
 | Fieldset | ok | ok | adaptado | no celular `disabled` bloqueia o toque no grupo (não há `<fieldset>`) |
+
+### Escolhas
+
+| Componente | Web | Electron | Celular | Motivo |
+|---|---|---|---|---|
+| Checkbox (+ Group) | ok | ok | adaptado | na web, a caixa do sistema na cor de destaque (`accent-color`, como no mockup); no celular, desenhada (o React Native não tem caixa) |
+| Radio (+ Group) | ok | ok | adaptado | igual ao Checkbox |
+| Switch (+ Group) | ok | ok | adaptado | na web, desenhado com as medidas do mockup; no celular, o `Switch` do sistema nas cores da identidade, com a linha toda tocável |
+| Chip (+ Group) | ok | ok | ok | |
+| SegmentedControl | ok | ok | adaptado | na web, setas do teclado entre as opções (são radios) |
+| Rating | ok | ok | ok | a estrela foi acrescentada ao conjunto de ícones (não existia na 0.1.0) |
