@@ -174,8 +174,9 @@
   background-clip: content-box !important;
 }
 
-/* a célula com uma caixa de marcar não pinta: o bloco é a caixa, como na tabela de verdade */
-.root[data-visible] :where(td, th):has(input:is([type="checkbox"], [type="radio"])) {
+/* a célula com um controle (caixa de marcar, campo, lista, botão) não pinta: o bloco é o controle, como na tabela de
+   verdade. Sem isto o campo branco ficava em cima de um bloco quadrado, e os cantos dele apareciam. */
+.root[data-visible] :where(td, th):has(input:not([type="hidden"]), select, textarea, button, [role="button"], [role="combobox"]) {
   background: none !important;
 }
 
