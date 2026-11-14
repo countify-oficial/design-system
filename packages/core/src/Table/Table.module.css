@@ -20,7 +20,7 @@
 
 .th,
 .td {
-  padding: var(--cf-space-3) var(--cf-space-4);
+  padding: var(--table-vertical-spacing, var(--cf-space-3)) var(--cf-space-4);
   text-align: start;
   white-space: nowrap;
 }

@@ -45,6 +45,7 @@ Origem: **cores** (índices da lista `MODOS[modo]["cores"]`). Contraste mínimo 
 | field | #FFFFFF | #172033 | superfície 2 |
 | chip | #E8EDF3 | #22334A | chip |
 | borderStrong | #CBD5E1 | #475569 | borda+ |
+| controlBorder | #667085 | #94A3B8 | contorno de controle (item 40) |
 | scrim | #C9CFD8 | #020617 | véu |
 | sheet | #F4F6FA | #111827 | folha |
 | upTint | #E9F7F0 | #16372F | tinta-verde |
@@ -254,3 +255,10 @@ Valores que a identidade já usa, agora com nome nos tokens:
 39. **Chip de filtro com filtro aplicado** (aprovado em 13/11/2026, no mockup "Countify Label · atual × sugestão"): o
     guia só desenha o chip neutro; com um filtro diferente do padrão ele usa a tinta e o anel do destaque, os mesmos do
     chip de escolha marcado.
+40. **Contorno de controle** (`controlBorder`, aprovado em 14/11/2026, no mockup "Countify Label · melhorias da avaliação"):
+    o contorno de campo, caixa de marcar e opção usa o texto 3 de cada modo, #667085 no claro e #94A3B8 no escuro, com
+    3:1 ou mais sobre bg, card, sheet e field (WCAG 1.4.11). A `border` (#D0D5DD, 1,47:1 sobre o branco) continua nos
+    contornos que não são de controle.
+41. **Linhas mais baixas na tabela** (`verticalSpacing` da Table, aprovado em 14/11/2026): o espaço acima e abaixo da
+    célula pode ir do padrão `space-3` (12) para `space-2` (8), com o mesmo token da grade de 4; o campo dentro da célula
+    continua com a altura de toque (44).

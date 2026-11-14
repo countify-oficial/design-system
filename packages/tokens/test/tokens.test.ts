@@ -28,6 +28,11 @@ describe("cores", () => {
     for (const [t, f] of pares) expect(contrast(c[t], c[f]), `${t} sobre ${f}`).toBeGreaterThanOrEqual(4.5);
   });
 
+  it.each(schemes)("contorno de controle com 3:1 sobre os fundos no modo %s", (scheme) => {
+    const c = colors[scheme];
+    for (const f of ["bg", "card", "sheet", "field"] as const) expect(contrast(c.controlBorder, c[f]), `controlBorder sobre ${f}`).toBeGreaterThanOrEqual(3);
+  });
+
   it("a cor principal é #225BA5 no claro e #8CBAF2 no escuro; o botão é #225BA5 nos dois", () => {
     expect(primary("light")).toBe("#225BA5");
     expect(primary("dark")).toBe("#8CBAF2");

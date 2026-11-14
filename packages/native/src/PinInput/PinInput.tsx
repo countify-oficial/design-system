@@ -84,7 +84,7 @@ export function PinInput(props: PinInputProps) {
               {
                 width: lado, height: lado, padding: 0, borderRadius: radius.sm, backgroundColor: c.field, textAlign: "center", color: c.text,
                 fontSize: fontSize.xl, fontFamily: nativeFontFamily700Mono(), borderWidth: borda,
-                borderColor: foco === i ? c.accent : error ? c.down : variant === "outline" ? c.border : "transparent",
+                borderColor: foco === i ? c.accent : error ? c.down : variant === "outline" ? c.controlBorder : "transparent",
               },
               disabled && { opacity: state.disabledOpacity },
             ]}

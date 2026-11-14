@@ -46,7 +46,7 @@ export function ChoiceField({
           style={({ pressed }) => [
             {
               flexDirection: "row", alignItems: "center", flexWrap: "wrap", gap: space[1], minHeight: controlHeight.input[size], paddingHorizontal: space[4] - borda,
-              paddingVertical: space[1], borderRadius: radius.sm, backgroundColor: c.field, borderWidth: borda, borderColor: error ? c.down : c.border,
+              paddingVertical: space[1], borderRadius: radius.sm, backgroundColor: c.field, borderWidth: borda, borderColor: error ? c.down : c.controlBorder,
             },
             pressed && { opacity: state.pressedOpacity },
             disabled && { opacity: state.disabledOpacity },

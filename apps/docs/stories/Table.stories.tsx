@@ -12,7 +12,7 @@ const meta = { title: "Dados/Table", component: Table, parameters: { docs: { des
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function Ordenavel(props: { stickyHeader?: boolean; striped?: boolean; highlightOnHover?: boolean }) {
+function Ordenavel(props: { stickyHeader?: boolean; striped?: boolean; highlightOnHover?: boolean; verticalSpacing?: 2 }) {
   const [desc, setDesc] = useState(true);
   const linhas = [...lojas].sort((a, b) => (desc ? b.entradas - a.entradas : a.entradas - b.entradas));
   return (
@@ -43,3 +43,4 @@ function Ordenavel(props: { stickyHeader?: boolean; striped?: boolean; highlight
 }
 export const Padrao: Story = { name: "Cabeçalho fixo e ordenação", render: () => <Ordenavel /> };
 export const Listrada: Story = { name: "Listrada e com hover", render: () => <Ordenavel striped highlightOnHover /> };
+export const LinhasBaixas: Story = { name: "Linhas mais baixas (verticalSpacing 2)", render: () => <Ordenavel verticalSpacing={2} /> };

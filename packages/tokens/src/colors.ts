@@ -52,6 +52,8 @@ const light = {
   divider: gray[1],
   border: "#D0D5DD",
   borderStrong: gray[3],
+  /** Contorno de campo, caixa de marcar e opção: 3:1 ou mais sobre bg, card e field (WCAG 1.4.11); o texto 3 do modo. */
+  controlBorder: gray[5],
   hatch: gray[3],
   scrim: "#C9CFD8",
   logoTile: blue[6],
@@ -88,6 +90,7 @@ const dark: SchemeColors = {
   divider: "#253044",
   border: gray[6],
   borderStrong: gray[6],
+  controlBorder: gray[4],
   hatch: gray[6],
   scrim: "#020617",
   logoTile: blue[3],

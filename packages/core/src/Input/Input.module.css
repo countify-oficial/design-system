@@ -47,7 +47,7 @@
 }
 
 .root[data-variant="outline"] {
-  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-border);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-control-border);
 }
 
 .root:focus-within {

@@ -55,7 +55,7 @@ export function CaixaDeMarcar({ estado, size = "md", disabled }: { estado: "all"
     <ContentColor value={c.bg}>
       <View
         style={[
-          { width: lado, height: lado, marginTop: (lineHeightPx(fontSize.md) - lado) / 2, borderRadius: space[1], borderWidth: borderWidth.thick, alignItems: "center", justifyContent: "center", borderColor: cheio ? c.accent : c.borderStrong, backgroundColor: cheio ? c.accent : c.field },
+          { width: lado, height: lado, marginTop: (lineHeightPx(fontSize.md) - lado) / 2, borderRadius: space[1], borderWidth: borderWidth.thick, alignItems: "center", justifyContent: "center", borderColor: cheio ? c.accent : c.controlBorder, backgroundColor: cheio ? c.accent : c.field },
           disabled && { opacity: state.disabledOpacity },
         ]}
       >

@@ -45,7 +45,7 @@ export function RadioItem(props: RadioProps) {
         controle={
           <View
             style={[
-              { width: lado, height: lado, marginTop: (lineHeightPx(fontSize.md) - lado) / 2, borderRadius: lado / 2, borderWidth: borderWidth.thick, alignItems: "center", justifyContent: "center", borderColor: marcado ? c.accent : c.borderStrong, backgroundColor: c.field },
+              { width: lado, height: lado, marginTop: (lineHeightPx(fontSize.md) - lado) / 2, borderRadius: lado / 2, borderWidth: borderWidth.thick, alignItems: "center", justifyContent: "center", borderColor: marcado ? c.accent : c.controlBorder, backgroundColor: c.field },
               disabled && { opacity: state.disabledOpacity },
             ]}
           >

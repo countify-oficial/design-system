@@ -51,7 +51,7 @@ export function InputBase(props: InputBaseProps) {
   const [focado, setFocado] = useState(false);
   // a borda cresce no foco e no erro; o recuo diminui o mesmo tanto e o texto não pula
   const borda = focado || error ? focusRing.width : variant === "outline" ? borderWidth.thin : 0;
-  const corBorda = focado ? c.accent : error ? c.down : variant === "outline" ? c.border : "transparent";
+  const corBorda = focado ? c.accent : error ? c.down : variant === "outline" ? c.controlBorder : "transparent";
   const letra = { fontSize: fontSize.sm, lineHeight: lineHeightPx(fontSize.sm), fontFamily: nativeFontFamily[400] };
   const multilinha = rows !== undefined;
   return (

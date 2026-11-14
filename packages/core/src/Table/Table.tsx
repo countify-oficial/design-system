@@ -1,7 +1,8 @@
 import { useComponentProps } from "@countify-oficial/provider";
+import type { Spacing } from "@countify-oficial/tokens";
 import type { ComponentPropsWithRef, CSSProperties, MouseEvent } from "react";
 import { Icon } from "../Icon/Icon";
-import { useStyles, type StylesApiProps } from "../styles";
+import { spacingVar, useStyles, type StylesApiProps } from "../styles";
 import { UnstyledButton } from "../UnstyledButton/UnstyledButton";
 import classes from "./Table.module.css";
 
@@ -14,6 +15,8 @@ export interface TableProps extends StylesApiProps, Omit<ComponentPropsWithRef<"
   highlightOnHover?: boolean | undefined;
   /** Linhas alternadas. */
   striped?: boolean | undefined;
+  /** Espaço acima e abaixo do conteúdo de cada célula (padrão 3 = 12). Com 2, cabem mais linhas na mesma altura. */
+  verticalSpacing?: Spacing | undefined;
 }
 
 type Parte<T extends keyof React.JSX.IntrinsicElements> = StylesApiProps & Omit<ComponentPropsWithRef<T>, "className" | "style">;
@@ -88,7 +91,11 @@ export function TableScrollContainer(props: TableScrollContainerProps) {
 }
 
 function TableRoot(props: TableProps) {
-  const { stickyHeader, stickyFirstColumn, highlightOnHover, striped, className, style, classNames, styles, ...rest } = useComponentProps("Table", {}, props);
+  const { stickyHeader, stickyFirstColumn, highlightOnHover, striped, verticalSpacing, className, style, classNames, styles, ...rest } = useComponentProps(
+    "Table",
+    {},
+    props,
+  );
   const getStyles = useStyles("Table", classes, { className, style, classNames, styles });
   return (
     <table
@@ -97,7 +104,7 @@ function TableRoot(props: TableProps) {
       data-sticky-first-column={stickyFirstColumn || undefined}
       data-highlight-on-hover={highlightOnHover || undefined}
       data-striped={striped || undefined}
-      {...getStyles("root")}
+      {...getStyles("root", { "--table-vertical-spacing": spacingVar(verticalSpacing) })}
     />
   );
 }

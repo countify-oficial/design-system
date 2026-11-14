@@ -29,4 +29,11 @@ describe("Table", () => {
     expect((container.firstElementChild as HTMLElement).style.getPropertyValue("--table-max-height")).toBe("300px");
     await semViolacoes(container);
   });
+
+  it("verticalSpacing muda o espaço acima e abaixo das células; sem ele vale o padrão do CSS", () => {
+    const { rerender } = render(<Table verticalSpacing={2}><Table.Tbody><Table.Tr><Table.Td>1</Table.Td></Table.Tr></Table.Tbody></Table>);
+    expect(screen.getByRole("table").style.getPropertyValue("--table-vertical-spacing")).toBe("var(--cf-space-2)");
+    rerender(<Table><Table.Tbody><Table.Tr><Table.Td>1</Table.Td></Table.Tr></Table.Tbody></Table>);
+    expect(screen.getByRole("table").style.getPropertyValue("--table-vertical-spacing")).toBe("");
+  });
 });

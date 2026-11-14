@@ -59,7 +59,7 @@ function PillsInputRoot(props: PillsInputProps) {
           style={[
             {
               flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: space[1], minHeight: controlHeight.input[size], paddingVertical: space[1], paddingHorizontal: space[4] - borda,
-              borderRadius: radius.sm, backgroundColor: c.field, borderWidth: borda, borderColor: focado ? c.accent : error ? c.down : c.border,
+              borderRadius: radius.sm, backgroundColor: c.field, borderWidth: borda, borderColor: focado ? c.accent : error ? c.down : c.controlBorder,
             },
             disabled && { opacity: state.disabledOpacity },
           ]}
