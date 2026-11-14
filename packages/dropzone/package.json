@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/dropzone",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Área de soltar arquivos da Countify (web e Electron)",
   "license": "UNLICENSED",
   "repository": {

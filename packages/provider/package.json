@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/provider",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CountifyProvider: tema, modo claro, escuro ou automático e textos (i18n), para web e React Native",
   "license": "UNLICENSED",
   "repository": {
