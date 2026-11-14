@@ -16,6 +16,7 @@ import {
 import {
   cloneElement,
   createContext,
+  useCallback,
   useContext,
   useRef,
   useState,
@@ -28,6 +29,7 @@ import {
 import { Icon } from "../Icon/Icon";
 import { usePopoverBase, type PopoverBase } from "../Popover/usePopover";
 import { useStyles, type StylesApiProps } from "../styles";
+import inputClasses from "../Input/Input.module.css";
 import classes from "./Combobox.module.css";
 
 export interface ComboboxProps {
@@ -84,7 +86,17 @@ export function ComboboxTarget({
   >;
 }) {
   const c = useComboboxContext();
-  const ref = useMergeRefs([c.base.refs.setReference, children.props.ref]);
+  // A lista se alinha à caixa do campo, e não ao <input> de dentro (mais estreito e recuado): sem isso ela abria mais
+  // estreita que a caixa e quebrava o texto das opções. Quem usa Combobox.Anchor troca a referência depois.
+  const posicionarEm = c.base.refs.setPositionReference;
+  const naCaixa = useCallback(
+    (el: Element | null) => {
+      const caixa = el?.closest(`.${inputClasses["root"] ?? ""}`);
+      if (caixa) posicionarEm(caixa);
+    },
+    [posicionarEm],
+  );
+  const ref = useMergeRefs([c.base.refs.setReference, naCaixa, children.props.ref]);
   return cloneElement(
     children,
     c.getReferenceProps({
