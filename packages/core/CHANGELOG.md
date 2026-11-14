@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.2.1
+
+### Patch Changes
+
+- 0d58071: O anel de Paper, Card e Table.ScrollContainer passa a ser uma borda de verdade. Em sombra interna, o fundo de um filho (o cabeçalho fixo ou a linha destacada de uma tabela) cobria a linha do anel.
+
 ## 0.2.0
 
 ### Minor Changes
