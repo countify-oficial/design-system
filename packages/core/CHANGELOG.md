@@ -1,5 +1,13 @@
 # @countify-oficial/core
 
+## 0.4.1
+
+### Patch Changes
+
+- 15bf41d: SkeletonMask: a célula de tabela com um controle (campo, lista, botão) não pinta o próprio bloco; só o controle aparece, sem os cantos de um bloco quadrado atrás do campo.
+- f4806b4: SkeletonMask: as caixas de marcar e as opções viram blocos (a opção redonda, sem o desenho do sistema, sem o visto nem o ponto), e os inputs invisíveis do SegmentedControl, do Chip e do Switch não aparecem mais no pulso. O SegmentedControl perde a moldura branca e cada segmento vira um bloco. O campo fica com a própria superfície, sem borda, com um bloco de uma linha onde o valor estaria (ícones, setas e o botão do calendário somem), e não engole mais o rótulo nem o botão ao lado. Botões, chips e segmentos ficam com o próprio canto; texto, ícones e células, com o 4 do Skeleton.
+- 4d1dd97: SkeletonMask: título, parágrafo, rótulo, legenda e descrição viram uma barra da largura do texto (no lugar dele, também centralizado ou no fim), e não da linha toda; nada ao lado se move. O "?" do HelpTip vira o círculo do ícone, na linha do título. O Slider fica com o trilho e a bolinha, a barra de progresso e a figura (`role="img"`: o Avatar sem foto, uma prévia desenhada com caixas) viram um bloco só, e o Badge dot fica com o ponto redondo e a barra do texto. A célula com uma caixa de marcar mostra só a caixa. Bloco dentro de bloco pulsa junto com o de fora, e o desativado tem o mesmo tom dos outros.
+
 ## 0.4.0
 
 ### Minor Changes
