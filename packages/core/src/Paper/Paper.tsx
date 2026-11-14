@@ -1,5 +1,5 @@
 import { useComponentProps } from "@countify-oficial/provider";
-import type { Size } from "@countify-oficial/tokens";
+import { shadows, type Size } from "@countify-oficial/tokens";
 import type { ElementType } from "react";
 import type { PolymorphicProps } from "../polymorphic";
 import { useStyles, type StylesApiProps } from "../styles";
@@ -10,7 +10,7 @@ export interface PaperOwnProps extends StylesApiProps {
   shadow?: Size | undefined;
   /** Canto: xs 8, sm 12, md 16, lg 20, xl 24. Padrão: md (cartões e listas). */
   radius?: Size | undefined;
-  /** O anel fino na cor da divisória (igual a shadow="xs"). */
+  /** O anel fino na cor da divisória (igual a shadow="xs"). É uma borda, para o fundo dos filhos não o cobrir. */
   withBorder?: boolean | undefined;
 }
 
@@ -21,6 +21,9 @@ export function Paper<C extends ElementType = "div">(props: PaperProps<C>) {
   const { component, shadow, radius = "md", withBorder, className, style, classNames, styles, ...rest } = useComponentProps("Paper", {}, props);
   const getStyles = useStyles("Paper", classes, { className, style, classNames, styles });
   const Component: ElementType = component ?? "div";
-  const sombra = shadow ? `var(--cf-shadow-${shadow})` : withBorder ? "var(--cf-shadow-xs)" : undefined;
-  return <Component {...rest} {...getStyles("root", { "--paper-radius": `var(--cf-radius-${radius})`, "--paper-shadow": sombra })} />;
+  // O anel (xs, sm, md e withBorder) é uma borda de verdade: em sombra interna, o fundo de um filho (o cabeçalho fixo
+  // ou a linha destacada de uma tabela) ficava por cima dele. Só a sombra da identidade (lg, xl) continua sombra.
+  const anel = shadow ? shadows[shadow] === "ring" : !!withBorder;
+  const sombra = shadow && !anel ? `var(--cf-shadow-${shadow})` : undefined;
+  return <Component data-ring={anel || undefined} {...rest} {...getStyles("root", { "--paper-radius": `var(--cf-radius-${radius})`, "--paper-shadow": sombra })} />;
 }

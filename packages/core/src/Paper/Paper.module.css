@@ -5,3 +5,8 @@
   box-shadow: var(--paper-shadow);
   color: var(--cf-color-text);
 }
+
+/* O anel dos cartões e das listas, em borda: o conteúdo começa depois dela e não a cobre. */
+.root[data-ring] {
+  border: var(--cf-border-thin) solid var(--cf-color-divider);
+}

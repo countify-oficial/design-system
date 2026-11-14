@@ -4,7 +4,8 @@
   max-height: var(--table-max-height);
   border-radius: var(--cf-radius-md);
   background-color: var(--cf-color-card);
-  box-shadow: var(--cf-shadow-xs);
+  /* o anel em borda: o cabeçalho fixo tem fundo e cobriria um anel em sombra interna */
+  border: var(--cf-border-thin) solid var(--cf-color-divider);
 }
 
 .root {
