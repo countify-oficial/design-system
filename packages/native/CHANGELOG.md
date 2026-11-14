@@ -1,5 +1,25 @@
 # @countify-oficial/native
 
+## 0.4.0
+
+### Minor Changes
+
+- 6b9d730: Tabler Icons (MIT, `@tabler/icons` 3.52.0) in the design system. The new `@countify-oficial/icons-tabler` package ships
+  all 5,491 outline and 1,054 filled SVGs unmodified, with the Tabler LICENSE and a manifest. `Icon` keeps the Countify
+  set for its names and draws any other name from Tabler, with `variant="outline" | "filled"`. Tabler icons use
+  `currentColor`, the icon-size tokens and the Countify stroke token (`iconGrid.stroke`). On the web each Tabler icon is
+  loaded on demand, one module per icon. On React Native the icons are bundled and only read when used.
+
+### Patch Changes
+
+- 3588660: Notification: a ação (o Button subtle do "Desfazer") e o botão de fechar usam os tokens do outro modo, porque o fundo do aviso é invertido. No claro, o "Desfazer" fica no azul #8CBAF2 sobre o aviso escuro (7,2:1, antes 2,2:1); no escuro, no #225BA5 sobre o aviso claro (6,5:1, antes 1,9:1). No aviso vermelho (`color="down"`), a ação usa o texto do outro modo (6,3:1 e 7,7:1). Na web, `data-cf-color-scheme` com o modo inverso do provider; no celular, o contexto do tema com as cores do outro modo.
+- 78154fc: Skeleton e SkeletonLoader: os blocos usam a cor do chip (`--cf-color-chip`, #E8EDF3 no claro) no lugar da divisória, que quase não aparecia sobre o cartão branco e sumia sobre o fundo (aprovado em 14/11/2026).
+- Updated dependencies [c0873ed]
+- Updated dependencies [6b9d730]
+  - @countify-oficial/tokens@0.4.0
+  - @countify-oficial/icons-tabler@0.1.0
+  - @countify-oficial/provider@0.2.2
+
 ## 0.3.0
 
 ### Minor Changes

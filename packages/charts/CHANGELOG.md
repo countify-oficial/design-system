@@ -1,5 +1,21 @@
 # @countify-oficial/charts
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [d1aa444]
+- Updated dependencies [5d5b520]
+- Updated dependencies [3588660]
+- Updated dependencies [c0873ed]
+- Updated dependencies [78154fc]
+- Updated dependencies [f465573]
+- Updated dependencies [6b9d730]
+  - @countify-oficial/core@0.4.0
+  - @countify-oficial/native@0.4.0
+  - @countify-oficial/tokens@0.4.0
+  - @countify-oficial/provider@0.2.2
+
 ## 0.1.2
 
 ### Patch Changes

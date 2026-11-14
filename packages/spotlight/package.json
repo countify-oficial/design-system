@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/spotlight",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Busca rápida da Countify (Ctrl+K / ⌘K) para a web e o Electron",
   "license": "UNLICENSED",
   "repository": {

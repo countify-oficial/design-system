@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/charts",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Gráficos da Countify em SVG: linha, área, barras, pizza, rosca, radar, dispersão, mapa de calor e minigráfico, na web e no React Native",
   "license": "UNLICENSED",
   "repository": {

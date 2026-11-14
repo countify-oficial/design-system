@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/icons-tabler",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Todos os ícones do Tabler Icons (MIT), sem alteração, para o Icon do core e do native: um módulo por ícone, carregado só quando usado",
   "license": "UNLICENSED",
   "repository": {
