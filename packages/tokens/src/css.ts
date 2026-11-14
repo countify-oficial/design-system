@@ -4,7 +4,7 @@ import { colors, palette, type ColorScheme } from "./colors.js";
 import { iconGrid } from "./icons.js";
 import {
   appShell, avatarSize, calendar, chart, controlFontSize, spotlightWidth, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
-  compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, switchSize, space, spacing, state,
+  compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, screenHeaderHeight, pageTitleTracking, helpIconSize, filterChipChevronSize, switchSize, space, spacing, state,
   borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
 
@@ -53,6 +53,10 @@ export function createCssVariables(): string {
     ...each("switch", switchSize, "px"),
     decl("overline-tracking", `${overlineTracking}em`),
     decl("side-panel-width", `${sidePanelWidth}px`),
+    decl("screen-header-height", `${screenHeaderHeight}px`),
+    decl("page-title-tracking", `${pageTitleTracking}em`),
+    decl("help-icon-size", `${helpIconSize}px`),
+    decl("filter-chip-chevron-size", `${filterChipChevronSize}px`),
     ...each("app-shell", appShell, "px"),
     ...each("calendar", calendar, "px"),
     decl("spotlight-width", `${String(spotlightWidth)}px`),

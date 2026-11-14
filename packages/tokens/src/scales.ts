@@ -66,6 +66,16 @@ export const sheetHandle = { width: 36, height: 4 } as const;
 /** Painel lateral no computador (a folha vira painel a partir de 768). */
 export const sidePanelWidth = 380;
 
+// ---------- cabeçalho de página, ajuda e chip de filtro (mockup, telas W-* e X-DocComponentes)
+/** Altura mínima do cabeçalho de tela no celular, com o voltar (mockup, telas M- com Voltar). */
+export const screenHeaderHeight = 60;
+/** Espaço entre letras do título da página no computador (mockup, h1 das telas W-*), em em. */
+export const pageTitleTracking = -0.01;
+/** Ícone do "?" de ajuda (mockup X-DocComponentes, "Botão de ícone e ajuda"). */
+export const helpIconSize = 20;
+/** Seta do chip de filtro (mockup X-DocComponentes, "Chip de filtro"). */
+export const filterChipChevronSize = 14;
+
 // ---------- AppShell (mockup, telas W-* e M-*): cabeçalho de 64 no computador, com ícone de 20 no menu; no celular,
 // abas embaixo com itens de 56 e ícone de 24
 export const appShell = { headerHeight: 64, tabItemHeight: 56, tabIconSize: 24, menuIconSize: 20 } as const;

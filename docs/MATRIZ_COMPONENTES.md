@@ -40,6 +40,9 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | SimpleGrid | ok | ok | adaptado | no celular, colunas pela largura da tela; células em porcentagem (o React Native não tem grid) |
 | Grid | ok | ok | adaptado | igual ao SimpleGrid; o `Grid.Col` lê colunas e espaço do `Grid` |
 | Container | ok | ok | adaptado | no celular, a margem segue a largura da tela (32 em tablet a partir de 768) |
+| PageHeader | ok | ok | adaptado | no celular é sempre a linha de 60 com a seta redonda; `backLabel` é só o nome para o leitor de tela e não há `backHref` (o caminho é do navegador de telas) |
+| Section | ok | ok | adaptado | no celular o título é `header` (não há região nomeada) e `order` não muda nada; o `aside` em texto sai em 13 na cor de texto 2 |
+| FilterChip | ok | ok | adaptado | no celular `onPress`, borda no lugar do anel e `selected` no estado de acessibilidade quando há filtro aplicado |
 | AppShell | ok | ok | adaptado | a moldura da identidade: abas embaixo abaixo de 768; cabeçalho de 64 com o menu só com ícones de 768 a 1279 e com os nomes a partir de 1280. No celular, as margens do sistema vêm de `safeAreaInsets` (do react-native-safe-area-context, que o app já usa) |
 | Splitter | ok | ok | N/A | no celular a identidade mostra "a lista, depois o detalhe" (`X-DocNavegacao`); não há painéis lado a lado |
 | ScrollArea | ok | ok | adaptado | na web, barra fina na cor da borda forte e entra no Tab; no celular, o ScrollView com a barra do sistema |
@@ -79,6 +82,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Alert | ok | ok | adaptado | no celular, `accessibilityLiveRegion` (Android) e papel `alert`; o contêiner não agrupa, para o botão de fechar continuar alcançável |
 | Notification | ok | ok | adaptado | igual ao Alert; a fila e a posição na tela ficam em `@countify-oficial/notifications` |
 | EmptyState | ok | ok | ok | |
+| HelpTip | ok | ok | adaptado | no celular a explicação abre numa folha (painel de 380 a partir de 768), sem `position`; fecha no botão, no véu ou no voltar do Android |
 
 ### Tipografia
 

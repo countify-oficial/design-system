@@ -1,0 +1,39 @@
+/* Seção das telas do mockup (W-Hoje, W-Grupo): título de 20 com o "?" a 4, o que vai à direita, e 12 até o conteúdo.
+   O cabeçalho tem 44 de altura mínima para o "?" e a ação caberem sem mexer no alinhamento. */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-3);
+  min-width: 0;
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+  min-height: var(--cf-touch-target);
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-1);
+  min-width: 0;
+}
+
+.title {
+  min-width: 0;
+}
+
+.aside {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}

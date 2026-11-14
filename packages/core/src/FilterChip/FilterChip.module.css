@@ -1,0 +1,53 @@
+/* "Chip de filtro" do mockup (X-DocComponentes): 44 de altura, recuo 12, canto 12, cartão com anel, letra 15 média e a
+   seta de 14. Com filtro aplicado, a tinta e o anel grosso do destaque (os do chip de escolha marcado). */
+.root {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--cf-space-2);
+  box-sizing: border-box;
+  min-height: var(--cf-touch-target);
+  padding-inline: var(--cf-space-3);
+  border-radius: var(--cf-radius-sm);
+  background-color: var(--cf-color-card);
+  box-shadow: inset 0 0 0 var(--cf-border-thin) var(--cf-color-divider);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+  white-space: nowrap;
+}
+
+.root[data-active] {
+  background-color: var(--cf-color-accent-tint);
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-accent);
+  color: var(--cf-color-accent);
+}
+
+.section,
+.chevron {
+  display: inline-flex;
+  flex: none;
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chevron svg {
+  width: var(--cf-filter-chip-chevron-size);
+  height: var(--cf-filter-chip-chevron-size);
+}
+
+@media (hover: hover) {
+  .root:not([data-disabled]):hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.root[data-disabled] {
+  opacity: var(--cf-disabled-opacity);
+}

@@ -1,0 +1,101 @@
+/* Cabeçalho de página do mockup. Celular (telas M- com Voltar): linha de 60 com a seta redonda de 44 puxada 12 para
+   fora, o título de 22 e as ações, a 4 uns dos outros. Computador (telas W-*): o link de voltar (15, cor principal,
+   seta de 16, alvo de 44) acima do título de 28 e as ações à direita, a 24 do título.
+   A media query repete tokens.breakpoints.sm (768); o teste test/css.test.ts confere. */
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "title actions";
+  align-items: center;
+  column-gap: var(--cf-space-1);
+  box-sizing: border-box;
+  min-height: var(--cf-screen-header-height);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.root[data-with-back] {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "back title actions";
+}
+
+.back {
+  grid-area: back;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cf-space-1);
+  width: var(--cf-touch-target);
+  height: var(--cf-touch-target);
+  margin-inline-start: calc(-1 * var(--cf-space-3));
+  border-radius: 50%;
+  color: var(--cf-color-text);
+  font-size: var(--cf-font-size-sm);
+  text-decoration: none;
+}
+
+.backLabel {
+  display: none;
+}
+
+.title {
+  grid-area: title;
+  min-width: 0;
+}
+
+.actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-2);
+}
+
+@media (min-width: 768px) {
+  .root,
+  .root[data-with-back] {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "title actions";
+    column-gap: var(--cf-space-6);
+    min-height: var(--cf-touch-target);
+  }
+
+  .root[data-with-back] {
+    grid-template-areas:
+      "back back"
+      "title actions";
+  }
+
+  .back {
+    justify-self: start;
+    width: auto;
+    height: auto;
+    min-height: var(--cf-touch-target);
+    margin-inline-start: 0;
+    border-radius: var(--cf-radius-xs);
+    color: var(--cf-color-accent);
+  }
+
+  .back svg {
+    width: var(--cf-icon-size-xs);
+    height: var(--cf-icon-size-xs);
+  }
+
+  .backLabel {
+    display: inline;
+  }
+
+  .title {
+    letter-spacing: var(--cf-page-title-tracking);
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 768px) and (hover: hover) {
+  .back:hover {
+    color: var(--cf-color-accent-hover);
+  }
+}

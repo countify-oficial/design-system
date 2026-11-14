@@ -243,3 +243,14 @@ Valores que a identidade já usa, agora com nome nos tokens:
     estabelecimento (`spotlightWidth` = 460, `W-Seletor`), o campo de busca de 48 e as linhas de 56 com o quadro de
     ícone de 40.
 
+## Depois da aplicação no countify-label (13/11/2026)
+
+37. **Cabeçalho de página** (`screenHeaderHeight`, `pageTitleTracking`): no celular, a linha do voltar tem 60 de altura
+    mínima (**mockup**, telas M- com Voltar); no computador, o título de 28 tem -0,01 em entre as letras (**mockup**, h1
+    das telas W-*).
+38. **Ajuda e chip de filtro** (`helpIconSize`, `filterChipChevronSize`): o "?" tem ícone de 20 num alvo redondo de 44
+    que não aumenta a linha, e a seta do chip de filtro tem 14. Origem: **mockup** `X-DocComponentes` ("Botão de ícone
+    e ajuda" e "Chip de filtro").
+39. **Chip de filtro com filtro aplicado** (aprovado em 13/11/2026, no mockup "Countify Label · atual × sugestão"): o
+    guia só desenha o chip neutro; com um filtro diferente do padrão ele usa a tinta e o anel do destaque, os mesmos do
+    chip de escolha marcado.

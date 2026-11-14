@@ -37,9 +37,11 @@ export { Divider, type DividerProps } from "./Divider/Divider";
 export { Drawer, type DrawerPosition, type DrawerProps } from "./Drawer/Drawer";
 export { EmptyState, type EmptyStateProps } from "./EmptyState/EmptyState";
 export { Fieldset, type FieldsetProps } from "./Fieldset/Fieldset";
+export { FilterChip, type FilterChipOwnProps, type FilterChipProps } from "./FilterChip/FilterChip";
 export { Flex, type FlexOwnProps, type FlexProps } from "./Flex/Flex";
 export { Grid, GridCol, type GridColOwnProps, type GridColProps, type GridOwnProps, type GridProps } from "./Grid/Grid";
 export { Group, type GroupOwnProps, type GroupProps } from "./Group/Group";
+export { HelpTip, type HelpTipProps } from "./HelpTip/HelpTip";
 export { Highlight, type HighlightProps } from "./Highlight/Highlight";
 export { HoverCard, type HoverCardProps } from "./HoverCard/HoverCard";
 export { Icon, type IconProps } from "./Icon/Icon";
@@ -64,6 +66,7 @@ export { NumberFormatter, type NumberFormatterProps } from "./NumberFormatter/Nu
 export { NumberInput, type NumberInputProps } from "./NumberInput/NumberInput";
 export { OverflowList, type OverflowListProps } from "./OverflowList/OverflowList";
 export { Overlay, type OverlayProps } from "./Overlay/Overlay";
+export { PageHeader, type PageHeaderProps } from "./PageHeader/PageHeader";
 export { Pagination, type PaginationProps } from "./Pagination/Pagination";
 export { Paper, type PaperOwnProps, type PaperProps } from "./Paper/Paper";
 export { PasswordInput, type PasswordInputProps } from "./PasswordInput/PasswordInput";
@@ -79,6 +82,7 @@ export { RingProgress, type RingProgressProps, type RingProgressSection } from "
 export { RollingNumber, type RollingNumberProps } from "./RollingNumber/RollingNumber";
 export { ScrollArea, type ScrollAreaProps } from "./ScrollArea/ScrollArea";
 export { Scroller, type ScrollerProps } from "./Scroller/Scroller";
+export { Section, type SectionProps } from "./Section/Section";
 export { SegmentedControl, type SegmentedControlItem, type SegmentedControlProps } from "./SegmentedControl/SegmentedControl";
 export { Select, type SelectProps } from "./Select/Select";
 export { SemiCircleProgress, type SemiCircleProgressProps } from "./SemiCircleProgress/SemiCircleProgress";

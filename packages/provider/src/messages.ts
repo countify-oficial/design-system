@@ -25,6 +25,8 @@ export interface CountifyMessages {
   /** botões do Tour */
   next: string;
   back: string;
+  /** Começo do nome do "?" de ajuda ("Ajuda: Fluxo de pessoas"). */
+  help: string;
   done: string;
   /** "1 de 4" no Tour e no Stepper */
   stepOf: (atual: number, total: number) => string;
@@ -102,6 +104,7 @@ export const defaultMessages: CountifyMessages = {
   alpha: "Transparência",
   next: "Próximo",
   back: "Voltar",
+  help: "Ajuda",
   done: "Concluir",
   stepOf: (atual, total) => `${atual} de ${total}`,
   search: "Buscar",
