@@ -1,4 +1,4 @@
-import { useComponentProps } from "@countify-oficial/provider";
+import { useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
 import type { ElementType, ReactNode } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { Loader } from "../Loader/Loader";
@@ -15,7 +15,7 @@ export interface NotificationOwnProps extends StylesApiProps<"root" | "icon" | "
   icon?: ReactNode;
   /** Girador no lugar do ícone (salvando…). */
   loading?: boolean | undefined;
-  /** Ação curta ("Desfazer"): um Button variant="subtle". */
+  /** Ação curta ("Desfazer"): um Button variant="subtle". Usa os tokens do outro modo, para ler sobre o fundo invertido. */
   action?: ReactNode;
   withCloseButton?: boolean | undefined;
   onClose?: (() => void) | undefined;
@@ -33,6 +33,8 @@ export function Notification<C extends ElementType = "div">(props: NotificationP
   } = useComponentProps("Notification", {}, props);
   const getStyles = useStyles("Notification", classes, { className, style, classNames, styles });
   const Component: ElementType = component ?? "div";
+  // o fundo é invertido (o texto do modo): ação e fechar usam os tokens do outro modo, como o azul claro do escuro
+  const inverso = useCountifyTheme().colorScheme === "dark" ? "light" : "dark";
   return (
     <Component role={color === "down" ? "alert" : "status"} {...rest} data-color={color} {...getStyles("root")}>
       {(loading || icon) && <span {...getStyles("icon")}>{loading ? <Loader size="sm" color="currentColor" label={false} /> : icon}</span>}
@@ -40,8 +42,10 @@ export function Notification<C extends ElementType = "div">(props: NotificationP
         {title !== undefined && <span {...getStyles("title")}>{title}</span>}
         {children}
       </div>
-      {action !== undefined && <span {...getStyles("action")}>{action}</span>}
-      {withCloseButton && <CloseButton aria-label={closeButtonLabel} onClick={onClose} color="bg" {...getStyles("closeButton")} />}
+      {action !== undefined && <span data-cf-color-scheme={inverso} {...getStyles("action")}>{action}</span>}
+      {withCloseButton && (
+        <CloseButton aria-label={closeButtonLabel} onClick={onClose} color="text" data-cf-color-scheme={inverso} {...getStyles("closeButton")} />
+      )}
     </Component>
   );
 }

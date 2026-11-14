@@ -1,3 +1,4 @@
+import { CountifyProvider } from "@countify-oficial/provider";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { Alert, Button, EmptyState, Notification } from "../src";
@@ -32,6 +33,20 @@ describe("Alert, Notification e EmptyState", () => {
     expect(screen.getByRole("status").textContent).toContain("Análise salva");
     expect(screen.getByRole("alert").dataset["color"]).toBe("down");
     await semViolacoes(container);
+  });
+
+  it("Notification: ação e fechar usam os tokens do outro modo (o fundo é invertido)", async () => {
+    const aviso = (color?: "down") => (
+      <Notification color={color} title="Análise salva" action={<Button variant="subtle" size="sm">Desfazer</Button>} withCloseButton />
+    );
+    const modo = () => ["Desfazer", "Fechar"].map((n) => screen.getByRole("button", { name: n }).closest("[data-cf-color-scheme]")?.getAttribute("data-cf-color-scheme"));
+    const { container, rerender } = render(aviso());
+    expect(modo()).toEqual(["dark", "dark"]);
+    // no outro modo, o fechar usa o texto (o bg do outro modo sumiria no fundo invertido)
+    expect(screen.getByRole("button", { name: "Fechar" }).style.getPropertyValue("--ai-color")).toBe("var(--cf-color-text)");
+    await semViolacoes(container);
+    rerender(<CountifyProvider colorScheme="dark">{aviso("down")}</CountifyProvider>);
+    expect(modo()).toEqual(["light", "light"]);
   });
 
   it("EmptyState: título, descrição e ação", async () => {

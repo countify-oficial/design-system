@@ -11,13 +11,14 @@ export const Erro: Story = { name: "Erro com ação (X-DocEstados)", render: () 
 export const SemConexao: Story = { name: "Sem conexão", args: { color: "gray", title: undefined, children: "Sem conexão · atualizado às 14:32" } };
 export const ComFechar: Story = { name: "Com botão de fechar", args: { color: "accent", withCloseButton: true, onClose: fn() } };
 
+// a ação e o fechar usam os tokens do outro modo: o subtle fica no azul claro sobre o aviso escuro (e o contrário)
 export const Notificacao: StoryObj = {
-  name: "Notification",
+  name: "Notification (com ação)",
   render: () => (
     <Stack align="flex-start">
-      <Notification icon={<Icon name="check" size="sm" />} action={<Button size="sm" variant="subtle" style={{ color: "inherit" }}>Desfazer</Button>}>Análise salva</Notification>
+      <Notification icon={<Icon name="check" size="sm" />} action={<Button size="sm" variant="subtle">Desfazer</Button>} withCloseButton>Análise salva</Notification>
       <Notification loading>Salvando…</Notification>
-      <Notification color="down" title="Falha ao enviar" withCloseButton>Verifique a conexão.</Notification>
+      <Notification color="down" title="Falha ao enviar" action={<Button size="sm" variant="subtle">Tentar de novo</Button>} withCloseButton>Verifique a conexão.</Notification>
     </Stack>
   ),
 };

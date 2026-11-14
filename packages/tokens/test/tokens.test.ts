@@ -28,6 +28,15 @@ describe("cores", () => {
     for (const [t, f] of pares) expect(contrast(c[t], c[f]), `${t} sobre ${f}`).toBeGreaterThanOrEqual(4.5);
   });
 
+  it.each(schemes)("aviso (Notification) no modo %s: ação e fechar com as cores do outro modo têm 4,5:1", (scheme) => {
+    const c = colors[scheme];
+    const o = colors[scheme === "light" ? "dark" : "light"];
+    // padrão: fundo text, ação no accent do outro modo, fechar no text do outro; vermelho: fundo down, os dois no text do outro
+    for (const [nome, frente, fundo] of [["ação", o.accent, c.text], ["fechar", o.text, c.text], ["ação e fechar no vermelho", o.text, c.down]]) {
+      expect(contrast(frente ?? "", fundo ?? ""), nome).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
   it.each(schemes)("contorno de controle com 3:1 sobre os fundos no modo %s", (scheme) => {
     const c = colors[scheme];
     for (const f of ["bg", "card", "sheet", "field"] as const) expect(contrast(c.controlBorder, c[f]), `controlBorder sobre ${f}`).toBeGreaterThanOrEqual(3);

@@ -3,7 +3,7 @@ import { colors } from "@countify-oficial/tokens";
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { StyleSheet, Text, type ViewStyle } from "react-native";
 import {
-  Alert, Avatar, Badge, Card, Divider, EmptyState, Icon, Indicator, Kbd, Notification, Paper, Progress, RingProgress,
+  Alert, Avatar, Badge, Button, Card, Divider, EmptyState, Icon, Indicator, Kbd, Notification, Paper, Progress, RingProgress,
   SemiCircleProgress, Skeleton, SkeletonLoader, ThemeIcon,
 } from "../src";
 
@@ -110,6 +110,14 @@ describe("Alert, Notification e EmptyState (React Native)", () => {
     await render(<CountifyProvider defaultColorScheme="dark"><Notification testID="n" title="Análise salva" /></CountifyProvider>);
     expect(screen.getByTestId("n")).toHaveStyle({ backgroundColor: colors.dark.text, minHeight: 48 });
     expect(screen.getByText("Análise salva")).toHaveStyle({ color: colors.dark.bg });
+  });
+
+  it("Notification: a ação usa as cores do outro modo; no vermelho, o texto do outro modo", async () => {
+    const aviso = (color?: "down") => <Notification color={color} title="Análise salva" action={<Button variant="subtle" size="sm">Desfazer</Button>} withCloseButton />;
+    await render(<CountifyProvider defaultColorScheme="dark">{aviso()}</CountifyProvider>);
+    expect(screen.getByText("Desfazer")).toHaveStyle({ color: colors.light.accent });
+    await render(<CountifyProvider defaultColorScheme="light">{aviso("down")}</CountifyProvider>);
+    expect(screen.getByText("Desfazer")).toHaveStyle({ color: colors.dark.text });
   });
 
   it("EmptyState centralizado", async () => {

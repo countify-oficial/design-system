@@ -41,6 +41,11 @@
   flex: none;
 }
 
+/* no vermelho, o azul do outro modo não chega a 4,5:1: a ação usa o texto do outro modo, como o fechar */
+.root[data-color="down"] .action {
+  --cf-color-accent: var(--cf-color-text);
+}
+
 .closeButton {
   margin-inline-end: calc(-1 * var(--cf-space-3));
 }
