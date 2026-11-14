@@ -41,7 +41,9 @@
   border-top: var(--cf-border-thin) solid var(--cf-color-divider);
 }
 
-.root[data-sticky-header] .thead .th {
+/* O cabeçalho inteiro gruda no topo, e não cada célula: com duas linhas (grupos de colunas em cima), a de baixo
+   ficaria por cima da de cima. */
+.root[data-sticky-header] .thead {
   position: sticky;
   top: 0;
   z-index: 1;
