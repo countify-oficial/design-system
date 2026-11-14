@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.5.1
+
+### Patch Changes
+
+- 1998680: Table com stickyHeader: o cabeçalho inteiro gruda no topo ao rolar. Com duas linhas (grupos de colunas em cima), a de baixo não cobre mais a de cima.
+
 ## 0.5.0
 
 ### Minor Changes
