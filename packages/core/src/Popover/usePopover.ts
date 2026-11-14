@@ -29,6 +29,8 @@ export function usePopoverBase({ opened, defaultOpened, onChange, position = "bo
     open: aberto,
     onOpenChange: setAberto,
     placement: position,
+    // A posição vai em left/top: o transform é da animação de abrir (scale), que o sobrescrevia e deixava a lista em 0,0.
+    transform: false,
     whileElementsMounted: autoUpdate,
     middleware: [
       offset(resolveSpacing(distancia)),
