@@ -51,7 +51,7 @@ export function Skeleton(props: SkeletonProps) {
       testID={testID}
       importantForAccessibility="no-hide-descendants"
       style={[
-        { height, width: circle ? height : width, backgroundColor: c.divider, borderRadius: circle && lado ? lado / 2 : radius ? cantos[radius] : space[1] },
+        { height, width: circle ? height : width, backgroundColor: c.chip, borderRadius: circle && lado ? lado / 2 : radius ? cantos[radius] : space[1] },
         pulsar && { opacity: opacidade },
         tema,
         style,

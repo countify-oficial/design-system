@@ -67,9 +67,9 @@ describe("Badge, ThemeIcon, Avatar, Indicator e Kbd (React Native)", () => {
 });
 
 describe("Skeleton, SkeletonLoader e progresso (React Native)", () => {
-  it("Skeleton: bloco cinza de 16, canto 4; visible={false} mostra o conteúdo", async () => {
+  it("Skeleton: bloco na cor do chip, de 16, canto 4; visible={false} mostra o conteúdo", async () => {
     await render(<><Skeleton testID="s" animate={false} /><Skeleton visible={false}><Text>1.284</Text></Skeleton></>);
-    expect(screen.getByTestId("s", { includeHiddenElements: true })).toHaveStyle({ height: 16, width: "100%", backgroundColor: l.divider, borderRadius: 4 });
+    expect(screen.getByTestId("s", { includeHiddenElements: true })).toHaveStyle({ height: 16, width: "100%", backgroundColor: l.chip, borderRadius: 4 });
     expect(screen.getByText("1.284")).toBeOnTheScreen();
   });
 
@@ -77,7 +77,7 @@ describe("Skeleton, SkeletonLoader e progresso (React Native)", () => {
     const { container } = await render(<SkeletonLoader variant="stat" testID="sl" animate={false} />);
     expect(screen.getByLabelText("Carregando")).toBeBusy();
     const estilo = (n: { props: { style?: unknown } }) => StyleSheet.flatten(n.props.style as ViewStyle | undefined) ?? {};
-    const blocos = container.queryAll((n) => typeof n.type === "string" && estilo(n).backgroundColor === l.divider);
+    const blocos = container.queryAll((n) => typeof n.type === "string" && estilo(n).backgroundColor === l.chip);
     expect(blocos.map((b) => [estilo(b).width, estilo(b).height])).toEqual([[96, 16], [140, 32], [112, 16]]);
   });
 

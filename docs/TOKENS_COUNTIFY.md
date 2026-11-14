@@ -165,8 +165,8 @@ Valores que a identidade já usa, agora com nome nos tokens:
 15. **Anel e semicírculo de progresso** (`ringProgress`, aprovado em 13/11/2026): anel de 120 e semicírculo de 200;
     a espessura é sempre 1/5 do tamanho, a proporção do anel da marca (`X-DocMarca`: 200 com traço de 40).
 16. **Pulso do Skeleton** (`state.pulseOpacity`): vai a 0,5 no meio de cada pulso de 1400 ms. Origem: **0.1.0**.
-17. **Blocos do "Carregando"** (`skeletonStat`): o cartão de número tem blocos de 96 × 16, 140 × 32 e 112 × 16, na cor
-    da divisória e com canto de 4. Origem: **mockup** `X-DocEstados`.
+17. **Blocos do "Carregando"** (`skeletonStat`): o cartão de número tem blocos de 96 × 16, 140 × 32 e 112 × 16, com
+    canto de 4 (a cor era a da divisória; agora é a do chip, ver 42). Origem: **mockup** `X-DocEstados`.
 18. **Tons** (`tones`): para Badge, ThemeIcon, Avatar, Alert e Progress, cada tom junta três papéis que já existem:
     texto, fundo claro e fundo cheio. A queda não tem tinta na identidade, então o fundo claro dela é o do chip.
 19. **Linha compacta de 56** (`compactRowHeight`): lista com caixas e interruptor (**mockup** `X-DocComponentes`) e o
@@ -262,3 +262,6 @@ Valores que a identidade já usa, agora com nome nos tokens:
 41. **Linhas mais baixas na tabela** (`verticalSpacing` da Table, aprovado em 14/11/2026): o espaço acima e abaixo da
     célula pode ir do padrão `space-3` (12) para `space-2` (8), com o mesmo token da grade de 4; o campo dentro da célula
     continua com a altura de toque (44).
+42. **Cor dos blocos do "Carregando"** (aprovado em 14/11/2026): o Skeleton e o SkeletonLoader usam o papel `chip`
+    (#E8EDF3 no claro, #22334A no escuro) no lugar da `divider`. A divisória quase não aparecia sobre o cartão branco
+    e sumia sobre o fundo. Canto de 4 e pulso (`state.pulseOpacity`, `duration.pulse`) continuam.

@@ -1,11 +1,12 @@
-/* os blocos cinza do mockup (X-DocEstados, "Carregando"): cor da divisória, canto de 4; pulsa como na 0.1.0 */
+/* os blocos cinza do mockup (X-DocEstados, "Carregando"): canto de 4; pulsa como na 0.1.0. A cor é a do chip
+   (aprovado em 14/11/2026, TOKENS_COUNTIFY 42): a da divisória sumia sobre o cartão e o fundo */
 .root {
   display: block;
   flex: none;
   width: var(--sk-width, 100%);
   height: var(--sk-height, var(--cf-space-4));
   border-radius: var(--sk-radius, var(--cf-space-1));
-  background-color: var(--cf-color-divider);
+  background-color: var(--cf-color-chip);
 }
 
 .root[data-circle] {
