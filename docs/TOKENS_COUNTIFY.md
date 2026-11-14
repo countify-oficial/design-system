@@ -116,8 +116,9 @@ A abertura do app não tem animação (**app** §3.0.0). Nenhum outro documento 
 ## Aprovado em 13/11/2026
 
 A identidade não definia estes itens. A proposta foi mostrada lado a lado com o Painel (tela 4) do mockup, nos quatro
-modos, sem nenhum pixel diferente, e aprovada pelo dono do projeto. Página da proposta:
-`legacy/ui/docs/proposta-tokens.html`. Simulação: `legacy/ui/docs/simulacao-painel.html`.
+modos, sem nenhum pixel diferente, e aprovada pelo dono do projeto. A página da proposta e a simulação ficaram no
+git, com o CSS da 0.1.0 que elas usam: `git show 45541ec:legacy/ui/docs/proposta-tokens.html` e
+`legacy/ui/docs/simulacao-painel.html` (o `legacy/ui/` saiu do repositório depois desse commit).
 
 1. **Escalas de 10 tons** (`palette`): azul, verde, vermelho, âmbar e cinza. Os tons da identidade ficam no degrau de
    mesma luminosidade; os que faltam saem por interpolação em OKLCH entre eles (âmbar: matiz 70, todos gerados). Os
@@ -152,7 +153,7 @@ Valores que a identidade já usa, agora com nome nos tokens:
 10. **Linhas** (`borderWidth`): fina 1 (contorno do Cancelar, anel do chip) e grossa 1,5 (chip escolhido, tracejado
     do Adicionar). Origem: **mockup** `X-DocComponentes` (Botões, Chips de escolha, Segmentado).
 11. **Estados** (`state`): apagado com opacidade 0,4; no hover, véu cinza a 10% (`rgb(127 127 127 / 0.1)`) por cima do
-    fundo; no celular, opacidade 0,8 ao tocar. Origem: **0.1.0** (`legacy/ui`), que segue o "Bloqueado aparece
+    fundo; no celular, opacidade 0,8 ao tocar. Origem: **0.1.0** (a `@countify/ui`), que segue o "Bloqueado aparece
     apagado" do mockup.
 12. **Girador** (`loaderStroke`): traço de 2,5 e uma volta em 800 ms (`duration.spin`); o tamanho é o do ícone.
     Origem: **0.1.0**. Para carregar uma tela, a identidade usa blocos cinza (`X-DocEstados`, "Sem girador").

@@ -12,7 +12,6 @@ packages/
   eslint-config/   @countify-oficial/eslint-config: regras comuns (privado)
 apps/
   docs/            Storybook da web (privado); desktop-demo e mobile-demo vêm depois
-legacy/ui/         @countify/ui 0.1.0, só referência; fora do workspace
 docs/              TOKENS_COUNTIFY.md, MATRIZ_COMPONENTES.md, ARQUITETURA.md, CONTRIBUINDO.md
 ```
 

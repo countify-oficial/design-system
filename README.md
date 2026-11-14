@@ -30,7 +30,6 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 
 A origem de cada token está em [docs/TOKENS_COUNTIFY.md](docs/TOKENS_COUNTIFY.md); a organização do repositório em
 [docs/ARQUITETURA.md](docs/ARQUITETURA.md); como contribuir em [docs/CONTRIBUINDO.md](docs/CONTRIBUINDO.md).
-A versão anterior (`@countify/ui` 0.1.0, pacote único) está em `legacy/ui/`, só como referência.
 
 ## Usar os tokens
 
@@ -156,7 +155,10 @@ Electron vira Node puro. Na galeria, o Metro usa a entrada `react-native` dos pa
 De execução, os pacotes só pedem o que o app já tem (dependências "peer"): React 19 (e o React DOM na web), e no
 celular o React Native (0.79 ou mais novo), o `expo-clipboard`, que o `useClipboard` usa
 (`npx expo install expo-clipboard`), e o `react-native-svg`, que desenha os ícones (a especificação já o previa para
-os gráficos). As animações do celular usam o `Animated` do próprio React Native. As de
+os gráficos). As animações do celular usam o `Animated` do próprio React Native. Essas do celular ficam só em
+`peerDependenciesMeta` (opcionais), fora de `peerDependencies`: vindo do GitHub Packages, o npm não recebe o
+`peerDependenciesMeta` (visto no `package-lock.json` do countify-label) e instalava o React Native e o Expo inteiros
+num app de Electron. As de
 desenvolvimento:
 
 | Dependência | Por quê |
@@ -188,6 +190,7 @@ Os pacotes são privados, no GitHub Packages da organização `countify-oficial`
 1. Cada pessoa cria um token no GitHub (Settings → Developer settings → Personal access tokens, tipo *classic*, com
    `read:packages`; quem publica também precisa de `write:packages`) e grava no `~/.npmrc` dela, fora do repositório:
    `//npm.pkg.github.com/:_authToken=<token>`.
-2. `pnpm changeset` a cada mudança; `pnpm version-packages` aplica as versões; `pnpm release` publica.
+2. `pnpm changeset` a cada mudança; `pnpm version-packages` aplica as versões; `pnpm release` publica, só com a
+   árvore do git limpa e com build, typecheck, lint e testes passando.
 
 Num app que usa a biblioteca, o `.npmrc` do app leva a mesma linha `@countify-oficial:registry=https://npm.pkg.github.com`.
