@@ -8,6 +8,11 @@
   min-height: var(--cf-list-row-height);
   padding: var(--cf-space-3) var(--cf-space-4);
   border-radius: var(--cf-radius-sm);
+  /* como botão (component="button"): sem a borda, o fundo, a margem e a letra pequena que o navegador põe nos botões */
+  margin: 0;
+  border: 0;
+  background-color: transparent;
+  font: inherit;
   color: var(--cf-color-text);
   font-family: var(--cf-font-sans);
   line-height: var(--cf-line-height);

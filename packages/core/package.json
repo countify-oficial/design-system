@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/core",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Componentes da Countify para web e Electron (React + CSS Modules)",
   "license": "UNLICENSED",
   "repository": {

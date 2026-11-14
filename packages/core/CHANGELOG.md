@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.4.3
+
+### Patch Changes
+
+- NavLink como botão (component="button"): sem a borda, o fundo cinza e a letra pequena que o navegador põe nos botões; fica igual ao NavLink de link.
+
 ## 0.4.2
 
 ### Patch Changes
