@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.3.2
+
+### Patch Changes
+
+- e1e5c9c: Select e os outros campos com lista (Combobox.Target) alinham a lista à caixa do campo, com a largura dela, e não ao input de dentro: a lista abria mais estreita e recuada, e quebrava o texto das opções.
+
 ## 0.3.1
 
 ### Patch Changes
