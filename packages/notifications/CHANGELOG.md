@@ -1,5 +1,13 @@
 # @countify-oficial/notifications
 
+## 0.5.0
+
+### Patch Changes
+
+- 70568ce: Saem as dependências `@countify-oficial/hooks` e `@countify-oficial/provider`, que o pacote não usa. React Native e `@countify-oficial/native` saem das `peerDependencies` (opcionais só em `peerDependenciesMeta`); sai o `react-native-svg`.
+- Updated dependencies [70568ce]
+  - @countify-oficial/core@0.5.0
+
 ## 0.1.3
 
 ### Patch Changes

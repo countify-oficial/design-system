@@ -1,5 +1,18 @@
 # @countify-oficial/provider
 
+## 0.3.0
+
+### Minor Changes
+
+- 70568ce: Ajudantes que a web e o celular repetiam passam a vir daqui: `hasContent` (rótulo, descrição ou erro com o que desenhar; `true` só marca), `limitNumber` (min, max e arredondamento a `decimalScale` como o campo mostra), `phoneMask`, `initials`, `isValidJson`, `decimalPlaces` e `selectAllState`. `formatNumber` e `numberSeparators` reaproveitam um `Intl.NumberFormat` por idioma e opções (3000 números formatavam em 80 ms; agora em cerca de 1 ms). O build do React Native deixa o `react-native` de fora do pacote mesmo sem estar nas `peerDependencies`.
+
+### Patch Changes
+
+- 70568ce: React Native sai das `peerDependencies` (opcional só em `peerDependenciesMeta`): vindo do GitHub Packages, o npm o tratava como obrigatório e instalava o React Native num app de Electron.
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+  - @countify-oficial/hooks@0.1.1
+
 ## 0.2.2
 
 ### Patch Changes

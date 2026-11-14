@@ -1,5 +1,16 @@
 # @countify-oficial/dropzone
 
+## 0.5.0
+
+### Patch Changes
+
+- 70568ce: Saem as dependências `@countify-oficial/hooks` e `@countify-oficial/tokens`, que o pacote não usa.
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+  - @countify-oficial/core@0.5.0
+  - @countify-oficial/provider@0.3.0
+
 ## 0.1.3
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @countify-oficial/carousel
 
+## 0.5.0
+
+### Patch Changes
+
+- 70568ce: Carousel da web: as setas e o contador medem de novo quando os cartões chegam depois ou a largura muda, e o `onSlideChange` só é chamado quando o cartão muda (antes, ao montar e a cada render com um callback novo). React Native sai das `peerDependencies` (opcional só em `peerDependenciesMeta`); saem `@countify-oficial/native` e `react-native-svg`, que o pacote não usa.
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+  - @countify-oficial/core@0.5.0
+  - @countify-oficial/hooks@0.1.1
+  - @countify-oficial/provider@0.3.0
+
 ## 0.1.3
 
 ### Patch Changes

@@ -1,5 +1,21 @@
 # @countify-oficial/native
 
+## 0.5.0
+
+### Minor Changes
+
+- 70568ce: NumberInput: ao sair do campo, o valor é arredondado a `decimalScale`, como o campo mostra. `error={true}` no Checkbox, nos grupos e nos campos de escolha só marca, sem texto vazio. `phoneMask`, `initials`, `selectAllState`, a conferência do JsonInput e as casas do passo do Slider vêm do provider (os nomes exportados não mudam).
+
+### Patch Changes
+
+- 70568ce: PinInput: a caixa é selecionada ao focar, e digitar numa caixa cheia troca o algarismo (antes o novo ia para a caixa seguinte).
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+  - @countify-oficial/hooks@0.1.1
+  - @countify-oficial/provider@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

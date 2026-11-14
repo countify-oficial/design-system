@@ -1,5 +1,19 @@
 # @countify-oficial/code-highlight
 
+## 0.5.0
+
+### Patch Changes
+
+- 70568ce: React Native e `@countify-oficial/native` saem das `peerDependencies` (opcionais só em `peerDependenciesMeta`); sai o `react-native-svg`, que o pacote não usa.
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+  - @countify-oficial/core@0.5.0
+  - @countify-oficial/hooks@0.1.1
+  - @countify-oficial/provider@0.3.0
+
 ## 0.1.3
 
 ### Patch Changes

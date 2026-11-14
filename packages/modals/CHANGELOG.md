@@ -1,5 +1,16 @@
 # @countify-oficial/modals
 
+## 0.5.0
+
+### Patch Changes
+
+- 70568ce: Sai a dependência `@countify-oficial/hooks`, que o pacote não usa. React Native e `@countify-oficial/native` saem das `peerDependencies` (opcionais só em `peerDependenciesMeta`); sai o `react-native-svg`.
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+- Updated dependencies [70568ce]
+  - @countify-oficial/core@0.5.0
+  - @countify-oficial/provider@0.3.0
+
 ## 0.1.3
 
 ### Patch Changes
