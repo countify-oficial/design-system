@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.5.2
+
+### Patch Changes
+
+- aec9368: Table: bordas separadas (border-spacing 0). Com o cabeçalho fixo, o conteúdo não aparece mais pelas linhas de borda ao rolar.
+
 ## 0.5.1
 
 ### Patch Changes
