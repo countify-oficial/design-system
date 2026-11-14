@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { Autocomplete, Button, ComboboxPopover, filterCombobox, parseComboboxData, Select } from "../src";
+import { Autocomplete, Button, ComboboxPopover, filterCombobox, Mentions, parseComboboxData, Select, TextInput } from "../src";
 import { semViolacoes } from "./setup";
 
 const cidades = ["Fortaleza", "São Paulo", "Sobral", { value: "crato", label: "Crato", disabled: true }];
@@ -65,6 +65,43 @@ describe("Autocomplete e ComboboxPopover", () => {
     expect(screen.getAllByRole("option").map((o) => o.textContent)).toEqual(["Lume Orla"]);
     await user.click(screen.getByRole("option"));
     expect(aoMudar).toHaveBeenLastCalledWith("Lume Orla");
+  });
+
+  it("Tab fecha a lista; o onFocus e o onClick de quem usa continuam valendo", async () => {
+    const user = userEvent.setup();
+    const aoFocar = vi.fn();
+    const aoClicar = vi.fn();
+    render(
+      <>
+        <Autocomplete label="Loja" data={["Lume Jardins", "Lume Orla"]} onFocus={aoFocar} />
+        <Select label="Cidade" data={cidades} onClick={aoClicar} />
+        <TextInput label="Depois" />
+      </>,
+    );
+    await user.click(screen.getByRole("combobox", { name: "Loja" }));
+    expect(aoFocar).toHaveBeenCalledOnce();
+    expect(screen.getByRole("listbox")).toBeTruthy();
+    await user.tab();
+    await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull());
+    await user.click(screen.getByRole("combobox", { name: "Cidade" }));
+    expect(aoClicar).toHaveBeenCalledOnce();
+    expect(screen.getByRole("listbox")).toBeTruthy();
+    await user.tab();
+    await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull());
+  });
+
+  it("Mentions: Esc dispensa a lista da menção; outra menção abre de novo", async () => {
+    const user = userEvent.setup();
+    render(<Mentions label="Comentário" data={["Ana", "Bruno"]} />);
+    const campo = screen.getByRole("textbox", { name: "Comentário" });
+    await user.type(campo, "oi @a");
+    expect(screen.getByRole("listbox")).toBeTruthy();
+    await user.keyboard("{Escape}");
+    await waitFor(() => expect(screen.queryByRole("listbox")).toBeNull());
+    await user.type(campo, "n");
+    expect(screen.queryByRole("listbox")).toBeNull();
+    await user.type(campo, " @b");
+    expect(screen.getByRole("listbox")).toBeTruthy();
   });
 
   it("ComboboxPopover: botão abre busca e opções; escolher fecha", async () => {

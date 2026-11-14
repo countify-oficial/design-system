@@ -2,7 +2,7 @@ import { ActionIcon, Icon } from "@countify-oficial/core";
 import { useReducedMotion } from "@countify-oficial/hooks";
 import { useComponentProps, useMessages } from "@countify-oficial/provider";
 import type { Spacing } from "@countify-oficial/tokens";
-import { Children, useEffect, useState, type ComponentPropsWithRef, type CSSProperties, type ReactNode } from "react";
+import { Children, useEffect, useRef, useState, type ComponentPropsWithRef, type CSSProperties, type ReactNode } from "react";
 import classes from "./Carousel.module.css";
 
 export interface CarouselProps extends Omit<ComponentPropsWithRef<"section">, "className" | "style"> {
@@ -52,9 +52,21 @@ function CarouselRoot(props: CarouselProps) {
     };
     medir();
     vista.addEventListener("scroll", medir, { passive: true });
-    return () => vista.removeEventListener("scroll", medir);
-  }, [vista]);
-  useEffect(() => onSlideChange?.(atual), [atual, onSlideChange]);
+    // a largura muda (janela) e os cartões chegam depois (dados): as setas e o contador medem de novo
+    const ro = new ResizeObserver(medir);
+    ro.observe(vista);
+    return () => {
+      vista.removeEventListener("scroll", medir);
+      ro.disconnect();
+    };
+  }, [vista, itens.length]);
+  // avisa só quando o cartão muda: nem ao montar, nem a cada render com um callback novo
+  const avisado = useRef(atual);
+  useEffect(() => {
+    if (avisado.current === atual) return;
+    avisado.current = atual;
+    onSlideChange?.(atual);
+  }, [atual, onSlideChange]);
   const ir = (i: number) => {
     const slides = Array.from(vista?.children ?? []) as HTMLElement[];
     const alvo = slides[Math.max(0, Math.min(slides.length - 1, i))];

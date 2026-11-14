@@ -2,11 +2,12 @@ import { render, screen } from "@testing-library/react";
 import { semViolacoes } from "@countify-oficial/test-utils";
 import { describe, expect, it } from "vitest";
 import {
-  AreaChart, BarChart, BarList, ChartLegend, DonutChart, drawBar, drawBarList, drawHeatmap, drawLine, drawPie, drawRadar, drawScatter, FunnelChart, Heatmap, heatLevel, LineChart, niceMax,
+  AreaChart, BarChart, BarList, ChartLegend, DonutChart, drawBar, drawBarList, drawHeatmap, drawLine, drawPie, drawRadar, drawScatter, FunnelChart, Heatmap, heatLevel, LineChart, niceMax, niceTicks,
   PieChart, RadarChart, ScatterChart, Sparkline, type Shape,
 } from "../src";
 
 const tipos = (s: Shape[], k: Shape["kind"]) => s.filter((x) => x.kind === k);
+const retangulos = (s: Shape[]) => s.filter((x): x is Extract<Shape, { kind: "rect" }> => x.kind === "rect");
 
 describe("contas dos gráficos", () => {
   it("teto redondo do eixo", () => {
@@ -28,6 +29,22 @@ describe("contas dos gráficos", () => {
   it("barras: o pico em destaque, as outras cinza", () => {
     const c = drawBar({ values: [3, 9, 4], highlight: "max", labels: ["9h", "", "11h"] }, 300);
     expect(tipos(c.shapes, "rect").map((r) => (r.kind === "rect" ? r.fill : ""))).toEqual(["border", "accent", "border"]);
+  });
+
+  it("negativos descem do zero dentro do gráfico; frações enchem o eixo", () => {
+    const c = drawBar({ values: [-50, 100] }, 300);
+    const [negativa, positiva] = retangulos(c.shapes);
+    // as duas saem do zero: a negativa para baixo, sem passar do pé do desenho
+    expect(negativa?.height).toBeGreaterThan(0);
+    expect(negativa?.y).toBeCloseTo((positiva?.y ?? 0) + (positiva?.height ?? 0));
+    expect((negativa?.y ?? 0) + (negativa?.height ?? 0)).toBeLessThanOrEqual(c.height);
+    const l = drawLine({ labels: ["a", "b"], actual: [-50, 100] }, 300);
+    expect(tipos(l.shapes, "circle").every((p) => p.kind === "circle" && p.cy >= 0 && p.cy <= l.height)).toBe(true);
+    // 2% e 5%: a maior enche o eixo (antes o teto era 1 e as barras tinham 2 e 4 px)
+    const f = drawBar({ values: [0.02, 0.05] }, 300);
+    expect(retangulos(f.shapes).map((r) => Math.round(r.height))).toEqual([35, 88]);
+    expect(heatLevel(0.5, 0.5)).toBe(1);
+    expect(niceTicks(0, 0.05)).toEqual([0, 0.02, 0.04, 0.06]);
   });
 
   it("ranking: a 1ª barra cheia e a marca de referência", () => {

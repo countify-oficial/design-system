@@ -1,9 +1,8 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
+import { allItems, filterCombobox, parseComboboxData, useComponentProps, useMessages, type ComboboxData, type ComboboxItem } from "@countify-oficial/provider";
 import type { Placement } from "@floating-ui/react";
 import { useMemo, useState, type ReactElement, type ReactNode, type Ref } from "react";
 import { Combobox } from "../Combobox/Combobox";
-import { allItems, filterCombobox, parseComboboxData, type ComboboxData, type ComboboxItem } from "../Combobox/data";
 import { ComboboxOptions } from "../Combobox/Options";
 import { Icon } from "../Icon/Icon";
 import { Input } from "../Input/Input";

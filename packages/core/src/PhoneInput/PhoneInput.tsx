@@ -1,5 +1,5 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { applyMask, useComponentProps } from "@countify-oficial/provider";
+import { applyMask, phoneMask, useComponentProps } from "@countify-oficial/provider";
 import type { ChangeEvent } from "react";
 import { InputBase, type InputBaseOwnProps } from "../Input/Input";
 import type { PolymorphicProps } from "../polymorphic";
@@ -13,9 +13,6 @@ export type PhoneInputProps = PolymorphicProps<
     onChange?: ((formatted: string, digits: string) => void) | undefined;
   }
 >;
-
-/** "(85) 99999-0000" para celular (11 algarismos com DDD) e "(85) 3333-0000" para fixo (10). */
-export const phoneMask = (digitos: string): string => (digitos.replace(/\D/g, "").length > 10 ? "(99) 99999-9999" : "(99) 9999-99999");
 
 const formatar = (t: string) => applyMask(t, phoneMask(t));
 

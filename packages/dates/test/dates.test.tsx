@@ -80,6 +80,13 @@ describe("DatePicker", () => {
     expect(campo.value).toBe("10/11/2026");
   });
 
+  it("um maxDate no futuro não puxa o mês: abre no mês de hoje", async () => {
+    const user = userEvent.setup();
+    render(<DatePicker label="Até" maxDate={new Date(2027, 11, 31)} />);
+    await user.click(screen.getByRole("combobox", { name: "Até" }));
+    expect(screen.getByRole("grid", { name: "Novembro de 2026" })).toBeTruthy();
+  });
+
   it("DateTimePicker: dia e hora juntos", async () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
@@ -91,6 +98,21 @@ describe("DatePicker", () => {
     await user.click(screen.getByRole("button", { name: "Aplicar" }));
     expect(aoMudar).toHaveBeenLastCalledWith(new Date(2026, 10, 4, 14, 30));
     expect(campo.value).toBe("04/11/2026 14:30");
+  });
+
+  it("DateTimePicker: horário pela metade não aplica a hora antiga", async () => {
+    const user = userEvent.setup();
+    const aoMudar = vi.fn();
+    render(<DateTimePicker label="Começa" defaultValue={new Date(2026, 10, 4, 8, 0)} onChange={aoMudar} />);
+    await user.click(screen.getByRole("combobox", { name: "Começa" }));
+    // escrever por cima do "08:00" selecionado, sem apagar antes
+    await user.tripleClick(screen.getByRole("textbox", { name: "Horário" }));
+    await user.keyboard("143");
+    expect(screen.getByRole<HTMLInputElement>("textbox", { name: "Horário" }).value).toBe("14:3");
+    expect(screen.getByRole("button", { name: "Aplicar" })).toHaveProperty("disabled", true);
+    await user.keyboard("0");
+    await user.click(screen.getByRole("button", { name: "Aplicar" }));
+    expect(aoMudar).toHaveBeenLastCalledWith(new Date(2026, 10, 4, 14, 30));
   });
 });
 
@@ -119,6 +141,13 @@ describe("DateInput e TimeInput", () => {
     await user.click(dia(5));
     expect(aoMudar).toHaveBeenLastCalledWith(new Date(2026, 10, 5));
     expect(campo.value).toBe("05/11/2026");
+  });
+
+  it("DateInput: defaultMonth chega ao calendário", async () => {
+    const user = userEvent.setup();
+    render(<DateInput label="Dia" defaultMonth={new Date(2026, 0, 20)} />);
+    await user.click(screen.getByRole("button", { name: "Escolher data" }));
+    expect(screen.getByRole("grid", { name: "Janeiro de 2026" })).toBeTruthy();
   });
 
   it("TimeInput: 24 h, só avisa a hora válida", async () => {

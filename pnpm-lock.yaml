@@ -768,15 +768,9 @@ importers:
 
   packages/dropzone:
     dependencies:
-      '@countify-oficial/hooks':
-        specifier: workspace:^
-        version: link:../hooks
       '@countify-oficial/provider':
         specifier: workspace:^
         version: link:../provider
-      '@countify-oficial/tokens':
-        specifier: workspace:^
-        version: link:../tokens
     devDependencies:
       '@countify-oficial/core':
         specifier: workspace:*
@@ -937,9 +931,6 @@ importers:
 
   packages/modals:
     dependencies:
-      '@countify-oficial/hooks':
-        specifier: workspace:^
-        version: link:../hooks
       '@countify-oficial/provider':
         specifier: workspace:^
         version: link:../provider
@@ -1110,12 +1101,6 @@ importers:
 
   packages/notifications:
     dependencies:
-      '@countify-oficial/hooks':
-        specifier: workspace:^
-        version: link:../hooks
-      '@countify-oficial/provider':
-        specifier: workspace:^
-        version: link:../provider
       '@countify-oficial/tokens':
         specifier: workspace:^
         version: link:../tokens
@@ -1286,15 +1271,9 @@ importers:
 
   packages/spotlight:
     dependencies:
-      '@countify-oficial/hooks':
-        specifier: workspace:^
-        version: link:../hooks
       '@countify-oficial/provider':
         specifier: workspace:^
         version: link:../provider
-      '@countify-oficial/tokens':
-        specifier: workspace:^
-        version: link:../tokens
     devDependencies:
       '@countify-oficial/core':
         specifier: workspace:*

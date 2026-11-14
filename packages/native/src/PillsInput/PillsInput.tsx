@@ -1,4 +1,4 @@
-import { useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
+import { hasContent, useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { controlFontSize, controlHeight, focusRing, fontSize, lineHeightPx, nativeFontFamily, radius, space, state, borderWidth, touchTarget, type Size } from "@countify-oficial/tokens";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { Text as RNText, TextInput as RNTextInput, View, type StyleProp, type TextInputProps, type ViewStyle } from "react-native";
@@ -50,10 +50,9 @@ function PillsInputRoot(props: PillsInputProps) {
   const [focado, setFocado] = useState(false);
   const borda = focado || error ? focusRing.width : variant === "outline" ? borderWidth.thin : 0;
   const letra = { fontSize: fontSize.sm, lineHeight: lineHeightPx(fontSize.sm), fontFamily: nativeFontFamily[400] };
-  const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== true && v !== "";
   return (
     <View style={[{ gap: space[2] }, style]}>
-      {tem(label) && <RNText style={[letra, { color: c.text2 }]}>{label}{required && <RNText accessibilityLabel={messages.required} style={{ color: c.down }}> *</RNText>}</RNText>}
+      {hasContent(label) && <RNText style={[letra, { color: c.text2 }]}>{label}{required && <RNText accessibilityLabel={messages.required} style={{ color: c.down }}> *</RNText>}</RNText>}
       <Campo value={{ rotulo: typeof label === "string" ? label : undefined, setFocado, desligado: !!disabled }}>
         <View
           style={[
@@ -68,8 +67,8 @@ function PillsInputRoot(props: PillsInputProps) {
           {rightSection !== undefined && <View style={{ marginLeft: "auto", marginRight: -space[3] }}>{rightSection}</View>}
         </View>
       </Campo>
-      {tem(description) && <RNText style={[letra, { color: c.text2 }]}>{description}</RNText>}
-      {tem(error) && <RNText accessibilityRole="alert" accessibilityLiveRegion="polite" style={[letra, { color: c.down }]}>{error}</RNText>}
+      {hasContent(description) && <RNText style={[letra, { color: c.text2 }]}>{description}</RNText>}
+      {hasContent(error) && <RNText accessibilityRole="alert" accessibilityLiveRegion="polite" style={[letra, { color: c.down }]}>{error}</RNText>}
     </View>
   );
 }

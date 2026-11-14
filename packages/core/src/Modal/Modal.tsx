@@ -1,11 +1,11 @@
 import { useId } from "@countify-oficial/hooks";
 import { useComponentProps } from "@countify-oficial/provider";
-import { useEffect, type ComponentPropsWithRef, type CSSProperties, type MouseEvent, type ReactNode } from "react";
+import type { ComponentPropsWithRef, CSSProperties, MouseEvent, ReactNode } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Overlay } from "../Overlay/Overlay";
 import { Portal } from "../Portal/Portal";
-import { useScrollLock } from "../scrollLock";
+import { useCloseOnEscape, useScrollLock } from "../scrollLock";
 import { useStyles, type StylesApiProps } from "../styles";
 import { Transition } from "../Transition/Transition";
 import classes from "./Modal.module.css";
@@ -50,14 +50,9 @@ export function Modal(props: ModalProps) {
   const getStyles = useStyles("Modal", classes, { className, style, classNames, styles });
   const base = useId(id);
   useScrollLock(opened && lockScroll);
-  useEffect(() => {
-    if (!opened || !closeOnEscape) return;
-    const aoTeclar = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", aoTeclar);
-    return () => document.removeEventListener("keydown", aoTeclar);
-  }, [opened, closeOnEscape, onClose]);
+  useCloseOnEscape(opened, () => {
+    if (closeOnEscape) onClose();
+  });
   const foraFecha = (e: MouseEvent<HTMLDivElement>) => {
     if (closeOnClickOutside && e.target === e.currentTarget) onClose();
   };

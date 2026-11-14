@@ -27,9 +27,7 @@
     "typecheck": "tsc"
   },
   "peerDependencies": {
-    "expo-clipboard": ">=58",
-    "react": "^19.0.0",
-    "react-native": ">=0.79"
+    "react": "^19.0.0"
   },
   "peerDependenciesMeta": {
     "expo-clipboard": { "optional": true },

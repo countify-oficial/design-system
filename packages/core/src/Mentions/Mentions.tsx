@@ -1,8 +1,7 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { mentionQuery, useComponentProps } from "@countify-oficial/provider";
+import { filterCombobox, mentionQuery, parseComboboxData, useComponentProps, type ComboboxData } from "@countify-oficial/provider";
 import { useId, useMemo, useState, type ChangeEvent, type SyntheticEvent } from "react";
 import { Combobox } from "../Combobox/Combobox";
-import { filterCombobox, parseComboboxData, type ComboboxData } from "../Combobox/data";
 import { ComboboxOptions } from "../Combobox/Options";
 import { InputBase, type InputBaseOwnProps, type InputBaseProps } from "../Input/Input";
 import type { PolymorphicProps } from "../polymorphic";
@@ -36,9 +35,14 @@ export function Mentions(props: MentionsProps) {
   const consulta = mentionQuery(texto, cursor, prefix);
   const opcoes = consulta ? filterCombobox(grupos, consulta.busca, limit) : [];
   const lerCursor = (e: SyntheticEvent<HTMLTextAreaElement>) => setCursor(e.currentTarget.selectionStart);
+  // Esc ou sair do campo dispensa a lista desta menção (pelo "@" onde ela começa); outra menção abre de novo
+  const [dispensada, setDispensada] = useState<number | null>(null);
   return (
     <Combobox
-      opened={opcoes.length > 0}
+      opened={opcoes.length > 0 && consulta?.inicio !== dispensada}
+      onOpenedChange={(aberto) => {
+        if (!aberto) setDispensada(consulta?.inicio ?? null);
+      }}
       onOptionSubmit={(v) => {
         if (!consulta) return;
         const rotulo = opcoes.flatMap((g) => g.items).find((i) => i.value === v)?.label ?? v;
@@ -60,6 +64,7 @@ export function Mentions(props: MentionsProps) {
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
             setTexto(e.currentTarget.value);
             setCursor(e.currentTarget.selectionStart);
+            if (!mentionQuery(e.currentTarget.value, e.currentTarget.selectionStart, prefix)) setDispensada(null);
           }}
           onSelect={lerCursor}
           onClick={lerCursor}

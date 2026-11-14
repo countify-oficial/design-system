@@ -48,17 +48,13 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@countify-oficial/hooks": "workspace:^",
     "@countify-oficial/provider": "workspace:^",
     "@countify-oficial/tokens": "workspace:^"
   },
   "peerDependencies": {
     "@countify-oficial/core": "workspace:^",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@countify-oficial/native": "workspace:^",
-    "react-native": ">=0.79",
-    "react-native-svg": ">=15"
+    "react-dom": "^19.0.0"
   },
   "peerDependenciesMeta": {
     "@countify-oficial/core": {
@@ -71,9 +67,6 @@
       "optional": true
     },
     "react-native": {
-      "optional": true
-    },
-    "react-native-svg": {
       "optional": true
     }
   },

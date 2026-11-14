@@ -5,5 +5,19 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
+  "linked": [
+    [
+      "@countify-oficial/core",
+      "@countify-oficial/native",
+      "@countify-oficial/carousel",
+      "@countify-oficial/charts",
+      "@countify-oficial/code-highlight",
+      "@countify-oficial/dates",
+      "@countify-oficial/dropzone",
+      "@countify-oficial/modals",
+      "@countify-oficial/notifications",
+      "@countify-oficial/spotlight"
+    ]
+  ],
   "ignore": []
 }

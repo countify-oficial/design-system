@@ -1,4 +1,4 @@
-import { useCountifyTheme } from "@countify-oficial/provider";
+import { decimalPlaces, useCountifyTheme } from "@countify-oficial/provider";
 import { fontSize, nativeFontFamily, space, state, touchTarget, tones, type Tone } from "@countify-oficial/tokens";
 import { useState, type ReactNode } from "react";
 import { Text as RNText, View, type GestureResponderEvent, type StyleProp, type ViewStyle } from "react-native";
@@ -33,7 +33,6 @@ interface Props extends SliderCommonProps {
   corDoTrilho?: string | undefined;
 }
 
-const casas = (n: number) => (String(n).split(".")[1] ?? "").length;
 const MATIZES = [0, 60, 120, 180, 240, 300, 360];
 
 /** A base dos sliders do celular: uma ou duas bolinhas, toque e ações do leitor de tela. */
@@ -44,7 +43,7 @@ export function SliderBase({
   const [largura, setLargura] = useState(0);
   const [ativa, setAtiva] = useState(0);
   const pct = (v: number) => ((v - min) / (max - min)) * 100;
-  const encaixar = (v: number) => Math.min(max, Math.max(min, Number((Math.round((v - min) / step) * step + min).toFixed(casas(step)))));
+  const encaixar = (v: number) => Math.min(max, Math.max(min, Number((Math.round((v - min) / step) * step + min).toFixed(decimalPlaces(step)))));
   const definir = (i: number, v: number, fim = false) => {
     const outro = valores[i === 0 ? 1 : 0];
     let novo = encaixar(v);

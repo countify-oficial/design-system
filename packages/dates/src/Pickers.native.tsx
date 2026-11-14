@@ -1,12 +1,12 @@
 import { ActionIcon, Button, Drawer, Icon, MaskInput, UnstyledButton, type MaskInputProps } from "@countify-oficial/native";
-import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
+import { hasContent, useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { borderWidth, controlHeight, fontSize, focusRing, lineHeightPx, nativeFontFamily, radius, space, state, touchTarget } from "@countify-oficial/tokens";
 import { useState, type ReactNode } from "react";
 import { ScrollView, Text, View, type StyleProp, type ViewStyle } from "react-native";
 import { Calendar } from "./Calendar.native";
 import { toRange, type CalendarBaseProps, type CalendarValueProps } from "./useCalendar";
-import { formatDate, formatRange, formatTime, outOfBounds, parseDate, parseTime, sameDay, sameRange, startOfMonth, type DatesRange, type DateValue } from "./utils";
+import { useDateInputState, useDatePickerState, useDateTimePickerState, useTimeInputState } from "./usePickers";
+import { formatRange, sameRange, type DatesRange, type DateValue } from "./utils";
 
 export interface DateFieldProps {
   label?: ReactNode;
@@ -23,8 +23,6 @@ export interface DatePreset {
   value: DateValue | DatesRange;
 }
 
-const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== "";
-
 /** O campo de 56 que abre a folha (M-Espaco): rótulo, valor em 17/700 e o ícone do calendário. */
 function Gatilho({ campo, texto, aberto, onPress }: { campo: DateFieldProps; texto: string; aberto: boolean; onPress: () => void }) {
   const { colors: c } = useCountifyTheme();
@@ -33,7 +31,7 @@ function Gatilho({ campo, texto, aberto, onPress }: { campo: DateFieldProps; tex
   const borda = error ? focusRing.width : 0;
   return (
     <View style={[{ gap: space[2] }, style]}>
-      {tem(label) && <Text style={[letra, { color: c.text2 }]}>{label}</Text>}
+      {hasContent(label) && <Text style={[letra, { color: c.text2 }]}>{label}</Text>}
       <UnstyledButton
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel ?? (typeof label === "string" ? label : undefined)}
@@ -53,8 +51,8 @@ function Gatilho({ campo, texto, aberto, onPress }: { campo: DateFieldProps; tex
         <Text style={{ flex: 1, color: texto ? c.text : c.text3, fontSize: fontSize.md, fontFamily: nativeFontFamily[texto ? 700 : 400], fontVariant: ["tabular-nums"] }}>{texto || placeholder || ""}</Text>
         <Icon name="calendar" color="text2" />
       </UnstyledButton>
-      {tem(description) && <Text style={[letra, { color: c.text2 }]}>{description}</Text>}
-      {tem(error) && <Text accessibilityRole="alert" style={[letra, { color: c.down }]}>{error}</Text>}
+      {hasContent(description) && <Text style={[letra, { color: c.text2 }]}>{description}</Text>}
+      {hasContent(error) && <Text accessibilityRole="alert" style={[letra, { color: c.down }]}>{error}</Text>}
     </View>
   );
 }
@@ -113,47 +111,13 @@ export function DatePicker(props: DatePickerProps) {
   const p = useComponentProps("DatePicker", {}, props);
   const { locale } = useCountifyTheme();
   const { minDate, maxDate, excludeDate, firstDayOfWeek, presets, valueFormat } = p;
-  const periodo = p.type === "range";
-  const [valor, setValor] = useControllableState<DatesRange>({
-    value: p.value === undefined ? undefined : toRange(p.value),
-    defaultValue: toRange(p.defaultValue),
-    onChange: (r) => {
-      if (p.type === "range") p.onChange?.(r);
-      else p.onChange?.(r[0]);
-    },
-  });
-  const [aberto, setAberto] = useState(false);
-  const [rascunho, setRascunho] = useState<DatesRange>(valor);
-  const [mes, setMes] = useState(() => startOfMonth(valor[0] ?? maxDate ?? new Date()));
-  const comRodape = periodo || !!presets?.length;
+  const { periodo, valor, aberto, abrir, rascunho, setRascunho, mes, setMes, comRodape, podeAplicar, aplicar, escolherAtalho } = useDatePickerState(p);
   const limites = { minDate, maxDate, excludeDate, firstDayOfWeek, month: mes, onMonthChange: setMes };
-  const aplicar = (r: DatesRange) => {
-    setValor(r);
-    setAberto(false);
-  };
   return (
     <>
-      <Gatilho
-        campo={p}
-        texto={valueFormat ? valueFormat(valor) : formatRange(valor, locale)}
-        aberto={aberto}
-        onPress={() => {
-          setRascunho(valor);
-          setMes(startOfMonth(valor[0] ?? maxDate ?? new Date()));
-          setAberto(true);
-        }}
-      />
-      <Folha titulo={p.label} aberto={aberto} fechar={() => setAberto(false)} aplicar={comRodape ? () => aplicar(rascunho) : undefined} podeAplicar={!periodo || (!!rascunho[0] && !!rascunho[1])}>
-        {presets && presets.length > 0 && (
-          <Atalhos
-            presets={presets}
-            rascunho={rascunho}
-            escolher={(r) => {
-              setRascunho(r);
-              if (r[0]) setMes(startOfMonth(r[0]));
-            }}
-          />
-        )}
+      <Gatilho campo={p} texto={valueFormat ? valueFormat(valor) : formatRange(valor, locale)} aberto={aberto} onPress={() => abrir(true)} />
+      <Folha titulo={p.label} aberto={aberto} fechar={() => abrir(false)} aplicar={comRodape ? () => aplicar(rascunho) : undefined} podeAplicar={podeAplicar}>
+        {presets && presets.length > 0 && <Atalhos presets={presets} rascunho={rascunho} escolher={escolherAtalho} />}
         {periodo ? (
           <Calendar {...limites} type="range" value={rascunho} onChange={setRascunho} />
         ) : (
@@ -175,39 +139,15 @@ export type DateTimePickerProps = DateFieldProps &
 export function DateTimePicker(props: DateTimePickerProps) {
   const messages = useMessages();
   const p = useComponentProps("DateTimePicker", {}, props);
-  const { value, defaultValue, onChange, minDate, maxDate, excludeDate, firstDayOfWeek } = p;
-  const [valor, setValor] = useControllableState<DateValue>({ value, defaultValue: defaultValue ?? null, onChange });
-  const [aberto, setAberto] = useState(false);
-  const [dia, setDia] = useState<DateValue>(valor);
-  const [hora, setHora] = useState("");
-  const [mes, setMes] = useState(() => startOfMonth(valor ?? new Date()));
-  const t = parseTime(hora);
+  const { minDate, maxDate, excludeDate, firstDayOfWeek } = p;
+  const { texto, aberto, abrir, dia, setDia, hora, setHora, mes, setMes, podeAplicar, aplicar } = useDateTimePickerState(p);
   return (
     <>
-      <Gatilho
-        campo={p}
-        texto={valor ? `${formatDate(valor)} ${formatTime(valor.getHours(), valor.getMinutes())}` : ""}
-        aberto={aberto}
-        onPress={() => {
-          setDia(valor);
-          setHora(valor ? formatTime(valor.getHours(), valor.getMinutes()) : "");
-          setMes(startOfMonth(valor ?? new Date()));
-          setAberto(true);
-        }}
-      />
-      <Folha
-        titulo={p.label}
-        aberto={aberto}
-        fechar={() => setAberto(false)}
-        podeAplicar={!!dia && !!t}
-        aplicar={() => {
-          if (!dia || !t) return;
-          setValor(new Date(dia.getFullYear(), dia.getMonth(), dia.getDate(), t.h, t.m));
-          setAberto(false);
-        }}
-      >
+      <Gatilho campo={p} texto={texto} aberto={aberto} onPress={() => abrir(true)} />
+      <Folha titulo={p.label} aberto={aberto} fechar={() => abrir(false)} podeAplicar={podeAplicar} aplicar={aplicar}>
         <Calendar {...{ minDate, maxDate, excludeDate, firstDayOfWeek }} month={mes} onMonthChange={setMes} value={dia} onChange={setDia} />
-        <TimeInput label={messages.time} value={hora} onChange={setHora} />
+        {/* o texto como está no campo (não o TimeInput, que guarda a última hora válida): "14:3" deixa o Aplicar apagado */}
+        <MaskInput label={messages.time} mask="99:99" keyboardType="number-pad" value={hora} onChange={setHora} />
       </Folha>
     </>
   );
@@ -224,15 +164,8 @@ export type DateInputProps = Omit<MaskInputProps, "mask" | "value" | "defaultVal
 export function DateInput(props: DateInputProps) {
   const messages = useMessages();
   const { value, defaultValue, onChange, month, defaultMonth, onMonthChange, minDate, maxDate, excludeDate, firstDayOfWeek, disabled, onBlur, ...rest } = useComponentProps("DateInput", {}, props);
-  const [valor, setValor] = useControllableState<DateValue>({ value, defaultValue: defaultValue ?? null, onChange });
-  const [texto, setTexto] = useState(valor ? formatDate(valor) : "");
-  const [visto, setVisto] = useState<DateValue>(valor);
+  const { valor, setValor, texto, digitar, sair } = useDateInputState({ value, defaultValue, onChange, minDate, maxDate, excludeDate });
   const [aberto, setAberto] = useState(false);
-  if (!(visto === valor || sameDay(visto, valor))) {
-    setVisto(valor);
-    setTexto(valor ? formatDate(valor) : "");
-  }
-  const valido = (d: Date | null) => !!d && !outOfBounds(d, minDate, maxDate) && !excludeDate?.(d);
   return (
     <>
       <MaskInput
@@ -241,19 +174,9 @@ export function DateInput(props: DateInputProps) {
         mask="99/99/9999"
         keyboardType="number-pad"
         value={texto}
-        onChange={(m, raw) => {
-          setTexto(m);
-          const d = parseDate(m);
-          if (raw.length === 8 && valido(d)) {
-            setVisto(d);
-            setValor(d);
-          } else if (raw.length === 0) {
-            setVisto(null);
-            setValor(null);
-          }
-        }}
+        onChange={digitar}
         onBlur={(e) => {
-          setTexto(valor ? formatDate(valor) : "");
+          sair();
           onBlur?.(e);
         }}
         rightSection={
@@ -285,33 +208,16 @@ export type TimeInputProps = Omit<MaskInputProps, "mask" | "value" | "defaultVal
 /** Hora digitada em 24 h ("10:00"), sem ícone. */
 export function TimeInput(props: TimeInputProps) {
   const { value, defaultValue, onChange, onBlur, ...rest } = useComponentProps("TimeInput", {}, props);
-  const [valor, setValor] = useControllableState({ value, defaultValue: defaultValue ?? "", onChange });
-  const [texto, setTexto] = useState(valor);
-  const [visto, setVisto] = useState(valor);
-  if (visto !== valor) {
-    setVisto(valor);
-    setTexto(valor);
-  }
+  const { texto, digitar, sair } = useTimeInputState({ value, defaultValue, onChange });
   return (
     <MaskInput
       {...rest}
       mask="99:99"
       keyboardType="number-pad"
       value={texto}
-      onChange={(m, raw) => {
-        setTexto(m);
-        const t = parseTime(m);
-        if (raw.length === 4 && t) {
-          const novo = formatTime(t.h, t.m);
-          setVisto(novo);
-          setValor(novo);
-        } else if (raw.length === 0) {
-          setVisto("");
-          setValor("");
-        }
-      }}
+      onChange={digitar}
       onBlur={(e) => {
-        setTexto(valor);
+        sair();
         onBlur?.(e);
       }}
     />

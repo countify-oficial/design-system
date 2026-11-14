@@ -1,7 +1,7 @@
 import { useControllableState } from "@countify-oficial/hooks";
 import { useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { useState } from "react";
-import { addDays, addMonths, dayKey, dayLabel, monthGrid, monthLabel, nextRange, outOfBounds, rangeRole, sameDay, startOfMonth, weekdays, type DatesRange, type DateValue } from "./utils";
+import { addDays, addMonths, dayKey, dayLabel, initialDay, monthGrid, monthLabel, nextRange, outOfBounds, rangeRole, sameDay, startOfMonth, weekdays, type DatesRange, type DateValue } from "./utils";
 
 /** O que serve aos dois modos: o mês à vista, os limites e o começo da semana. */
 export interface CalendarBaseProps {
@@ -51,7 +51,7 @@ export function useCalendar(props: CalendarBaseProps & CalendarValueProps) {
       else props.onChange?.(r[0]);
     },
   });
-  const inicial = valor[0] ?? (maxDate && dayKey(maxDate) < dayKey(new Date()) ? maxDate : new Date());
+  const inicial = valor[0] ?? initialDay(maxDate);
   const [mes, setMes] = useControllableState<Date>({ value: month && startOfMonth(month), defaultValue: startOfMonth(defaultMonth ?? inicial), onChange: onMonthChange });
   const [foco, setFoco] = useState<Date>(valor[0] ?? inicial);
   const hoje = new Date();

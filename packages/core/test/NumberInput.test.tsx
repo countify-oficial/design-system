@@ -34,6 +34,16 @@ describe("NumberInput", () => {
     expect(screen.getByRole("spinbutton").getAttribute("aria-valuenow")).toBe("2");
   });
 
+  it("ao sair, arredonda a decimalScale: o valor é o que o campo mostra", async () => {
+    const user = userEvent.setup();
+    const aoMudar = vi.fn();
+    render(<NumberInput label="Preço" decimalScale={2} onChange={aoMudar} />);
+    await user.type(screen.getByRole("spinbutton"), "10,555");
+    await user.tab();
+    expect(aoMudar).toHaveBeenLastCalledWith(10.56);
+    expect(screen.getByRole<HTMLInputElement>("spinbutton").value).toBe("10,56");
+  });
+
   it("ao sair, limita ao máximo", async () => {
     const user = userEvent.setup();
     render(<NumberInput label="Percentual" max={100} />);

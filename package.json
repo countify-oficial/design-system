@@ -14,7 +14,7 @@
     "check": "turbo run build typecheck lint test",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build && changeset publish"
+    "release": "git diff --quiet && turbo run build typecheck lint test && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.3",

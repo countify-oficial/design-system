@@ -17,6 +17,10 @@ export function treeCheckState(no: TreeNode, marcados: string[]): "all" | "some"
   return n === 0 ? "none" : n === folhas.length ? "all" : "some";
 }
 
+/** Estado do "Selecionar todos" para uma lista: all, none ou some (meio marcado). */
+export const selectAllState = (todos: string[], marcados: string[]): "all" | "none" | "some" =>
+  marcados.length === 0 ? "none" : todos.every((t) => marcados.includes(t)) ? "all" : "some";
+
 /** Acha o nó pelo valor. */
 export function findTreeNode(dados: TreeNode[], valor: string): TreeNode | undefined {
   for (const no of dados) {

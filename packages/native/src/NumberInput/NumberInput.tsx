@@ -1,5 +1,5 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { formatNumber, numberSeparators, parseNumber, useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
+import { formatNumber, limitNumber, numberSeparators, parseNumber, useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { fontSize, nativeFontFamily } from "@countify-oficial/tokens";
 import { useState } from "react";
 import { Text as RNText, View } from "react-native";
@@ -35,7 +35,8 @@ export function NumberInput(props: NumberInputProps) {
   const [numero, setNumero] = useControllableState<number | "">({ value, defaultValue: defaultValue ?? "", onChange });
   const [texto, setTexto] = useState<string | null>(null);
   const { decimal } = numberSeparators(locale);
-  const limitar = (n: number) => Math.min(max ?? Infinity, Math.max(min ?? -Infinity, n));
+  // entre min e max, nas casas de decimalScale: o valor que fica é o que o campo mostra
+  const limitar = (n: number) => limitNumber(n, { min, max, decimalScale });
   const formatado = numero === "" ? "" : formatNumber(numero, { locale, decimalScale, fixedDecimalScale });
   const passo = (sinal: 1 | -1) => {
     setNumero(limitar(Number(((numero === "" ? (min ?? 0) : numero) + sinal * step).toFixed(10))));

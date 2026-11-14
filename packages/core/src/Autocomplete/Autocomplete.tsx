@@ -1,8 +1,7 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps } from "@countify-oficial/provider";
-import { useMemo, useState, type ChangeEvent } from "react";
+import { filterCombobox, parseComboboxData, useComponentProps, type ComboboxData } from "@countify-oficial/provider";
+import { useMemo, useState, type ChangeEvent, type FocusEvent } from "react";
 import { Combobox } from "../Combobox/Combobox";
-import { filterCombobox, parseComboboxData, type ComboboxData } from "../Combobox/data";
 import { ComboboxOptions } from "../Combobox/Options";
 import { InputBase, type InputBaseOwnProps } from "../Input/Input";
 import type { PolymorphicProps } from "../polymorphic";
@@ -24,7 +23,7 @@ export type AutocompleteProps = PolymorphicProps<
 
 /** Campo de texto livre com sugestões que aparecem ao digitar (o texto não precisa ser uma delas). */
 export function Autocomplete(props: AutocompleteProps) {
-  const { data, value, defaultValue, onChange, onOptionSubmit, limit, maxDropdownHeight, disabled, ...rest } = useComponentProps("Autocomplete", {}, props);
+  const { data, value, defaultValue, onChange, onOptionSubmit, limit, maxDropdownHeight, disabled, onFocus, ...rest } = useComponentProps("Autocomplete", {}, props);
   const grupos = useMemo(() => parseComboboxData(data), [data]);
   const [texto, setTexto] = useControllableState({ value, defaultValue: defaultValue ?? "", onChange });
   const [aberto, setAberto] = useState(false);
@@ -52,7 +51,10 @@ export function Autocomplete(props: AutocompleteProps) {
             setTexto(e.currentTarget.value);
             setAberto(true);
           }}
-          onFocus={() => setAberto(true)}
+          onFocus={(e: FocusEvent<HTMLInputElement>) => {
+            setAberto(true);
+            onFocus?.(e);
+          }}
         />
       </Combobox.Target>
       <Combobox.Dropdown>

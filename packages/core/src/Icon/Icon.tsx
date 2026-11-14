@@ -19,6 +19,8 @@ export interface IconProps extends StylesApiProps, Omit<ComponentPropsWithRef<"s
 type Tabler = { html: string; filled: boolean };
 // ícones do Tabler já baixados, por "variante/nome"
 const tabler = new Map<string, Tabler>();
+// os que estão baixando: mil linhas com o mesmo ícone esperam o mesmo pedido, em vez de mil
+const baixando = new Map<string, Promise<Tabler>>();
 
 const isCountify = (name: string): name is IconName => Object.hasOwn(icons, name);
 
@@ -37,10 +39,22 @@ function useTabler(name: string | undefined, variant: "outline" | "filled") {
   useEffect(() => {
     if (name === undefined || key === undefined || tabler.has(key)) return;
     let mounted = true;
-    void loadTabler(name, variant).then((t) => {
-      tabler.set(key, t);
-      if (mounted) loaded();
-    });
+    let pedido = baixando.get(key);
+    if (!pedido) {
+      pedido = loadTabler(name, variant).then((t) => {
+        tabler.set(key, t);
+        return t;
+      });
+      baixando.set(key, pedido);
+      // pronto ou com erro (um pedaço que não baixou), sai da fila; com erro, a próxima montagem tenta de novo
+      void pedido.finally(() => baixando.delete(key)).catch(() => undefined);
+    }
+    void pedido.then(
+      () => {
+        if (mounted) loaded();
+      },
+      () => undefined,
+    );
     return () => {
       mounted = false;
     };

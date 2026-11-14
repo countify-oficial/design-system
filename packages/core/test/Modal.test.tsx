@@ -49,6 +49,33 @@ describe("Modal e Drawer", () => {
     expect(fechar).toHaveBeenCalledTimes(2);
   });
 
+  it("janela sobre janela: o Tab anda na de cima e o Esc fecha só ela", async () => {
+    const user = userEvent.setup();
+    const fecharDeBaixo = vi.fn();
+    const fecharDeCima = vi.fn();
+    render(
+      <>
+        <Modal opened onClose={fecharDeBaixo} title="Produtos">
+          <Button>Foto</Button>
+        </Modal>
+        <Modal opened onClose={fecharDeCima} title="Foto ampliada" withCloseButton={false}>
+          <Button>Um</Button>
+          <Button>Dois</Button>
+          <Button>Três</Button>
+        </Modal>
+      </>,
+    );
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Um" }));
+    await user.tab();
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Dois" }));
+    await user.tab();
+    await user.tab();
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Um" }));
+    await user.keyboard("{Escape}");
+    expect(fecharDeCima).toHaveBeenCalledTimes(1);
+    expect(fecharDeBaixo).not.toHaveBeenCalled();
+  });
+
   it("Drawer: folha no celular e painel a partir de 768 (por padrão)", async () => {
     const user = userEvent.setup();
     render(<Janela tipo="drawer" />);

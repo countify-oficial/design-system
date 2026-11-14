@@ -57,6 +57,9 @@ export function FocusTrap({ active = true, returnFocus = true, children }: Focus
         return;
       }
       const fora = !root.contains(atual);
+      // o foco está noutra janela ou lista por cima (outro FocusTrap, Popover com trapFocus): ela cuida do Tab.
+      // Só o foco que caiu no <body> volta para cá.
+      if (fora && atual !== null && atual !== document.body) return;
       if (e.shiftKey && (atual === primeiro || atual === root || fora)) {
         e.preventDefault();
         ultimo.focus();

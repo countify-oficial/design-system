@@ -1,4 +1,4 @@
-import { useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
+import { initials, useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
 import { avatarSize, fontSize, nativeFontFamily, tones, type Size, type Tone } from "@countify-oficial/tokens";
 import { useState, type ReactNode } from "react";
 import { Image, Text as RNText, View, type StyleProp, type ViewProps, type ViewStyle } from "react-native";
@@ -18,13 +18,6 @@ export interface AvatarProps extends Omit<ViewProps, "children"> {
   /** Conteúdo próprio no lugar das iniciais. */
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
-}
-
-/** "Ana Souza" → "AS"; um nome só → as duas primeiras letras. */
-export function initials(name: string): string {
-  const partes = name.trim().split(/\s+/).filter(Boolean);
-  const [primeira = "", ultima] = [partes[0], partes.length > 1 ? partes.at(-1) : undefined];
-  return (ultima ? (primeira[0] ?? "") + (ultima[0] ?? "") : primeira.slice(0, 2)).toUpperCase();
 }
 
 const letra: Record<Size, Size> = { xs: "xs", sm: "xs", md: "sm", lg: "sm", xl: "lg" };

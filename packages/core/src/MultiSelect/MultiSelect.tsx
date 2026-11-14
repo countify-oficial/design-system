@@ -1,9 +1,8 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
-import { useMemo, useState, type ComponentPropsWithRef, type KeyboardEvent, type ReactNode } from "react";
+import { allItems, filterCombobox, parseComboboxData, useComponentProps, useMessages, type ComboboxData } from "@countify-oficial/provider";
+import { useMemo, useState, type ComponentPropsWithRef, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { Combobox } from "../Combobox/Combobox";
-import { allItems, filterCombobox, parseComboboxData, type ComboboxData } from "../Combobox/data";
 import { ComboboxOptions } from "../Combobox/Options";
 import { Icon } from "../Icon/Icon";
 import { Pill } from "../Pill/Pill";
@@ -34,7 +33,7 @@ export function MultiSelect(props: MultiSelectProps) {
   const messages = useMessages();
   const {
     data, value, defaultValue, onChange, searchable = true, clearable, maxValues, hidePickedOptions, nothingFoundMessage = messages.nothingFound, placeholder, limit,
-    maxDropdownHeight, inputProps, disabled, ...rest
+    maxDropdownHeight, inputProps, disabled, onClick, ...rest
   } = useComponentProps("MultiSelect", {}, props);
   const grupos = useMemo(() => parseComboboxData(data), [data]);
   const itens = useMemo(() => allItems(grupos), [grupos]);
@@ -54,7 +53,10 @@ export function MultiSelect(props: MultiSelectProps) {
         <PillsInput
           {...rest}
           disabled={disabled}
-          onClick={() => setAberto(true)}
+          onClick={(e: MouseEvent<HTMLDivElement>) => {
+            setAberto(true);
+            onClick?.(e);
+          }}
           rightSection={clearable && valores.length > 0 ? <CloseButton aria-label={messages.clear} color="text2" onClick={() => setValores([])} /> : <Icon name="chevron-down" />}
         >
           {valores.map((v) => (
@@ -69,10 +71,15 @@ export function MultiSelect(props: MultiSelectProps) {
               onChange={(e) => {
                 setBusca(e.currentTarget.value);
                 setAberto(true);
+                inputProps?.onChange?.(e);
               }}
-              onFocus={() => setAberto(true)}
+              onFocus={(e) => {
+                setAberto(true);
+                inputProps?.onFocus?.(e);
+              }}
               onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Backspace" && busca === "" && valores.length > 0) setValores(valores.slice(0, -1));
+                inputProps?.onKeyDown?.(e);
               }}
             />
           </Combobox.Target>

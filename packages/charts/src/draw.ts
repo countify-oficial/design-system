@@ -15,12 +15,20 @@ export function niceMax(v: number): number {
   return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * e;
 }
 
+/** O piso do eixo: 0, ou um valor "redondo" abaixo do menor negativo (a variação que caiu). */
+const piso = (vs: number[]): number => {
+  const menor = Math.min(0, ...vs);
+  return menor < 0 ? -niceMax(-menor) : 0;
+};
+
 /** Marcas "redondas" de min a max (3 intervalos). */
 export function niceTicks(min: number, max: number, intervalos = 3): number[] {
   const passo = niceMax((max - min) / intervalos || 1);
+  // arredonda na casa do passo (0,02 não vira 0)
+  const casas = Math.max(0, 1 - Math.floor(Math.log10(passo)));
   const ini = Math.floor(min / passo) * passo;
   const out: number[] = [];
-  for (let v = ini; v <= max + passo * 0.999; v += passo) out.push(n1(v));
+  for (let v = ini; v <= max + passo * 0.999; v += passo) out.push(Number(v.toFixed(casas)));
   return out;
 }
 
@@ -43,14 +51,14 @@ interface Eixo {
   base: number;
 }
 
-function eixoDeIndices(largura: number, altura: number, n: number, max: number, labels: string[], format: (v: number) => string, labelEvery: number, esquerda: number): Eixo {
+function eixoDeIndices(largura: number, altura: number, n: number, max: number, lo: number, labels: string[], format: (v: number) => string, labelEvery: number, esquerda: number): Eixo {
   const { top, bottom } = chart.padding;
   const ins = chart.inset;
   const base = altura - bottom;
   const X = (i: number) => esquerda + ins + (n > 1 ? (i * (largura - esquerda - 2 * ins)) / (n - 1) : (largura - esquerda - 2 * ins) / 2);
-  const Y = (v: number) => top + (base - top) * (1 - v / max);
+  const Y = (v: number) => top + ((base - top) * (max - v)) / (max - lo);
   const shapes: Shape[] = [];
-  for (const t of [0, max / 2, max]) {
+  for (const t of lo < 0 ? [lo, 0, max] : [0, max / 2, max]) {
     shapes.push(linha(esquerda, Y(t), largura, Y(t), t === 0 ? "border" : "divider"));
     shapes.push(texto(esquerda - ins, Y(t) + 4, format(t), "end"));
   }
@@ -93,9 +101,10 @@ export interface LineChartData {
 
 export function drawLine(d: LineChartData, largura: number, altura: number = chart.height.line): Scene {
   const { labels, actual, forecast, band, gaps = [], partial, now, markers = true, labelEvery = 1, format = fmtPadrao, nowLabel = "agora" } = d;
-  const max = d.max ?? niceMax(Math.max(1, ...finitos([...actual, ...(forecast ?? []), ...(band ? band[1] : [])])));
+  const valores = finitos([...actual, ...(forecast ?? []), ...(band ? [...band[0], ...band[1]] : [])]);
+  const max = d.max ?? niceMax(Math.max(0, ...valores));
   const n = Math.max(labels.length, actual.length);
-  const { shapes, X, Y, base } = eixoDeIndices(largura, altura, n, max, labels, format, labelEvery, chart.padding.left);
+  const { shapes, X, Y, base } = eixoDeIndices(largura, altura, n, max, piso(valores), labels, format, labelEvery, chart.padding.left);
   const top = chart.padding.top;
   if (band) {
     const [lo, hi] = band;
@@ -137,16 +146,18 @@ export interface AreaChartData {
 
 export function drawArea(d: AreaChartData, largura: number, altura: number = chart.height.line): Scene {
   const { labels, series, labelEvery = 1, format = fmtPadrao } = d;
-  const max = d.max ?? niceMax(Math.max(1, ...finitos(series.flatMap((s) => s.values))));
+  const valores = finitos(series.flatMap((s) => s.values));
+  const max = d.max ?? niceMax(Math.max(0, ...valores));
   const n = Math.max(labels.length, ...series.map((s) => s.values.length));
-  const { shapes, X, Y, base } = eixoDeIndices(largura, altura, n, max, labels, format, labelEvery, chart.padding.left);
+  const { shapes, X, Y } = eixoDeIndices(largura, altura, n, max, piso(valores), labels, format, labelEvery, chart.padding.left);
   const cor = (i: number): Paint => (series.length === 1 ? "accent" : seriesPaint(i));
   series.forEach((s, i) => {
     const pts = s.values.flatMap((v, k): [number, number][] => (v === null ? [] : [[X(k), Y(v)]]));
     const primeiro = pts[0];
     const ultimo = pts.at(-1);
     if (!primeiro || !ultimo) return;
-    shapes.push({ kind: "polygon", points: pontos([[primeiro[0], base], ...pts, [ultimo[0], base]]), fill: cor(i), opacity: chart.areaOpacity });
+    // a área vai até o zero (com negativos, o zero não é o pé do gráfico)
+    shapes.push({ kind: "polygon", points: pontos([[primeiro[0], Y(0)], ...pts, [ultimo[0], Y(0)]]), fill: cor(i), opacity: chart.areaOpacity });
   });
   series.forEach((s, i) => shapes.push({ kind: "polyline", points: polilinha(s.values, X, Y), fill: "none", stroke: cor(i), strokeWidth: chart.stroke.line, cap: "round", join: "round" }));
   return { height: altura, shapes };
@@ -172,24 +183,27 @@ export function drawBar(d: BarChartData, largura: number, altura: number = chart
   const esquerda = axis ? chart.padding.left : 0;
   const topo = axis ? chart.padding.top : chart.inset;
   const base = altura - (labels ? chart.bar.bottom : 0);
-  const max = d.max ?? niceMax(Math.max(1, ...finitos([...values, ...(forecast ?? [])])));
+  const valores = finitos([...values, ...(forecast ?? [])]);
+  const max = d.max ?? niceMax(Math.max(0, ...valores));
+  const lo = piso(valores);
   const fatia = (largura - esquerda) / n;
   const vao = Math.min(chart.bar.gap, fatia * 0.2);
-  const Y = (v: number) => topo + (base - topo) * (1 - v / max);
+  const Y = (v: number) => topo + ((base - topo) * (max - v)) / (max - lo);
   const cx = (i: number) => esquerda + i * fatia + fatia / 2;
   const destaque = d.highlight === "max" ? values.indexOf(Math.max(...finitos(values))) : d.highlight;
   const shapes: Shape[] = [];
   if (axis) {
-    for (const t of [max / 2, max]) {
+    for (const t of lo < 0 ? [lo, max] : [max / 2, max]) {
       shapes.push(linha(esquerda, Y(t), largura, Y(t), "divider"));
       shapes.push(texto(esquerda - chart.inset, Y(t) + 4, format(t), "end"));
     }
   }
   values.forEach((v, i) => {
     if (v === null) return;
-    shapes.push({ kind: "rect", x: esquerda + i * fatia + vao / 2, y: Y(v), width: fatia - vao, height: base - Y(v), rx: chart.bar.radius, fill: i === destaque ? "accent" : "border" });
+    // a barra sai do zero: para cima se positiva, para baixo se negativa
+    shapes.push({ kind: "rect", x: esquerda + i * fatia + vao / 2, y: Math.min(Y(v), Y(0)), width: fatia - vao, height: Math.abs(Y(v) - Y(0)), rx: chart.bar.radius, fill: i === destaque ? "accent" : "border" });
   });
-  shapes.push(linha(esquerda, base, largura, base, "border"));
+  shapes.push(linha(esquerda, Y(0), largura, Y(0), "border"));
   if (forecast) {
     shapes.push({ kind: "polyline", points: pontos(forecast.flatMap((v, i): [number, number][] => (v === null ? [] : [[cx(i), Y(v)]]))), fill: "none", stroke: "text2", strokeWidth: chart.stroke.line, dash: chart.dash.forecast, cap: "round" });
   }
@@ -273,8 +287,9 @@ export function drawScatter(d: ScatterChartData, largura: number, altura: number
   const { points, formatX = fmtPadrao, formatY = fmtPadrao, wideAxis = true } = d;
   const xs = points.map((p) => p.x);
   const ys = points.map((p) => p.y);
-  const tx = niceTicks(Math.min(0, ...xs), Math.max(1, ...xs));
-  const ty = niceTicks(Math.min(0, ...ys), Math.max(1, ...ys));
+  // sem nada acima de zero, o eixo vai até 1 (como o niceMax)
+  const tx = niceTicks(Math.min(0, ...xs), Math.max(0, ...xs) || 1);
+  const ty = niceTicks(Math.min(0, ...ys), Math.max(0, ...ys) || 1);
   const esquerda = wideAxis ? chart.padding.leftWide : chart.padding.left;
   const { top, bottom } = chart.padding;
   const base = altura - bottom;
@@ -310,7 +325,7 @@ export interface HeatmapData {
 
 export const heatLevel = (v: number, max: number): number => {
   const niveis = chart.heatmap.levels;
-  const i = Math.min(niveis.length - 1, Math.max(0, Math.floor((v / Math.max(1, max)) * niveis.length - 1e-9)));
+  const i = Math.min(niveis.length - 1, Math.max(0, Math.floor((max > 0 ? v / max : 0) * niveis.length - 1e-9)));
   return niveis[i] ?? 1;
 };
 
@@ -320,7 +335,7 @@ export function drawHeatmap(d: HeatmapData, largura: number): Scene {
   const vao = space[1];
   const n = Math.max(1, columns.length);
   const cw = (largura - labelWidth - vao * n) / n;
-  const max = Math.max(1, ...finitos(values.flat()));
+  const max = Math.max(0, ...finitos(values.flat()));
   const shapes: Shape[] = [];
   rows.forEach((r, i) => {
     const y = i * (ch + vao);
@@ -412,7 +427,7 @@ export interface RadarChartData {
 
 export function drawRadar(d: RadarChartData, largura: number, size: number = chart.pieSize): Scene {
   const n = d.axes.length;
-  const max = d.max ?? niceMax(Math.max(1, ...d.values, ...(d.compare ?? [])));
+  const max = d.max ?? niceMax(Math.max(0, ...d.values, ...(d.compare ?? [])));
   const folga = space[8] + space[4];
   const tamanho = Math.min(largura - 2 * folga, size);
   const r = tamanho / 2;
@@ -444,7 +459,7 @@ export interface SparklineData {
 export function drawSparkline(d: SparklineData, largura: number, altura: number = chart.sparklineHeight): Scene {
   const vs = finitos(d.values);
   const min = Math.min(0, ...vs);
-  const max = Math.max(1, ...vs);
+  const max = Math.max(0, ...vs);
   const m = chart.stroke.line;
   const n = d.values.length;
   const X = (i: number) => m + (n > 1 ? (i * (largura - 2 * m)) / (n - 1) : (largura - 2 * m) / 2);

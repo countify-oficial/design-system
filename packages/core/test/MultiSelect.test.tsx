@@ -61,4 +61,14 @@ describe("TagsInput", () => {
     await user.keyboard("{Backspace}");
     expect(aoMudar).toHaveBeenLastCalledWith(["Calçados"]);
   });
+
+  it("Enter na sugestão marcada cria só ela (não o texto digitado antes)", async () => {
+    const user = userEvent.setup();
+    const aoMudar = vi.fn();
+    render(<TagsInput label="Categorias" data={["Acessórios"]} onChange={aoMudar} inputProps={{ onKeyDown: aoMudar.bind(null, "tecla") }} />);
+    await user.type(screen.getByRole("combobox", { name: "Categorias" }), "ac{ArrowDown}{Enter}");
+    expect(aoMudar.mock.calls.filter((c) => c[0] !== "tecla")).toEqual([[["Acessórios"]]]);
+    // o onKeyDown de inputProps também roda
+    expect(aoMudar.mock.calls.some((c) => c[0] === "tecla")).toBe(true);
+  });
 });

@@ -1,12 +1,11 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
+import { useComponentProps, useMessages, type TreeNode } from "@countify-oficial/provider";
 import { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { Icon } from "../Icon/Icon";
 import { InputBase, type InputBaseOwnProps } from "../Input/Input";
 import type { PolymorphicProps } from "../polymorphic";
 import { Popover } from "../Popover/Popover";
-import type { TreeNode } from "../Tree/data";
 import { UnstyledButton } from "../UnstyledButton/UnstyledButton";
 import classes from "./Cascader.module.css";
 

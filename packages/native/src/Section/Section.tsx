@@ -1,4 +1,4 @@
-import { useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
+import { hasContent, useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { fontSize, lineHeightPx, nativeFontFamily, space, touchTarget } from "@countify-oficial/tokens";
 import type { ReactNode } from "react";
 import { Text as RNText, View, type StyleProp, type ViewStyle } from "react-native";
@@ -25,8 +25,6 @@ export interface SectionProps {
   testID?: string | undefined;
 }
 
-const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false;
-
 /** Seção de uma tela: título de 20 com o "?" de ajuda, o que vai à direita e o conteúdo. */
 export function Section(props: SectionProps) {
   const { title, order = 2, help, helpLabel, aside, children, style, testID } = useComponentProps("Section", {}, props);
@@ -39,9 +37,9 @@ export function Section(props: SectionProps) {
       <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: space[3], minHeight: touchTarget }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: space[1], flexShrink: 1 }}>
           <Title order={order} size="section" style={{ flexShrink: 1 }}>{title}</Title>
-          {tem(help) && <HelpTip label={nomeDaAjuda}>{help}</HelpTip>}
+          {hasContent(help) && <HelpTip label={nomeDaAjuda}>{help}</HelpTip>}
         </View>
-        {tem(aside) && (
+        {hasContent(aside) && (
           <View style={{ flexDirection: "row", alignItems: "center", gap: space[2] }}>
             {typeof aside === "string" || typeof aside === "number" ? (
               <RNText style={{ color: c.text2, fontSize: fontSize.xs, lineHeight: lineHeightPx(fontSize.xs), fontFamily: nativeFontFamily[400], fontVariant: ["tabular-nums"] }}>{aside}</RNText>

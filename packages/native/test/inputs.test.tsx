@@ -47,6 +47,14 @@ describe("campos de texto (React Native)", () => {
     expect(screen.getByLabelText("Câmeras").props.value).toBe("2");
   });
 
+  it("NumberInput: ao sair, arredonda a decimalScale (o valor é o que o campo mostra)", async () => {
+    const aoMudar = jest.fn();
+    await render(<NumberInput label="Preço" decimalScale={2} onChange={aoMudar} />);
+    await fireEvent.changeText(screen.getByLabelText("Preço"), "10,555");
+    await fireEvent(screen.getByLabelText("Preço"), "blur");
+    expect(aoMudar).toHaveBeenLastCalledWith(10.56);
+  });
+
   it("JsonInput avisa JSON inválido ao sair", async () => {
     await render(<JsonInput label="Config" />);
     await fireEvent.changeText(screen.getByLabelText("Config"), "{ruim");
@@ -67,6 +75,8 @@ describe("campos de texto (React Native)", () => {
     const pronto = jest.fn();
     await render(<PinInput onComplete={pronto} />);
     expect(screen.getByLabelText("Código, 4 de 4")).toBeOnTheScreen();
+    // a caixa cheia é selecionada ao focar: digitar troca o algarismo
+    expect(screen.getByLabelText("Código, 2 de 4").props.selectTextOnFocus).toBe(true);
     await fireEvent.changeText(screen.getByLabelText("Código, 1 de 4"), "12a34");
     expect(pronto).toHaveBeenCalledWith("1234");
   });

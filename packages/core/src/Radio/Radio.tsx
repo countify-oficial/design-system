@@ -1,5 +1,5 @@
 import { useControllableState, useId } from "@countify-oficial/hooks";
-import { useComponentProps } from "@countify-oficial/provider";
+import { hasContent, useComponentProps } from "@countify-oficial/provider";
 import type { Size } from "@countify-oficial/tokens";
 import { createContext, useContext, type ChangeEvent, type ComponentPropsWithRef, type ReactNode } from "react";
 import classes from "../Checkbox/Checkbox.module.css";
@@ -27,14 +27,13 @@ export function RadioItem(props: RadioProps) {
   const doGrupo = grupo && value !== undefined
     ? { name: grupo.nome, checked: grupo.valor === String(value), onChange: (e: ChangeEvent<HTMLInputElement>) => { grupo.escolher(String(value)); onChange?.(e); } }
     : { name, checked, onChange };
-  const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== "";
   return (
     <div data-label-position={labelPosition} data-disabled={disabled || undefined} {...getStyles("root", { "--check-size": `var(--cf-icon-size-${size})` })}>
-      <input id={campo} type="radio" value={value} disabled={disabled} aria-describedby={tem(description) ? `${campo}-description` : undefined} {...rest} {...doGrupo} {...getStyles("input")} />
-      {(tem(label) || tem(description)) && (
+      <input id={campo} type="radio" value={value} disabled={disabled} aria-describedby={hasContent(description) ? `${campo}-description` : undefined} {...rest} {...doGrupo} {...getStyles("input")} />
+      {(hasContent(label) || hasContent(description)) && (
         <div {...getStyles("body")}>
-          {tem(label) && <label htmlFor={campo} {...getStyles("label")}>{label}</label>}
-          {tem(description) && <span id={`${campo}-description`} {...getStyles("description")}>{description}</span>}
+          {hasContent(label) && <label htmlFor={campo} {...getStyles("label")}>{label}</label>}
+          {hasContent(description) && <span id={`${campo}-description`} {...getStyles("description")}>{description}</span>}
         </div>
       )}
     </div>

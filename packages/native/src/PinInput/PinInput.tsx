@@ -67,6 +67,8 @@ export function PinInput(props: PinInputProps) {
             secureTextEntry={mask}
             editable={!disabled}
             autoFocus={autoFocus && i === 0}
+            // a caixa cheia fica selecionada: digitar troca o algarismo em vez de virar "colar" de dois
+            selectTextOnFocus
             value={(codigo[i] ?? "").trim()}
             onChangeText={(t) => escrever(i, t.length > 1 ? t : t.slice(-1))}
             onKeyPress={(e) => {

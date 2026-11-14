@@ -1,5 +1,5 @@
 import { useControllableState, useId } from "@countify-oficial/hooks";
-import { useComponentProps } from "@countify-oficial/provider";
+import { hasContent, useComponentProps } from "@countify-oficial/provider";
 import type { Size } from "@countify-oficial/tokens";
 import { createContext, useContext, useEffect, type ChangeEvent, type ComponentPropsWithRef, type ReactNode } from "react";
 import { ChoiceGroup, type ChoiceGroupOwnProps } from "../ChoiceGroup/ChoiceGroup";
@@ -38,7 +38,6 @@ export function CheckboxItem(props: CheckboxProps) {
     if (el instanceof HTMLInputElement) el.indeterminate = !!indeterminate;
   }, [campo, indeterminate]);
   const doGrupo = grupo && value !== undefined ? { checked: grupo.valor.includes(String(value)), onChange: (e: ChangeEvent<HTMLInputElement>) => { grupo.alternar(String(value)); onChange?.(e); } } : { checked, onChange };
-  const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== "";
   return (
     <div data-label-position={labelPosition} data-disabled={disabled || undefined} {...getStyles("root", { "--check-size": `var(--cf-icon-size-${size})` })}>
       <input
@@ -46,17 +45,17 @@ export function CheckboxItem(props: CheckboxProps) {
         type="checkbox"
         value={value}
         disabled={disabled}
-        aria-invalid={tem(error) || undefined}
-        aria-describedby={[tem(description) && `${campo}-description`, tem(error) && `${campo}-error`].filter(Boolean).join(" ") || undefined}
+        aria-invalid={!!error || undefined}
+        aria-describedby={[hasContent(description) && `${campo}-description`, hasContent(error) && `${campo}-error`].filter(Boolean).join(" ") || undefined}
         {...rest}
         {...doGrupo}
         {...getStyles("input")}
       />
-      {(tem(label) || tem(description) || tem(error)) && (
+      {(hasContent(label) || hasContent(description) || hasContent(error)) && (
         <div {...getStyles("body")}>
-          {tem(label) && <label htmlFor={campo} {...getStyles("label")}>{label}</label>}
-          {tem(description) && <span id={`${campo}-description`} {...getStyles("description")}>{description}</span>}
-          {tem(error) && <span id={`${campo}-error`} {...getStyles("error")}>{error}</span>}
+          {hasContent(label) && <label htmlFor={campo} {...getStyles("label")}>{label}</label>}
+          {hasContent(description) && <span id={`${campo}-description`} {...getStyles("description")}>{description}</span>}
+          {hasContent(error) && <span id={`${campo}-error`} {...getStyles("error")}>{error}</span>}
         </div>
       )}
     </div>
@@ -82,10 +81,6 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     </GrupoDeCaixas>
   );
 }
-
-/** Estado do "Selecionar todos" para uma lista: all, none ou some (meio marcado). */
-export const selectAllState = (todos: string[], marcados: string[]): "all" | "none" | "some" =>
-  marcados.length === 0 ? "none" : todos.every((t) => marcados.includes(t)) ? "all" : "some";
 
 /** Caixa de marcar. Checkbox.Group agrupa e guarda os marcados. */
 export const Checkbox = Object.assign(CheckboxItem, { Group: CheckboxGroup });

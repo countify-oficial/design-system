@@ -1,4 +1,4 @@
-import { useCountifyTheme, useMessages } from "@countify-oficial/provider";
+import { hasContent, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { controlFontSize, controlHeight, fontSize, lineHeightPx, nativeFontFamily, radius, space, state, borderWidth, focusRing, type Size } from "@countify-oficial/tokens";
 import type { ReactNode } from "react";
 import { Text as RNText, View, type GestureResponderEvent, type StyleProp, type ViewStyle } from "react-native";
@@ -26,10 +26,9 @@ export function ChoiceField({
   const messages = useMessages();
   const letra = { fontSize: fontSize.sm, lineHeight: lineHeightPx(fontSize.sm), fontFamily: nativeFontFamily[400] };
   const borda = error ? focusRing.width : variant === "outline" ? borderWidth.thin : 0;
-  const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== true && v !== "";
   return (
     <View style={[{ gap: space[2] }, style]}>
-      {tem(label) && (
+      {hasContent(label) && (
         <RNText style={[letra, { color: c.text2 }]}>
           {label}
           {required && <RNText accessibilityLabel={messages.required} style={{ color: c.down }}> *</RNText>}
@@ -60,8 +59,8 @@ export function ChoiceField({
           <Icon name="chevron-down" />
         </UnstyledButton>
       </ContentColor>
-      {tem(description) && <RNText style={[letra, { color: c.text2 }]}>{description}</RNText>}
-      {tem(error) && <RNText accessibilityRole="alert" accessibilityLiveRegion="polite" style={[letra, { color: c.down }]}>{error}</RNText>}
+      {hasContent(description) && <RNText style={[letra, { color: c.text2 }]}>{description}</RNText>}
+      {hasContent(error) && <RNText accessibilityRole="alert" accessibilityLiveRegion="polite" style={[letra, { color: c.down }]}>{error}</RNText>}
     </View>
   );
 }

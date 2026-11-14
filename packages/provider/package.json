@@ -49,8 +49,7 @@
     "@countify-oficial/tokens": "workspace:^"
   },
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-native": ">=0.79"
+    "react": "^19.0.0"
   },
   "peerDependenciesMeta": {
     "react-native": {

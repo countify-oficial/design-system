@@ -8,7 +8,7 @@ export { AngleSlider, type AngleSliderProps } from "./AngleSlider/AngleSlider";
 export { AppShell, AppShellHeader, AppShellMain, AppShellNavItem, AppShellTabBar, type AppShellHeaderProps, type AppShellMainProps, type AppShellNavItemOwnProps, type AppShellNavItemProps, type AppShellProps, type AppShellTabBarProps } from "./AppShell/AppShell";
 export { AspectRatio, type AspectRatioOwnProps, type AspectRatioProps } from "./AspectRatio/AspectRatio";
 export { Autocomplete, type AutocompleteProps } from "./Autocomplete/Autocomplete";
-export { Avatar, initials, type AvatarOwnProps, type AvatarProps } from "./Avatar/Avatar";
+export { Avatar, type AvatarOwnProps, type AvatarProps } from "./Avatar/Avatar";
 export { BackgroundImage, type BackgroundImageOwnProps, type BackgroundImageProps } from "./BackgroundImage/BackgroundImage";
 export { Badge, type BadgeOwnProps, type BadgeProps, type BadgeVariant } from "./Badge/Badge";
 export { Blockquote, type BlockquoteProps } from "./Blockquote/Blockquote";
@@ -19,7 +19,7 @@ export { Button, type ButtonColor, type ButtonOwnProps, type ButtonProps, type B
 export { Card, CardSection, type CardOwnProps, type CardProps, type CardSectionOwnProps, type CardSectionProps } from "./Card/Card";
 export { Cascader, type CascaderProps } from "./Cascader/Cascader";
 export { Center, type CenterOwnProps, type CenterProps } from "./Center/Center";
-export { Checkbox, CheckboxGroup, CheckboxItem, selectAllState, type CheckboxGroupProps, type CheckboxProps } from "./Checkbox/Checkbox";
+export { Checkbox, CheckboxGroup, CheckboxItem, type CheckboxGroupProps, type CheckboxProps } from "./Checkbox/Checkbox";
 export { Chip, ChipGroup, ChipItem, type ChipGroupProps, type ChipProps } from "./Chip/Chip";
 export type { ChoiceGroupOwnProps } from "./ChoiceGroup/ChoiceGroup";
 export { CloseButton, type CloseButtonProps } from "./CloseButton/CloseButton";
@@ -29,7 +29,6 @@ export { ColorInput, type ColorInputProps } from "./ColorInput/ColorInput";
 export { ColorPicker, type ColorPickerProps } from "./ColorPicker/ColorPicker";
 export { ColorSwatch, type ColorSwatchOwnProps, type ColorSwatchProps } from "./ColorSwatch/ColorSwatch";
 export { Combobox, ComboboxAnchor, ComboboxDropdown, ComboboxEmpty, ComboboxGroup, ComboboxOption, ComboboxTarget, useComboboxContext, type ComboboxDropdownProps, type ComboboxOptionProps, type ComboboxProps } from "./Combobox/Combobox";
-export { allItems, filterCombobox, normalizeSearch, parseComboboxData, type ComboboxData, type ComboboxGroup as ComboboxDataGroup, type ComboboxItem, type ComboboxParsed } from "./Combobox/data";
 export { ComboboxPopover, type ComboboxPopoverProps } from "./ComboboxPopover/ComboboxPopover";
 export { Container, type ContainerProps } from "./Container/Container";
 export { CopyButton, type CopyButtonProps } from "./CopyButton/CopyButton";
@@ -79,7 +78,7 @@ export { PageHeader, type PageHeaderProps } from "./PageHeader/PageHeader";
 export { Pagination, type PaginationProps } from "./Pagination/Pagination";
 export { Paper, type PaperOwnProps, type PaperProps } from "./Paper/Paper";
 export { PasswordInput, type PasswordInputProps } from "./PasswordInput/PasswordInput";
-export { PhoneInput, phoneMask, type PhoneInputProps } from "./PhoneInput/PhoneInput";
+export { PhoneInput, type PhoneInputProps } from "./PhoneInput/PhoneInput";
 export { Pill, PillGroup, PillItem, type PillProps } from "./Pill/Pill";
 export { PillsInput, PillsInputField, type PillsInputProps } from "./PillsInput/PillsInput";
 export { PinInput, type PinInputProps } from "./PinInput/PinInput";
@@ -124,7 +123,6 @@ export { Toolbar, type ToolbarProps } from "./Toolbar/Toolbar";
 export { Tooltip, type TooltipProps } from "./Tooltip/Tooltip";
 export { Tour, type TourProps, type TourStep } from "./Tour/Tour";
 export { Transition, type TransitionDuration, type TransitionName, type TransitionProps } from "./Transition/Transition";
-export { findTreeNode, treeCheckState, treeLeaves, treePath, type TreeNode } from "./Tree/data";
 export { Tree, type TreeProps } from "./Tree/Tree";
 export { TreeSelect, type TreeSelectProps } from "./TreeSelect/TreeSelect";
 export { Typography, type TypographyProps } from "./Typography/Typography";
@@ -133,4 +131,9 @@ export { VisuallyHidden, type VisuallyHiddenProps } from "./VisuallyHidden/Visua
 export type { PolymorphicProps } from "./polymorphic";
 export type { CssVars, StylesApiProps } from "./styles";
 export type { IconName, Responsive, Spacing, Tone } from "@countify-oficial/tokens";
-export { applyMask, formatColor, formatNumber, highlighter, hsvToRgb, mentionQuery, numberSeparators, pageLabel, paginationRange, parseColor, parseNumber, rgbToHsv, type ColorFormat, type FormatNumberOptions, type HSVA } from "@countify-oficial/provider";
+// os ajudantes são os mesmos na web e no celular: vêm do provider
+export {
+  allItems, applyMask, filterCombobox, findTreeNode, formatColor, formatNumber, highlighter, hsvToRgb, initials, mentionQuery, normalizeSearch, numberSeparators, pageLabel, paginationRange,
+  parseColor, parseComboboxData, parseNumber, phoneMask, rgbToHsv, selectAllState, treeCheckState, treeLeaves, treePath,
+  type ColorFormat, type ComboboxData, type ComboboxGroup as ComboboxDataGroup, type ComboboxItem, type ComboboxParsed, type FormatNumberOptions, type HSVA, type TreeNode,
+} from "@countify-oficial/provider";

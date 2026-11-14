@@ -1,5 +1,5 @@
 import { useId } from "@countify-oficial/hooks";
-import { useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
+import { hasContent, useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import {
   controlFontSize, controlHeight, focusRing, fontSize, lineHeightPx, nativeFontFamily, radius as cantos, space, state, borderWidth, type Size,
 } from "@countify-oficial/tokens";
@@ -36,8 +36,6 @@ export interface InputBaseProps extends Omit<RNTextInputProps, "style" | "editab
   ref?: Ref<ComponentRef<typeof RNTextInput>> | undefined;
 }
 
-const temTexto = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== true && v !== "";
-
 /** Campo completo: rótulo, caixa, descrição e erro. A base dos outros campos. */
 export function InputBase(props: InputBaseProps) {
   const messages = useMessages();
@@ -56,7 +54,7 @@ export function InputBase(props: InputBaseProps) {
   const multilinha = rows !== undefined;
   return (
     <View style={[{ gap: space[2] }, style]}>
-      {temTexto(label) && (
+      {hasContent(label) && (
         <RNText nativeID={`${base}-label`} style={[letra, { color: c.text2 }]}>
           {label}
           {(withAsterisk ?? required) && <RNText accessibilityLabel={messages.required} style={{ color: c.down }}> *</RNText>}
@@ -76,7 +74,7 @@ export function InputBase(props: InputBaseProps) {
           {leftSection}
           <RNTextInput
             accessibilityLabel={accessibilityLabel ?? (typeof label === "string" ? label : undefined)}
-            accessibilityLabelledBy={temTexto(label) ? `${base}-label` : undefined}
+            accessibilityLabelledBy={hasContent(label) ? `${base}-label` : undefined}
             accessibilityHint={typeof description === "string" ? description : undefined}
             accessibilityState={{ disabled: !!disabled }}
             placeholderTextColor={c.text3}
@@ -102,8 +100,8 @@ export function InputBase(props: InputBaseProps) {
           {rightSection !== undefined && <View style={{ marginRight: -space[3] }}>{rightSection}</View>}
         </View>
       </ContentColor>
-      {temTexto(description) && <RNText style={[letra, { color: c.text2 }]}>{description}</RNText>}
-      {temTexto(error) && (
+      {hasContent(description) && <RNText style={[letra, { color: c.text2 }]}>{description}</RNText>}
+      {hasContent(error) && (
         <RNText accessibilityRole="alert" accessibilityLiveRegion="polite" style={[letra, { color: c.down }]}>{error}</RNText>
       )}
     </View>

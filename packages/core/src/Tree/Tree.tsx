@@ -1,9 +1,8 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps } from "@countify-oficial/provider";
+import { treeCheckState, treeLeaves, useComponentProps, type TreeNode } from "@countify-oficial/provider";
 import { useEffect, useState, type ComponentPropsWithRef, type KeyboardEvent } from "react";
 import { Icon } from "../Icon/Icon";
 import { useStyles, type StylesApiProps } from "../styles";
-import { treeCheckState, treeLeaves, type TreeNode } from "./data";
 import classes from "./Tree.module.css";
 
 export interface TreeProps extends StylesApiProps<"root" | "group" | "node" | "chevron" | "check" | "label">, Omit<ComponentPropsWithRef<"ul">, "className" | "style" | "onSelect" | "defaultChecked"> {

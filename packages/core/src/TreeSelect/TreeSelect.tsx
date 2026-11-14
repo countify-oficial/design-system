@@ -1,11 +1,10 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps } from "@countify-oficial/provider";
+import { findTreeNode, useComponentProps, type TreeNode } from "@countify-oficial/provider";
 import { useState, type ChangeEvent } from "react";
 import { Icon } from "../Icon/Icon";
 import { InputBase, type InputBaseOwnProps } from "../Input/Input";
 import type { PolymorphicProps } from "../polymorphic";
 import { Popover } from "../Popover/Popover";
-import { findTreeNode, type TreeNode } from "../Tree/data";
 import { Tree } from "../Tree/Tree";
 
 export type TreeSelectProps = PolymorphicProps<

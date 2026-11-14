@@ -1,4 +1,4 @@
-import { useComponentProps } from "@countify-oficial/provider";
+import { decimalPlaces, useComponentProps } from "@countify-oficial/provider";
 import type { Tone } from "@countify-oficial/tokens";
 import { useRef, useState, type ComponentPropsWithRef, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { toneVars, useStyles, type CssVars, type StylesApiProps } from "../styles";
@@ -45,8 +45,6 @@ interface Props extends SliderCommonProps {
   corDoTrilho?: string | undefined;
 }
 
-const casas = (n: number) => (String(n).split(".")[1] ?? "").length;
-
 /** A base dos sliders lineares: uma ou duas bolinhas, ponteiro e teclado. */
 export function SliderBase({
   nome, valores, aoMudar, aoTerminar, nomes, minRange = 0, tipo, corDaBolinha, corDoTrilho,
@@ -57,7 +55,7 @@ export function SliderBase({
   const trilho = useRef<HTMLDivElement>(null);
   const [arrastando, setArrastando] = useState<number | null>(null);
   const pct = (v: number) => ((v - min) / (max - min)) * 100;
-  const encaixar = (v: number) => Math.min(max, Math.max(min, Number((Math.round((v - min) / step) * step + min).toFixed(casas(step)))));
+  const encaixar = (v: number) => Math.min(max, Math.max(min, Number((Math.round((v - min) / step) * step + min).toFixed(decimalPlaces(step)))));
   const definir = (i: number, v: number, fim = false) => {
     const outros = valores.filter((_, k) => k !== i);
     let novo = encaixar(v);

@@ -1,10 +1,10 @@
 import { ActionIcon, Button, Icon, InputBase, MaskInput, Popover, UnstyledButton, type InputBaseOwnProps, type MaskInputProps } from "@countify-oficial/core";
-import { useControllableState } from "@countify-oficial/hooks";
 import { useComponentProps, useCountifyTheme, useMessages } from "@countify-oficial/provider";
 import { useState, type ChangeEvent, type ReactNode } from "react";
 import { Calendar } from "./Calendar";
 import { toRange, type CalendarBaseProps, type CalendarValueProps } from "./useCalendar";
-import { formatDate, formatRange, formatTime, outOfBounds, parseDate, parseTime, sameDay, sameRange, startOfMonth, type DatesRange, type DateValue } from "./utils";
+import { useDateInputState, useDatePickerState, useDateTimePickerState, useTimeInputState } from "./usePickers";
+import { formatRange, sameRange, type DatesRange, type DateValue } from "./utils";
 import classes from "./Pickers.module.css";
 
 /** As props do campo (rótulo, descrição, erro, tamanho…). */
@@ -85,38 +85,16 @@ export function DatePicker(props: DatePickerProps) {
   const { locale } = useCountifyTheme();
   const { minDate, maxDate, excludeDate, firstDayOfWeek, presets, valueFormat } = p;
   const campo = semChaves(p, [...DO_CALENDARIO, "type", "presets", "valueFormat"]);
-  const periodo = p.type === "range";
-  const [valor, setValor] = useControllableState<DatesRange>({
-    value: p.value === undefined ? undefined : toRange(p.value),
-    defaultValue: toRange(p.defaultValue),
-    onChange: (r) => {
-      if (p.type === "range") p.onChange?.(r);
-      else p.onChange?.(r[0]);
-    },
-  });
-  const [aberto, setAberto] = useState(false);
-  const [rascunho, setRascunho] = useState<DatesRange>(valor);
-  const [mes, setMes] = useState(() => startOfMonth(valor[0] ?? maxDate ?? new Date()));
-  const comRodape = periodo || !!presets?.length;
+  const { periodo, valor, aberto, abrir, rascunho, setRascunho, mes, setMes, comRodape, podeAplicar, aplicar, escolherAtalho } = useDatePickerState(p);
   const limites = { minDate, maxDate, excludeDate, firstDayOfWeek, month: mes, onMonthChange: setMes };
-  const aplicar = (r: DatesRange) => {
-    setValor(r);
-    setAberto(false);
-  };
   return (
     <CampoDoSeletor
       campo={campo}
       texto={valueFormat ? valueFormat(valor) : formatRange(valor, locale)}
       aberto={aberto}
-      setAberto={(v) => {
-        setAberto(v);
-        if (v) {
-          setRascunho(valor);
-          setMes(startOfMonth(valor[0] ?? maxDate ?? new Date()));
-        }
-      }}
+      setAberto={abrir}
       aplicar={comRodape ? () => aplicar(rascunho) : undefined}
-      podeAplicar={!periodo || (!!rascunho[0] && !!rascunho[1])}
+      podeAplicar={podeAplicar}
       conteudo={
         <div className={classes["body"]}>
           {presets && presets.length > 0 && (
@@ -126,11 +104,7 @@ export function DatePicker(props: DatePickerProps) {
                   key={pr.label}
                   className={classes["preset"]}
                   aria-pressed={sameRange(toRange(pr.value), rascunho)}
-                  onClick={() => {
-                    const r = toRange(pr.value);
-                    setRascunho(r);
-                    if (r[0]) setMes(startOfMonth(r[0]));
-                  }}
+                  onClick={() => escolherAtalho(toRange(pr.value))}
                 >
                   {pr.label}
                 </UnstyledButton>
@@ -160,37 +134,22 @@ export type DateTimePickerProps = DateFieldProps &
 export function DateTimePicker(props: DateTimePickerProps) {
   const messages = useMessages();
   const p = useComponentProps("DateTimePicker", {}, props);
-  const { value, defaultValue, onChange, minDate, maxDate, excludeDate, firstDayOfWeek } = p;
+  const { minDate, maxDate, excludeDate, firstDayOfWeek } = p;
   const campo = semChaves(p, DO_CALENDARIO);
-  const [valor, setValor] = useControllableState<DateValue>({ value, defaultValue: defaultValue ?? null, onChange });
-  const [aberto, setAberto] = useState(false);
-  const [dia, setDia] = useState<DateValue>(valor);
-  const [hora, setHora] = useState(valor ? formatTime(valor.getHours(), valor.getMinutes()) : "");
-  const [mes, setMes] = useState(() => startOfMonth(valor ?? new Date()));
-  const t = parseTime(hora);
+  const { texto, aberto, abrir, dia, setDia, hora, setHora, mes, setMes, podeAplicar, aplicar } = useDateTimePickerState(p);
   return (
     <CampoDoSeletor
       campo={campo}
-      texto={valor ? `${formatDate(valor)} ${formatTime(valor.getHours(), valor.getMinutes())}` : ""}
+      texto={texto}
       aberto={aberto}
-      setAberto={(v) => {
-        setAberto(v);
-        if (v) {
-          setDia(valor);
-          setHora(valor ? formatTime(valor.getHours(), valor.getMinutes()) : "");
-          setMes(startOfMonth(valor ?? new Date()));
-        }
-      }}
-      podeAplicar={!!dia && !!t}
-      aplicar={() => {
-        if (!dia || !t) return;
-        setValor(new Date(dia.getFullYear(), dia.getMonth(), dia.getDate(), t.h, t.m));
-        setAberto(false);
-      }}
+      setAberto={abrir}
+      podeAplicar={podeAplicar}
+      aplicar={aplicar}
       conteudo={
         <div>
           <Calendar className={classes["calendar"]} {...{ minDate, maxDate, excludeDate, firstDayOfWeek }} month={mes} onMonthChange={setMes} value={dia} onChange={setDia} />
-          <TimeInput className={classes["time"]} label={messages.time} value={hora} onChange={setHora} />
+          {/* o texto como está no campo (não o TimeInput, que guarda a última hora válida): "14:3" deixa o Aplicar apagado */}
+          <MaskInput className={classes["time"]} label={messages.time} mask="99:99" inputMode="numeric" value={hora} onChange={setHora} />
         </div>
       }
     />
@@ -208,18 +167,10 @@ export type DateInputProps = DateFieldProps &
 export function DateInput(props: DateInputProps) {
   const messages = useMessages();
   const p = useComponentProps("DateInput", {}, props);
-  const { value, defaultValue, onChange, minDate, maxDate, excludeDate, firstDayOfWeek, disabled } = p;
+  const { month, defaultMonth, onMonthChange, minDate, maxDate, excludeDate, firstDayOfWeek, disabled } = p;
   const campo = semChaves(p, [...DO_CALENDARIO, "disabled"]);
-  const [valor, setValor] = useControllableState<DateValue>({ value, defaultValue: defaultValue ?? null, onChange });
-  const [texto, setTexto] = useState(valor ? formatDate(valor) : "");
-  const [visto, setVisto] = useState<DateValue>(valor);
+  const { valor, setValor, texto, digitar, sair } = useDateInputState(p);
   const [aberto, setAberto] = useState(false);
-  // o valor mudou por fora (ou pelo calendário): o texto acompanha
-  if (!(visto === valor || sameDay(visto, valor))) {
-    setVisto(valor);
-    setTexto(valor ? formatDate(valor) : "");
-  }
-  const valido = (d: Date | null) => !!d && !outOfBounds(d, minDate, maxDate) && !excludeDate?.(d);
   return (
     <MaskInput
       {...(campo as Omit<MaskInputProps, "mask">)}
@@ -227,18 +178,8 @@ export function DateInput(props: DateInputProps) {
       mask="99/99/9999"
       inputMode="numeric"
       value={texto}
-      onChange={(m: string, raw: string) => {
-        setTexto(m);
-        const d = parseDate(m);
-        if (raw.length === 8 && valido(d)) {
-          setVisto(d);
-          setValor(d);
-        } else if (raw.length === 0) {
-          setVisto(null);
-          setValor(null);
-        }
-      }}
-      onBlur={() => setTexto(valor ? formatDate(valor) : "")}
+      onChange={digitar}
+      onBlur={sair}
       rightSectionPointerEvents="auto"
       rightSection={
         <Popover opened={aberto && !disabled} onChange={setAberto} position="bottom-end" trapFocus>
@@ -250,7 +191,7 @@ export function DateInput(props: DateInputProps) {
           <Popover.Dropdown aria-label={messages.chooseDate}>
             <Calendar
               className={classes["calendar"]}
-              {...{ minDate, maxDate, excludeDate, firstDayOfWeek }}
+              {...{ month, defaultMonth, onMonthChange, minDate, maxDate, excludeDate, firstDayOfWeek }}
               value={valor}
               onChange={(d) => {
                 setValor(d);
@@ -275,33 +216,16 @@ export type TimeInputProps = Omit<MaskInputProps, "mask" | "value" | "defaultVal
 /** Hora digitada em 24 h ("10:00"), como os campos Abre e Fecha do mockup: sem ícone. */
 export function TimeInput(props: TimeInputProps) {
   const { value, defaultValue, onChange, onBlur, ...rest } = useComponentProps("TimeInput", {}, props);
-  const [valor, setValor] = useControllableState({ value, defaultValue: defaultValue ?? "", onChange });
-  const [texto, setTexto] = useState(valor);
-  const [visto, setVisto] = useState(valor);
-  if (visto !== valor) {
-    setVisto(valor);
-    setTexto(valor);
-  }
+  const { texto, digitar, sair } = useTimeInputState({ value, defaultValue, onChange });
   return (
     <MaskInput
       {...rest}
       mask="99:99"
       inputMode="numeric"
       value={texto}
-      onChange={(m: string, raw: string) => {
-        setTexto(m);
-        const t = parseTime(m);
-        if (raw.length === 4 && t) {
-          const novo = formatTime(t.h, t.m);
-          setVisto(novo);
-          setValor(novo);
-        } else if (raw.length === 0) {
-          setVisto("");
-          setValor("");
-        }
-      }}
+      onChange={digitar}
       onBlur={(e) => {
-        setTexto(valor);
+        sair();
         onBlur?.(e);
       }}
     />

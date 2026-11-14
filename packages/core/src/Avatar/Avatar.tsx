@@ -1,4 +1,4 @@
-import { useComponentProps } from "@countify-oficial/provider";
+import { initials, useComponentProps } from "@countify-oficial/provider";
 import type { Size, Tone } from "@countify-oficial/tokens";
 import { useState, type ElementType, type ReactNode } from "react";
 import { Icon } from "../Icon/Icon";
@@ -20,13 +20,6 @@ export interface AvatarOwnProps extends StylesApiProps<"root" | "image"> {
 }
 
 export type AvatarProps<C extends ElementType = "span"> = PolymorphicProps<C, AvatarOwnProps>;
-
-/** "Ana Souza" → "AS"; um nome só → as duas primeiras letras. */
-export function initials(name: string): string {
-  const partes = name.trim().split(/\s+/).filter(Boolean);
-  const [primeira = "", ultima] = [partes[0], partes.length > 1 ? partes.at(-1) : undefined];
-  return (ultima ? (primeira[0] ?? "") + (ultima[0] ?? "") : primeira.slice(0, 2)).toUpperCase();
-}
 
 const letra: Record<Size, string> = { xs: "xs", sm: "xs", md: "sm", lg: "sm", xl: "lg" };
 

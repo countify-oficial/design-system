@@ -31,6 +31,19 @@ describe("useControllableState", () => {
     act(() => result.current[1]("a"));
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it("controlado: o pai recusa e o mesmo pedido de novo ainda avisa (aba guardada por um confirm)", async () => {
+    const onChange = vi.fn();
+    const { result } = renderHook(() => useControllableState({ value: "a", defaultValue: "a", onChange }));
+    // dois cliques: o act assíncrono deixa as microtarefas correrem entre eles
+    for (let i = 0; i < 2; i++) {
+      await act(async () => {
+        result.current[1]("b");
+        await Promise.resolve();
+      });
+    }
+    expect(onChange.mock.calls).toEqual([["b"], ["b"]]);
+  });
 });
 
 describe("useDisclosure", () => {
@@ -89,6 +102,14 @@ describe("useMediaQuery (web)", () => {
     matches = true;
     act(() => ouvintes.forEach((f) => f()));
     expect(result.current).toBe(true);
+    vi.unstubAllGlobals();
+  });
+
+  it("muitos componentes com a mesma query dividem um ouvinte", () => {
+    const ouvintes = new Set<() => void>();
+    vi.stubGlobal("matchMedia", (q: string) => ({ media: q, matches: false, addEventListener: (_: string, f: () => void) => ouvintes.add(f), removeEventListener: () => undefined }));
+    renderHook(() => [useMediaQuery("(prefers-reduced-motion: reduce)"), useMediaQuery("(prefers-reduced-motion: reduce)")]);
+    expect(ouvintes.size).toBe(1);
     vi.unstubAllGlobals();
   });
 });

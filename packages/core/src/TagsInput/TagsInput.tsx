@@ -1,9 +1,8 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
+import { filterCombobox, normalizeSearch, parseComboboxData, useComponentProps, useMessages, type ComboboxData } from "@countify-oficial/provider";
 import { useMemo, useState, type ComponentPropsWithRef, type KeyboardEvent } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { Combobox } from "../Combobox/Combobox";
-import { filterCombobox, normalizeSearch, parseComboboxData, type ComboboxData } from "../Combobox/data";
 import { ComboboxOptions } from "../Combobox/Options";
 import { Pill } from "../Pill/Pill";
 import { PillsInput, type PillsInputProps } from "../PillsInput/PillsInput";
@@ -68,14 +67,19 @@ export function TagsInput(props: TagsInputProps) {
                   setBusca(partes.at(-1) ?? "");
                 } else setBusca(t);
                 setAberto(true);
+                inputProps?.onChange?.(e);
               }}
               onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter" && busca.trim() !== "" && !e.defaultPrevented) {
                   e.preventDefault();
                   adicionar([busca]);
                 } else if (e.key === "Backspace" && busca === "" && tags.length > 0) setTags(tags.slice(0, -1));
+                inputProps?.onKeyDown?.(e);
               }}
-              onBlur={() => busca.trim() !== "" && adicionar([busca])}
+              onBlur={(e) => {
+                if (busca.trim() !== "") adicionar([busca]);
+                inputProps?.onBlur?.(e);
+              }}
             />
           </Combobox.Target>
         </PillsInput>

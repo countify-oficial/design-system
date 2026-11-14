@@ -24,6 +24,9 @@ export function monthGrid(ano: number, mes: number, primeiroDia = 0): (Date | nu
   return Array.from({ length: celulas.length / 7 }, (_, s) => celulas.slice(s * 7, s * 7 + 7));
 }
 
+/** O dia em que o calendário abre sem valor: hoje, ou o maxDate se ele já passou (um maxDate futuro não puxa o mês). */
+export const initialDay = (maxDate?: Date | null): Date => (maxDate && dayKey(maxDate) < dayKey(new Date()) ? maxDate : new Date());
+
 /** Fora do intervalo permitido. */
 export const outOfBounds = (d: Date, min?: Date | null, max?: Date | null): boolean => (!!min && dayKey(d) < dayKey(min)) || (!!max && dayKey(d) > dayKey(max));
 

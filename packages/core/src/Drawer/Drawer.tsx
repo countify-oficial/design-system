@@ -1,13 +1,13 @@
 import { useId, useMediaQuery } from "@countify-oficial/hooks";
 import { useComponentProps } from "@countify-oficial/provider";
 import { breakpoints, type Responsive } from "@countify-oficial/tokens";
-import { useEffect, type ComponentPropsWithRef, type CSSProperties, type MouseEvent } from "react";
+import type { ComponentPropsWithRef, CSSProperties, MouseEvent } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import type { ModalBaseProps } from "../Modal/Modal";
 import { Overlay } from "../Overlay/Overlay";
 import { Portal } from "../Portal/Portal";
-import { useScrollLock } from "../scrollLock";
+import { useCloseOnEscape, useScrollLock } from "../scrollLock";
 import { useStyles, type StylesApiProps } from "../styles";
 import { Transition, type TransitionName } from "../Transition/Transition";
 import classes from "./Drawer.module.css";
@@ -36,14 +36,9 @@ export function Drawer(props: DrawerProps) {
   const pos = typeof position === "object" ? position : { base: position };
   const agora: DrawerPosition = (largo ? pos.sm : undefined) ?? pos.base;
   useScrollLock(opened && lockScroll);
-  useEffect(() => {
-    if (!opened || !closeOnEscape) return;
-    const aoTeclar = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", aoTeclar);
-    return () => document.removeEventListener("keydown", aoTeclar);
-  }, [opened, closeOnEscape, onClose]);
+  useCloseOnEscape(opened, () => {
+    if (closeOnEscape) onClose();
+  });
   const largura = typeof size === "number" ? `${size}px` : size;
   return (
     <Portal>

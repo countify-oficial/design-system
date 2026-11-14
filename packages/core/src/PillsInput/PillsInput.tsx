@@ -1,5 +1,5 @@
 import { useId } from "@countify-oficial/hooks";
-import { useComponentProps } from "@countify-oficial/provider";
+import { hasContent, useComponentProps } from "@countify-oficial/provider";
 import type { Size } from "@countify-oficial/tokens";
 import { createContext, useContext, type ComponentPropsWithRef, type MouseEvent, type ReactNode } from "react";
 import { InputWrapper, type InputWrapperOwnProps } from "../Input/Input";
@@ -44,8 +44,7 @@ function PillsInputRoot(props: PillsInputProps) {
   } = useComponentProps("PillsInput", {}, props);
   const getStyles = useStyles("PillsInput", classes, { className, style, classNames, styles });
   const base = useId(id);
-  const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== true && v !== "";
-  const descrito = [tem(description) && `${base}-description`, tem(error) && `${base}-error`].filter(Boolean).join(" ") || undefined;
+  const descrito = [hasContent(description) && `${base}-description`, hasContent(error) && `${base}-error`].filter(Boolean).join(" ") || undefined;
   return (
     <InputWrapper id={base} label={label} description={description} error={error} withAsterisk={withAsterisk ?? required}>
       <Campo value={{ id: base, descrito, erro: !!error, desligado: !!disabled }}>

@@ -43,9 +43,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@countify-oficial/hooks": "workspace:^",
-    "@countify-oficial/provider": "workspace:^",
-    "@countify-oficial/tokens": "workspace:^"
+    "@countify-oficial/provider": "workspace:^"
   },
   "peerDependencies": {
     "@countify-oficial/core": "workspace:^",

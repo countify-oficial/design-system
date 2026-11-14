@@ -1,5 +1,5 @@
 import { useId } from "@countify-oficial/hooks";
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
+import { hasContent, useComponentProps, useMessages } from "@countify-oficial/provider";
 import type { Size } from "@countify-oficial/tokens";
 import type { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 import type { PolymorphicProps } from "../polymorphic";
@@ -24,8 +24,6 @@ export interface InputWrapperOwnProps extends StylesApiProps<"root" | "label" | 
 
 export type InputWrapperProps = InputWrapperOwnProps & Omit<ComponentPropsWithRef<"div">, keyof InputWrapperOwnProps | "className" | "style">;
 
-const temTexto = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== true && v !== "";
-
 /** Rótulo, descrição e erro de um campo. */
 export function InputWrapper(props: InputWrapperProps) {
   const messages = useMessages();
@@ -33,15 +31,15 @@ export function InputWrapper(props: InputWrapperProps) {
   const getStyles = useStyles("InputWrapper", { root: classes["wrapper"] ?? "", label: classes["label"] ?? "", required: classes["required"] ?? "", description: classes["description"] ?? "", error: classes["error"] ?? "" }, { className, style, classNames, styles });
   return (
     <div {...rest} {...getStyles("root")}>
-      {temTexto(label) && (
+      {hasContent(label) && (
         <label htmlFor={id} id={`${id}-label`} {...getStyles("label")}>
           {label}
           {withAsterisk && <span {...getStyles("required")}><span aria-hidden>*</span><span style={{ display: "none" }}>{messages.required}</span></span>}
         </label>
       )}
       {children}
-      {temTexto(description) && <p id={`${id}-description`} {...getStyles("description")}>{description}</p>}
-      {temTexto(error) && <p id={`${id}-error`} role="alert" {...getStyles("error")}>{error}</p>}
+      {hasContent(description) && <p id={`${id}-description`} {...getStyles("description")}>{description}</p>}
+      {hasContent(error) && <p id={`${id}-error`} role="alert" {...getStyles("error")}>{error}</p>}
     </div>
   );
 }
@@ -121,7 +119,9 @@ export function InputBase<C extends ElementType = "input">(props: InputBaseProps
     id, label, description, error, required, withAsterisk, rootProps, className, style, classNames, styles, ...rest
   } = useComponentProps("InputBase", {}, props);
   const campo = useId(id);
-  const descrito = [temTexto(description) && `${campo}-description`, temTexto(error) && `${campo}-error`].filter(Boolean).join(" ") || undefined;
+  // o aria-describedby de quem usa soma à descrição e ao erro, em vez de ser trocado por eles
+  const doUsuario = (rest as { "aria-describedby"?: string | undefined })["aria-describedby"];
+  const descrito = [doUsuario, hasContent(description) && `${campo}-description`, hasContent(error) && `${campo}-error`].filter(Boolean).join(" ") || undefined;
   const input = {
     ...rest,
     id: campo,

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Combobox } from "./Combobox";
-import type { ComboboxParsed } from "./data";
+import type { ComboboxParsed } from "@countify-oficial/provider";
 
 /** Desenha os grupos e as opções; nenhuma → a mensagem de vazio. */
 export function ComboboxOptions({ grupos, escolhidos, vazio, withCheckIcon = true }: { grupos: ComboboxParsed[]; escolhidos: string[]; vazio?: ReactNode; withCheckIcon?: boolean | undefined }) {

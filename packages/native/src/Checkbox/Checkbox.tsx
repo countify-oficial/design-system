@@ -1,5 +1,5 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
+import { hasContent, useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
 import { borderWidth, fontSize, iconSize, lineHeightPx, nativeFontFamily, space, state, type Size } from "@countify-oficial/tokens";
 import { createContext, useContext, type ReactNode } from "react";
 import { Text as RNText, View, type StyleProp, type ViewStyle } from "react-native";
@@ -30,16 +30,15 @@ const GrupoDeCaixas = createContext<{ valor: string[]; alternar: (v: string) => 
 /** Linha com rótulo e descrição (as caixas, os radios e os interruptores do celular). */
 export function LinhaDeEscolha({ controle, label, description, error, labelPosition, disabled }: { controle: ReactNode; label?: ReactNode; description?: ReactNode; error?: ReactNode; labelPosition: "left" | "right"; disabled?: boolean | undefined }) {
   const { colors: c } = useCountifyTheme();
-  const tem = (v: ReactNode) => v !== undefined && v !== null && v !== false && v !== "";
   const texto = (v: ReactNode, s: object) => (typeof v === "string" ? <RNText style={s}>{v}</RNText> : v);
   return (
     <View style={{ flexDirection: labelPosition === "left" ? "row-reverse" : "row", alignItems: "flex-start", gap: space[3], justifyContent: labelPosition === "left" ? "space-between" : "flex-start" }}>
       {controle}
-      {(tem(label) || tem(description) || tem(error)) && (
+      {(hasContent(label) || hasContent(description) || hasContent(error)) && (
         <View style={{ flex: 1 }}>
-          {tem(label) && texto(label, { color: disabled ? c.text2 : c.text, fontSize: fontSize.md, lineHeight: lineHeightPx(fontSize.md), fontFamily: nativeFontFamily[400] })}
-          {tem(description) && texto(description, { color: c.text2, fontSize: fontSize.sm, fontFamily: nativeFontFamily[400] })}
-          {tem(error) && texto(error, { color: c.down, fontSize: fontSize.sm, fontFamily: nativeFontFamily[400] })}
+          {hasContent(label) && texto(label, { color: disabled ? c.text2 : c.text, fontSize: fontSize.md, lineHeight: lineHeightPx(fontSize.md), fontFamily: nativeFontFamily[400] })}
+          {hasContent(description) && texto(description, { color: c.text2, fontSize: fontSize.sm, fontFamily: nativeFontFamily[400] })}
+          {hasContent(error) && texto(error, { color: c.down, fontSize: fontSize.sm, fontFamily: nativeFontFamily[400] })}
         </View>
       )}
     </View>
@@ -109,10 +108,6 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
     </GrupoDeCaixas>
   );
 }
-
-/** Estado do "Selecionar todos": all, none ou some. */
-export const selectAllState = (todos: string[], marcados: string[]): "all" | "none" | "some" =>
-  marcados.length === 0 ? "none" : todos.every((t) => marcados.includes(t)) ? "all" : "some";
 
 /** Caixa de marcar. Checkbox.Group agrupa. */
 export const Checkbox = Object.assign(CheckboxItem, { Group: CheckboxGroup });

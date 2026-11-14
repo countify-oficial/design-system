@@ -1,5 +1,5 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { applyMask, useComponentProps } from "@countify-oficial/provider";
+import { applyMask, phoneMask, useComponentProps } from "@countify-oficial/provider";
 import { InputBase, type InputBaseProps } from "../Input/Input";
 
 export type PhoneInputProps = Omit<InputBaseProps, "rows" | "value" | "defaultValue" | "onChange" | "onChangeText"> & {
@@ -8,8 +8,6 @@ export type PhoneInputProps = Omit<InputBaseProps, "rows" | "value" | "defaultVa
   onChange?: ((formatted: string, digits: string) => void) | undefined;
 };
 
-/** "(85) 99999-0000" para celular e "(85) 3333-0000" para fixo. */
-export const phoneMask = (digitos: string): string => (digitos.replace(/\D/g, "").length > 10 ? "(99) 99999-9999" : "(99) 9999-99999");
 const formatar = (t: string) => applyMask(t, phoneMask(t));
 
 /** Telefone do Brasil com DDD; a máscara muda entre fixo e celular. */

@@ -1,4 +1,4 @@
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
+import { isValidJson, useComponentProps, useMessages } from "@countify-oficial/provider";
 import { useState, type FocusEvent, type ReactNode } from "react";
 import { Textarea, type TextareaProps } from "../Textarea/Textarea";
 
@@ -7,16 +7,6 @@ export type JsonInputProps = TextareaProps & {
   formatOnBlur?: boolean | undefined;
   /** Erro mostrado se o JSON não for válido. Padrão: "JSON inválido" do provider. */
   validationError?: ReactNode;
-};
-
-const valido = (t: string) => {
-  if (t.trim() === "") return true;
-  try {
-    JSON.parse(t);
-    return true;
-  } catch {
-    return false;
-  }
 };
 
 /** Campo de JSON: confere ao sair do campo e pode reorganizar o texto. Letra de largura fixa. */
@@ -35,7 +25,7 @@ export function JsonInput(props: JsonInputProps) {
         onChange?.(e);
       }}
       onBlur={(e: FocusEvent<HTMLTextAreaElement>) => {
-        const ok = valido(atual);
+        const ok = isValidJson(atual);
         setInvalido(!ok);
         if (ok && formatOnBlur && atual.trim() !== "") setTexto(JSON.stringify(JSON.parse(atual), null, 2));
         onBlur?.(e);

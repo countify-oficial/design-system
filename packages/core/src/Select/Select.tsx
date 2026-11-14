@@ -1,9 +1,8 @@
 import { useControllableState } from "@countify-oficial/hooks";
-import { useComponentProps, useMessages } from "@countify-oficial/provider";
+import { allItems, filterCombobox, parseComboboxData, useComponentProps, useMessages, type ComboboxData, type ComboboxItem } from "@countify-oficial/provider";
 import { useMemo, useState, type ChangeEvent, type ReactNode } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { Combobox } from "../Combobox/Combobox";
-import { allItems, filterCombobox, parseComboboxData, type ComboboxData, type ComboboxItem } from "../Combobox/data";
 import { ComboboxOptions } from "../Combobox/Options";
 import { Icon } from "../Icon/Icon";
 import { InputBase, type InputBaseOwnProps } from "../Input/Input";
@@ -36,7 +35,7 @@ export function Select(props: SelectProps) {
   const messages = useMessages();
   const {
     data, value, defaultValue, onChange, searchable, clearable, allowDeselect = true, nothingFoundMessage = messages.nothingFound, limit, maxDropdownHeight, withCheckIcon,
-    disabled, onBlur, ...rest
+    disabled, onBlur, onClick, ...rest
   } = useComponentProps("Select", {}, props);
   const grupos = useMemo(() => parseComboboxData(data), [data]);
   const itens = useMemo(() => allItems(grupos), [grupos]);
@@ -71,7 +70,10 @@ export function Select(props: SelectProps) {
             setBusca(e.currentTarget.value);
             setAberto(true);
           }}
-          onClick={() => setAberto(!aberto)}
+          onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+            setAberto(!aberto);
+            onClick?.(e);
+          }}
           onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
             setBusca(null);
             onBlur?.(e);

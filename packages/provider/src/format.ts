@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface FormatNumberOptions {
   /** Idioma e região (BCP 47). Padrão: pt-BR. */
   locale?: string | undefined;
@@ -9,14 +11,36 @@ export interface FormatNumberOptions {
   format?: Intl.NumberFormatOptions | undefined;
 }
 
+// Um Intl.NumberFormat por idioma e opções: criar um custa dezenas de µs (3000 células: 80 ms contra 1 ms reaproveitando).
+// O mapa só cresce com as combinações de opções escritas no código, que são poucas.
+const formatadores = new Map<string, Intl.NumberFormat>();
+function formatador(locale: string, opcoes: Intl.NumberFormatOptions = {}): Intl.NumberFormat {
+  const chave = `${locale}|${JSON.stringify(opcoes)}`;
+  let f = formatadores.get(chave);
+  if (!f) formatadores.set(chave, (f = new Intl.NumberFormat(locale, opcoes)));
+  return f;
+}
+
 /** Número no formato do idioma: 1284.5 → "1.284,5" em pt-BR. */
 export function formatNumber(value: number, { locale = "pt-BR", decimalScale, fixedDecimalScale, format }: FormatNumberOptions = {}): string {
-  return new Intl.NumberFormat(locale, {
+  return formatador(locale, {
     ...(decimalScale === undefined ? {} : { maximumFractionDigits: decimalScale }),
     ...(fixedDecimalScale && decimalScale !== undefined ? { minimumFractionDigits: decimalScale } : {}),
     ...format,
   }).format(value);
 }
+
+/**
+ * Prende o número entre min e max e o arredonda a decimalScale casas como o Intl arredonda ao mostrar (10,555 → 10,56):
+ * o valor guardado é o que o campo mostra. A regra do NumberInput da web e do celular.
+ */
+export function limitNumber(n: number, { min, max, decimalScale }: { min?: number | undefined; max?: number | undefined; decimalScale?: number | undefined } = {}): number {
+  const arredondado = decimalScale === undefined ? n : Number(formatNumber(n, { locale: "en-US", decimalScale, format: { useGrouping: false } }));
+  return Math.min(max ?? Infinity, Math.max(min ?? -Infinity, arredondado));
+}
+
+/** Casas decimais de um número escrito (0.25 → 2): o passo do Slider arredonda nelas. */
+export const decimalPlaces = (n: number): number => (String(n).split(".")[1] ?? "").length;
 
 /** Corta o texto em pedaços, marcando os que batem com algum termo (sem diferenciar maiúsculas). */
 export function highlighter(text: string, termos: string | string[]): { chunk: string; highlighted: boolean }[] {
@@ -29,7 +53,7 @@ export function highlighter(text: string, termos: string | string[]): { chunk: s
 
 /** Os separadores de milhar e de decimal do idioma ("." e "," em pt-BR). */
 export function numberSeparators(locale = "pt-BR"): { group: string; decimal: string } {
-  const partes = new Intl.NumberFormat(locale).formatToParts(12345.6);
+  const partes = formatador(locale).formatToParts(12345.6);
   return {
     group: partes.find((p) => p.type === "group")?.value ?? "",
     decimal: partes.find((p) => p.type === "decimal")?.value ?? ".",
@@ -72,3 +96,27 @@ export function applyMask(texto: string, mask: string): { masked: string; raw: s
   }
   return { masked, raw };
 }
+
+/** "(85) 99999-0000" para celular (11 algarismos com DDD) e "(85) 3333-0000" para fixo (10). */
+export const phoneMask = (digitos: string): string => (digitos.replace(/\D/g, "").length > 10 ? "(99) 99999-9999" : "(99) 9999-99999");
+
+/** "Ana Souza" → "AS"; um nome só → as duas primeiras letras. */
+export function initials(name: string): string {
+  const partes = name.trim().split(/\s+/).filter(Boolean);
+  const [primeira = "", ultima] = [partes[0], partes.length > 1 ? partes.at(-1) : undefined];
+  return (ultima ? (primeira[0] ?? "") + (ultima[0] ?? "") : primeira.slice(0, 2)).toUpperCase();
+}
+
+/** JSON que o JsonInput aceita: vazio também vale. */
+export function isValidJson(texto: string): boolean {
+  if (texto.trim() === "") return true;
+  try {
+    JSON.parse(texto);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Rótulo, descrição ou erro com o que desenhar. true só marca (o erro sem mensagem deixa o campo vermelho), sem texto. */
+export const hasContent = (v: ReactNode): boolean => v !== undefined && v !== null && v !== false && v !== true && v !== "";

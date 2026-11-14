@@ -121,3 +121,20 @@ describe("dados das opções (Combobox)", () => {
     expect(filterCombobox(g, "", 2).flatMap((x) => x.items)).toHaveLength(2);
   });
 });
+
+describe("ajudantes da web e do celular", () => {
+  it("limitNumber prende entre min e max e arredonda como o campo mostra", async () => {
+    const { formatNumber, limitNumber } = await import("../src/index");
+    expect([limitNumber(10.555, { decimalScale: 2 }), limitNumber(-10.555, { decimalScale: 2 }), limitNumber(150, { max: 100 }), limitNumber(1.25)]).toEqual([10.56, -10.56, 100, 1.25]);
+    expect(formatNumber(10.555, { decimalScale: 2 })).toBe("10,56");
+  });
+
+  it("hasContent: true só marca; telefone, iniciais, JSON e selecionar todos", async () => {
+    const { hasContent, initials, isValidJson, phoneMask, selectAllState } = await import("../src/index");
+    expect([hasContent(true), hasContent(""), hasContent(null), hasContent(0), hasContent("Erro")]).toEqual([false, false, false, true, true]);
+    expect([phoneMask("8533330000"), phoneMask("85999990000")]).toEqual(["(99) 9999-99999", "(99) 99999-9999"]);
+    expect([initials("Ana Souza"), initials(" lume ")]).toEqual(["AS", "LU"]);
+    expect([isValidJson(""), isValidJson('{"a":1}'), isValidJson("{a}")]).toEqual([true, true, false]);
+    expect([selectAllState(["a", "b"], []), selectAllState(["a", "b"], ["a"]), selectAllState(["a", "b"], ["b", "a"])]).toEqual(["none", "some", "all"]);
+  });
+});

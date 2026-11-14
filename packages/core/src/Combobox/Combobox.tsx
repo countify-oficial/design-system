@@ -21,6 +21,7 @@ import {
   useRef,
   useState,
   type ComponentPropsWithRef,
+  type FocusEvent,
   type KeyboardEvent,
   type ReactElement,
   type ReactNode,
@@ -82,6 +83,7 @@ export function ComboboxTarget({
     Record<string, unknown> & {
       ref?: Ref<unknown>;
       onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
+      onBlur?: (e: FocusEvent<HTMLElement>) => void;
     }
   >;
 }) {
@@ -103,12 +105,18 @@ export function ComboboxTarget({
       ...children.props,
       ref,
       onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
-        children.props.onKeyDown?.(e);
+        // a opção marcada vem antes do campo: o Enter do TagsInput vê o defaultPrevented e não cria o texto digitado
         if (e.key === "Enter" && c.aberto && c.ativo !== null) {
           e.preventDefault();
           const v = c.elementos.current[c.ativo]?.dataset["value"];
           if (v !== undefined) c.enviar(v);
         }
+        children.props.onKeyDown?.(e);
+      },
+      // sair do campo (Tab) fecha a lista; clicar nela não conta (o foco fica no campo ou vai para a própria lista)
+      onBlur: (e: FocusEvent<HTMLElement>) => {
+        children.props.onBlur?.(e);
+        if (!c.inline && !c.base.refs.floating.current?.contains(e.relatedTarget)) c.setAberto(false);
       },
       "aria-autocomplete": "list",
       // solta (inline), o papel não vem do useRole

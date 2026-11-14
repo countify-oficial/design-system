@@ -31,6 +31,12 @@ describe("datas (React Native)", () => {
     expect(screen.getByText("01/11/2026")).toBeOnTheScreen();
   });
 
+  it("DatePicker: um maxDate no futuro não puxa o mês", async () => {
+    await render(<DatePicker label="Até" maxDate={new Date(2027, 11, 31)} />);
+    await fireEvent.press(screen.getByRole("button", { name: "Até" }));
+    expect(screen.getByText("Novembro de 2026")).toBeOnTheScreen();
+  });
+
   it("DatePicker de período: Aplicar", async () => {
     const aoMudar = jest.fn();
     await render(<DatePicker type="range" label="Período" onChange={aoMudar} />);

@@ -55,16 +55,10 @@
   "peerDependencies": {
     "@countify-oficial/core": "workspace:^",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@countify-oficial/native": "workspace:^",
-    "react-native": ">=0.79",
-    "react-native-svg": ">=15"
+    "react-dom": "^19.0.0"
   },
   "peerDependenciesMeta": {
     "@countify-oficial/core": {
-      "optional": true
-    },
-    "@countify-oficial/native": {
       "optional": true
     },
     "react-dom": {

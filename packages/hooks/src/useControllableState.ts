@@ -16,10 +16,12 @@ export function useControllableState<T>({ value, defaultValue, onChange }: Contr
   const [interno, setInterno] = useState(defaultValue);
   const controlado = value !== undefined;
   const atual = controlado ? value : interno;
-  // o último valor e o último onChange, para mudanças em sequência no mesmo evento (setValue(v => v + 1) duas vezes)
+  // o valor desenhado, e o último pedido, para mudanças em sequência no mesmo evento (setValue(v => v + 1) duas vezes)
+  const desenhado = useRef(atual);
   const ultimo = useRef(atual);
   const onChangeRef = useRef(onChange);
   useEffect(() => {
+    desenhado.current = atual;
     ultimo.current = atual;
     onChangeRef.current = onChange;
   });
@@ -30,6 +32,12 @@ export function useControllableState<T>({ value, defaultValue, onChange }: Contr
       if (Object.is(novo, ultimo.current)) return;
       ultimo.current = novo;
       if (!controlado) setInterno(novo);
+      // controlado: se o pai recusar (o value não muda e nada redesenha), o próximo evento parte de novo do valor desenhado;
+      // sem isso, pedir a mesma mudança outra vez não chamava o onChange
+      else
+        queueMicrotask(() => {
+          ultimo.current = desenhado.current;
+        });
       onChangeRef.current?.(novo);
     },
     [controlado],
