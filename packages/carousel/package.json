@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/carousel",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Carrossel da Countify: cartões que rolam para o lado com encaixe, setas e pontos, na web e no React Native",
   "license": "UNLICENSED",
   "repository": {
