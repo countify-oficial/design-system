@@ -17,8 +17,9 @@ export interface SkeletonMaskProps extends StylesApiProps, Omit<ComponentPropsWi
 
 /**
  * O "Carregando" no formato exato da tela: os filhos de verdade, no mesmo lugar e tamanho, viram os blocos do Skeleton
- * (texto, campos, botões, abas, etiquetas, ícones, imagens e células); cartões e fundos ficam. Enquanto mostra os
- * blocos, nada ali recebe clique, foco ou leitor de tela. Sem `visible`, não muda nada (o invólucro não tem caixa).
+ * (texto da largura dele, botões, abas, etiquetas, caixas de marcar, ícones, imagens e células, cada um com o próprio
+ * canto); o campo fica com a própria superfície e um bloco onde o valor estaria; cartões e fundos ficam. Enquanto mostra
+ * os blocos, nada ali recebe clique, foco ou leitor de tela. Sem `visible`, não muda nada (o invólucro não tem caixa).
  */
 export function SkeletonMask(props: SkeletonMaskProps) {
   const messages = useMessages();

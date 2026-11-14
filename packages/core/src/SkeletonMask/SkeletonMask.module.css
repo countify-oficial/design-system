@@ -27,7 +27,8 @@
 .root[data-visible]
   :where(
     p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
-    button, [role="button"], [role="tab"], input:is([type="checkbox"], [type="radio"]), svg, img, video, canvas, td, th
+    button, [role="button"], [role="tab"], [role="img"], [role="slider"], [role="progressbar"], div:has(> [role="slider"]),
+    input:is([type="checkbox"], [type="radio"]), svg, img, video, canvas, td, th
   ) {
   border-color: transparent !important;
   outline: none !important;
@@ -41,9 +42,61 @@
 :where(.root[data-visible])
   :where(
     p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
-    button, [role="button"], [role="tab"], input[type="checkbox"], svg, img, video, canvas, td, th
+    button, [role="button"], [role="tab"], [role="img"], [role="slider"], [role="progressbar"], div:has(> [role="slider"]),
+    input[type="checkbox"], svg, img, video, canvas, td, th
   ) {
   border-radius: var(--cf-space-1);
+}
+
+/* Texto em bloco (título, parágrafo, rótulo, descrição) vira uma barra da largura do texto, não da linha toda. Texto que
+   quebra continua com a largura toda, e as quebras são as mesmas. Sem especificidade: a largura que o componente dá vale
+   mais (o 1px do VisuallyHidden, a caixa do Avatar). */
+:where(.root[data-visible]) :where(p, h1, h2, h3, h4, h5, h6, label, legend, dt, dd, figcaption, span) {
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* a legenda do Fieldset tem largura toda no CSS dele (é um item da coluna, e estreitar não move nada) */
+.root[data-visible] :where(legend) {
+  width: fit-content;
+}
+
+/* texto centralizado ou no fim (a prop align do Text e do Title, ou o style): a barra fica onde o texto estava */
+.root[data-visible] :where(p, h1, h2, h3, h4, h5, h6, label, dt, dd, figcaption):where([style*="text-align: center"]) {
+  margin-inline: auto;
+}
+
+.root[data-visible] :where(p, h1, h2, h3, h4, h5, h6, label, dt, dd, figcaption):where([style*="text-align: end"], [style*="text-align: right"]) {
+  margin-inline-start: auto;
+}
+
+/* Um bloco só: a figura (role="img": o Avatar sem foto, uma prévia desenhada com caixas) e a barra de progresso. */
+.root[data-visible] :where([role="img"], [role="progressbar"]) * {
+  visibility: hidden !important;
+}
+
+/* Slider: o trilho e a bolinha; a parte preenchida e as marcas somem */
+.root[data-visible] :where(div:has(> [role="slider"])) > :not([role="slider"]) {
+  visibility: hidden !important;
+}
+
+/* Badge dot: o ponto vira um círculo e o texto, a barra ao lado dele (o ponto tem 8 e o espaço até o texto, 8) */
+.root[data-visible] :where([data-variant="dot"]) {
+  background: linear-gradient(var(--cf-color-chip), var(--cf-color-chip)) 100% 0 / calc(100% - 2 * var(--cf-space-2)) 100% no-repeat !important;
+}
+
+.root[data-visible] :where([data-variant="dot"])::before {
+  visibility: visible !important;
+  background: var(--cf-color-chip) !important;
+}
+
+/* O "?" do HelpTip: o alvo de 44 é transparente; o bloco é o círculo do ícone, na linha do título */
+.root[data-visible] :where(button[aria-haspopup="dialog"]:not([data-variant]):has(> svg:only-child)) {
+  background: none !important;
+}
+
+.root[data-visible] :where(button[aria-haspopup="dialog"]:not([data-variant])) > svg:only-child {
+  border-radius: 50% !important;
 }
 
 /* Caixa de marcar e opção sem o desenho do sistema: o bloco no lugar dela, redondo na opção. As que ficam invisíveis
@@ -99,9 +152,31 @@
   box-shadow: none !important;
 }
 
+/* Desativado: o mesmo tom dos outros blocos. O opacity fica em 1 e o pulso vai por filter (menos nas caixas de marcar,
+   que podem ser as invisíveis). */
+.root[data-visible] :where([data-disabled], [aria-disabled="true"], :disabled, :disabled + label, [data-disabled] *):where(:not(input:is([type="checkbox"], [type="radio"]))) {
+  opacity: 1 !important;
+  animation-name: pulsar-filtro;
+}
+
+/* Bloco dentro de bloco não pulsa sozinho: pulsa junto com o de fora, sem somar a transparência dos dois. */
+.root[data-visible]
+  :where(
+    p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
+    button, [role="button"], [role="tab"], [role="img"], [role="slider"], [role="progressbar"], div:has(> [role="slider"]), svg, td, th
+  )
+  :where(*) {
+  animation: none;
+}
+
 /* a célula pinta só o miolo: o recuo separa os blocos e a tabela não vira um bloco só */
 .root[data-visible] :where(td, th) {
   background-clip: content-box !important;
+}
+
+/* a célula com uma caixa de marcar não pinta: o bloco é a caixa, como na tabela de verdade */
+.root[data-visible] :where(td, th):has(input:is([type="checkbox"], [type="radio"])) {
+  background: none !important;
 }
 
 /* a foto sai da própria caixa (que guarda o tamanho) e fica só o bloco */
