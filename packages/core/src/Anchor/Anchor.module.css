@@ -14,3 +14,14 @@
   outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
   outline-offset: var(--cf-focus-ring-offset);
 }
+
+/* component="button": tira o visual de botão do navegador (fundo, borda, recuo) e fica igual ao link. Sem
+   especificidade, para o Text continuar mandando na letra e na cor. */
+:where(button.root) {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: inherit;
+}

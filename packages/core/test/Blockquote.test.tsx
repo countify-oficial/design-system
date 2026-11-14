@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Anchor, Blockquote, List, Typography } from "../src";
 import { semViolacoes } from "./setup";
 
@@ -30,6 +30,17 @@ describe("Blockquote, List, Anchor e Typography", () => {
     const a = screen.getByRole("link", { name: "análises" });
     expect(a.style.getPropertyValue("--text-color")).toBe("var(--cf-color-accent)");
     expect([a.dataset["underline"], a.hasAttribute("data-inherit")]).toEqual(["hover", true]);
+    await semViolacoes(container);
+  });
+
+  it("Anchor como botão: <button type=button> com a classe do link (o CSS tira o visual do navegador)", async () => {
+    const abrir = vi.fn();
+    const { container } = render(<p>Sem conta? <Anchor component="button" type="button" onClick={abrir}>Criar conta</Anchor></p>);
+    const b = screen.getByRole("button", { name: "Criar conta" });
+    expect([b.tagName, b.getAttribute("type"), b.dataset["underline"]]).toEqual(["BUTTON", "button", "hover"]);
+    expect(b.className).toMatch(/root/);
+    b.click();
+    expect(abrir).toHaveBeenCalledOnce();
     await semViolacoes(container);
   });
 

@@ -7,3 +7,7 @@ type Story = StoryObj<typeof meta>;
 
 export const NoTexto: Story = { name: "No texto", render: (a) => <Text>Para comparar períodos, <Anchor {...a} />.</Text> };
 export const Sublinhado: Story = { render: (a) => <Stack><Anchor {...a} underline="hover">hover</Anchor><Anchor {...a} underline="always">sempre</Anchor><Anchor {...a} underline="never">nunca</Anchor></Stack> };
+export const ComoBotao: Story = {
+  name: "Como botão (component=\"button\")",
+  render: () => <Text>Sem conta? <Anchor component="button" type="button" onClick={() => undefined}>Criar conta</Anchor> ou <Anchor href="#entrar">entrar</Anchor>.</Text>,
+};
