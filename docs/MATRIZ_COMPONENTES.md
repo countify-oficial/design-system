@@ -76,6 +76,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Kbd | ok | ok | ok | no celular serve a teclado físico (tablet) |
 | Skeleton | ok | ok | adaptado | no celular pulsa com `Animated`; para com "reduzir movimento" |
 | SkeletonLoader | ok | ok | ok | não existe no Mantine: as formas do "Carregando" da Countify prontas (texto, cartões de número, lista, cartão) |
+| SkeletonMask | ok | ok | N/A | não existe no Mantine: o conteúdo de verdade vira os blocos do "Carregando" no mesmo lugar e tamanho, sem clique, foco nem leitura (`inert`), com `aria-busy` e o status "Carregando". Funciona pelo CSS em cascata, que o React Native não tem: no celular, `Skeleton visible` em volta de cada bloco ou o SkeletonLoader |
 | Progress | ok | ok | ok | |
 | RingProgress | ok | ok | adaptado | no celular, `react-native-svg` |
 | SemiCircleProgress | ok | ok | adaptado | no celular, `react-native-svg` |

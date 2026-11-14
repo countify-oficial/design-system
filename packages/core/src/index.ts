@@ -100,6 +100,7 @@ export { SemiCircleProgress, type SemiCircleProgressProps } from "./SemiCirclePr
 export { SimpleGrid, type SimpleGridOwnProps, type SimpleGridProps } from "./SimpleGrid/SimpleGrid";
 export { Skeleton, type SkeletonProps } from "./Skeleton/Skeleton";
 export { SkeletonLoader, type SkeletonLoaderProps, type SkeletonLoaderVariant } from "./SkeletonLoader/SkeletonLoader";
+export { SkeletonMask, type SkeletonMaskProps } from "./SkeletonMask/SkeletonMask";
 export { AlphaSlider, HueSlider, RangeSlider, Slider, type AlphaSliderProps, type HueSliderProps, type RangeSliderProps, type SliderProps } from "./Slider/Slider";
 export type { SliderCommonProps, SliderMark, SliderPart } from "./Slider/SliderBase";
 export { Space, type SpaceProps } from "./Space/Space";

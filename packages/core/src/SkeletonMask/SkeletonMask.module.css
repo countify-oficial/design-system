@@ -1,0 +1,62 @@
+/* O invólucro não tem caixa: os filhos ficam no layout do pai (flex, grid) com ou sem a máscara, e nada pula. */
+.root {
+  display: contents;
+}
+
+/* Com a máscara, o conteúdo de verdade vira os blocos do Skeleton (chip, canto de 4, o mesmo pulso). !important: a
+   máscara vale por cima das variantes, dos estados (foco, erro, hover) e do style de cada componente. */
+.root[data-visible] :where(*) {
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+.root[data-visible] :where(*)::placeholder {
+  color: transparent !important;
+}
+
+/* enfeites desenhados em ::before e ::after (ponto da etiqueta, marca da caixa) e o desenho dos svg somem */
+.root[data-visible] :where(*)::before,
+.root[data-visible] :where(*)::after,
+.root[data-visible] :where(svg *) {
+  visibility: hidden !important;
+}
+
+/* As folhas viram blocos: texto, campos (a caixa inteira do Input), botões, abas, etiquetas, ícones, imagens e células.
+   div, section, cartões, Paper e a moldura da tabela não estão aqui: ficam com o próprio fundo, e os blocos ficam sobre
+   eles como o conteúdo ficaria. */
+.root[data-visible]
+  :where(
+    p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
+    button, [role="button"], [role="tab"], input:not([type="hidden"]), textarea, select,
+    div:has(> :is(input:not([type="hidden"]), textarea, select)),
+    svg, img, video, canvas, td, th
+  ) {
+  border-color: transparent !important;
+  border-radius: var(--cf-space-1) !important;
+  outline: none !important;
+  background: var(--cf-color-chip) !important;
+  box-shadow: none !important;
+  animation: pulsar var(--cf-duration-pulse) ease-in-out infinite;
+}
+
+/* a célula pinta só o miolo: o recuo separa os blocos e a tabela não vira um bloco só */
+.root[data-visible] :where(td, th) {
+  background-clip: content-box !important;
+}
+
+/* a foto sai da própria caixa (que guarda o tamanho) e fica só o bloco */
+.root[data-visible] :where(img, video, canvas) {
+  object-position: 200vw 0 !important;
+}
+
+/* animate={false}: sem pulso (nem as animações dos próprios componentes, que estão debaixo dos blocos) */
+.root[data-visible]:not([data-animate]) :where(*) {
+  animation: none !important;
+}
+
+/* o mesmo pulso do Skeleton; com "reduzir movimento", os tokens zeram a duração */
+@keyframes pulsar {
+  50% {
+    opacity: var(--cf-pulse-opacity);
+  }
+}

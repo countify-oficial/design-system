@@ -262,6 +262,6 @@ Valores que a identidade já usa, agora com nome nos tokens:
 41. **Linhas mais baixas na tabela** (`verticalSpacing` da Table, aprovado em 14/11/2026): o espaço acima e abaixo da
     célula pode ir do padrão `space-3` (12) para `space-2` (8), com o mesmo token da grade de 4; o campo dentro da célula
     continua com a altura de toque (44).
-42. **Cor dos blocos do "Carregando"** (aprovado em 14/11/2026): o Skeleton e o SkeletonLoader usam o papel `chip`
-    (#E8EDF3 no claro, #22334A no escuro) no lugar da `divider`. A divisória quase não aparecia sobre o cartão branco
-    e sumia sobre o fundo. Canto de 4 e pulso (`state.pulseOpacity`, `duration.pulse`) continuam.
+42. **Cor dos blocos do "Carregando"** (aprovado em 14/11/2026): o Skeleton, o SkeletonLoader e o SkeletonMask usam o
+    papel `chip` (#E8EDF3 no claro, #22334A no escuro) no lugar da `divider`. A divisória quase não aparecia sobre o
+    cartão branco e sumia sobre o fundo. Canto de 4 e pulso (`state.pulseOpacity`, `duration.pulse`) continuam.
