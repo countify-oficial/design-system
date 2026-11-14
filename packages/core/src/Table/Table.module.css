@@ -10,7 +10,10 @@
 
 .root {
   width: 100%;
-  border-collapse: collapse;
+  /* bordas separadas: com collapse, o Chromium não leva a borda junto com o cabeçalho fixo, e o corpo aparece por ela
+     ao rolar. As bordas são só a de baixo do cabeçalho e a de cima das linhas: nenhuma se encosta em outra. */
+  border-collapse: separate;
+  border-spacing: 0;
   color: var(--cf-color-text);
   font-family: var(--cf-font-sans);
   font-size: var(--cf-font-size-sm);
