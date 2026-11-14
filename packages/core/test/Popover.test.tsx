@@ -65,6 +65,33 @@ describe("Popover, Tooltip, HoverCard, Menu e ColorInput", () => {
     await waitFor(() => expect(screen.queryByRole("menu")).toBeNull());
   });
 
+  it("Menu comprido: a lista não passa da tela e a seta rola o item ativo para a vista", async () => {
+    const user = userEvent.setup();
+    const rolar = vi.spyOn(Element.prototype, "scrollIntoView");
+    // o jsdom não tem altura de tela: uma de 600
+    const altura = vi.spyOn(document.documentElement, "clientHeight", "get").mockReturnValue(600);
+    const itens = Array.from({ length: 30 }, (_, i) => `Loja ${i + 1}`);
+    render(
+      <Menu>
+        <Menu.Target><Button>Lojas</Button></Menu.Target>
+        <Menu.Dropdown>{itens.map((t) => <Menu.Item key={t}>{t}</Menu.Item>)}</Menu.Dropdown>
+      </Menu>,
+    );
+    await user.click(screen.getByRole("button", { name: "Lojas" }));
+    const menu = screen.getByRole("menu");
+    // a altura que cabe na tela vira o max-height do CSS (Menu.module.css)
+    await waitFor(() => {
+      const cabe = parseInt(menu.style.getPropertyValue("--popover-available-height"), 10);
+      expect(cabe > 0 && cabe < 600).toBe(true);
+    });
+    // seta para cima no começo vai ao último item (loop), lá embaixo da lista
+    await user.keyboard("{ArrowUp}");
+    await waitFor(() => expect(document.activeElement?.textContent).toBe("Loja 30"));
+    await waitFor(() => expect(rolar.mock.contexts).toContain(document.activeElement));
+    rolar.mockRestore();
+    altura.mockRestore();
+  });
+
   it("ColorInput: escrever uma cor válida muda o valor; o seletor abre no clique", async () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();

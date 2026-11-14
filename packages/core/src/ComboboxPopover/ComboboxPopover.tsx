@@ -50,7 +50,8 @@ export function ComboboxPopover(props: ComboboxPopoverProps) {
           <Combobox.Target>
             <Input aria-label={searchPlaceholder} placeholder={searchPlaceholder} leftSection={<Icon name="search" />} variant="outline" value={busca} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBusca(e.currentTarget.value)} />
           </Combobox.Target>
-          <Combobox.Dropdown style={{ marginTop: "var(--cf-space-2)" }}>
+          {/* solta, a lista não tem o limite das que flutuam; aqui ganha o mesmo (6 linhas) e rola por dentro */}
+          <Combobox.Dropdown style={{ marginTop: "var(--cf-space-2)", maxHeight: "var(--combobox-max-height)" }}>
             <ComboboxOptions grupos={filterCombobox(grupos, busca)} escolhidos={valor === null ? [] : [valor]} vazio={nothingFoundMessage} />
           </Combobox.Dropdown>
         </Combobox>

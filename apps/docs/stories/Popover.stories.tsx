@@ -37,6 +37,18 @@ export const MenuDeAcoes: Story = {
   ),
 };
 
+export const MenuComprido: Story = {
+  name: "Menu com 30 itens (rola por dentro)",
+  render: () => (
+    <Menu>
+      <Menu.Target><Button variant="outline" rightSection={<Icon name="chevron-down" size="sm" />}>Loja</Button></Menu.Target>
+      <Menu.Dropdown>
+        {Array.from({ length: 30 }, (_, i) => <Menu.Item key={i}>{`Loja ${String(i + 1).padStart(2, "0")}`}</Menu.Item>)}
+      </Menu.Dropdown>
+    </Menu>
+  ),
+};
+
 export const Dica: Story = { name: "Tooltip (hover e foco)", render: () => <Tooltip label="Baixa a tabela em CSV"><Button variant="outline">Exportar</Button></Tooltip> };
 
 export const CartaoNoHover: Story = {

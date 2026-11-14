@@ -37,8 +37,11 @@ export function usePopoverBase({ opened, defaultOpened, onChange, position = "bo
       flip(),
       shift({ padding: resolveSpacing("sm") }),
       size({
-        apply({ rects, elements }) {
+        padding: resolveSpacing("sm"),
+        apply({ rects, elements, availableHeight }) {
           if (width === "target") elements.floating.style.width = `${rects.reference.width}px`;
+          // a altura que cabe na tela daquele lado: o Menu usa como max-height e rola por dentro
+          elements.floating.style.setProperty("--popover-available-height", `${Math.floor(availableHeight)}px`);
         },
       }),
     ],

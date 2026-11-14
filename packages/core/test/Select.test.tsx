@@ -73,6 +73,12 @@ describe("Autocomplete e ComboboxPopover", () => {
     render(<ComboboxPopover data={cidades} onChange={aoMudar}><Button variant="outline">Cidade</Button></ComboboxPopover>);
     await user.click(screen.getByRole("button", { name: "Cidade" }));
     const busca = await screen.findByRole("combobox", { name: "Buscar" });
+    // a lista solta tem o mesmo limite das que flutuam (6 linhas) e rola por dentro
+    const lista = screen.getByRole("listbox");
+    expect([lista.style.maxHeight, lista.style.getPropertyValue("--combobox-max-height")]).toEqual([
+      "var(--combobox-max-height)",
+      "calc(6 * var(--cf-touch-target) + 2 * var(--cf-space-1))",
+    ]);
     await user.type(busca, "sob");
     await user.keyboard("{ArrowDown}{Enter}");
     expect(aoMudar).toHaveBeenLastCalledWith("Sobral", { value: "Sobral", label: "Sobral" });
