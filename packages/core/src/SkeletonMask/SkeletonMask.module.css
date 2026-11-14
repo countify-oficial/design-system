@@ -3,8 +3,8 @@
   display: contents;
 }
 
-/* Com a máscara, o conteúdo de verdade vira os blocos do Skeleton (chip, canto de 4, o mesmo pulso). !important: a
-   máscara vale por cima das variantes, dos estados (foco, erro, hover) e do style de cada componente. */
+/* Com a máscara, o conteúdo de verdade vira os blocos do Skeleton (a cor do chip, o mesmo pulso). !important: a
+   máscara vale por cima das variantes, dos estados (foco, erro, hover, escolhido) e do style de cada componente. */
 .root[data-visible] :where(*) {
   color: transparent !important;
   text-shadow: none !important;
@@ -21,22 +21,82 @@
   visibility: hidden !important;
 }
 
-/* As folhas viram blocos: texto, campos (a caixa inteira do Input), botões, abas, etiquetas, ícones, imagens e células.
-   div, section, cartões, Paper e a moldura da tabela não estão aqui: ficam com o próprio fundo, e os blocos ficam sobre
-   eles como o conteúdo ficaria. */
+/* As folhas viram blocos: texto, botões, abas, etiquetas, caixas de marcar, ícones, imagens e células. div, section,
+   cartões, Paper e a moldura da tabela não estão aqui: ficam com o próprio fundo, e os blocos ficam sobre eles como o
+   conteúdo ficaria. Os campos de digitar estão mais abaixo. */
 .root[data-visible]
   :where(
     p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
-    button, [role="button"], [role="tab"], input:not([type="hidden"]), textarea, select,
-    div:has(> :is(input:not([type="hidden"]), textarea, select)),
-    svg, img, video, canvas, td, th
+    button, [role="button"], [role="tab"], input:is([type="checkbox"], [type="radio"]), svg, img, video, canvas, td, th
   ) {
   border-color: transparent !important;
-  border-radius: var(--cf-space-1) !important;
   outline: none !important;
   background: var(--cf-color-chip) !important;
   box-shadow: none !important;
   animation: pulsar var(--cf-duration-pulse) ease-in-out infinite;
+}
+
+/* O canto é o do próprio componente (botão, chip, segmento, bolinha); o que não tem canto (texto, ícone, célula) fica
+   com o 4 do Skeleton. Sem especificidade: qualquer canto do componente vale mais. */
+:where(.root[data-visible])
+  :where(
+    p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
+    button, [role="button"], [role="tab"], input[type="checkbox"], svg, img, video, canvas, td, th
+  ) {
+  border-radius: var(--cf-space-1);
+}
+
+/* Caixa de marcar e opção sem o desenho do sistema: o bloco no lugar dela, redondo na opção. As que ficam invisíveis
+   sobre um controle (segmento, chip, interruptor) pulsam por filter, que respeita o opacity 0 delas; o pulso por
+   opacity as faria aparecer. */
+.root[data-visible] :where(input:is([type="checkbox"], [type="radio"])) {
+  appearance: none !important;
+  animation-name: pulsar-filtro;
+}
+
+.root[data-visible] :where(input[type="radio"]) {
+  border-radius: 50% !important;
+}
+
+/* Sem o desenho do sistema, a caixa sem tamanho no CSS ficaria com 0 e subiria a linha: guarda os 13 do Chrome e põe a
+   margem de baixo dele (3) abaixo da linha de base, como a caixa do sistema. O CSS do componente vale mais. */
+:where(.root[data-visible]) :where(input:is([type="checkbox"], [type="radio"])) {
+  min-width: 13px;
+  min-height: 13px;
+  vertical-align: -3px;
+}
+
+/* O campo fica com a própria superfície (a do campo, sem borda nem anel) e o bloco é uma linha de texto onde o valor
+   estaria; ícones, setas e botões dentro do campo somem. */
+.root[data-visible] :where(div:has(> :is(input:not([type="hidden"], [type="checkbox"], [type="radio"]), textarea, select))) {
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.root[data-visible] :where(div:has(> :is(input:not([type="hidden"], [type="checkbox"], [type="radio"]), textarea, select)) > [data-position]) {
+  visibility: hidden !important;
+}
+
+.root[data-visible] :where(input:not([type="hidden"], [type="checkbox"], [type="radio"]), textarea, select) {
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: var(--cf-color-chip) !important;
+  /* o bloco de uma linha com o canto de 4, no começo do texto (no alto, na área de texto) */
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' rx='4'/%3E%3C/svg%3E")
+    content-box 0 50% / min(60%, 10em) 1lh no-repeat !important;
+  animation: pulsar var(--cf-duration-pulse) ease-in-out infinite;
+}
+
+.root[data-visible] :where(textarea) {
+  mask-position: 0 0 !important;
+}
+
+/* A moldura do SegmentedControl some: ficam só os segmentos, cada um um bloco. */
+.root[data-visible] :where([role="radiogroup"]:has(> div > input[type="radio"] + label)) {
+  background: none !important;
+  box-shadow: none !important;
 }
 
 /* a célula pinta só o miolo: o recuo separa os blocos e a tabela não vira um bloco só */
@@ -58,5 +118,11 @@
 @keyframes pulsar {
   50% {
     opacity: var(--cf-pulse-opacity);
+  }
+}
+
+@keyframes pulsar-filtro {
+  50% {
+    filter: opacity(var(--cf-pulse-opacity));
   }
 }
