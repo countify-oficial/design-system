@@ -23,6 +23,8 @@ function schemeVars(scheme: ColorScheme): string[] {
     // séries dos gráficos: degraus da escala azul por modo (--cf-chart-series-1…4)
     ...chart.seriesShades[scheme].map((t, i) => decl(`chart-series-${String(i + 1)}`, palette.blue[t])),
     `color-scheme: ${scheme};`,
+    // a barra de rolagem do ScrollArea em toda a página; repetida em cada modo para seguir o modo forçado num trecho
+    "scrollbar-color: var(--cf-color-border-strong) transparent;",
   ];
 }
 
@@ -76,6 +78,7 @@ export function createCssVariables(): string {
     ...each("border", borderWidth, "px"),
     decl("loader-stroke", `${loaderStroke}px`),
     decl("icon-stroke", iconGrid.stroke),
+    "scrollbar-width: thin;",
   ];
   const bloco = (sel: string, linhas: string[]) => `${sel} {\n  ${linhas.join("\n  ")}\n}`;
   return [

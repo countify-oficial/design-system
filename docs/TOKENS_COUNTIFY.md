@@ -204,8 +204,10 @@ Valores que a identidade já usa, agora com nome nos tokens:
 28. **Velocidade do Marquee** (`marqueeSpeed`, aprovado em 13/11/2026): 50 px por segundo; para com o mouse em cima,
     com o foco dentro e para quem pediu menos movimento.
 29. **Composto de valores da identidade** (sem valor novo): a barra de rolagem do ScrollArea é fina, na cor da borda
-    forte; a alça do Splitter tem 8 de área (`space[2]`) com a linha da divisória, que fica na cor principal no foco e
-    ao arrastar; a Toolbar separa os botões por 8, como as ações do cabeçalho da 0.1.0.
+    forte (pedido do dono em 14/11/2026: o `tokens.css` põe essa barra na página toda, com `scrollbar-width: thin` e
+    `scrollbar-color: var(--cf-color-border-strong) transparent` no `:root` e em cada modo; as duas herdam); a alça
+    do Splitter tem 8 de área (`space[2]`) com a linha da divisória, que fica na cor principal no foco e ao arrastar; a
+    Toolbar separa os botões por 8, como as ações do cabeçalho da 0.1.0.
 
 ## Passo 12
 

@@ -60,6 +60,13 @@ describe("variáveis CSS", () => {
     }
   });
 
+  it("a barra de rolagem fina do ScrollArea vale na página toda, nos dois modos", () => {
+    expect(bloco(":root")).toContain("scrollbar-width: thin;");
+    for (const sel of [":root", '[data-cf-color-scheme="light"]', '[data-cf-color-scheme="dark"]', ':root:not([data-cf-color-scheme="light"])']) {
+      expect(bloco(sel)).toContain("scrollbar-color: var(--cf-color-border-strong) transparent;");
+    }
+  });
+
   it("não sai valor vazio", () => {
     expect(css).not.toMatch(/undefined|NaN|\[object/);
   });
