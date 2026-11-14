@@ -1,7 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { Anchor, Breadcrumbs, Burger, NavLink, Pagination, Stepper, TableOfContents, Tabs } from "../src";
+import {
+  Anchor,
+  Breadcrumbs,
+  Burger,
+  NavLink,
+  Pagination,
+  Stepper,
+  TableOfContents,
+  Tabs,
+} from "../src";
 import { semViolacoes } from "./setup";
 
 function Abas({ onChange }: { onChange?: (v: string | null) => void }) {
@@ -10,7 +19,9 @@ function Abas({ onChange }: { onChange?: (v: string | null) => void }) {
       <Tabs.List aria-label="Período">
         <Tabs.Tab value="dia">Dia</Tabs.Tab>
         <Tabs.Tab value="semana">Semana</Tabs.Tab>
-        <Tabs.Tab value="mes" disabled>Mês</Tabs.Tab>
+        <Tabs.Tab value="mes" disabled>
+          Mês
+        </Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="dia">Hoje</Tabs.Panel>
       <Tabs.Panel value="semana">Esta semana</Tabs.Panel>
@@ -19,18 +30,46 @@ function Abas({ onChange }: { onChange?: (v: string | null) => void }) {
 }
 
 describe("Tabs", () => {
+  it("className e style soltos chegam na lista, na aba e no painel (partes sem raiz)", () => {
+    render(
+      <Tabs defaultValue="dia">
+        <Tabs.List className="lista" style={{ marginTop: 4 }}>
+          <Tabs.Tab value="dia" className="aba">
+            Dia
+          </Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="dia" className="painel" style={{ padding: 8 }}>
+          Hoje
+        </Tabs.Panel>
+      </Tabs>,
+    );
+    expect(screen.getByRole("tablist").className).toContain("lista");
+    expect(screen.getByRole("tablist").style.marginTop).toBe("4px");
+    expect(screen.getByRole("tab").className).toContain("aba");
+    expect(screen.getByRole("tabpanel").className).toContain("painel");
+    expect(screen.getByRole("tabpanel").style.padding).toBe("8px");
+  });
+
   it("clique e setas abrem a aba; pula a desativada; painel ligado à aba", async () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
     const { container } = render(<Abas onChange={aoMudar} />);
-    expect(screen.getByRole("tabpanel", { name: "Dia" }).textContent).toBe("Hoje");
+    expect(screen.getByRole("tabpanel", { name: "Dia" }).textContent).toBe(
+      "Hoje",
+    );
     await user.tab();
-    expect(document.activeElement).toBe(screen.getByRole("tab", { name: "Dia" }));
+    expect(document.activeElement).toBe(
+      screen.getByRole("tab", { name: "Dia" }),
+    );
     await user.keyboard("{ArrowRight}");
     expect(aoMudar).toHaveBeenLastCalledWith("semana");
-    expect(screen.getByRole("tab", { name: "Semana" }).getAttribute("aria-selected")).toBe("true");
+    expect(
+      screen.getByRole("tab", { name: "Semana" }).getAttribute("aria-selected"),
+    ).toBe("true");
     await user.keyboard("{ArrowRight}");
-    expect(document.activeElement).toBe(screen.getByRole("tab", { name: "Dia" }));
+    expect(document.activeElement).toBe(
+      screen.getByRole("tab", { name: "Dia" }),
+    );
     await user.click(screen.getByRole("tab", { name: "Semana" }));
     expect(screen.getByRole("tabpanel").textContent).toBe("Esta semana");
     expect(screen.getByRole("tab", { name: "Dia" }).tabIndex).toBe(-1);
@@ -41,9 +80,17 @@ describe("Tabs", () => {
 describe("Burger, Breadcrumbs e NavLink", () => {
   it("Burger anuncia aberto e troca o nome", () => {
     const { rerender } = render(<Burger opened={false} />);
-    expect(screen.getByRole("button", { name: "Abrir menu" }).getAttribute("aria-expanded")).toBe("false");
+    expect(
+      screen
+        .getByRole("button", { name: "Abrir menu" })
+        .getAttribute("aria-expanded"),
+    ).toBe("false");
     rerender(<Burger opened />);
-    expect(screen.getByRole("button", { name: "Fechar menu" }).getAttribute("aria-expanded")).toBe("true");
+    expect(
+      screen
+        .getByRole("button", { name: "Fechar menu" })
+        .getAttribute("aria-expanded"),
+    ).toBe("true");
   });
 
   it("Breadcrumbs: o último é a tela atual", async () => {
@@ -56,7 +103,9 @@ describe("Burger, Breadcrumbs e NavLink", () => {
     );
     const nav = screen.getByRole("navigation", { name: "Caminho" });
     expect(nav.querySelectorAll("li[aria-hidden]")).toHaveLength(2);
-    expect(nav.querySelector('[aria-current="page"]')?.textContent).toBe("Dispositivos");
+    expect(nav.querySelector('[aria-current="page"]')?.textContent).toBe(
+      "Dispositivos",
+    );
     await semViolacoes(container);
   });
 
@@ -64,13 +113,20 @@ describe("Burger, Breadcrumbs e NavLink", () => {
     const user = userEvent.setup();
     const { container } = render(
       <nav aria-label="Ajustes">
-        <NavLink href="/conta" label="Conta" description="Nome, e-mail e senha" active />
+        <NavLink
+          href="/conta"
+          label="Conta"
+          description="Nome, e-mail e senha"
+          active
+        />
         <NavLink label="Lojas" defaultOpened={false}>
           <NavLink href="/lojas/jardins" label="Lume Jardins" />
         </NavLink>
       </nav>,
     );
-    expect(screen.getByRole("link", { name: /Conta/ }).getAttribute("aria-current")).toBe("page");
+    expect(
+      screen.getByRole("link", { name: /Conta/ }).getAttribute("aria-current"),
+    ).toBe("page");
     const grupo = screen.getByRole("button", { name: "Lojas" });
     expect(grupo.getAttribute("aria-expanded")).toBe("false");
     await user.click(grupo);
@@ -84,19 +140,34 @@ describe("Pagination", () => {
   it("números com saltos; setas param nas pontas", async () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();
-    const { container } = render(<Pagination total={10} defaultValue={5} onChange={aoMudar} />);
+    const { container } = render(
+      <Pagination total={10} defaultValue={5} onChange={aoMudar} />,
+    );
     const nav = screen.getByRole("navigation", { name: "Páginas" });
     expect(nav.textContent).toBe("1…456…10");
-    expect(screen.getByRole("button", { name: "Página 5" }).getAttribute("aria-current")).toBe("page");
+    expect(
+      screen
+        .getByRole("button", { name: "Página 5" })
+        .getAttribute("aria-current"),
+    ).toBe("page");
     await user.click(screen.getByRole("button", { name: "Próxima página" }));
     expect(aoMudar).toHaveBeenLastCalledWith(6);
     await user.click(screen.getByRole("button", { name: "Página 10" }));
-    expect(screen.getByRole("button", { name: "Próxima página" })).toHaveProperty("disabled", true);
+    expect(
+      screen.getByRole("button", { name: "Próxima página" }),
+    ).toHaveProperty("disabled", true);
     await semViolacoes(container);
   });
 
   it("compacta: só as setas e o rótulo", () => {
-    render(<Pagination total={17} value={2} withPages={false} label="21–40 de 340" />);
+    render(
+      <Pagination
+        total={17}
+        value={2}
+        withPages={false}
+        label="21–40 de 340"
+      />,
+    );
     expect(screen.getByRole("navigation").textContent).toBe("21–40 de 340");
   });
 });
@@ -124,8 +195,15 @@ describe("Stepper", () => {
     const user = userEvent.setup();
     const ir = vi.fn();
     const { container } = render(passos(1, ir));
-    expect(screen.getByRole("button", { name: "Câmeras" }).getAttribute("aria-current")).toBe("step");
-    expect(screen.getByRole("button", { name: "Pronto" })).toHaveProperty("disabled", true);
+    expect(
+      screen
+        .getByRole("button", { name: "Câmeras" })
+        .getAttribute("aria-current"),
+    ).toBe("step");
+    expect(screen.getByRole("button", { name: "Pronto" })).toHaveProperty(
+      "disabled",
+      true,
+    );
     await user.click(screen.getByRole("button", { name: "Lojas" }));
     expect(ir).toHaveBeenCalledWith(0);
     await semViolacoes(container);
@@ -149,7 +227,9 @@ describe("TableOfContents", () => {
     expect(nav.textContent).toBe("01Cores02Letra");
     await user.click(screen.getByRole("link", { name: "Letra" }));
     expect(aoMudar).toHaveBeenLastCalledWith("letra");
-    expect(screen.getByRole("link", { name: "Letra" }).getAttribute("aria-current")).toBe("location");
+    expect(
+      screen.getByRole("link", { name: "Letra" }).getAttribute("aria-current"),
+    ).toBe("location");
     await semViolacoes(container);
   });
 });

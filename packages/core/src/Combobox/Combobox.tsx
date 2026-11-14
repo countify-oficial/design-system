@@ -3,10 +3,27 @@
 import { useControllableState, useId } from "@countify-oficial/hooks";
 import { useComponentProps } from "@countify-oficial/provider";
 import {
-  FloatingList, FloatingPortal, useDismiss, useInteractions, useListItem, useListNavigation, useMergeRefs, useRole, type Placement,
+  FloatingList,
+  FloatingPortal,
+  useDismiss,
+  useInteractions,
+  useListItem,
+  useListNavigation,
+  useMergeRefs,
+  useRole,
+  type Placement,
 } from "@floating-ui/react";
 import {
-  cloneElement, createContext, useContext, useRef, useState, type ComponentPropsWithRef, type KeyboardEvent, type ReactElement, type ReactNode, type Ref,
+  cloneElement,
+  createContext,
+  useContext,
+  useRef,
+  useState,
+  type ComponentPropsWithRef,
+  type KeyboardEvent,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
 } from "react";
 import { Icon } from "../Icon/Icon";
 import { usePopoverBase, type PopoverBase } from "../Popover/usePopover";
@@ -38,7 +55,9 @@ interface Contexto {
   base: PopoverBase;
   getReferenceProps: (p?: Record<string, unknown>) => Record<string, unknown>;
   getFloatingProps: (p?: Record<string, unknown>) => Record<string, unknown>;
-  getItemProps: (p?: Record<string, unknown> & { active?: boolean; selected?: boolean }) => Record<string, unknown>;
+  getItemProps: (
+    p?: Record<string, unknown> & { active?: boolean; selected?: boolean },
+  ) => Record<string, unknown>;
   elementos: React.RefObject<(HTMLElement | null)[]>;
   enviar: (v: string) => void;
   inline: boolean;
@@ -54,7 +73,16 @@ export function useComboboxContext(): Contexto {
 }
 
 /** O alvo: um campo (role combobox) ou um botão. Setas abrem e andam; Enter escolhe; Esc fecha. */
-export function ComboboxTarget({ children }: { children: ReactElement<Record<string, unknown> & { ref?: Ref<unknown>; onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void }> }) {
+export function ComboboxTarget({
+  children,
+}: {
+  children: ReactElement<
+    Record<string, unknown> & {
+      ref?: Ref<unknown>;
+      onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
+    }
+  >;
+}) {
   const c = useComboboxContext();
   const ref = useMergeRefs([c.base.refs.setReference, children.props.ref]);
   return cloneElement(
@@ -72,39 +100,83 @@ export function ComboboxTarget({ children }: { children: ReactElement<Record<str
       },
       "aria-autocomplete": "list",
       // solta (inline), o papel não vem do useRole
-      ...(c.inline ? { role: "combobox", "aria-controls": c.id, "aria-expanded": true } : {}),
+      ...(c.inline
+        ? { role: "combobox", "aria-controls": c.id, "aria-expanded": true }
+        : {}),
     }),
   );
 }
 
 /** Onde a lista se alinha, quando não é o próprio alvo (a caixa inteira do MultiSelect, por exemplo). */
-export function ComboboxAnchor({ children }: { children: ReactElement<Record<string, unknown> & { ref?: Ref<unknown> }> }) {
+export function ComboboxAnchor({
+  children,
+}: {
+  children: ReactElement<Record<string, unknown> & { ref?: Ref<unknown> }>;
+}) {
   const c = useComboboxContext();
-  const ref = useMergeRefs([c.base.refs.setPositionReference, children.props.ref]);
+  const ref = useMergeRefs([
+    c.base.refs.setPositionReference,
+    children.props.ref,
+  ]);
   return cloneElement(children, { ref });
 }
 
-export type ComboboxDropdownProps = StylesApiProps<"dropdown"> & Omit<ComponentPropsWithRef<"div">, "className" | "style">;
+export type ComboboxDropdownProps = StylesApiProps<"dropdown"> &
+  Omit<ComponentPropsWithRef<"div">, "className" | "style">;
 
 /** A lista que abre (ou fica solta, com inline). */
 export function ComboboxDropdown(props: ComboboxDropdownProps) {
   const c = useComboboxContext();
-  const { children, className, style, classNames, styles, ...rest } = useComponentProps("ComboboxDropdown", {}, props);
-  const getStyles = useStyles("Combobox", { dropdown: classes["dropdown"] ?? "" }, { className, style, classNames, styles });
-  const { className: classe, style: estilo } = getStyles("dropdown", { "--combobox-max-height": c.altura });
-  const lista = <FloatingList elementsRef={c.elementos}>{children}</FloatingList>;
-  if (c.inline) return <div role="listbox" id={c.id} data-inline {...rest} className={classe} style={estilo}>{lista}</div>;
+  const { children, className, style, classNames, styles, ...rest } =
+    useComponentProps("ComboboxDropdown", {}, props);
+  const getStyles = useStyles(
+    "Combobox",
+    { dropdown: classes["dropdown"] ?? "" },
+    { className, style, classNames, styles },
+    "dropdown",
+  );
+  const { className: classe, style: estilo } = getStyles("dropdown", {
+    "--combobox-max-height": c.altura,
+  });
+  const lista = (
+    <FloatingList elementsRef={c.elementos}>{children}</FloatingList>
+  );
+  if (c.inline)
+    return (
+      <div
+        role="listbox"
+        id={c.id}
+        data-inline
+        {...rest}
+        className={classe}
+        style={estilo}
+      >
+        {lista}
+      </div>
+    );
   if (!c.base.animacao.isMounted) return null;
   return (
     <FloatingPortal>
-      <div ref={c.base.refs.setFloating} {...c.getFloatingProps({ ...rest, id: c.id })} className={classe} style={{ ...c.base.floatingStyles, ...estilo, ...c.base.animacao.styles }}>
+      <div
+        ref={c.base.refs.setFloating}
+        {...c.getFloatingProps({ ...rest, id: c.id })}
+        className={classe}
+        style={{
+          ...c.base.floatingStyles,
+          ...estilo,
+          ...c.base.animacao.styles,
+        }}
+      >
         {lista}
       </div>
     </FloatingPortal>
   );
 }
 
-export interface ComboboxOptionProps extends StylesApiProps<"option" | "optionLabel" | "check">, Omit<ComponentPropsWithRef<"div">, "className" | "style"> {
+export interface ComboboxOptionProps
+  extends
+    StylesApiProps<"option" | "optionLabel" | "check">,
+    Omit<ComponentPropsWithRef<"div">, "className" | "style"> {
   value: string;
   /** Escolhida: marca com o check e anuncia selecionada. */
   selected?: boolean | undefined;
@@ -117,8 +189,29 @@ export interface ComboboxOptionProps extends StylesApiProps<"option" | "optionLa
 /** Uma opção da lista. */
 export function ComboboxOption(props: ComboboxOptionProps) {
   const c = useComboboxContext();
-  const { value, selected, disabled, withCheckIcon = true, children, onClick, className, style, classNames, styles, ...rest } = useComponentProps("ComboboxOption", {}, props);
-  const getStyles = useStyles("ComboboxOption", { option: classes["option"] ?? "", optionLabel: classes["optionLabel"] ?? "", check: classes["check"] ?? "" }, { className, style, classNames, styles });
+  const {
+    value,
+    selected,
+    disabled,
+    withCheckIcon = true,
+    children,
+    onClick,
+    className,
+    style,
+    classNames,
+    styles,
+    ...rest
+  } = useComponentProps("ComboboxOption", {}, props);
+  const getStyles = useStyles(
+    "ComboboxOption",
+    {
+      option: classes["option"] ?? "",
+      optionLabel: classes["optionLabel"] ?? "",
+      check: classes["check"] ?? "",
+    },
+    { className, style, classNames, styles },
+    "option",
+  );
   const { ref, index } = useListItem();
   const ativo = c.ativo === index;
   return (
@@ -143,18 +236,30 @@ export function ComboboxOption(props: ComboboxOptionProps) {
       })}
       {...getStyles("option")}
     >
-      {withCheckIcon && <span {...getStyles("check")}>{selected && <Icon name="check" size="sm" />}</span>}
+      {withCheckIcon && (
+        <span {...getStyles("check")}>
+          {selected && <Icon name="check" size="sm" />}
+        </span>
+      )}
       <span {...getStyles("optionLabel")}>{children}</span>
     </div>
   );
 }
 
 /** Grupo de opções com título. */
-export function ComboboxGroup({ label, children }: { label: ReactNode; children?: ReactNode }) {
+export function ComboboxGroup({
+  label,
+  children,
+}: {
+  label: ReactNode;
+  children?: ReactNode;
+}) {
   const id = useId();
   return (
     <div role="group" aria-labelledby={id}>
-      <div id={id} className={classes["groupLabel"]}>{label}</div>
+      <div id={id} className={classes["groupLabel"]}>
+        {label}
+      </div>
       {children}
     </div>
   );
@@ -167,19 +272,53 @@ export function ComboboxEmpty({ children }: { children?: ReactNode }) {
 
 /** A base dos campos de escolha (Select, Autocomplete, MultiSelect, TagsInput…): alvo, lista, opções, grupos e vazio. */
 function ComboboxRoot(props: ComboboxProps) {
-  const { opened, defaultOpened, onOpenedChange, onOptionSubmit, position = "bottom-start", inline = false, role = "combobox", maxDropdownHeight, disabled, children } =
-    useComponentProps("Combobox", {}, props);
+  const {
+    opened,
+    defaultOpened,
+    onOpenedChange,
+    onOptionSubmit,
+    position = "bottom-start",
+    inline = false,
+    role = "combobox",
+    maxDropdownHeight,
+    disabled,
+    children,
+  } = useComponentProps("Combobox", {}, props);
   const id = useId();
-  const [aberto, setAberto] = useControllableState({ value: opened, defaultValue: defaultOpened ?? false, onChange: onOpenedChange });
-  const base = usePopoverBase({ opened: inline || aberto, onChange: setAberto, position, offset: "xs", width: "target" });
+  const [aberto, setAberto] = useControllableState({
+    value: opened,
+    defaultValue: defaultOpened ?? false,
+    onChange: onOpenedChange,
+  });
+  const base = usePopoverBase({
+    opened: inline || aberto,
+    onChange: setAberto,
+    position,
+    offset: "xs",
+    width: "target",
+  });
   const elementos = useRef<(HTMLElement | null)[]>([]);
   const [ativo, setAtivo] = useState<number | null>(null);
-  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
-    useRole(base.context, { role, enabled: !inline }),
-    useDismiss(base.context, { enabled: !inline }),
-    useListNavigation(base.context, { listRef: elementos, activeIndex: ativo, onNavigate: setAtivo, virtual: true, loop: true, enabled: !disabled }),
-  ]);
-  const altura = maxDropdownHeight === undefined ? "calc(6 * var(--cf-touch-target) + 2 * var(--cf-space-1))" : typeof maxDropdownHeight === "number" ? `${maxDropdownHeight}px` : maxDropdownHeight;
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
+    [
+      useRole(base.context, { role, enabled: !inline }),
+      useDismiss(base.context, { enabled: !inline }),
+      useListNavigation(base.context, {
+        listRef: elementos,
+        activeIndex: ativo,
+        onNavigate: setAtivo,
+        virtual: true,
+        loop: true,
+        enabled: !disabled,
+      }),
+    ],
+  );
+  const altura =
+    maxDropdownHeight === undefined
+      ? "calc(6 * var(--cf-touch-target) + 2 * var(--cf-space-1))"
+      : typeof maxDropdownHeight === "number"
+        ? `${maxDropdownHeight}px`
+        : maxDropdownHeight;
   return (
     <ComboboxContext
       value={{
@@ -203,4 +342,11 @@ function ComboboxRoot(props: ComboboxProps) {
 }
 
 /** Combobox: Target, Anchor, Dropdown, Option, Group e Empty. */
-export const Combobox = Object.assign(ComboboxRoot, { Target: ComboboxTarget, Anchor: ComboboxAnchor, Dropdown: ComboboxDropdown, Option: ComboboxOption, Group: ComboboxGroup, Empty: ComboboxEmpty });
+export const Combobox = Object.assign(ComboboxRoot, {
+  Target: ComboboxTarget,
+  Anchor: ComboboxAnchor,
+  Dropdown: ComboboxDropdown,
+  Option: ComboboxOption,
+  Group: ComboboxGroup,
+  Empty: ComboboxEmpty,
+});
