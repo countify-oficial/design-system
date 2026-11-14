@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.4.2
+
+### Patch Changes
+
+- Checkbox e Radio: a caixa fica no meio da primeira linha do rótulo. O campo usava a letra pequena dos controles do navegador para medir a linha e a caixa subia 4px.
+
 ## 0.4.1
 
 ### Patch Changes

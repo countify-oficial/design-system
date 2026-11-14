@@ -16,6 +16,10 @@
   flex: none;
   width: var(--check-size);
   height: var(--check-size);
+  /* 1lh é a linha do próprio campo: com a letra e a altura de linha do rótulo (o campo não as herda do navegador, que
+     usa a letra pequena dos controles), a caixa fica no meio da primeira linha do rótulo e não 3px acima */
+  font-size: var(--cf-font-size-md);
+  line-height: var(--cf-line-height);
   margin: calc((1lh - var(--check-size)) / 2) 0 0;
   accent-color: var(--cf-color-accent);
   cursor: pointer;
