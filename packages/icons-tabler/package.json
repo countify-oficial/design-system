@@ -1,0 +1,48 @@
+{
+  "name": "@countify-oficial/icons-tabler",
+  "version": "0.0.0",
+  "description": "Todos os ícones do Tabler Icons (MIT), sem alteração, para o Icon do core e do native: um módulo por ícone, carregado só quando usado",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/countify-oficial/design-system.git",
+    "directory": "packages/icons-tabler"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./dist/index.native.js",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./dist/index.native.d.ts",
+        "default": "./dist/index.native.js"
+      },
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./assets/*": "./assets/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "assets"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "update-tabler": "node scripts/update.mjs",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@countify-oficial/eslint-config": "workspace:*",
+    "eslint": "9.39.5",
+    "vitest": "5.1.0"
+  }
+}

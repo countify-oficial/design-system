@@ -21,6 +21,7 @@ Countify e API própria. Monorepo pnpm + Turborepo, TypeScript estrito.
 | `@countify-oficial/dropzone` | `Dropzone` com `Idle`, `Accept` e `Reject`, e as regras de tipo, tamanho e quantidade (web e Electron) | em andamento (0.1.0) |
 | `@countify-oficial/spotlight` | busca rápida: `Spotlight`, `spotlight.open()` e o atalho Ctrl+K / ⌘K (web e Electron) | em andamento (0.1.0) |
 | `@countify-oficial/code-highlight` | `CodeHighlight`: bloco de código com realce próprio (TypeScript, JSON, shell, CSS) e o link Copiar (web e React Native) | em andamento (0.1.0) |
+| `@countify-oficial/icons-tabler` | todos os ícones do Tabler Icons (MIT), sem alteração, para o `Icon` do core e do native: um módulo por ícone, carregado só quando usado (ver [Ícones do Tabler](#ícones-do-tabler)) | em andamento (0.1.0) |
 | `@countify-oficial/test-utils` | interno: a preparação do jsdom e o axe dos testes da web dos pacotes de extensão | privado |
 | `apps/docs` | Storybook da web: cada componente com variantes, tamanhos, estados e a tabela de props | em andamento |
 | `apps/desktop-demo` | app de Electron (electron-vite) com os pacotes da web juntos: processo principal e preload em `.ts`, renderer em `.tsx`, preload tipado (`window.countify`), `contextIsolation` ligado, `nodeIntegration` desligado e sandbox | demonstração |
@@ -76,8 +77,10 @@ import { Text, UnstyledButton } from "@countify-oficial/core";
 import { Text, UnstyledButton } from "@countify-oficial/native";
 ```
 
-Ícones: `<Icon name="search" />`, com os ícones da Countify (lista em `@countify-oficial/tokens`, `icons`). No celular,
-o `Icon` usa o `react-native-svg` (`npx expo install react-native-svg`) e a Roboto vem do `@expo-google-fonts/roboto`.
+Ícones: `<Icon name="search" />`, com os ícones da Countify (lista em `@countify-oficial/tokens`, `icons`), ou
+`<Icon name="home" variant="filled" />` com qualquer ícone do Tabler (ver [Ícones do Tabler](#ícones-do-tabler)). No
+celular, o `Icon` usa o `react-native-svg` (`npx expo install react-native-svg`) e a Roboto vem do
+`@expo-google-fonts/roboto`.
 
 Props comuns: `size` (xs–xl), `color` (papel de cor dos tokens), `component` (troca o elemento), `disabled`; na web,
 `className`, `style`, `classNames` e `styles` por parte. Espaço (`gap`, `spacing`…): `xs`–`xl` ou um degrau da grade de
@@ -86,6 +89,45 @@ Props comuns: `size` (xs–xl), `color` (papel de cor dos tokens), `component` (
 `createTheme({ components: { Text: { defaultProps: { size: "sm" } } } })`.
 
 Para ver todos: `pnpm build` e `pnpm --filter @countify-oficial/docs dev` (Storybook em http://localhost:6006).
+
+## Ícones do Tabler
+
+**Origem**: o `@countify-oficial/icons-tabler` traz todos os ícones do [Tabler Icons](https://github.com/tabler/tabler-icons),
+do pacote npm `@tabler/icons` **3.52.0**: 5.491 outline e 1.054 filled. Os SVGs estão sem alteração, com os nomes
+originais em kebab-case, em `packages/icons-tabler/assets/icons/tabler/outline/` e `filled/`. O `manifest.json` ao lado
+lista o nome, a variante e o caminho de cada um (relativo a essa pasta), e a versão do pacote.
+
+```tsx
+<Icon name="search" />                  // da Countify: o desenho aprovado da identidade
+<Icon name="home" />                    // qualquer outro nome vem do Tabler, outline
+<Icon name="home" variant="filled" />   // Tabler cheio; se o ícone não tem versão cheia, fica o outline
+```
+
+- Os 30 nomes que existem nos dois conjuntos (`star`, `search`, `menu`, `settings`…) ficam com o desenho da Countify,
+  que tem um desenho só (`variant` vale só para o Tabler).
+- Cor: `currentColor` (no celular, a cor do botão em volta ou `text`, como os da Countify). Tamanho: `size`, nos
+  tokens `iconSize` / `--cf-icon-size-*`. Traço: o mesmo token dos ícones da Countify (`iconGrid.stroke`, 1,8), no
+  lugar do 2 do Tabler, na caixa de 24 dele. O filled não tem traço, como no Tabler.
+- Peso: na web, cada ícone é um módulo à parte, baixado com `import()` só quando aparece (a lista dos nomes também só
+  desce no primeiro ícone do Tabler). No celular o Metro não divide o bundle: os ícones entram nele (cerca de 2,7 MB de
+  JS antes de minificar) e cada um só é executado quando usado.
+- O build (`scripts/build.mjs`) gera os módulos a partir dos SVGs e para se um SVG trouxer algo além de formas simples
+  (script, evento, link ou estilo), porque o desenho entra na página por `innerHTML`.
+
+**Atualizar**: o script baixa com `npm pack` (que não roda scripts do pacote), para antes de copiar se a estrutura, a
+licença ou o LICENSE não forem os esperados, copia os SVGs byte a byte, regrava o `manifest.json` e o `LICENSE`, e
+compara a contagem e o hash de cada arquivo com os do pacote:
+
+```bash
+pnpm --filter @countify-oficial/icons-tabler update-tabler 3.52.0   # a versão desejada; sem versão, a mais nova
+pnpm check
+```
+
+Depois, troque a versão citada aqui e no [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md) e crie um changeset.
+
+**Licença**: os ícones são do Tabler Icons, licença MIT, Copyright (c) 2020-2026 Paweł Kuna. O texto da licença vai
+junto com os ícones, em `packages/icons-tabler/assets/icons/tabler/LICENSE`, e no pacote publicado; não remova esse
+arquivo nem o aviso de copyright. Detalhes em [THIRD-PARTY-LICENSES.md](THIRD-PARTY-LICENSES.md).
 
 ## Desenvolver
 

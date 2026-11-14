@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@countify-oficial/hooks": "workspace:^",
+    "@countify-oficial/icons-tabler": "workspace:^",
     "@countify-oficial/provider": "workspace:^",
     "@countify-oficial/tokens": "workspace:^",
     "@floating-ui/react": "0.27.20"

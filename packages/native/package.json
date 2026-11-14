@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@countify-oficial/hooks": "workspace:^",
+    "@countify-oficial/icons-tabler": "workspace:^",
     "@countify-oficial/provider": "workspace:^",
     "@countify-oficial/tokens": "workspace:^"
   },

@@ -7,6 +7,7 @@ packages/
   provider/        @countify-oficial/provider: CountifyProvider (tema, modo, textos)
   core/            @countify-oficial/core: componentes da web e do Electron (React + CSS Modules)
   native/          @countify-oficial/native: componentes do React Native (mesma API do core)
+  icons-tabler/    @countify-oficial/icons-tabler: os SVGs do Tabler Icons (MIT), sem alteração, e os módulos gerados deles
   tsconfig/        @countify-oficial/tsconfig: base estrita (privado)
   eslint-config/   @countify-oficial/eslint-config: regras comuns (privado)
 apps/
@@ -29,6 +30,8 @@ docs/              TOKENS_COUNTIFY.md, MATRIZ_COMPONENTES.md, ARQUITETURA.md, CO
 
 Cada pacote compila com tsup para `dist/` (ESM, CJS e `.d.ts`). O Turborepo roda `build` antes de `typecheck`, `lint`
 e `test` dos pacotes que dependem dele. O `dist/` não vai para o git: o pacote é publicado no registry privado.
+A exceção é o `icons-tabler`: o `scripts/build.mjs` gera o `dist/` direto dos SVGs (um módulo por ícone e os mapas
+da web e do celular), sem tsup.
 
 ## Web e React Native no mesmo pacote
 

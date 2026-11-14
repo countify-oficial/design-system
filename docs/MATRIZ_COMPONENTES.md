@@ -52,7 +52,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 
 | Componente | Web | Electron | Celular | Motivo |
 |---|---|---|---|---|
-| Icon | ok | ok | adaptado | no celular, `react-native-svg` (`SvgXml`) com o mesmo desenho; a cor padrão vem do botão em volta (`ContentColor`), porque o React Native não herda cor |
+| Icon | ok | ok | adaptado | os da Countify e, com outro nome, os do Tabler (`variant` outline ou filled), no traço do token; no celular, `react-native-svg` (`SvgXml`) com o mesmo desenho; a cor padrão vem do botão em volta (`ContentColor`), porque o React Native não herda cor; os do Tabler na web descem um a um, quando aparecem, e no celular vão no bundle |
 | Loader | ok | ok | adaptado | no celular, o girador do sistema (`ActivityIndicator`): pequeno até md, grande em lg e xl |
 | Button | ok | ok | adaptado | no celular é um `Pressable`; ao tocar, opacidade 0,8 em vez do véu do hover; numa coluna ocupa a largura toda |
 | ActionIcon | ok | ok | adaptado | no celular o nome vai em `accessibilityLabel` (na web, `aria-label`) |
