@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.5.5
+
+### Patch Changes
+
+- 97c49cd: Input: só um botão (ActionIcon) na seção da direita encosta na borda; o Loader e os ícones ficam no recuo normal, longe da margem.
+
 ## 0.5.4
 
 ### Patch Changes
