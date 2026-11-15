@@ -10,11 +10,12 @@
   gap: var(--cf-space-3);
 }
 
+/* O anel em borda de verdade, como o do Paper: o destaque do cabeçalho (hover) fica por dentro e não o cobre. */
 .root[data-variant="separated"] .item,
 .root[data-variant="contained"] {
+  border: var(--cf-border-thin) solid var(--cf-color-divider);
   border-radius: var(--cf-radius-md);
   background-color: var(--cf-color-card);
-  box-shadow: var(--cf-shadow-xs);
 }
 
 .root[data-variant="contained"] .item + .item {
@@ -41,6 +42,23 @@
   .control:not([data-disabled]):hover {
     background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
   }
+}
+
+/* O destaque do cabeçalho só arredonda nos cantos de fora do cartão: no meio de uma lista "contained" ele é reto, e
+   aberto ele se emenda com o painel embaixo. O raio de dentro desconta a borda. */
+.root[data-variant="contained"] .control,
+.root[data-variant="separated"] .control {
+  border-radius: 0;
+}
+.root[data-variant="contained"] .item:first-child .control,
+.root[data-variant="separated"] .control {
+  border-start-start-radius: calc(var(--cf-radius-md) - var(--cf-border-thin));
+  border-start-end-radius: calc(var(--cf-radius-md) - var(--cf-border-thin));
+}
+.root[data-variant="contained"] .item:last-child .control:not([aria-expanded="true"]),
+.root[data-variant="separated"] .control:not([aria-expanded="true"]) {
+  border-end-start-radius: calc(var(--cf-radius-md) - var(--cf-border-thin));
+  border-end-end-radius: calc(var(--cf-radius-md) - var(--cf-border-thin));
 }
 
 .control[data-disabled] {
