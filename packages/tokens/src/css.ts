@@ -4,7 +4,7 @@ import { colors, palette, type ColorScheme } from "./colors.js";
 import { iconGrid } from "./icons.js";
 import {
   appShell, avatarSize, calendar, chart, controlFontSize, spotlightWidth, controlHeight, controlPaddingX, duration, easing, focusRing, fontFamily, fontSize, fontWeight, gutter,
-  compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, screenHeaderHeight, pageTitleTracking, helpIconSize, filterChipChevronSize, switchSize, space, spacing, state,
+  compactDensity, compactRowHeight, dialogWidth, headings, iconSize, lineHeight, listRowHeight, overlineTracking, loaderStroke, radius, raisedShadow, shadows, sheetHandle, sidePanelWidth, screenHeaderHeight, pageTitleTracking, helpIconSize, filterChipChevronSize, switchSize, space, spacing, state,
   borderWidth, touchTarget, transition, zIndex,
 } from "./scales.js";
 
@@ -25,6 +25,23 @@ function schemeVars(scheme: ColorScheme): string[] {
     `color-scheme: ${scheme};`,
     // a barra de rolagem do ScrollArea em toda a página; repetida em cada modo para seguir o modo forçado num trecho
     "scrollbar-color: var(--cf-color-border-strong) transparent;",
+  ];
+}
+
+/** As variáveis que a densidade compacta redefine (janela pequena no computador). */
+function compactas(): string[] {
+  const c = compactDensity;
+  return [
+    ...each("font-size", c.fontSize, "px"),
+    ...Object.entries(c.headings).map(([k, v]) => decl(`heading-${k}-size`, `${v}px`)),
+    ...each("button-height", c.controlHeight.button, "px"),
+    ...each("input-height", c.controlHeight.input, "px"),
+    ...each("control-font-size", c.controlFontSize, "px"),
+    ...each("control-padding-x", c.controlPaddingX, "px"),
+    decl("touch-target", `${c.touchTarget}px`),
+    decl("list-row-height", `${c.listRowHeight}px`),
+    decl("compact-row-height", `${c.compactRowHeight}px`),
+    decl("gutter-desktop", `${c.gutterDesktop}px`),
   ];
 }
 
@@ -88,5 +105,6 @@ export function createCssVariables(): string {
     bloco('[data-cf-color-scheme="dark"]', schemeVars("dark")),
     `@media (prefers-color-scheme: dark) {\n${bloco(':root:not([data-cf-color-scheme="light"])', schemeVars("dark"))}\n}`,
     `@media (prefers-reduced-motion: reduce) {\n${bloco(":root", Object.keys(duration).map((k) => decl(`duration-${k}`, "0ms")))}\n}`,
+    `@media ${compactDensity.media} {\n${bloco(":root", compactas())}\n}`,
   ].join("\n\n") + "\n";
 }

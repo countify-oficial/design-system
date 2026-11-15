@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { colors, createCssVariables, duration, nativeRaisedShadow, palette, primary, resolveSpacing, type ColorRole, type ColorScheme } from "../src/index.js";
+import { colors, compactDensity, createCssVariables, duration, fontSize, nativeRaisedShadow, palette, primary, resolveSpacing, type ColorRole, type ColorScheme } from "../src/index.js";
 
 // contraste WCAG: o guia pede 4,5:1 no texto
 function contrast(a: string, b: string): number {
@@ -96,5 +96,22 @@ describe("React Native", () => {
 describe("espaço", () => {
   it("resolveSpacing aceita tamanho, degrau da grade de 4 e 0", () => {
     expect([resolveSpacing("xs"), resolveSpacing("lg"), resolveSpacing(3), resolveSpacing(5), resolveSpacing(0)]).toEqual([4, 24, 12, 20, 0]);
+  });
+});
+
+describe("densidade compacta", () => {
+  it("só no computador com janela pequena, e nenhuma letra abaixo de 13", () => {
+    expect(compactDensity.media).toContain("min-width: 768px");
+    expect(Math.min(...Object.values(compactDensity.fontSize), ...Object.values(compactDensity.controlFontSize))).toBeGreaterThanOrEqual(13);
+    // menor que a escala normal, nunca maior
+    for (const k of Object.keys(fontSize) as (keyof typeof fontSize)[]) expect(compactDensity.fontSize[k]).toBeLessThanOrEqual(fontSize[k]);
+  });
+  it("o CSS redefine as variáveis dentro da media da janela pequena", () => {
+    const css = createCssVariables();
+    const bloco = css.slice(css.indexOf(`@media ${compactDensity.media}`));
+    expect(bloco).toContain("--cf-font-size-md: 15px;");
+    expect(bloco).toContain("--cf-button-height-sm: 36px;");
+    expect(bloco).toContain("--cf-heading-page-title-size: 24px;");
+    expect(bloco).toContain("--cf-gutter-desktop: 24px;");
   });
 });

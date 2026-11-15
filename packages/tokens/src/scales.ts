@@ -59,6 +59,40 @@ export const listRowHeight = 64;
 export const switchSize = { width: 52, height: 32, thumb: 24 } as const;
 /** Linha compacta de 56: lista com caixas, interruptor e cabeçalho do acordeão (mockup X-DocComponentes e 0.1.0). */
 export const compactRowHeight = 56;
+/**
+ * Densidade compacta (aprovada pelo dono em 15/11/2026): no computador com janela pequena (notebook de 1366 × 768),
+ * letras, controles, linhas e margem menores, para a tela caber sem rolar. Vale sozinha pela `media`: em monitor grande
+ * fica a escala normal, e no celular (abaixo de 768) nunca. A fonte mínima continua 13; com mouse, os controles podem
+ * ficar abaixo de 44. Aprovados: texto 15/14/13, seção 17, título da página e número 24, botão e campo sm/md 36/40,
+ * botão de ícone 36, linha de lista 48 e margem 24. Os demais degraus seguem a mesma proporção.
+ */
+export const compactDensity = {
+  media: "(min-width: 768px) and (max-width: 1600px), (min-width: 768px) and (max-height: 860px)",
+  fontSize: { xs: 13, sm: 14, md: 15, lg: 18, xl: 20 },
+  headings: { pageTitle: 24, screenTitle: 20, section: 17, number: 24 },
+  controlHeight: {
+    button: { xs: 32, sm: 36, md: 40, lg: 44, xl: 48 },
+    input: { xs: 32, sm: 36, md: 40, lg: 44, xl: 48 },
+  },
+  controlFontSize: { xs: 13, sm: 14, md: 15, lg: 15, xl: 17 },
+  controlPaddingX: { xs: 10, sm: 12, md: 16, lg: 20, xl: 24 },
+  touchTarget: 36,
+  listRowHeight: 48,
+  compactRowHeight: 44,
+  gutterDesktop: 24,
+} as const satisfies {
+  media: string;
+  fontSize: BySize;
+  headings: Partial<Record<keyof typeof headings, number>>;
+  controlHeight: Record<keyof typeof controlHeight, BySize>;
+  controlFontSize: BySize;
+  controlPaddingX: BySize;
+  touchTarget: number;
+  listRowHeight: number;
+  compactRowHeight: number;
+  gutterDesktop: number;
+};
+
 /** Alerta no centro (mockup W-Confirmar): 440 de largura. */
 export const dialogWidth = 440;
 /** Alça da folha que sobe (mockup, telas M- com folha): 36 × 4, na cor da borda forte. */
