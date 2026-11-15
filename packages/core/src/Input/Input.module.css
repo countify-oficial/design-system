@@ -110,8 +110,8 @@
   color: var(--cf-color-text2);
 }
 
-/* um ActionIcon de 44 no canto encosta na borda, como o da 0.1.0 */
-.section[data-position="right"] {
+/* um ActionIcon de 44 no canto encosta na borda, como o da 0.1.0; o resto (o Loader, um ícone) fica no recuo normal */
+.section[data-position="right"]:has(> button, > [role="button"]) {
   margin-inline-end: calc(-1 * var(--cf-space-3));
 }
 
