@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/code-highlight",
-  "version": "0.5.0",
+  "version": "0.5.3",
   "description": "Código da Countify: blocos de código com cores de sintaxe e o botão de copiar, na web e no React Native",
   "license": "UNLICENSED",
   "repository": {

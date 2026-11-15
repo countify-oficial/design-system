@@ -1,5 +1,12 @@
 # @countify-oficial/provider
 
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [fe5fdc5]
+  - @countify-oficial/tokens@0.5.0
+
 ## 0.3.0
 
 ### Minor Changes

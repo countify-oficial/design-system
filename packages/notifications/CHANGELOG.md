@@ -1,5 +1,13 @@
 # @countify-oficial/notifications
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [fe5fdc5]
+  - @countify-oficial/tokens@0.5.0
+  - @countify-oficial/core@0.5.3
+
 ## 0.5.0
 
 ### Patch Changes

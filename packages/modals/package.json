@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/modals",
-  "version": "0.5.0",
+  "version": "0.5.3",
   "description": "Janelas da Countify abertas por função: modals.open() e modals.openConfirmModal(), na web e no React Native",
   "license": "UNLICENSED",
   "repository": {

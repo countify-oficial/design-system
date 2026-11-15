@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/tokens",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Tokens da Countify (cores, letra, espaço, cantos, tamanhos, sombras, camadas, movimento): TS, variáveis CSS e objeto para React Native",
   "license": "UNLICENSED",
   "repository": {
