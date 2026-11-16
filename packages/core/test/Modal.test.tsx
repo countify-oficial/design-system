@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -47,6 +47,16 @@ describe("Modal e Drawer", () => {
     const fundo = screen.getByRole("dialog").closest('[role="presentation"]') as HTMLElement;
     await user.click(fundo);
     expect(fechar).toHaveBeenCalledTimes(2);
+  });
+
+  it("Modal: selecionar o texto de um campo arrastando até o véu não fecha", () => {
+    const fechar = vi.fn();
+    render(<Modal opened onClose={fechar} title="Aviso"><input aria-label="CPF" /></Modal>);
+    const fundo = screen.getByRole("dialog").closest('[role="presentation"]') as HTMLElement;
+    // apertou no campo e soltou no véu: o navegador manda o clique para o véu (o ancestral comum)
+    fireEvent.mouseDown(screen.getByRole("textbox", { name: "CPF" }));
+    fireEvent.click(fundo);
+    expect(fechar).not.toHaveBeenCalled();
   });
 
   it("janela sobre janela: o Tab anda na de cima e o Esc fecha só ela", async () => {

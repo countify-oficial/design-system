@@ -1,6 +1,6 @@
 import { useId } from "@countify-oficial/hooks";
 import { useComponentProps } from "@countify-oficial/provider";
-import type { ComponentPropsWithRef, CSSProperties, MouseEvent, ReactNode } from "react";
+import { useRef, type ComponentPropsWithRef, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Overlay } from "../Overlay/Overlay";
@@ -53,8 +53,14 @@ export function Modal(props: ModalProps) {
   useCloseOnEscape(opened, () => {
     if (closeOnEscape) onClose();
   });
+  // Fecha só se o clique começou e terminou fora: arrastando a seleção de um campo para fora, o clique cai no véu.
+  const comecouFora = useRef(false);
+  const aoApertar = (e: MouseEvent<HTMLDivElement>) => {
+    comecouFora.current = e.target === e.currentTarget;
+  };
   const foraFecha = (e: MouseEvent<HTMLDivElement>) => {
-    if (closeOnClickOutside && e.target === e.currentTarget) onClose();
+    if (closeOnClickOutside && comecouFora.current && e.target === e.currentTarget) onClose();
+    comecouFora.current = false;
   };
   const tamanho = typeof size === "number" ? `${size}px` : size;
   return (
@@ -67,6 +73,7 @@ export function Modal(props: ModalProps) {
           <div
             role="presentation"
             data-full-screen={fullScreen || undefined}
+            onMouseDown={aoApertar}
             onClick={foraFecha}
             {...getStyles("inner", { "--modal-align": centered ? "center" : "flex-start", "--modal-size": tamanho ?? "var(--cf-dialog-width)" })}
           >
