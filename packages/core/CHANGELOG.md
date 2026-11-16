@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.5.6
+
+### Patch Changes
+
+- acf6460: Modal: só fecha pelo véu quando o clique começa e termina nele. Selecionar o texto de um campo arrastando até fora da janela não fecha mais.
+
 ## 0.5.5
 
 ### Patch Changes
