@@ -44,6 +44,17 @@ describe("Select", () => {
     expect(aoMudar).toHaveBeenLastCalledWith(null, null);
   });
 
+  it("searchable: ao clicar, o texto do escolhido fica selecionado e a busca o substitui", async () => {
+    const user = userEvent.setup();
+    render(<Select label="Cidade" data={cidades} searchable defaultValue="Sobral" />);
+    const campo = screen.getByRole<HTMLInputElement>("combobox", { name: "Cidade" });
+    await user.click(campo);
+    expect([campo.selectionStart, campo.selectionEnd]).toEqual([0, "Sobral".length]);
+    await user.keyboard("Forta");
+    expect(campo.value).toBe("Forta");
+    expect(screen.getByRole("option", { name: "Fortaleza" })).toBeTruthy();
+  });
+
   it("escolher a escolhida tira a escolha (allowDeselect)", async () => {
     const user = userEvent.setup();
     const aoMudar = vi.fn();

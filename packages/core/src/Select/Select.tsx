@@ -35,7 +35,7 @@ export function Select(props: SelectProps) {
   const messages = useMessages();
   const {
     data, value, defaultValue, onChange, searchable, clearable, allowDeselect = true, nothingFoundMessage = messages.nothingFound, limit, maxDropdownHeight, withCheckIcon,
-    disabled, onBlur, onClick, ...rest
+    disabled, onBlur, onClick, onFocus, ...rest
   } = useComponentProps("Select", {}, props);
   const grupos = useMemo(() => parseComboboxData(data), [data]);
   const itens = useMemo(() => allItems(grupos), [grupos]);
@@ -72,7 +72,13 @@ export function Select(props: SelectProps) {
           }}
           onClick={(e: React.MouseEvent<HTMLInputElement>) => {
             setAberto(!aberto);
+            // com busca, o texto do escolhido fica selecionado: a primeira tecla o troca pela busca, em vez de somar
+            if (searchable) e.currentTarget.select();
             onClick?.(e);
+          }}
+          onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
+            if (searchable) e.currentTarget.select();
+            onFocus?.(e);
           }}
           onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
             setBusca(null);
