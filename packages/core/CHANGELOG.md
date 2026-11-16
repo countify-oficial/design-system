@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.5.7
+
+### Patch Changes
+
+- 342a174: Select com busca: ao clicar ou entrar no campo, o texto do item escolhido fica selecionado e a primeira tecla o troca pela busca (antes somava ao texto e o filtro não achava nada).
+
 ## 0.5.6
 
 ### Patch Changes
