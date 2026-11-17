@@ -27,7 +27,8 @@
 .root[data-visible]
   :where(
     p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
-    button, [role="button"], [role="tab"], [role="img"], [role="slider"], [role="progressbar"], div:has(> [role="slider"]),
+    :is(button, [role="button"]):not(:has(div, p, h1, h2, h3, h4, h5, h6)), [role="tab"], [role="img"], [role="slider"], [role="progressbar"],
+    div:has(> [role="slider"]),
     input:is([type="checkbox"], [type="radio"]), svg, img, video, canvas, td, th
   ) {
   border-color: transparent !important;
@@ -42,7 +43,8 @@
 :where(.root[data-visible])
   :where(
     p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
-    button, [role="button"], [role="tab"], [role="img"], [role="slider"], [role="progressbar"], div:has(> [role="slider"]),
+    :is(button, [role="button"]):not(:has(div, p, h1, h2, h3, h4, h5, h6)), [role="tab"], [role="img"], [role="slider"], [role="progressbar"],
+    div:has(> [role="slider"]),
     input[type="checkbox"], svg, img, video, canvas, td, th
   ) {
   border-radius: var(--cf-space-1);
@@ -163,7 +165,8 @@
 .root[data-visible]
   :where(
     p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
-    button, [role="button"], [role="tab"], [role="img"], [role="slider"], [role="progressbar"], div:has(> [role="slider"]), svg, td, th
+    :is(button, [role="button"]):not(:has(div, p, h1, h2, h3, h4, h5, h6)), [role="tab"], [role="img"], [role="slider"], [role="progressbar"],
+    div:has(> [role="slider"]), svg, td, th
   )
   :where(*) {
   animation: none;
