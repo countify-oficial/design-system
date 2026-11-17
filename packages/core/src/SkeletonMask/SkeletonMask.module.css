@@ -26,7 +26,7 @@
    conteúdo ficaria. Os campos de digitar estão mais abaixo. */
 .root[data-visible]
   :where(
-    p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
+    p, :is(h1, h2, h3, h4, h5, h6):not(:has(button, div)), label, legend, span:not(:has(div, p)), a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
     :is(button, [role="button"]):not(:has(div, p, h1, h2, h3, h4, h5, h6)), [role="tab"], [role="img"], [role="slider"], [role="progressbar"],
     div:has(> [role="slider"]),
     input:is([type="checkbox"], [type="radio"]), svg, img, video, canvas, td, th
@@ -42,7 +42,7 @@
    com o 4 do Skeleton. Sem especificidade: qualquer canto do componente vale mais. */
 :where(.root[data-visible])
   :where(
-    p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
+    p, :is(h1, h2, h3, h4, h5, h6):not(:has(button, div)), label, legend, span:not(:has(div, p)), a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
     :is(button, [role="button"]):not(:has(div, p, h1, h2, h3, h4, h5, h6)), [role="tab"], [role="img"], [role="slider"], [role="progressbar"],
     div:has(> [role="slider"]),
     input[type="checkbox"], svg, img, video, canvas, td, th
@@ -53,7 +53,7 @@
 /* Texto em bloco (título, parágrafo, rótulo, descrição) vira uma barra da largura do texto, não da linha toda. Texto que
    quebra continua com a largura toda, e as quebras são as mesmas. Sem especificidade: a largura que o componente dá vale
    mais (o 1px do VisuallyHidden, a caixa do Avatar). */
-:where(.root[data-visible]) :where(p, h1, h2, h3, h4, h5, h6, label, legend, dt, dd, figcaption, span) {
+:where(.root[data-visible]) :where(p, :is(h1, h2, h3, h4, h5, h6):not(:has(button, div)), label, legend, dt, dd, figcaption, span:not(:has(div, p))) {
   width: fit-content;
   max-width: 100%;
 }
@@ -164,7 +164,7 @@
 /* Bloco dentro de bloco não pulsa sozinho: pulsa junto com o de fora, sem somar a transparência dos dois. */
 .root[data-visible]
   :where(
-    p, h1, h2, h3, h4, h5, h6, label, legend, span, a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
+    p, :is(h1, h2, h3, h4, h5, h6):not(:has(button, div)), label, legend, span:not(:has(div, p)), a, small, strong, em, b, code, kbd, mark, time, abbr, dt, dd, figcaption,
     :is(button, [role="button"]):not(:has(div, p, h1, h2, h3, h4, h5, h6)), [role="tab"], [role="img"], [role="slider"], [role="progressbar"],
     div:has(> [role="slider"]), svg, td, th
   )
