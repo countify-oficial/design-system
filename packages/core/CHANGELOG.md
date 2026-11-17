@@ -1,5 +1,11 @@
 # @countify-oficial/core
 
+## 0.5.9
+
+### Patch Changes
+
+- 7f1108b: SkeletonMask: título e span que contêm outros blocos (o cabeçalho do Accordion) ficam como recipientes, e cada elemento de dentro vira o próprio bloco: o ícone, a linha de cima e a de baixo.
+
 ## 0.5.8
 
 ### Patch Changes
