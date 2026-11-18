@@ -1,6 +1,6 @@
 // A tabela de dados de cada gráfico: vai escondida na web (para o leitor de tela) e vira o resumo no celular.
 import type { CountifyMessages } from "@countify-oficial/provider";
-import type { AreaChartData, BarChartData, BarListData, FunnelChartData, HeatmapData, LineChartData, PieChartData, RadarChartData, ScatterChartData, SparklineData } from "./draw";
+import type { AreaChartData, BarChartData, BarListData, ComboChartData, FunnelChartData, HeatmapData, LineChartData, PieChartData, RadarChartData, ScatterChartData, SparklineData } from "./draw";
 
 export interface DataTable {
   head: string[];
@@ -27,7 +27,20 @@ export const areaTable = (d: AreaChartData): DataTable => ({
   rows: d.labels.map((l, i) => [l, ...d.series.map((s) => fmt(s.values[i], d.format))]),
 });
 
-export const barTable = (d: BarChartData): DataTable => ({ head: ["", ""], rows: d.values.map((v, i) => [d.labels?.[i] || String(i + 1), fmt(v, d.format)]) });
+/** Barras e combinado: uma coluna por série de barras e por linha (com uma série só, sem nome). */
+export const barTable = (d: BarChartData & Partial<Pick<ComboChartData, "lines" | "formatRight">>): DataTable => {
+  const series = d.series ?? [{ name: "", values: d.values ?? [] }];
+  const lines = d.lines ?? [];
+  const n = Math.max(0, ...series.map((s) => s.values.length), ...lines.map((l) => l.values.length));
+  return {
+    head: ["", ...series.map((s) => s.name), ...lines.map((l) => l.name)],
+    rows: Array.from({ length: n }, (_, i) => [
+      d.labels?.[i] || String(i + 1),
+      ...series.map((s) => fmt(s.values[i], d.format)),
+      ...lines.map((l) => fmt(l.values[i], l.axis === "right" ? (d.formatRight ?? d.format) : d.format)),
+    ]),
+  };
+};
 
 export const barListTable = (d: BarListData): DataTable => ({ head: ["", ""], rows: d.data.map((x) => [x.label, x.valueLabel ?? fmt(x.value, d.format)]) });
 
@@ -45,6 +58,12 @@ export const pieTable = (d: PieChartData): DataTable => ({ head: ["", ""], rows:
 export const radarTable = (d: RadarChartData): DataTable => ({ head: ["", "", ...(d.compare ? [""] : [])], rows: d.axes.map((a, i) => [a, fmt(d.values[i]), ...(d.compare ? [fmt(d.compare[i])] : [])]) });
 
 export const sparklineTable = (d: SparklineData): DataTable => ({ head: ["", ""], rows: d.values.map((v, i) => [String(i + 1), fmt(v)]) });
+
+/** As linhas da dica de um ponto: o rótulo e "série: valor" (sem nome de série, só o valor). */
+export const tipLines = (t: DataTable, i: number): string[] => {
+  const [rotulo = "", ...celulas] = t.rows[i] ?? [];
+  return [rotulo, ...celulas.map((c, j) => (t.head[j + 1] ? `${t.head[j + 1] ?? ""}: ${c}` : c))];
+};
 
 /** A tabela numa frase, para o leitor de tela do celular. */
 export const tableSummary = (t: DataTable): string => t.rows.map((r) => r.filter(Boolean).join(" ")).join("; ");

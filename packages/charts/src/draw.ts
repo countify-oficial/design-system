@@ -130,7 +130,7 @@ export function drawLine(d: LineChartData, largura: number, altura: number = cha
     shapes.push(linha(X(now), top - 4, X(now), base, "text3", { strokeWidth: chart.stroke.now, dash: chart.dash.now }));
     shapes.push(texto(X(now) + 4, top + 2, nowLabel, "start"));
   }
-  return { height: altura, shapes, hatch: gaps.length > 0 };
+  return { height: altura, shapes, hatch: gaps.length > 0, tips: { xs: Array.from({ length: n }, (_, i) => X(i)), top, bottom: base } };
 }
 
 // ---------- área (a confirmar com o design)
@@ -149,7 +149,7 @@ export function drawArea(d: AreaChartData, largura: number, altura: number = cha
   const valores = finitos(series.flatMap((s) => s.values));
   const max = d.max ?? niceMax(Math.max(0, ...valores));
   const n = Math.max(labels.length, ...series.map((s) => s.values.length));
-  const { shapes, X, Y } = eixoDeIndices(largura, altura, n, max, piso(valores), labels, format, labelEvery, chart.padding.left);
+  const { shapes, X, Y, base } = eixoDeIndices(largura, altura, n, max, piso(valores), labels, format, labelEvery, chart.padding.left);
   const cor = (i: number): Paint => (series.length === 1 ? "accent" : seriesPaint(i));
   series.forEach((s, i) => {
     const pts = s.values.flatMap((v, k): [number, number][] => (v === null ? [] : [[X(k), Y(v)]]));
@@ -160,16 +160,26 @@ export function drawArea(d: AreaChartData, largura: number, altura: number = cha
     shapes.push({ kind: "polygon", points: pontos([[primeiro[0], Y(0)], ...pts, [ultimo[0], Y(0)]]), fill: cor(i), opacity: chart.areaOpacity });
   });
   series.forEach((s, i) => shapes.push({ kind: "polyline", points: polilinha(s.values, X, Y), fill: "none", stroke: cor(i), strokeWidth: chart.stroke.line, cap: "round", join: "round" }));
-  return { height: altura, shapes };
+  return { height: altura, shapes, tips: { xs: Array.from({ length: n }, (_, i) => X(i)), top: chart.padding.top, bottom: base } };
 }
 
-// ---------- barras
+// ---------- barras (uma série, várias agrupadas ou empilhadas) e o combinado (barras + linhas)
+
+export interface BarSeries {
+  name: string;
+  values: (number | null)[];
+}
 
 export interface BarChartData {
-  values: (number | null)[];
+  /** Uma série só: as barras comuns em cinza e o pico em destaque. */
+  values?: (number | null)[] | undefined;
+  /** Várias séries (lojas, períodos), no lugar de values: cores das séries, na ordem; lado a lado ou empilhadas. */
+  series?: BarSeries[] | undefined;
+  /** Empilha as séries numa barra só por ponto (positivos para cima, negativos para baixo). Padrão: false (lado a lado). */
+  stacked?: boolean | undefined;
   labels?: string[] | undefined;
   forecast?: (number | null)[] | undefined;
-  /** A barra em destaque (o pico): um índice, ou "max" para a maior. */
+  /** A barra em destaque (o pico): um índice, ou "max" para a maior. Só com values. */
   highlight?: number | "max" | undefined;
   /** Grade e rótulos do eixo y. Padrão: false (as barras pequenas do W-Comparar). */
   axis?: boolean | undefined;
@@ -177,41 +187,100 @@ export interface BarChartData {
   format?: ((v: number) => string) | undefined;
 }
 
-export function drawBar(d: BarChartData, largura: number, altura: number = chart.height.bar): Scene {
-  const { values, labels, forecast, axis = false, format = fmtPadrao } = d;
-  const n = Math.max(1, values.length);
+export interface ComboLine {
+  name: string;
+  values: (number | null)[];
+  /** O eixo da linha: right põe a escala dela à direita (conversão em % sobre vendas em R$). Padrão: left. */
+  axis?: "left" | "right" | undefined;
+  /** Tracejada na text2, sem pontos, como o previsto (a meta). Padrão: false (cor da série, traço 3 e pontos). */
+  dashed?: boolean | undefined;
+}
+
+export interface ComboChartData extends Omit<BarChartData, "forecast"> {
+  /** As linhas por cima das barras, no centro de cada barra. */
+  lines: ComboLine[];
+  /** Teto do eixo da direita. */
+  rightMax?: number | undefined;
+  /** Formato do eixo da direita (e dos valores das linhas da direita na tabela e na dica). Padrão: format. */
+  formatRight?: ((v: number) => string) | undefined;
+}
+
+const numero = (v: number | null | undefined): v is number => typeof v === "number" && Number.isFinite(v);
+
+export function drawBar(d: BarChartData & Partial<Omit<ComboChartData, keyof BarChartData>>, largura: number, altura: number = chart.height.bar): Scene {
+  const { labels, forecast, axis = false, format = fmtPadrao, stacked = false, lines = [] } = d;
+  const multi = d.series !== undefined;
+  const series = d.series ?? [{ name: "", values: d.values ?? [] }];
+  const n = Math.max(1, ...series.map((s) => s.values.length), ...lines.map((l) => l.values.length));
+  const direitas = lines.filter((l) => l.axis === "right");
   const esquerda = axis ? chart.padding.left : 0;
+  const direita = axis && direitas.length > 0 ? chart.padding.left : 0;
   const topo = axis ? chart.padding.top : chart.inset;
   const base = altura - (labels ? chart.bar.bottom : 0);
-  const valores = finitos([...values, ...(forecast ?? [])]);
+  // empilhadas, o eixo vai até a soma de cada ponto
+  const somas = (negativos: boolean) => Array.from({ length: n }, (_, i) => series.reduce((t, s) => { const v = s.values[i]; return numero(v) && v < 0 === negativos ? t + v : t; }, 0));
+  const valores = finitos([...(stacked ? [...somas(false), ...somas(true)] : series.flatMap((s) => s.values)), ...(forecast ?? []), ...lines.filter((l) => l.axis !== "right").flatMap((l) => l.values)]);
   const max = d.max ?? niceMax(Math.max(0, ...valores));
   const lo = piso(valores);
-  const fatia = (largura - esquerda) / n;
+  const vd = finitos(direitas.flatMap((l) => l.values));
+  const rmax = d.rightMax ?? niceMax(Math.max(0, ...vd));
+  const rlo = piso(vd);
+  const fatia = (largura - esquerda - direita) / n;
   const vao = Math.min(chart.bar.gap, fatia * 0.2);
   const Y = (v: number) => topo + ((base - topo) * (max - v)) / (max - lo);
+  const YR = (v: number) => topo + ((base - topo) * (rmax - v)) / (rmax - rlo);
   const cx = (i: number) => esquerda + i * fatia + fatia / 2;
-  const destaque = d.highlight === "max" ? values.indexOf(Math.max(...finitos(values))) : d.highlight;
+  const primeira = series[0]?.values ?? [];
+  const destaque = multi ? undefined : d.highlight === "max" ? primeira.indexOf(Math.max(...finitos(primeira))) : d.highlight;
+  const cor = (k: number, i: number): Paint => (multi ? (series.length === 1 ? "accent" : seriesPaint(k)) : i === destaque ? "accent" : "border");
   const shapes: Shape[] = [];
   if (axis) {
     for (const t of lo < 0 ? [lo, max] : [max / 2, max]) {
-      shapes.push(linha(esquerda, Y(t), largura, Y(t), "divider"));
+      shapes.push(linha(esquerda, Y(t), largura - direita, Y(t), "divider"));
       shapes.push(texto(esquerda - chart.inset, Y(t) + 4, format(t), "end"));
+      // a escala da direita usa as mesmas linhas da grade
+      if (direita > 0) shapes.push(texto(largura - direita + chart.inset, Y(t) + 4, (d.formatRight ?? format)(rlo + ((rmax - rlo) * (t - lo)) / (max - lo)), "start"));
     }
   }
-  values.forEach((v, i) => {
-    if (v === null) return;
-    // a barra sai do zero: para cima se positiva, para baixo se negativa
-    shapes.push({ kind: "rect", x: esquerda + i * fatia + vao / 2, y: Math.min(Y(v), Y(0)), width: fatia - vao, height: Math.abs(Y(v) - Y(0)), rx: chart.bar.radius, fill: i === destaque ? "accent" : "border" });
+  const lado = stacked ? 1 : series.length;
+  const w = (fatia - vao) / lado;
+  const cima: number[] = [];
+  const baixo: number[] = [];
+  series.forEach((s, k) => {
+    s.values.forEach((v, i) => {
+      if (!numero(v)) return;
+      const pilha = v < 0 ? baixo : cima;
+      const de = stacked ? (pilha[i] ?? 0) : 0;
+      if (stacked) pilha[i] = de + v;
+      // a barra sai do zero (ou do topo da pilha): para cima se positiva, para baixo se negativa
+      shapes.push({ kind: "rect", x: esquerda + i * fatia + vao / 2 + (stacked ? 0 : k * w), y: Math.min(Y(de + v), Y(de)), width: w, height: Math.abs(Y(de + v) - Y(de)), rx: chart.bar.radius, fill: cor(k, i) });
+    });
   });
-  shapes.push(linha(esquerda, Y(0), largura, Y(0), "border"));
+  shapes.push(linha(esquerda, Y(0), largura - direita, Y(0), "border"));
   if (forecast) {
     shapes.push({ kind: "polyline", points: pontos(forecast.flatMap((v, i): [number, number][] => (v === null ? [] : [[cx(i), Y(v)]]))), fill: "none", stroke: "text2", strokeWidth: chart.stroke.line, dash: chart.dash.forecast, cap: "round" });
+  }
+  // as linhas cheias continuam as cores depois das barras coloridas; com barras cinza, a 1ª é a da série (a 2ª, se houver pico)
+  let cheia = multi ? series.length : destaque !== undefined ? 1 : 0;
+  for (const l of lines) {
+    const Yl = l.axis === "right" ? YR : Y;
+    const pts = l.values.flatMap((v, i): [number, number][] => (numero(v) ? [[cx(i), Yl(v)]] : []));
+    if (l.dashed) {
+      shapes.push({ kind: "polyline", points: pontos(pts), fill: "none", stroke: "text2", strokeWidth: chart.stroke.line, dash: chart.dash.forecast, cap: "round" });
+      continue;
+    }
+    const c = seriesPaint(cheia++);
+    shapes.push({ kind: "polyline", points: pontos(pts), fill: "none", stroke: c, strokeWidth: chart.stroke.series, cap: "round", join: "round" });
+    for (const [x, y] of pts) shapes.push({ kind: "circle", cx: x, cy: y, r: chart.point.radius, fill: c });
   }
   labels?.forEach((r, i) => {
     if (r) shapes.push(texto(cx(i), base + chart.labelBaseline.bar, r));
   });
-  return { height: altura, shapes };
+  return { height: altura, shapes, tips: { xs: Array.from({ length: n }, (_, i) => cx(i)), top: topo, bottom: base } };
 }
+
+/** Combinado: barras (uma série ou várias) e linhas por cima, com o eixo da direita opcional. Eixo e altura da linha por padrão. */
+export const drawCombo = (d: ComboChartData, largura: number, altura: number = chart.height.line): Scene => drawBar({ axis: true, ...d }, largura, altura);
 
 // ---------- ranking (barras deitadas) e funil
 

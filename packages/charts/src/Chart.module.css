@@ -28,3 +28,31 @@
   align-items: center;
   gap: var(--cf-space-2);
 }
+
+/* Gráfico com dica: recebe o foco (setas percorrem os pontos); o arrasto na horizontal escolhe o ponto no toque */
+.explore {
+  position: relative;
+  border-radius: var(--cf-radius-xs);
+  touch-action: pan-y;
+}
+
+.explore:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+/* A dica: a mesma do Tooltip (cores invertidas), uma linha por série */
+.tip {
+  position: absolute;
+  z-index: var(--cf-z-tooltip);
+  padding: var(--cf-space-1) var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  background-color: var(--cf-color-text);
+  color: var(--cf-color-bg);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-medium);
+  line-height: var(--cf-line-height);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}

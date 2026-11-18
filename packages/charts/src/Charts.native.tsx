@@ -1,8 +1,8 @@
 import { useComponentProps, useMessages } from "@countify-oficial/provider";
 import { Grafico, type ChartFrameProps } from "./Chart.native";
 import {
-  drawArea, drawBar, drawBarList, drawFunnel, drawHeatmap, drawLine, drawPie, drawRadar, drawScatter, drawSparkline,
-  type AreaChartData, type BarChartData, type BarListData, type FunnelChartData, type HeatmapData, type LineChartData, type PieChartData, type RadarChartData, type ScatterChartData,
+  drawArea, drawBar, drawBarList, drawCombo, drawFunnel, drawHeatmap, drawLine, drawPie, drawRadar, drawScatter, drawSparkline,
+  type AreaChartData, type BarChartData, type BarListData, type ComboChartData, type FunnelChartData, type HeatmapData, type LineChartData, type PieChartData, type RadarChartData, type ScatterChartData,
   type SparklineData,
 } from "./draw";
 import { areaTable, barListTable, barTable, funnelTable, heatmapTable, lineTable, pieTable, radarTable, scatterTable, sparklineTable } from "./tables";
@@ -26,10 +26,21 @@ export function AreaChart(props: AreaChartProps) {
 
 export type BarChartProps = BarChartData & ChartFrameProps;
 
-/** Barras (W-Comparar): as comuns em cinza, o pico em destaque, o previsto tracejado. Use max igual para a "mesma escala". */
+/**
+ * Barras (W-Comparar): as comuns em cinza, o pico em destaque, o previsto tracejado. Use max igual para a "mesma escala".
+ * Com series, várias séries nas cores das séries: lado a lado (lojas, períodos) ou empilhadas (stacked).
+ */
 export function BarChart(props: BarChartProps) {
   const p = useComponentProps("BarChart", {}, props);
   return <Grafico {...p} desenhar={(w) => drawBar(p, w, p.height)} tabela={barTable(p)} />;
+}
+
+export type ComboChartProps = ComboChartData & ChartFrameProps;
+
+/** Combinado: barras (values ou series) e linhas por cima (a meta tracejada, a conversão no eixo da direita). */
+export function ComboChart(props: ComboChartProps) {
+  const p = useComponentProps("ComboChart", {}, props);
+  return <Grafico {...p} desenhar={(w) => drawCombo(p, w, p.height)} tabela={barTable(p)} />;
 }
 
 export type BarListProps = BarListData & ChartFrameProps;

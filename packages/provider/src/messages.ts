@@ -77,6 +77,8 @@ export interface CountifyMessages {
   actual: string;
   forecast: string;
   normalRange: string;
+  /** gráficos: o nome do controle que percorre os pontos (setas) e mostra a dica */
+  chartPoint: string;
   /** link de copiar do CodeHighlight */
   copy: string;
   copied: string;
@@ -140,6 +142,7 @@ export const defaultMessages: CountifyMessages = {
   actual: "Real",
   forecast: "Previsto",
   normalRange: "Faixa normal",
+  chartPoint: "Ponto do gráfico",
   copy: "Copiar",
   copied: "Copiado",
   dropFiles: "Arraste os arquivos ou clique para escolher",

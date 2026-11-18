@@ -1,10 +1,10 @@
 import { useCountifyTheme } from "@countify-oficial/provider";
-import { chart, fontSize, nativeFontFamily, palette, space } from "@countify-oficial/tokens";
+import { chart, fontSize, nativeFontFamily, palette, radius, space } from "@countify-oficial/tokens";
 import { useState, type ReactNode } from "react";
-import { Text as RNText, View, type StyleProp, type ViewStyle } from "react-native";
+import { Text as RNText, View, type GestureResponderEvent, type StyleProp, type ViewStyle } from "react-native";
 import Svg, { Circle, Defs, Line, Path, Pattern, Polygon, Polyline, Text as SvgText } from "react-native-svg";
-import type { Paint, Scene, Shape } from "./scene";
-import { tableSummary, type DataTable } from "./tables";
+import { nearest, type Paint, type Scene, type Shape } from "./scene";
+import { tableSummary, tipLines, type DataTable } from "./tables";
 
 type Cores = ReturnType<typeof useCountifyTheme>["colors"];
 
@@ -52,19 +52,34 @@ export interface ChartFrameProps {
   testID?: string | undefined;
 }
 
-/** Moldura dos gráficos no celular: mede a largura (onLayout) e desenha no react-native-svg; o leitor de tela ouve os valores. */
+/**
+ * Moldura dos gráficos no celular: mede a largura (onLayout) e desenha no react-native-svg; o leitor de tela ouve os valores.
+ * Nos gráficos por índice, a dica aparece enquanto o dedo está no gráfico (como o Tooltip) e segue o arrasto.
+ */
 export function Grafico({ desenhar, tabela, accessibilityLabel, width, style, testID }: ChartFrameProps & { desenhar: (largura: number) => Scene; tabela: DataTable }) {
   const [medida, setMedida] = useState(0);
+  const [ativo, setAtivo] = useState<number | null>(null);
   const tinta = useTinta();
   const { colors: c } = useCountifyTheme();
   const largura = width ?? medida;
   const cena = largura > 0 ? desenhar(largura) : null;
   const resumo = [accessibilityLabel, tableSummary(tabela)].filter(Boolean).join(". ");
   const { size, stroke } = chart.hatch;
+  const dicas = cena?.tips;
+  const i = dicas && ativo !== null ? Math.min(ativo, dicas.xs.length - 1) : null;
+  const xa = i === null ? 0 : (dicas?.xs[i] ?? 0);
+  // o Svg não recebe o toque: o locationX é sempre o da moldura
+  const toque = dicas && {
+    onStartShouldSetResponder: () => true,
+    onResponderGrant: (e: GestureResponderEvent) => setAtivo(nearest(dicas.xs, e.nativeEvent.locationX)),
+    onResponderMove: (e: GestureResponderEvent) => setAtivo(nearest(dicas.xs, e.nativeEvent.locationX)),
+    onResponderRelease: () => setAtivo(null),
+    onResponderTerminate: () => setAtivo(null),
+  };
   return (
-    <View testID={testID} accessible accessibilityRole="image" accessibilityLabel={resumo} onLayout={width === undefined ? (e) => setMedida(e.nativeEvent.layout.width) : undefined} style={style}>
+    <View testID={testID} accessible accessibilityRole="image" accessibilityLabel={resumo} onLayout={width === undefined ? (e) => setMedida(e.nativeEvent.layout.width) : undefined} style={style} {...toque}>
       {cena && (
-        <Svg width={largura} height={cena.height}>
+        <Svg width={largura} height={cena.height} pointerEvents="none">
           {cena.hatch && (
             <Defs>
               <Pattern id="hachura" width={size} height={size} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -72,8 +87,19 @@ export function Grafico({ desenhar, tabela, accessibilityLabel, width, style, te
               </Pattern>
             </Defs>
           )}
-          {cena.shapes.map((s, i) => forma(s, i, tinta))}
+          {cena.shapes.map((s, k) => forma(s, k, tinta))}
+          {dicas && i !== null && forma({ kind: "line", x1: xa, y1: dicas.top, x2: xa, y2: dicas.bottom, stroke: "text3", strokeWidth: chart.stroke.grid }, cena.shapes.length, tinta)}
         </Svg>
+      )}
+      {dicas && i !== null && (
+        // a mesma dica do Tooltip, do lado de dentro da linha-guia
+        <View pointerEvents="none" style={[{ position: "absolute", top: dicas.top, paddingVertical: space[1], paddingHorizontal: space[2], borderRadius: radius.xs, backgroundColor: c.text }, xa < largura / 2 ? { left: xa + space[2] } : { right: largura - xa + space[2] }]}>
+          {tipLines(tabela, i).map((l, k) => (
+            <RNText key={k} style={{ color: c.bg, fontSize: fontSize.xs, fontFamily: nativeFontFamily[500] }}>
+              {l}
+            </RNText>
+          ))}
+        </View>
       )}
     </View>
   );
