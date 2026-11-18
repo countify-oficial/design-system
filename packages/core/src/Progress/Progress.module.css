@@ -18,10 +18,10 @@
 
 .marker {
   position: absolute;
-  top: calc(-1 * var(--cf-space-1));
+  /* passa 4 da barra em cima e embaixo: 16 na barra de 8, e acompanha uma barra mais alta (o Meter lg) */
+  inset-block: calc(-1 * var(--cf-space-1));
   inset-inline-start: var(--progress-marker);
   width: calc(2 * var(--cf-border-thin));
-  height: var(--cf-space-4);
   margin-inline-start: calc(-1 * var(--cf-border-thin));
   border-radius: var(--cf-border-thin);
   background-color: var(--cf-color-text);

@@ -107,6 +107,8 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | ColorSwatch | ok | ok | ok | |
 | NumberFormatter | ok | ok | ok | o mesmo `formatNumber` (no provider) nas duas plataformas |
 | RollingNumber | ok | ok | adaptado | no celular rola com `Animated` |
+| StatCard | ok | ok | ok | não existe no Mantine: o cartão de número do mockup (W-Hoje, W-Indicadores). A variação é lida com o sentido ("alta de 12%"), na web por texto escondido e no celular pelo `accessibilityLabel` |
+| Meter | ok | ok | adaptado | não existe no Mantine: o bloco da meta (W-Hoje) e da conversão (W-Indicadores, `size="lg"`) sobre o Progress. Na web a barra é `role="meter"` com `aria-valuetext`; o React Native não tem esse papel: no celular é `progressbar` com `accessibilityValue` (min, max, now e text) |
 | OverflowList | ok | ok | ok | conta pelos itens (`maxVisible`), não mede a largura |
 | Table | ok | ok | N/A | a identidade troca a tabela por lista no celular (`X-DocNavegacao`: "Lista com mais de dois números → Tabela") |
 | DataList | ok | ok | ok | |
