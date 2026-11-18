@@ -1,5 +1,22 @@
 # @countify-oficial/charts
 
+## 0.6.0
+
+### Minor Changes
+
+- 358a6db: Charts: `BarChart` aceita várias séries (`series`), lado a lado ou empilhadas (`stacked`), nas cores das séries; o novo `ComboChart` junta barras e linhas (a meta tracejada, a conversão no eixo da direita com `rightMax` e `formatRight`); linha, área, barras e combinado mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque. Com `values`, o `BarChart` desenha igual. Provider: o texto `chartPoint` ("Ponto do gráfico"), o nome do controle da dica.
+
+### Patch Changes
+
+- Updated dependencies [358a6db]
+- Updated dependencies [76c73f4]
+- Updated dependencies [d4cc0d0]
+- Updated dependencies [0dc2592]
+- Updated dependencies [12511a7]
+- Updated dependencies [3a43a5b]
+  - @countify-oficial/provider@0.4.0
+  - @countify-oficial/core@0.6.0
+
 ## 0.5.3
 
 ### Patch Changes

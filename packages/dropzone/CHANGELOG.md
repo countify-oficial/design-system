@@ -1,5 +1,18 @@
 # @countify-oficial/dropzone
 
+## 0.6.0
+
+### Patch Changes
+
+- Updated dependencies [358a6db]
+- Updated dependencies [76c73f4]
+- Updated dependencies [d4cc0d0]
+- Updated dependencies [0dc2592]
+- Updated dependencies [12511a7]
+- Updated dependencies [3a43a5b]
+  - @countify-oficial/provider@0.4.0
+  - @countify-oficial/core@0.6.0
+
 ## 0.5.0
 
 ### Patch Changes

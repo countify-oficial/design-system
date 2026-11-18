@@ -1,5 +1,16 @@
 # @countify-oficial/notifications
 
+## 0.6.0
+
+### Patch Changes
+
+- Updated dependencies [76c73f4]
+- Updated dependencies [d4cc0d0]
+- Updated dependencies [0dc2592]
+- Updated dependencies [12511a7]
+- Updated dependencies [3a43a5b]
+  - @countify-oficial/core@0.6.0
+
 ## 0.5.3
 
 ### Patch Changes

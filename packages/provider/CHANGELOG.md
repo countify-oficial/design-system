@@ -1,5 +1,18 @@
 # @countify-oficial/provider
 
+## 0.4.0
+
+### Minor Changes
+
+- 76c73f4: DataTable: tabela pronta com colunas declarativas, ordenação (pt-BR e números de verdade), seleção com a barra de ações, paginação no cliente ou no servidor (`manual`), carregando e vazio. Só no computador (no celular, lista). Mensagens novas no provider: `selectRow`, `selectPageRows`, `selectedCount`, `selectionActions` e `emptyTable`.
+- d4cc0d0: DataGrid: grade de edição em massa, como uma planilha (só computador). Colunas de texto, número e moeda com formato pt-BR e validação; navegação por teclado (padrão ARIA grid, roving tabindex), edição na célula com Enter, F2 ou digitando; desfazer e refazer; copiar e colar blocos do Excel; só as linhas visíveis desenhadas (10.000 linhas). Mensagens novas no provider: `invalidNumber`, `cellsCopied`, `cellsPasted`, `cellsRejected`, `undone` e `redone`.
+- 12511a7: NotificationList (web e celular): a lista dos Avisos (mockups W-Avisos e M-Avisos), agrupada por dia ("hoje", "ontem", "12 de novembro"), cada aviso com ícone ou iniciais, título, loja e a hora em `<time>`; o escolhido fica em destaque (`selected`, `onSelect`), o não lido em negrito com um ponto, e há os estados vazio (EmptyState) e carregando (SkeletonLoader). Na web, uma parada no Tab e as setas andam entre os avisos. O NavLink do celular aceita `accessibilityLabel`. No provider, `groupByDay` e as mensagens `yesterday`, `unread` e `noNotifications`.
+- 3a43a5b: StatCard (cartão de indicador: rótulo com o "?", número com prefixo e unidade, linha de apoio, variação com seta e lugar para um gráfico pequeno) e Meter (medidor de meta: rótulo e valor em destaque, a barra `role="meter"` com o traço do esperado, legendas dos dois lados e a linha de baixo; `size="lg"` para a barra de conversão), na web e no celular. A variação é lida com o sentido ("alta de 12%"): mensagens `increase`, `decrease` e `noChange` no provider. Progress: o traço da meta acompanha a altura da barra; no celular, `accessibilityValue` troca o valor lido.
+
+### Patch Changes
+
+- 358a6db: Charts: `BarChart` aceita várias séries (`series`), lado a lado ou empilhadas (`stacked`), nas cores das séries; o novo `ComboChart` junta barras e linhas (a meta tracejada, a conversão no eixo da direita com `rightMax` e `formatRight`); linha, área, barras e combinado mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque. Com `values`, o `BarChart` desenha igual. Provider: o texto `chartPoint` ("Ponto do gráfico"), o nome do controle da dica.
+
 ## 0.3.1
 
 ### Patch Changes
