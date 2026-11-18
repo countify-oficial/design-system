@@ -58,6 +58,7 @@ export { Marquee, type MarqueeProps } from "./Marquee/Marquee";
 export { MaskInput, type MaskInputProps } from "./MaskInput/MaskInput";
 export { Mentions, type MentionsProps } from "./Mentions/Mentions";
 export { Menu, MenuDivider, MenuDropdown, MenuItem, MenuLabel, MenuTarget, type MenuItemProps, type MenuProps } from "./Menu/Menu";
+export { Meter, type MeterProps } from "./Meter/Meter";
 export { Modal, type ModalBaseProps, type ModalProps } from "./Modal/Modal";
 export { MultiSelect, type MultiSelectProps } from "./MultiSelect/MultiSelect";
 export { NavLink, type NavLinkProps } from "./NavLink/NavLink";
@@ -93,6 +94,8 @@ export { AlphaSlider, HueSlider, RangeSlider, Slider, type AlphaSliderProps, typ
 export { Space, type SpaceProps } from "./Space/Space";
 export { Spoiler, type SpoilerProps } from "./Spoiler/Spoiler";
 export { Stack, type StackOwnProps, type StackProps } from "./Stack/Stack";
+export { StatCard, type StatCardOwnProps, type StatCardProps } from "./StatCard/StatCard";
+export type { StatDiffProps } from "./StatCard/StatDiff";
 export { Stepper, StepperCompleted, StepperStep, type StepperProps, type StepperStepProps } from "./Stepper/Stepper";
 export { Switch, SwitchGroup, SwitchItem, type SwitchGroupProps, type SwitchProps } from "./Switch/Switch";
 export { Tabs, TabsList, TabsPanel, TabsTab, type TabsListProps, type TabsPanelProps, type TabsProps, type TabsTabProps, type TabsVariant } from "./Tabs/Tabs";

@@ -1,0 +1,51 @@
+/* Cartão de número do mockup (W-Hoje, W-Indicadores): recuo 16 e 4 entre as linhas (o Card); rótulo em 15 texto 2,
+   número em 28 com prefixo e unidade em 17 texto 2, linha de apoio em 15 texto 2. */
+.root {
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+/* a confirmar: o mockup pede 22 de altura mínima na linha do rótulo; 24 é a altura dela com o "?" (alinha os cartões
+   com e sem ajuda) */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--cf-space-1);
+  min-width: 0;
+  min-height: var(--cf-space-6);
+}
+
+.label {
+  min-width: 0;
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.figure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--cf-space-1);
+}
+
+.value {
+  font-size: var(--cf-heading-number-size);
+  font-weight: var(--cf-heading-number-weight);
+  line-height: var(--cf-heading-number-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.affix {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-md);
+}
+
+.description {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.chart {
+  min-width: 0;
+}

@@ -1,0 +1,84 @@
+/* Bloco da meta do mockup (W-Hoje): 12 entre as partes; rótulo em 17 médio e o valor em 28, alinhados pela base; a barra
+   é a do Progress; a legenda em 15 (a da direita em texto 2) e a linha de baixo em 13 texto 2. */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-3);
+  min-width: 0;
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+}
+
+.label {
+  min-width: 0;
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+.figure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--cf-space-2);
+}
+
+.value {
+  font-size: var(--cf-heading-number-size);
+  font-weight: var(--cf-heading-number-weight);
+  line-height: var(--cf-heading-number-line-height);
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--cf-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.legendRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--cf-space-3);
+}
+
+.end {
+  color: var(--cf-color-text2);
+  text-align: end;
+}
+
+.footer {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-xs);
+}
+
+/* lg, a barra de conversão do mockup (W-Indicadores): 16 entre as partes, barra de 16 com canto 8 no fundo da
+   divisória e a variação em 17 médio */
+.root[data-size="lg"] {
+  gap: var(--cf-space-4);
+}
+
+/* a confirmar: o mockup pede o número em 40; o maior título dos tokens é o tabTitle, de 32 */
+.root[data-size="lg"] .value {
+  font-size: var(--cf-heading-tab-title-size);
+  font-weight: var(--cf-heading-tab-title-weight);
+  line-height: var(--cf-heading-tab-title-line-height);
+}
+
+.root[data-size="lg"] .diff {
+  font-size: var(--cf-font-size-md);
+}
+
+.root[data-size="lg"] .bar {
+  height: var(--cf-space-4);
+  border-radius: var(--cf-space-2);
+  background-color: var(--cf-color-divider);
+}

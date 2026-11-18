@@ -1,0 +1,13 @@
+/* "▲ 8% vs. qua." do mockup (W-Hoje): a variação em 15 médio na cor da alta ou da queda; a comparação em texto 2. */
+.root {
+  color: var(--diff-color);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-regular);
+}

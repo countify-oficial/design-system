@@ -87,6 +87,10 @@ export interface CountifyMessages {
   /** Carousel: o tipo da região e de cada item, para o leitor de tela */
   carousel: string;
   slide: string;
+  /** variação do StatCard e do Meter, para o leitor de tela ("alta de 12%", "queda de 3%", "sem variação") */
+  increase: (valor: string) => string;
+  decrease: (valor: string) => string;
+  noChange: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -148,4 +152,7 @@ export const defaultMessages: CountifyMessages = {
   dropFiles: "Arraste os arquivos ou clique para escolher",
   carousel: "carrossel",
   slide: "item",
+  increase: (valor) => `alta de ${valor}`,
+  decrease: (valor) => `queda de ${valor}`,
+  noChange: "sem variação",
 };
