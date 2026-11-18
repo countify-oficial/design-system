@@ -1,7 +1,7 @@
 import { colors } from "@countify-oficial/tokens";
-import { fireEvent, render, screen } from "@testing-library/react-native";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react-native";
 import { Text } from "react-native";
-import { Fieldset, JsonInput, MaskInput, NumberInput, PasswordInput, PhoneInput, PinInput, Textarea, TextInput } from "../src";
+import { Fieldset, JsonInput, MaskInput, NumberInput, PasswordInput, PhoneInput, PinInput, SearchInput, Textarea, TextInput } from "../src";
 
 const l = colors.light;
 
@@ -84,5 +84,41 @@ describe("campos de texto (React Native)", () => {
   it("Fieldset: legenda como título; disabled bloqueia o toque", async () => {
     await render(<Fieldset legend="Endereço" disabled><Text>dentro</Text></Fieldset>);
     expect(screen.getByRole("header", { name: "Endereço" })).toBeOnTheScreen();
+  });
+
+  it("SearchInput: searchbox \"Buscar\" com a lupa; o × aparece com texto e limpa", async () => {
+    const aoMudar = jest.fn();
+    const aoBuscar = jest.fn();
+    await render(<SearchInput onChange={aoMudar} onSearch={aoBuscar} />);
+    const campo = screen.getByRole("searchbox", { name: "Buscar" });
+    expect(campo.props).toMatchObject({ placeholder: "Buscar", returnKeyType: "search" });
+    expect(screen.queryByRole("button")).toBeNull();
+    await fireEvent.changeText(campo, "lume");
+    expect(aoMudar).toHaveBeenLastCalledWith("lume");
+    await waitFor(() => expect(aoBuscar).toHaveBeenLastCalledWith("lume"));
+    await fireEvent.press(screen.getByRole("button", { name: "Limpar busca" }));
+    expect(aoMudar).toHaveBeenLastCalledWith("");
+    expect(campo.props.value).toBe("");
+    expect(screen.queryByRole("button")).toBeNull();
+    await waitFor(() => expect(aoBuscar).toHaveBeenLastCalledWith(""));
+  });
+
+  it("SearchInput: com rótulo, o nome é o rótulo; onSearch espera o debounce", async () => {
+    jest.useFakeTimers();
+    try {
+      const aoBuscar = jest.fn();
+      await render(<SearchInput label="Lojas" debounce={300} onSearch={aoBuscar} />);
+      const campo = screen.getByRole("searchbox", { name: "Lojas" });
+      await fireEvent.changeText(campo, "lu");
+      await act(() => jest.advanceTimersByTime(200));
+      await fireEvent.changeText(campo, "lume");
+      await act(() => jest.advanceTimersByTime(200));
+      expect(aoBuscar).not.toHaveBeenCalled();
+      await act(() => jest.advanceTimersByTime(100));
+      expect(aoBuscar).toHaveBeenCalledTimes(1);
+      expect(aoBuscar).toHaveBeenLastCalledWith("lume");
+    } finally {
+      jest.useRealTimers();
+    }
   });
 });

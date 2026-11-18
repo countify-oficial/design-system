@@ -1,0 +1,5 @@
+/* O "×" do campo é o CloseButton; o do navegador (type="search") sai para não aparecer dois. */
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  appearance: none;
+}

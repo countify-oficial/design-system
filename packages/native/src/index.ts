@@ -84,6 +84,7 @@ export { RingProgress, type RingProgressProps, type RingProgressSection } from "
 export { RollingNumber, type RollingNumberProps } from "./RollingNumber/RollingNumber";
 export { ScrollArea, type ScrollAreaProps } from "./ScrollArea/ScrollArea";
 export { Scroller, type ScrollerProps } from "./Scroller/Scroller";
+export { SearchInput, type SearchInputProps } from "./SearchInput/SearchInput";
 export { Section, type SectionProps } from "./Section/Section";
 export { SegmentedControl, type SegmentedControlItem, type SegmentedControlProps } from "./SegmentedControl/SegmentedControl";
 export { Select, type SelectProps } from "./Select/Select";
