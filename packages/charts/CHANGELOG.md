@@ -1,5 +1,21 @@
 # @countify-oficial/charts
 
+## 0.7.0
+
+### Minor Changes
+
+- e17705b: Charts: SankeyChart, fluxos entre etapas com a espessura proporcional ao valor (visitantes → entraram → compraram; estoque recebido → exposto → vendido ou perdido), na web e no React Native. Colunas pela profundidade do grafo; ciclo, id repetido ou desconhecido dão erro. Tabela de dados com origem, destino e valor; dica no fluxo mais perto do mouse, do dedo ou das setas. Mensagens novas no provider: `flowSource`, `flowTarget`, `flowValue` e `chartFlow`.
+
+### Patch Changes
+
+- Updated dependencies [1aa5f0e]
+- Updated dependencies [da0fa21]
+- Updated dependencies [e17705b]
+- Updated dependencies [e38b598]
+- Updated dependencies [43178a7]
+  - @countify-oficial/provider@0.5.0
+  - @countify-oficial/core@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes

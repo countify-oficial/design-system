@@ -1,5 +1,17 @@
 # @countify-oficial/carousel
 
+## 0.7.0
+
+### Patch Changes
+
+- Updated dependencies [1aa5f0e]
+- Updated dependencies [da0fa21]
+- Updated dependencies [e17705b]
+- Updated dependencies [e38b598]
+- Updated dependencies [43178a7]
+  - @countify-oficial/provider@0.5.0
+  - @countify-oficial/core@0.7.0
+
 ## 0.6.0
 
 ### Patch Changes

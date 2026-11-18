@@ -1,5 +1,14 @@
 # @countify-oficial/provider
 
+## 0.5.0
+
+### Minor Changes
+
+- 1aa5f0e: Announcement (web e celular): a novidade que fica na tela até a pessoa dispensar ("Nova versão do agente", "Agora dá para exportar em CSV"), para o rodapé do menu lateral ou o topo de uma tela. Cartão com o ícone no quadrado do tom (ThemeIcon), título, texto curto, uma ação opcional (Button ou Anchor) e o × "Dispensar". Funciona controlado (`opened`, `onDismiss`) ou não (`defaultOpened`); na web, `storageKey` lembra a dispensa no `localStorage`, e o foco vai para o próximo elemento focável ao dispensar. No provider, a mensagem `dismiss`.
+- e17705b: Charts: SankeyChart, fluxos entre etapas com a espessura proporcional ao valor (visitantes → entraram → compraram; estoque recebido → exposto → vendido ou perdido), na web e no React Native. Colunas pela profundidade do grafo; ciclo, id repetido ou desconhecido dão erro. Tabela de dados com origem, destino e valor; dica no fluxo mais perto do mouse, do dedo ou das setas. Mensagens novas no provider: `flowSource`, `flowTarget`, `flowValue` e `chartFlow`.
+- e38b598: EventCalendar (web e celular): o calendário de eventos do mês. Na web, a grade do Calendar com os eventos de cada dia em chips (Badge com o tom do evento), "+N mais" que abre a lista do dia num Popover, hoje marcado, `role="grid"` com setas, e `onEventClick` e `onDayClick`; no celular, o mês com pontos nos dias que têm evento e a lista do dia escolhido embaixo. Mensagens novas no provider: `eventCount`, `moreEvents` e `noEvents`.
+- 43178a7: SearchInput (web e celular): o campo de busca do mockup ("Busca no topo da lista"), com a lupa à esquerda, o × para limpar quando há texto e `onSearch` com `debounce` opcional. Na web, `type="search"` com `role="searchbox"`, Esc limpa e `shortcut` ("/" ou "mod+K") leva o foco ao campo, mostrado num Kbd enquanto vazio; no celular, sem atalho nem Esc. Mensagem nova no provider: `clearSearch` ("Limpar busca").
+
 ## 0.4.0
 
 ### Minor Changes

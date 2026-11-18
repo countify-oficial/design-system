@@ -1,6 +1,6 @@
 {
   "name": "@countify-oficial/notifications",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Avisos rápidos (toasts) da Countify: notifications.show() de qualquer lugar, na web e no React Native",
   "license": "UNLICENSED",
   "repository": {

@@ -1,5 +1,21 @@
 # @countify-oficial/core
 
+## 0.7.0
+
+### Minor Changes
+
+- 1aa5f0e: Announcement (web e celular): a novidade que fica na tela até a pessoa dispensar ("Nova versão do agente", "Agora dá para exportar em CSV"), para o rodapé do menu lateral ou o topo de uma tela. Cartão com o ícone no quadrado do tom (ThemeIcon), título, texto curto, uma ação opcional (Button ou Anchor) e o × "Dispensar". Funciona controlado (`opened`, `onDismiss`) ou não (`defaultOpened`); na web, `storageKey` lembra a dispensa no `localStorage`, e o foco vai para o próximo elemento focável ao dispensar. No provider, a mensagem `dismiss`.
+- da0fa21: Button: variante `link` (aparência do Anchor, com a altura e o alvo de toque do botão) e `Button.Group` (botões encostados, horizontal ou vertical, com `role="group"` e nome obrigatório).
+- 43178a7: SearchInput (web e celular): o campo de busca do mockup ("Busca no topo da lista"), com a lupa à esquerda, o × para limpar quando há texto e `onSearch` com `debounce` opcional. Na web, `type="search"` com `role="searchbox"`, Esc limpa e `shortcut` ("/" ou "mod+K") leva o foco ao campo, mostrado num Kbd enquanto vazio; no celular, sem atalho nem Esc. Mensagem nova no provider: `clearSearch` ("Limpar busca").
+
+### Patch Changes
+
+- Updated dependencies [1aa5f0e]
+- Updated dependencies [e17705b]
+- Updated dependencies [e38b598]
+- Updated dependencies [43178a7]
+  - @countify-oficial/provider@0.5.0
+
 ## 0.6.0
 
 ### Minor Changes

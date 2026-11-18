@@ -1,5 +1,14 @@
 # @countify-oficial/notifications
 
+## 0.7.0
+
+### Patch Changes
+
+- Updated dependencies [1aa5f0e]
+- Updated dependencies [da0fa21]
+- Updated dependencies [43178a7]
+  - @countify-oficial/core@0.7.0
+
 ## 0.6.0
 
 ### Patch Changes
