@@ -85,6 +85,13 @@ export interface CountifyMessages {
   /** Carousel: o tipo da região e de cada item, para o leitor de tela */
   carousel: string;
   slide: string;
+  /** DataTable: caixa de cada linha ("Selecionar Lume Jardins"), a do cabeçalho, a contagem e o nome da barra de ações */
+  selectRow: (rotulo: string) => string;
+  selectPageRows: string;
+  selectedCount: (n: number) => string;
+  selectionActions: string;
+  /** DataTable sem linhas */
+  emptyTable: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -145,4 +152,9 @@ export const defaultMessages: CountifyMessages = {
   dropFiles: "Arraste os arquivos ou clique para escolher",
   carousel: "carrossel",
   slide: "item",
+  selectRow: (rotulo) => `Selecionar ${rotulo}`,
+  selectPageRows: "Selecionar todas desta página",
+  selectedCount: (n) => (n === 1 ? "1 selecionada" : `${n} selecionadas`),
+  selectionActions: "Ações das linhas selecionadas",
+  emptyTable: "Nada para mostrar",
 };

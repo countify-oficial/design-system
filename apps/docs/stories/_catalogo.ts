@@ -77,6 +77,7 @@ export const descricoes: Record<string, string> = {
   "Combobox/TreeSelect": "Escolha numa árvore de itens.",
   "Dados/Accordion": "Seções que abrem e fecham.",
   "Dados/DataList": "Pares de rótulo e valor, como uma ficha.",
+  "Dados/DataTable": "Tabela pronta: ordena, seleciona, pagina, carrega e mostra o vazio.",
   "Dados/Image": "Imagem com proporção, canto e substituta.",
   "Dados/Marquee": "Faixa que rola sozinha.",
   "Dados/NumberFormatter": "Números, moedas e porcentagens no formato brasileiro.",

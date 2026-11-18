@@ -110,6 +110,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | OverflowList | ok | ok | ok | conta pelos itens (`maxVisible`), não mede a largura |
 | Table | ok | ok | N/A | a identidade troca a tabela por lista no celular (`X-DocNavegacao`: "Lista com mais de dois números → Tabela") |
 | DataList | ok | ok | ok | |
+| DataTable | ok | ok | N/A | é a `Table` pronta, e a tabela é só do computador. No celular, as mesmas linhas viram lista (`M-Lojas`, `M-Usuarios`, `M-Indicadores`), não cartões com as colunas: cada linha junta os campos em texto ("Ribeirão Preto · SP", "38% · 31 peças"), escolhidos por tela, sem cabeçalho que ordena, sem caixa de marcar e com "Ver todos" no lugar da paginação. Monte com `NavLink` (a linha de 64) ou `DataList`, e `EmptyState` e `Skeleton` |
 | Timeline | ok | ok | ok | |
 | Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |
 | Collapse | ok | ok | adaptado | na web anima pela grade (CSS); no celular, a altura medida com `Animated` |
