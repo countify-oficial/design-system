@@ -3,21 +3,24 @@ import {
   controlFontSize, controlHeight, controlPaddingX, nativeFontFamily, radius as cantos, space, state, borderWidth,
   type Responsive, type Size,
 } from "@countify-oficial/tokens";
-import type { ElementType, ReactNode } from "react";
-import { Pressable, Text as RNText, type PressableProps } from "react-native";
+import { Children, createContext, useContext, type ElementType, type ReactNode } from "react";
+import { Pressable, Text as RNText, View, type PressableProps, type StyleProp, type ViewStyle } from "react-native";
 import { ContentColor } from "../contentColor";
 import { Loader } from "../Loader/Loader";
 import type { PolymorphicProps } from "../polymorphic";
 import { pressableStyle, useResponsive, useThemeStyle } from "../styles";
 import { UnstyledButton } from "../UnstyledButton/UnstyledButton";
 
-/** filled: principal (um por tela); outline: Cancelar; subtle: só texto (Excluir, com color="down"); dashed: adicionar. */
-export type ButtonVariant = "filled" | "outline" | "subtle" | "dashed";
+/**
+ * filled: principal (um por tela); outline: Cancelar; subtle: só texto (Excluir, com color="down"); dashed: adicionar;
+ * link: com cara de link (texto na cor, sem fundo nem borda), com a altura e o alvo de toque do botão.
+ */
+export type ButtonVariant = "filled" | "outline" | "subtle" | "dashed" | "link";
 /** accent: o azul do botão; down, up e warn: as cores de queda, alta e aviso. */
 export type ButtonColor = "accent" | "down" | "up" | "warn";
 
 export interface ButtonOwnProps {
-  /** Padrão: filled. */
+  /** filled, outline, subtle, dashed ou link (aparência do Anchor, com a altura do botão). Padrão: filled. */
   variant?: ButtonVariant | undefined;
   /** Padrão: accent. */
   color?: ButtonColor | undefined;
@@ -43,14 +46,36 @@ export type ButtonProps<C extends ElementType = typeof Pressable> = PolymorphicP
 
 const padrao: Responsive<Size> = { base: "md", sm: "sm" };
 
+/** Lugar do botão dentro do Button.Group. */
+interface Encaixe {
+  orientation: "horizontal" | "vertical";
+  first: boolean;
+  last: boolean;
+}
+const GroupContext = createContext<Encaixe | null>(null);
+
+// cantos só nas pontas; o seguinte entra uma borda fina no anterior (a borda é uma só)
+function encaixar({ orientation, first, last }: Encaixe): ViewStyle {
+  return orientation === "horizontal"
+    ? {
+        ...(!first && { marginLeft: -borderWidth.thin, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
+        ...(!last && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
+      }
+    : {
+        ...(!first && { marginTop: -borderWidth.thin, borderTopLeftRadius: 0, borderTopRightRadius: 0 }),
+        ...(!last && { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }),
+      };
+}
+
 /** Botão da Countify (Pressable), com as mesmas variantes e cores da web. */
-export function Button<C extends ElementType = typeof Pressable>(props: ButtonProps<C>) {
+function ButtonRoot<C extends ElementType = typeof Pressable>(props: ButtonProps<C>) {
   const {
     component, variant = "filled", color = "accent", size = padrao, radius = "sm", fullWidth, disabled, loading,
     leftSection, rightSection, children, style, ...rest
   } = useComponentProps("Button", {}, props);
   const { colors: c } = useCountifyTheme();
   const tema = useThemeStyle("Button");
+  const encaixe = useContext(GroupContext);
   const t = useResponsive(size);
   const cor = {
     accent: { texto: c.accent, fundo: c.button, sobre: c.onButton },
@@ -58,7 +83,7 @@ export function Button<C extends ElementType = typeof Pressable>(props: ButtonPr
     up: { texto: c.up, fundo: c.up, sobre: c.bg },
     warn: { texto: c.warn, fundo: c.warn, sobre: c.bg },
   }[color];
-  const fg = variant === "filled" ? cor.sobre : variant === "subtle" || (variant === "outline" && color !== "accent") ? cor.texto : c.text;
+  const fg = variant === "filled" ? cor.sobre : variant === "subtle" || variant === "link" || (variant === "outline" && color !== "accent") ? cor.texto : c.text;
   const texto = typeof children === "string" || typeof children === "number";
   return (
     <ContentColor value={fg}>
@@ -76,6 +101,12 @@ export function Button<C extends ElementType = typeof Pressable>(props: ButtonPr
           variant === "outline" && { borderWidth: borderWidth.thin, borderColor: c.borderStrong },
           variant === "dashed" && { borderWidth: borderWidth.thick, borderStyle: "dashed", borderColor: c.text3 },
           fullWidth && { alignSelf: "stretch" },
+          encaixe && encaixar(encaixe),
+          // a confirmar: filled sem borda ficaria um bloco só; a linha entre eles é fina e na cor do texto do botão
+          encaixe && !encaixe.first && variant === "filled" && {
+            [encaixe.orientation === "horizontal" ? "borderLeftWidth" : "borderTopWidth"]: borderWidth.thin,
+            borderColor: cor.sobre,
+          },
           pressed && { opacity: state.pressedOpacity },
           disabled && !loading && { opacity: state.disabledOpacity },
           tema,
@@ -97,3 +128,30 @@ export function Button<C extends ElementType = typeof Pressable>(props: ButtonPr
     </ContentColor>
   );
 }
+
+export interface ButtonGroupProps {
+  /** O nome do grupo para o leitor de tela ("Período", "Alinhamento"). */
+  accessibilityLabel: string;
+  /** Lado a lado (horizontal) ou um embaixo do outro (vertical). Padrão: horizontal. */
+  orientation?: "horizontal" | "vertical" | undefined;
+  children?: ReactNode;
+  style?: StyleProp<ViewStyle>;
+}
+
+/** Botões encostados (role group): sem vão, cantos só nas pontas e a borda compartilhada. */
+export function ButtonGroup(props: ButtonGroupProps) {
+  const { accessibilityLabel, orientation = "horizontal", children, style } = useComponentProps("ButtonGroup", {}, props);
+  const itens = Children.toArray(children);
+  return (
+    <View role="group" accessibilityLabel={accessibilityLabel} style={[{ flexDirection: orientation === "horizontal" ? "row" : "column" }, style]}>
+      {itens.map((item, i) => (
+        <GroupContext key={i} value={{ orientation, first: i === 0, last: i === itens.length - 1 }}>
+          {item}
+        </GroupContext>
+      ))}
+    </View>
+  );
+}
+
+/** Botão da Countify. Button.Group encosta vários. */
+export const Button = Object.assign(ButtonRoot, { Group: ButtonGroup });

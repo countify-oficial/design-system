@@ -7,12 +7,12 @@ const meta = {
   title: "Botões/Button",
   component: Button,
   args: { children: "Salvar", onClick: fn() },
-  parameters: { docs: { description: { component: "Principal: um por tela. Excluir: cor de queda e confirmação. Tracejado: adicionar." } } },
+  parameters: { docs: { description: { component: "Principal: um por tela. Excluir: cor de queda e confirmação. Tracejado: adicionar. Link: ação com cara de link. Button.Group: botões encostados." } } },
 } satisfies Meta<typeof Button>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const variantes: ButtonVariant[] = ["filled", "outline", "subtle", "dashed"];
+const variantes: ButtonVariant[] = ["filled", "outline", "subtle", "dashed", "link"];
 const cores: ButtonColor[] = ["accent", "down", "up", "warn"];
 const tamanhos: Size[] = ["xs", "sm", "md", "lg", "xl"];
 
@@ -68,3 +68,43 @@ export const ComIcones: Story = {
 };
 
 export const ComoLink: Story = { name: "Como link", args: { component: "a", href: "#analises", variant: "subtle", children: "Ver análises" } };
+
+export const VarianteLink: Story = {
+  name: "Variante link",
+  render: (args) => (
+    <Group>
+      <Button {...args} variant="link">Esqueci a senha</Button>
+      <Button {...args} variant="link" rightSection={<Icon name="chevron-right" size="sm" />}>Ver todas as lojas</Button>
+      <Button {...args} variant="link" color="down">Remover filtro</Button>
+      <Button {...args} variant="link" disabled>Desativado</Button>
+    </Group>
+  ),
+};
+
+export const Grupo: Story = {
+  name: "Button.Group (horizontal)",
+  render: (args) => (
+    <Stack align="flex-start">
+      <Button.Group aria-label="Navegar no calendário">
+        <Button {...args} variant="outline" aria-label="Mês anterior"><Icon name="back" size="sm" /></Button>
+        <Button {...args} variant="outline">Hoje</Button>
+        <Button {...args} variant="outline" aria-label="Próximo mês"><Icon name="chevron-right" size="sm" /></Button>
+      </Button.Group>
+      <Button.Group aria-label="Salvar">
+        <Button {...args}>Salvar</Button>
+        <Button {...args} aria-label="Mais opções de salvar"><Icon name="chevron-down" size="sm" /></Button>
+      </Button.Group>
+    </Stack>
+  ),
+};
+
+export const GrupoVertical: Story = {
+  name: "Button.Group (vertical)",
+  render: (args) => (
+    <Button.Group aria-label="Exportar" orientation="vertical">
+      <Button {...args} variant="outline" leftSection={<Icon name="download" size="sm" />}>Planilha</Button>
+      <Button {...args} variant="outline" leftSection={<Icon name="download" size="sm" />}>PDF</Button>
+      <Button {...args} variant="outline" leftSection={<Icon name="printer" size="sm" />}>Imprimir</Button>
+    </Button.Group>
+  ),
+};

@@ -16,7 +16,7 @@ export { Blockquote, type BlockquoteProps } from "./Blockquote/Blockquote";
 export { Box, type BoxProps } from "./Box/Box";
 export { Breadcrumbs, type BreadcrumbsProps } from "./Breadcrumbs/Breadcrumbs";
 export { Burger, type BurgerProps } from "./Burger/Burger";
-export { Button, type ButtonColor, type ButtonOwnProps, type ButtonProps, type ButtonVariant } from "./Button/Button";
+export { Button, type ButtonColor, type ButtonGroupProps, type ButtonOwnProps, type ButtonProps, type ButtonVariant } from "./Button/Button";
 export { Card, CardSection, type CardOwnProps, type CardProps, type CardSectionOwnProps, type CardSectionProps } from "./Card/Card";
 export { Cascader, type CascaderProps } from "./Cascader/Cascader";
 export { Center, type CenterOwnProps, type CenterProps } from "./Center/Center";
