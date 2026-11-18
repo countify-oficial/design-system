@@ -1,11 +1,11 @@
 import { useComponentProps, useMessages } from "@countify-oficial/provider";
 import { Grafico, type ChartFrameProps } from "./Chart.native";
 import {
-  drawArea, drawBar, drawBarList, drawCombo, drawFunnel, drawHeatmap, drawLine, drawPie, drawRadar, drawScatter, drawSparkline,
-  type AreaChartData, type BarChartData, type BarListData, type ComboChartData, type FunnelChartData, type HeatmapData, type LineChartData, type PieChartData, type RadarChartData, type ScatterChartData,
+  drawArea, drawBar, drawBarList, drawCombo, drawFunnel, drawHeatmap, drawLine, drawPie, drawRadar, drawSankey, drawScatter, drawSparkline,
+  type AreaChartData, type BarChartData, type BarListData, type ComboChartData, type FunnelChartData, type HeatmapData, type LineChartData, type PieChartData, type RadarChartData, type SankeyChartData, type ScatterChartData,
   type SparklineData,
 } from "./draw";
-import { areaTable, barListTable, barTable, funnelTable, heatmapTable, lineTable, pieTable, radarTable, scatterTable, sparklineTable } from "./tables";
+import { areaTable, barListTable, barTable, funnelTable, heatmapTable, lineTable, pieTable, radarTable, sankeyTable, scatterTable, sparklineTable } from "./tables";
 
 export type LineChartProps = LineChartData & ChartFrameProps & { seriesLabels?: { actual?: string | undefined; forecast?: string | undefined } | undefined };
 
@@ -57,6 +57,19 @@ export type FunnelChartProps = FunnelChartData & ChartFrameProps;
 export function FunnelChart(props: FunnelChartProps) {
   const p = useComponentProps("FunnelChart", {}, props);
   return <Grafico {...p} desenhar={(w) => drawFunnel(p, w)} tabela={funnelTable(p)} />;
+}
+
+export type SankeyChartProps = SankeyChartData & ChartFrameProps;
+
+/**
+ * Sankey: fluxos entre etapas (visitantes → entraram → compraram; recebido → exposto → vendido ou perdido), com a
+ * espessura proporcional ao valor. Etapas como a barra do funil em pé, com o nome e o número; faixas na série a 18%.
+ * A dica mostra o fluxo mais perto do mouse, do dedo ou das setas. Ciclo ou id desconhecido: erro. A confirmar com o design.
+ */
+export function SankeyChart(props: SankeyChartProps) {
+  const messages = useMessages();
+  const p = useComponentProps("SankeyChart", {}, props);
+  return <Grafico {...p} desenhar={(w) => drawSankey(p, w, p.height)} tabela={sankeyTable(p, messages)} />;
 }
 
 export type ScatterChartProps = ScatterChartData & ChartFrameProps;

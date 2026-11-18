@@ -1,6 +1,6 @@
 import { Stack, Text } from "@countify-oficial/core";
 import {
-  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, FunnelChart, Heatmap, LineChart, PieChart, RadarChart, ScatterChart, Sparkline,
+  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, FunnelChart, Heatmap, LineChart, PieChart, RadarChart, SankeyChart, ScatterChart, Sparkline,
 } from "@countify-oficial/charts";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -13,7 +13,7 @@ const cartao = { padding: "var(--cf-space-5)", borderRadius: "var(--cf-radius-md
 const meta = {
   title: "Extensões/Charts",
   component: LineChart,
-  parameters: { docs: { description: { component: "Gráficos do mockup em SVG. Área, pizza, rosca, radar e minigráfico não existem na identidade: valores aprovados em 13/11/2026, a confirmar com o design. Barras com várias séries e o combinado usam as cores das séries (aprovadas em 18/11/2026). Linha, área, barras e combinado mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque." } } },
+  parameters: { docs: { description: { component: "Gráficos do mockup em SVG. Área, pizza, rosca, radar e minigráfico não existem na identidade: valores aprovados em 13/11/2026, a confirmar com o design. Barras com várias séries e o combinado usam as cores das séries (aprovadas em 18/11/2026). Sankey: a identidade não desenha; usa a barra do funil em pé e as faixas como a área, a confirmar com o design. Linha, área, barras, combinado e Sankey mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque." } } },
 } satisfies Meta;
 export default meta;
 // cada gráfico tem os seus dados obrigatórios: as histórias usam render
@@ -110,6 +110,52 @@ export const Ranking: Story = {
   render: () => <div style={{ maxWidth: "var(--cf-side-panel-width)" }}><BarList data={[{ label: "Lume Jardins", value: 14.2, valueLabel: "14,2%" }, { label: "Lume Aldeota", value: 12.9, valueLabel: "12,9%" }, { label: "Lume Orla", value: 9.8, valueLabel: "9,8%" }]} reference={12.6} aria-label="Conversão por loja; média 12,6%" /></div>,
 };
 export const Funil: Story = { name: "Funil (barra de conversão)", render: () => <div style={{ maxWidth: "var(--cf-side-panel-width)" }}><FunnelChart data={[{ label: "Visitantes", value: 180 }, { label: "Compraram", value: 25 }]} /></div> };
+export const Sankey: Story = {
+  name: "Sankey: da calçada ao caixa",
+  render: () => (
+    <div style={cartao}>
+      <SankeyChart
+        nodes={[
+          { id: "passaram", label: "Passaram" },
+          { id: "entraram", label: "Entraram" },
+          { id: "naoEntraram", label: "Não entraram" },
+          { id: "experimentaram", label: "Experimentaram" },
+          { id: "compraram", label: "Compraram" },
+          { id: "saiuSem", label: "Saíram sem comprar" },
+        ]}
+        links={[
+          { source: "passaram", target: "entraram", value: 420 },
+          { source: "passaram", target: "naoEntraram", value: 1380 },
+          { source: "entraram", target: "experimentaram", value: 190 },
+          { source: "entraram", target: "saiuSem", value: 230 },
+          { source: "experimentaram", target: "compraram", value: 72 },
+          { source: "experimentaram", target: "saiuSem", value: 118 },
+        ]}
+        aria-label="Visitantes de hoje: 1.800 passaram, 420 entraram, 72 compraram"
+      />
+    </div>
+  ),
+};
+export const SankeyEstoque: Story = {
+  name: "Sankey: estoque recebido, exposto e vendido",
+  render: () => (
+    <div style={cartao}>
+      <SankeyChart
+        height={220}
+        nodes={[{ id: "rec", label: "Recebido" }, { id: "exp", label: "Exposto" }, { id: "ven", label: "Vendido" }, { id: "per", label: "Perdido" }, { id: "loja", label: "Ainda na loja" }]}
+        links={[
+          { source: "rec", target: "exp", value: 940 },
+          { source: "rec", target: "per", value: 60 },
+          { source: "exp", target: "ven", value: 610 },
+          { source: "exp", target: "per", value: 35 },
+          { source: "exp", target: "loja", value: 295 },
+        ]}
+        format={(v) => `${new Intl.NumberFormat("pt-BR").format(v)} pç`}
+        aria-label="Estoque do mês: 1.000 peças recebidas, 610 vendidas, 95 perdidas"
+      />
+    </div>
+  ),
+};
 export const Dispersao: Story = {
   name: "Dispersão (M-Montar)",
   render: () => <div style={{ maxWidth: "var(--cf-side-panel-width)" }}><ScatterChart points={[{ x: 1200, y: 18000 }, { x: 1500, y: 24000, label: "Jardins" }, { x: 800, y: 9000 }, { x: 1100, y: 15000, label: "Orla" }]} formatX={(v) => `${String(v / 1000).replace(".", ",")} mil`} formatY={(v) => `R$ ${String(v / 1000)} mil`} aria-label="Faturamento por peças, um ponto por loja" /></div>,

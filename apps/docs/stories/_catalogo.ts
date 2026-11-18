@@ -127,7 +127,7 @@ const importacoes: Record<string, string> = {
     'import { Spotlight, spotlight } from "@countify-oficial/spotlight";',
     'import { CodeHighlight } from "@countify-oficial/code-highlight";',
   ].join("\n"),
-  "Extensões/Charts": 'import { AreaChart, BarChart, LineChart, PieChart } from "@countify-oficial/charts";',
+  "Extensões/Charts": 'import { AreaChart, BarChart, LineChart, PieChart, SankeyChart } from "@countify-oficial/charts";',
   "Extensões/Dates": 'import { Calendar, DateInput, DatePicker, DateTimePicker, TimeInput } from "@countify-oficial/dates";',
   "Extensões/Modals": 'import { ModalsProvider, modals } from "@countify-oficial/modals";',
   "Extensões/Notifications": 'import { Notifications, notifications } from "@countify-oficial/notifications";',

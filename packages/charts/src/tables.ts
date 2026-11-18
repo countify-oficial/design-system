@@ -1,6 +1,6 @@
 // A tabela de dados de cada gráfico: vai escondida na web (para o leitor de tela) e vira o resumo no celular.
 import type { CountifyMessages } from "@countify-oficial/provider";
-import type { AreaChartData, BarChartData, BarListData, ComboChartData, FunnelChartData, HeatmapData, LineChartData, PieChartData, RadarChartData, ScatterChartData, SparklineData } from "./draw";
+import type { AreaChartData, BarChartData, BarListData, ComboChartData, FunnelChartData, HeatmapData, LineChartData, PieChartData, RadarChartData, SankeyChartData, ScatterChartData, SparklineData } from "./draw";
 
 export interface DataTable {
   head: string[];
@@ -56,6 +56,12 @@ export const heatmapTable = (d: HeatmapData, m: CountifyMessages): DataTable => 
 export const pieTable = (d: PieChartData): DataTable => ({ head: ["", ""], rows: d.data.map((x) => [x.label, fmt(x.value, d.format)]) });
 
 export const radarTable = (d: RadarChartData): DataTable => ({ head: ["", "", ...(d.compare ? [""] : [])], rows: d.axes.map((a, i) => [a, fmt(d.values[i]), ...(d.compare ? [fmt(d.compare[i])] : [])]) });
+
+/** Sankey: uma linha por fluxo (origem, destino, valor), na ordem de links: é a mesma ordem da dica. */
+export const sankeyTable = (d: SankeyChartData, m: CountifyMessages): DataTable => {
+  const nome = new Map(d.nodes.map((x) => [x.id, x.label]));
+  return { head: [m.flowSource, m.flowTarget, m.flowValue], rows: d.links.map((l) => [nome.get(l.source) ?? l.source, nome.get(l.target) ?? l.target, fmt(l.value, d.format)]) };
+};
 
 export const sparklineTable = (d: SparklineData): DataTable => ({ head: ["", ""], rows: d.values.map((v, i) => [String(i + 1), fmt(v)]) });
 
