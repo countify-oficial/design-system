@@ -1,4 +1,6 @@
 export { Calendar, type CalendarProps } from "./Calendar.native";
+export { EventCalendar, type EventCalendarProps } from "./EventCalendar.native";
+export type { CalendarEvent, EventCalendarBaseProps } from "./useEventCalendar";
 export { DateInput, DatePicker, DateTimePicker, TimeInput, type DateFieldProps, type DateInputProps, type DatePickerProps, type DatePreset, type DateTimePickerProps, type TimeInputProps } from "./Pickers.native";
 export { useCalendar, type CalendarBaseProps, type CalendarDay, type CalendarValueProps } from "./useCalendar";
 export {

@@ -109,6 +109,10 @@ export interface CountifyMessages {
   cellsRejected: (n: number) => string;
   undone: string;
   redone: string;
+  /** EventCalendar: quantos eventos o dia tem ("2 eventos"), o nome do "+N mais" e o dia sem eventos */
+  eventCount: (n: number) => string;
+  moreEvents: (n: number, dia: string) => string;
+  noEvents: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -187,4 +191,7 @@ export const defaultMessages: CountifyMessages = {
   cellsRejected: (n) => (n === 1 ? "1 valor recusado" : `${n} valores recusados`),
   undone: "Edição desfeita",
   redone: "Edição refeita",
+  eventCount: (n) => (n === 1 ? "1 evento" : `${n} eventos`),
+  moreEvents: (n, dia) => (n === 1 ? `mais 1 evento em ${dia}` : `mais ${n} eventos em ${dia}`),
+  noEvents: "Nenhum evento",
 };
