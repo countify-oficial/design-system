@@ -29,12 +29,19 @@ export interface Scene {
   shapes: Shape[];
   /** Usa o padrão de hachura (as lacunas da linha). */
   hatch?: boolean | undefined;
-  /** A dica (passar o mouse, foco, toque): o x de cada ponto e a altura da linha-guia. Só nos gráficos por índice. */
-  tips?: { xs: number[]; top: number; bottom: number } | undefined;
+  /**
+   * A dica (passar o mouse, foco, toque): o x de cada ponto e a altura da linha-guia, nos gráficos por índice. Com ys
+   * (Sankey), cada item é um ponto (x, y): a escolha é pelo mais perto nos dois eixos, sem linha-guia; a dica sai no
+   * ponto e marks[i] realça o item ativo.
+   */
+  tips?: { xs: number[]; top: number; bottom: number; ys?: number[] | undefined; marks?: Shape[] | undefined } | undefined;
 }
 
-/** O ponto mais perto do x (o mouse ou o dedo). */
-export const nearest = (xs: number[], x: number): number => xs.reduce((m, v, i) => (Math.abs(v - x) < Math.abs((xs[m] ?? 0) - x) ? i : m), 0);
+/** O ponto mais perto do x (o mouse ou o dedo); com ys, o mais perto de (x, y). */
+export const nearest = (xs: number[], x: number, ys?: number[], y = 0): number => {
+  const d = (i: number) => Math.hypot((xs[i] ?? 0) - x, ys ? (ys[i] ?? 0) - y : 0);
+  return xs.reduce((m, _, i) => (d(i) < d(m) ? i : m), 0);
+};
 
 /** Arredonda a 1 casa (SVG menor e estável nos testes). */
 export const n1 = (v: number): number => Math.round(v * 10) / 10;

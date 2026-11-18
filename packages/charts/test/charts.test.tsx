@@ -3,11 +3,17 @@ import userEvent from "@testing-library/user-event";
 import { semViolacoes } from "@countify-oficial/test-utils";
 import { describe, expect, it } from "vitest";
 import {
-  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, drawBar, drawCombo, drawBarList, drawHeatmap, drawLine, drawPie, drawRadar, drawScatter, FunnelChart, Heatmap, heatLevel, LineChart, niceMax, niceTicks,
-  PieChart, RadarChart, ScatterChart, Sparkline, type Shape,
+  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, drawBar, drawCombo, drawBarList, drawHeatmap, drawLine, drawPie, drawRadar, drawSankey, drawScatter, FunnelChart, Heatmap, heatLevel, LineChart, niceMax,
+  niceTicks, PieChart, RadarChart, SankeyChart, ScatterChart, Sparkline, type SankeyChartData, type Shape,
 } from "../src";
 import { nearest } from "../src/scene";
 import { barTable, tipLines } from "../src/tables";
+
+// estoque: recebido → exposto → vendido; o que não foi exposto se perdeu
+const estoque: SankeyChartData = {
+  nodes: [{ id: "rec", label: "Recebido" }, { id: "exp", label: "Exposto" }, { id: "ven", label: "Vendido" }, { id: "per", label: "Perdido" }],
+  links: [{ source: "rec", target: "exp", value: 80 }, { source: "rec", target: "per", value: 20 }, { source: "exp", target: "ven", value: 60 }, { source: "exp", target: "per", value: 20 }],
+};
 
 const tipos = (s: Shape[], k: Shape["kind"]) => s.filter((x) => x.kind === k);
 const retangulos = (s: Shape[]) => s.filter((x): x is Extract<Shape, { kind: "rect" }> => x.kind === "rect");
@@ -108,6 +114,54 @@ describe("contas dos gráficos", () => {
   });
 });
 
+describe("Sankey", () => {
+  it("colunas pela profundidade, barras e faixas proporcionais ao valor, rótulos do funil", () => {
+    const c = drawSankey(estoque, 400, 200);
+    const barras = retangulos(c.shapes);
+    // Recebido na 1ª coluna, Exposto na 2ª, Vendido e Perdido na última (Perdido recebe da 1ª e da 2ª); a última
+    // coluna reserva o lugar dos rótulos dela ("60 · 60%": 8 + 8 letras de 15 × 0,56 = 75,2)
+    expect(barras.map((b) => b.x)).toEqual([0, 154.4, 308.8, 308.8]);
+    expect(barras.every((b) => b.width === 16 && b.fill === "accent")).toBe(true);
+    // a coluna mais cheia (Vendido e Perdido, 60 + 40, com o vão de 16) enche a altura: 184 para 100
+    expect(barras.map((b) => Math.round(b.height))).toEqual([184, 147, 110, 74]);
+    const faixas = tipos(c.shapes, "path");
+    expect(faixas).toHaveLength(4);
+    expect(faixas.every((f) => f.kind === "path" && f.fill === "accent" && f.opacity === 0.18)).toBe(true);
+    const textos = tipos(c.shapes, "text").map((t) => (t.kind === "text" ? t.text : ""));
+    expect(textos).toEqual(["Recebido", "100", "Exposto", "80 · 80%", "Vendido", "60 · 60%", "Perdido", "40 · 40%"]);
+    // os rótulos ficam 8 à direita da barra, também na última coluna
+    expect(tipos(c.shapes, "text").at(-1)).toMatchObject({ anchor: "start", x: 332.8 });
+    // a dica: um ponto no meio de cada fluxo e o realce dele
+    expect(c.tips?.xs).toHaveLength(4);
+    expect(c.tips?.ys).toHaveLength(4);
+    expect(c.tips?.marks?.[0]).toMatchObject({ kind: "path", opacity: 0.36 });
+    expect(nearest([0, 10], 4, [0, 10], 9)).toBe(1);
+  });
+
+  it("as faixas saem e chegam empilhadas na barra, sem sobrar nem passar", () => {
+    const c = drawSankey(estoque, 400, 200);
+    const [rec] = retangulos(c.shapes);
+    // os dois fluxos do Recebido somam a barra inteira: o 1º começa no topo
+    const inicio = (k: number) => {
+      const f = tipos(c.shapes, "path")[k];
+      return f?.kind === "path" ? Number(/^M[\d.]+,([\d.]+)/.exec(f.d)?.[1]) : NaN;
+    };
+    expect(inicio(0)).toBeCloseTo(rec?.y ?? 0, 0);
+    expect(inicio(1)).toBeCloseTo((rec?.y ?? 0) + (rec?.height ?? 0) * 0.8, 0);
+  });
+
+  it("recusa ciclo, id desconhecido e id repetido com erro claro", () => {
+    const nodes = [{ id: "a", label: "A" }, { id: "b", label: "B" }];
+    expect(() => drawSankey({ nodes, links: [{ source: "a", target: "b", value: 1 }, { source: "b", target: "a", value: 1 }] }, 300)).toThrow(/ciclo entre A, B/);
+    expect(() => drawSankey({ nodes, links: [{ source: "a", target: "a", value: 1 }] }, 300)).toThrow(/ciclo/);
+    expect(() => drawSankey({ nodes, links: [{ source: "a", target: "x", value: 1 }] }, 300)).toThrow(/"a" → "x"/);
+    expect(() => drawSankey({ nodes: [...nodes, { id: "a", label: "C" }], links: [] }, 300)).toThrow(/mesmo id/);
+    // sem fluxos, só os nomes; vazio não quebra
+    expect(retangulos(drawSankey({ nodes, links: [] }, 300).shapes)).toHaveLength(0);
+    expect(drawSankey({ nodes: [], links: [] }, 300).shapes).toEqual([]);
+  });
+});
+
 describe("componentes (web)", () => {
   it("o desenho fica fora do leitor de tela; a tabela de dados entra", async () => {
     const { container } = render(
@@ -153,11 +207,36 @@ describe("componentes (web)", () => {
         <DonutChart width={300} data={[{ label: "A", value: 1 }]} centerLabel="100%" />
         <RadarChart width={300} axes={["a", "b", "c"]} values={[1, 2, 3]} />
         <Sparkline width={120} values={[1, 3, 2]} />
+        <SankeyChart width={300} {...estoque} />
         <ChartLegend items={[{ label: "Real" }, { label: "Previsto", type: "dashed" }, { label: "Pico", type: "square" }]} />
       </>,
     );
-    expect(container.querySelectorAll("figure svg")).toHaveLength(12);
+    expect(container.querySelectorAll("figure svg")).toHaveLength(13);
     expect(screen.getByText("Previsto")).toBeTruthy();
+    await semViolacoes(container);
+  });
+
+  it("Sankey: a tabela de fluxos e a dica do fluxo mais perto (mouse e teclado)", async () => {
+    const usuario = userEvent.setup();
+    const { container } = render(<SankeyChart width={400} height={200} {...estoque} aria-label="Estoque da semana: 60 de 100 vendidos" />);
+    const tabela = screen.getByRole("table");
+    expect(tabela.querySelector("thead")?.textContent).toBe("OrigemDestinoValor");
+    expect(tabela.querySelector("tbody tr")?.textContent).toBe("RecebidoExposto80");
+    const controle = screen.getByRole("slider", { name: "Fluxo do gráfico" });
+    // sem linha-guia; o fluxo ativo ganha o realce
+    const faixas = () => container.querySelectorAll("svg path").length;
+    expect(faixas()).toBe(4);
+    const c = drawSankey(estoque, 400, 200);
+    fireEvent.pointerMove(controle, { clientX: c.tips?.xs[2], clientY: c.tips?.ys?.[2] });
+    expect(container.textContent).toContain("ExpostoDestino: VendidoValor: 60");
+    expect(faixas()).toBe(5);
+    expect(container.querySelector("svg line")).toBeNull();
+    fireEvent.pointerLeave(controle);
+    expect(faixas()).toBe(4);
+    await usuario.tab();
+    expect(controle.getAttribute("aria-valuetext")).toBe("Recebido, Destino: Exposto, Valor: 80");
+    await usuario.keyboard("{End}");
+    expect(controle.getAttribute("aria-valuetext")).toBe("Exposto, Destino: Perdido, Valor: 20");
     await semViolacoes(container);
   });
 });

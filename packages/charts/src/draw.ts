@@ -342,6 +342,124 @@ export function drawFunnel(d: FunnelChartData, largura: number): Scene {
   );
 }
 
+// ---------- Sankey (a identidade não desenha: a barra do funil em pé e as faixas como a área; a confirmar com o design)
+
+export interface SankeyChartData {
+  /** As etapas: id único (o que os fluxos citam) e o nome escrito ao lado da barra. Em cada coluna, a ordem é a de cima para baixo. */
+  nodes: { id: string; label: string }[];
+  /**
+   * Os fluxos de uma etapa para outra; a espessura é proporcional ao value (negativo conta como 0). A coluna de cada
+   * etapa é o caminho mais longo desde uma etapa de entrada. Um id fora de nodes, um id repetido em nodes ou fluxos que
+   * voltam a uma etapa já passada (ciclo) são recusados com erro: o Sankey só anda para a frente.
+   */
+  links: { source: string; target: string; value: number }[];
+  /** O formato dos números (rótulos, tabela e dica). Padrão: pt-BR com até uma casa. */
+  format?: ((v: number) => string) | undefined;
+}
+
+export function drawSankey(d: SankeyChartData, largura: number, altura: number = chart.height.line): Scene {
+  const format = d.format ?? fmtPadrao;
+  const n = d.nodes.length;
+  const ids = new Map(d.nodes.map((x, i) => [x.id, i]));
+  if (ids.size !== n) throw new Error("SankeyChart: há etapas com o mesmo id em nodes.");
+  const fluxos = d.links.map((l) => {
+    const s = ids.get(l.source);
+    const t = ids.get(l.target);
+    if (s === undefined || t === undefined) throw new Error(`SankeyChart: o fluxo "${l.source}" → "${l.target}" cita uma etapa que não está em nodes.`);
+    return { s, t, v: Math.max(0, l.value) || 0 };
+  });
+  // a coluna pela ordem topológica (Kahn): quem não entra na fila está num ciclo
+  const prof = d.nodes.map(() => 0);
+  const faltam = d.nodes.map((_, i) => fluxos.filter((l) => l.t === i).length);
+  const fila = faltam.flatMap((f, i) => (f === 0 ? [i] : []));
+  for (let k = 0; k < fila.length; k++) {
+    const s = fila[k] ?? 0;
+    for (const l of fluxos) {
+      if (l.s !== s) continue;
+      prof[l.t] = Math.max(prof[l.t] ?? 0, (prof[s] ?? 0) + 1);
+      faltam[l.t] = (faltam[l.t] ?? 0) - 1;
+      if (faltam[l.t] === 0) fila.push(l.t);
+    }
+  }
+  if (fila.length < n) {
+    const presas = d.nodes.filter((_, i) => !fila.includes(i)).map((x) => x.label);
+    throw new Error(`SankeyChart: os fluxos formam um ciclo entre ${presas.join(", ")}. O Sankey só aceita fluxos que vão para a frente.`);
+  }
+  const soma = (f: (l: (typeof fluxos)[number]) => boolean) => fluxos.reduce((t, l) => (f(l) ? t + l.v : t), 0);
+  const valor = d.nodes.map((_, i) => Math.max(soma((l) => l.t === i), soma((l) => l.s === i)));
+  const ultima = Math.max(0, ...prof);
+  const colunas = Array.from({ length: ultima + 1 }, (_, c) => d.nodes.flatMap((_, i) => (prof[i] === c ? [i] : [])));
+  // a confirmar: a barra da etapa tem a altura da barra de conversão (16) e o vão entre etapas é o do funil (16)
+  const barra = chart.funnel.height;
+  const vao = space[4];
+  // cada etapa ocupa ao menos as duas linhas do rótulo (nome e número), para os textos não se encostarem
+  const bloco = 2 * LINHA_TEXTO;
+  const somaCol = (col: number[]) => col.reduce((t, i) => t + (valor[i] ?? 0), 0);
+  const ky = Math.max(0, Math.min(...colunas.map((col) => (somaCol(col) > 0 ? (altura - (col.length - 1) * vao) / somaCol(col) : Infinity))));
+  const escala = Number.isFinite(ky) ? ky : 0;
+  const alto = valor.map((v) => v * escala);
+  const vaga = alto.map((h) => Math.max(h, bloco));
+  const extensao = colunas.map((col) => col.reduce((t, i) => t + (vaga[i] ?? 0), 0) + Math.max(0, col.length - 1) * vao);
+  const total = Math.max(0, ...extensao);
+  // o rótulo do funil: o nome e, embaixo, o número em negrito com a parte da entrada (a soma da 1ª coluna)
+  const entrada = somaCol(colunas[0] ?? []);
+  const pct = new Intl.NumberFormat("pt-BR", { style: "percent", maximumFractionDigits: 1 });
+  const numeros = valor.map((v, i) => (prof[i] === 0 || entrada === 0 ? format(v) : `${format(v)} · ${pct.format(v / entrada)}`));
+  // os rótulos ficam à direita da barra; a última coluna reserva o lugar dos dela (largura aproximada do texto de 15)
+  const larguraRotulo = (i: number) => space[2] + Math.max(...[d.nodes[i]?.label ?? "", numeros[i] ?? ""].map((t) => t.length * fontSize.sm * 0.56));
+  const reserva = Math.max(0, ...(colunas[ultima] ?? []).map(larguraRotulo));
+  const X = prof.map((c) => (ultima > 0 ? (c * Math.max(0, largura - barra - reserva)) / ultima : 0));
+  const Y = d.nodes.map(() => 0);
+  colunas.forEach((col, c) => {
+    // cada coluna centrada na altura da maior
+    let y = (total - (extensao[c] ?? 0)) / 2;
+    for (const i of col) {
+      Y[i] = y + ((vaga[i] ?? 0) - (alto[i] ?? 0)) / 2;
+      y += (vaga[i] ?? 0) + vao;
+    }
+  });
+  // as faixas saem na ordem do destino e chegam na ordem da origem (de cima para baixo): menos cruzamentos
+  const sai = d.nodes.map(() => 0);
+  const chega = d.nodes.map(() => 0);
+  const ys0: number[] = [];
+  const ys1: number[] = [];
+  const ordem = fluxos.map((_, j) => j);
+  const de = (j: number) => fluxos[j] ?? { s: 0, t: 0, v: 0 };
+  for (const j of [...ordem].sort((a, b) => (Y[de(a).t] ?? 0) - (Y[de(b).t] ?? 0))) {
+    const { s, v } = de(j);
+    ys0[j] = (Y[s] ?? 0) + (sai[s] ?? 0);
+    sai[s] = (sai[s] ?? 0) + v * escala;
+  }
+  for (const j of [...ordem].sort((a, b) => (Y[de(a).s] ?? 0) - (Y[de(b).s] ?? 0))) {
+    const { t, v } = de(j);
+    ys1[j] = (Y[t] ?? 0) + (chega[t] ?? 0);
+    chega[t] = (chega[t] ?? 0) + v * escala;
+  }
+  const f = (v: number) => String(n1(v));
+  const faixas = fluxos.map(({ s, t, v }, j) => {
+    const x0 = (X[s] ?? 0) + barra;
+    const x1 = X[t] ?? 0;
+    const xm = (x0 + x1) / 2;
+    const y0 = ys0[j] ?? 0;
+    const y1 = ys1[j] ?? 0;
+    const w = v * escala;
+    return { d: `M${f(x0)},${f(y0)}C${f(xm)},${f(y0)} ${f(xm)},${f(y1)} ${f(x1)},${f(y1)}L${f(x1)},${f(y1 + w)}C${f(xm)},${f(y1 + w)} ${f(xm)},${f(y0 + w)} ${f(x0)},${f(y0 + w)}Z`, x: xm, y: (y0 + y1 + w) / 2 };
+  });
+  const shapes: Shape[] = faixas.map((fx) => ({ kind: "path", d: fx.d, fill: "accent", opacity: chart.areaOpacity }));
+  d.nodes.forEach((x, i) => {
+    const xi = X[i] ?? 0;
+    const yi = Y[i] ?? 0;
+    if ((alto[i] ?? 0) > 0) shapes.push({ kind: "rect", x: xi, y: yi, width: barra, height: alto[i] ?? 0, rx: chart.bar.radius, fill: "accent" });
+    const tx = xi + barra + space[2];
+    const b1 = yi + (alto[i] ?? 0) / 2 - LINHA_TEXTO + fontSize.sm;
+    shapes.push({ kind: "text", x: tx, y: b1, text: x.label, anchor: "start", fill: "text", size: fontSize.sm });
+    shapes.push({ kind: "text", x: tx, y: b1 + LINHA_TEXTO, text: numeros[i] ?? "", anchor: "start", fill: "text", size: fontSize.sm, weight: 700 });
+  });
+  // a confirmar: o fluxo ativo da dica ganha mais uma camada da série a 36% (o 2º tom do mapa de calor)
+  const marks: Shape[] = faixas.map((fx) => ({ kind: "path", d: fx.d, fill: "accent", opacity: chart.heatmap.levels[1] }));
+  return { height: total, shapes, tips: { xs: faixas.map((fx) => fx.x), ys: faixas.map((fx) => fx.y), top: 0, bottom: total, marks } };
+}
+
 // ---------- dispersão
 
 export interface ScatterChartData {

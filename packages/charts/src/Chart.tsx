@@ -2,7 +2,7 @@ import { VisuallyHidden } from "@countify-oficial/core";
 import { useId } from "@countify-oficial/hooks";
 import { useMessages } from "@countify-oficial/provider";
 import { chart, fontWeight, space } from "@countify-oficial/tokens";
-import { useEffect, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { nearest, type Paint, type Scene, type Shape } from "./scene";
 import { tipLines, type DataTable } from "./tables";
 import classes from "./Chart.module.css";
@@ -62,6 +62,13 @@ export function Grafico({ desenhar, tabela, "aria-label": rotulo, width, classNa
   const dicas = cena?.tips;
   const i = dicas && ativo !== null ? Math.min(ativo, dicas.xs.length - 1) : null;
   const xa = i === null ? 0 : (dicas?.xs[i] ?? 0);
+  // no Sankey a dica sai no meio do fluxo; nos outros, no topo da linha-guia
+  const ya = i === null ? 0 : (dicas?.ys?.[i] ?? dicas?.top ?? 0);
+  const escolher = (e: PointerEvent<HTMLElement>) => {
+    if (!dicas) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    setAtivo(nearest(dicas.xs, e.clientX - r.left, dicas.ys, e.clientY - r.top));
+  };
   const tecla = (e: KeyboardEvent) => {
     if (!dicas) return;
     const ultimo = dicas.xs.length - 1;
@@ -85,7 +92,8 @@ export function Grafico({ desenhar, tabela, "aria-label": rotulo, width, classNa
         </defs>
       )}
       {cena.shapes.map((s, k) => forma(s, k, hachura))}
-      {dicas && i !== null && forma({ kind: "line", x1: xa, y1: dicas.top, x2: xa, y2: dicas.bottom, stroke: "text3", strokeWidth: chart.stroke.grid }, cena.shapes.length, hachura)}
+      {dicas?.marks && i !== null && dicas.marks[i] && forma(dicas.marks[i], cena.shapes.length, hachura)}
+      {dicas && !dicas.ys && i !== null && forma({ kind: "line", x1: xa, y1: dicas.top, x2: xa, y2: dicas.bottom, stroke: "text3", strokeWidth: chart.stroke.grid }, cena.shapes.length, hachura)}
     </svg>
   );
   return (
@@ -94,14 +102,14 @@ export function Grafico({ desenhar, tabela, "aria-label": rotulo, width, classNa
         <div
           role="slider"
           tabIndex={0}
-          aria-label={messages.chartPoint}
+          aria-label={dicas.ys ? messages.chartFlow : messages.chartPoint}
           aria-valuemin={0}
           aria-valuemax={dicas.xs.length - 1}
           aria-valuenow={i ?? 0}
           aria-valuetext={tipLines(tabela, i ?? 0).join(", ")}
           className={classes["explore"]}
-          onPointerDown={(e) => setAtivo(nearest(dicas.xs, e.clientX - e.currentTarget.getBoundingClientRect().left))}
-          onPointerMove={(e) => setAtivo(nearest(dicas.xs, e.clientX - e.currentTarget.getBoundingClientRect().left))}
+          onPointerDown={escolher}
+          onPointerMove={escolher}
           onPointerLeave={() => setAtivo(null)}
           onFocus={() => setAtivo((a) => a ?? 0)}
           onBlur={() => setAtivo(null)}
@@ -110,7 +118,7 @@ export function Grafico({ desenhar, tabela, "aria-label": rotulo, width, classNa
           {desenho}
           {i !== null && (
             // a dica fica do lado de dentro da linha-guia: à direita dela na 1ª metade, à esquerda na 2ª
-            <div aria-hidden className={classes["tip"]} style={xa < largura / 2 ? { top: dicas.top, left: xa + space[2] } : { top: dicas.top, right: largura - xa + space[2] }}>
+            <div aria-hidden className={classes["tip"]} style={xa < largura / 2 ? { top: ya, left: xa + space[2] } : { top: ya, right: largura - xa + space[2] }}>
               {tipLines(tabela, i).map((l, k) => (
                 <div key={k}>{l}</div>
               ))}

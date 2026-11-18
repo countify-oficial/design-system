@@ -68,11 +68,14 @@ export function Grafico({ desenhar, tabela, accessibilityLabel, width, style, te
   const dicas = cena?.tips;
   const i = dicas && ativo !== null ? Math.min(ativo, dicas.xs.length - 1) : null;
   const xa = i === null ? 0 : (dicas?.xs[i] ?? 0);
-  // o Svg não recebe o toque: o locationX é sempre o da moldura
+  // no Sankey a dica sai no meio do fluxo; nos outros, no topo da linha-guia
+  const ya = i === null ? 0 : (dicas?.ys?.[i] ?? dicas?.top ?? 0);
+  // o Svg não recebe o toque: o locationX e o locationY são sempre os da moldura
+  const escolher = (e: GestureResponderEvent) => dicas && setAtivo(nearest(dicas.xs, e.nativeEvent.locationX, dicas.ys, e.nativeEvent.locationY));
   const toque = dicas && {
     onStartShouldSetResponder: () => true,
-    onResponderGrant: (e: GestureResponderEvent) => setAtivo(nearest(dicas.xs, e.nativeEvent.locationX)),
-    onResponderMove: (e: GestureResponderEvent) => setAtivo(nearest(dicas.xs, e.nativeEvent.locationX)),
+    onResponderGrant: escolher,
+    onResponderMove: escolher,
     onResponderRelease: () => setAtivo(null),
     onResponderTerminate: () => setAtivo(null),
   };
@@ -88,12 +91,13 @@ export function Grafico({ desenhar, tabela, accessibilityLabel, width, style, te
             </Defs>
           )}
           {cena.shapes.map((s, k) => forma(s, k, tinta))}
-          {dicas && i !== null && forma({ kind: "line", x1: xa, y1: dicas.top, x2: xa, y2: dicas.bottom, stroke: "text3", strokeWidth: chart.stroke.grid }, cena.shapes.length, tinta)}
+          {dicas?.marks && i !== null && dicas.marks[i] && forma(dicas.marks[i], cena.shapes.length, tinta)}
+          {dicas && !dicas.ys && i !== null && forma({ kind: "line", x1: xa, y1: dicas.top, x2: xa, y2: dicas.bottom, stroke: "text3", strokeWidth: chart.stroke.grid }, cena.shapes.length, tinta)}
         </Svg>
       )}
       {dicas && i !== null && (
         // a mesma dica do Tooltip, do lado de dentro da linha-guia
-        <View pointerEvents="none" style={[{ position: "absolute", top: dicas.top, paddingVertical: space[1], paddingHorizontal: space[2], borderRadius: radius.xs, backgroundColor: c.text }, xa < largura / 2 ? { left: xa + space[2] } : { right: largura - xa + space[2] }]}>
+        <View pointerEvents="none" style={[{ position: "absolute", top: ya, paddingVertical: space[1], paddingHorizontal: space[2], borderRadius: radius.xs, backgroundColor: c.text }, xa < largura / 2 ? { left: xa + space[2] } : { right: largura - xa + space[2] }]}>
           {tipLines(tabela, i).map((l, k) => (
             <RNText key={k} style={{ color: c.bg, fontSize: fontSize.xs, fontFamily: nativeFontFamily[500] }}>
               {l}

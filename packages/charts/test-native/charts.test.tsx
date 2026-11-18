@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react-native";
-import { BarChart, ChartLegend, ComboChart, Heatmap, LineChart } from "../src/index.native";
+import { BarChart, ChartLegend, ComboChart, drawSankey, Heatmap, LineChart, SankeyChart } from "../src/index.native";
 
 describe("gráficos (React Native)", () => {
   it("o leitor de tela ouve o resumo e os valores", async () => {
@@ -40,5 +40,20 @@ describe("gráficos (React Native)", () => {
     expect(screen.getByText("11h")).toBeOnTheScreen();
     await fireEvent(g, "responderRelease");
     expect(screen.queryByText("11h")).toBeNull();
+  });
+
+  it("Sankey: o resumo traz cada fluxo e o dedo escolhe o fluxo mais perto", async () => {
+    const dados = {
+      nodes: [{ id: "v", label: "Visitantes" }, { id: "e", label: "Entraram" }, { id: "c", label: "Compraram" }],
+      links: [{ source: "v", target: "e", value: 400 }, { source: "e", target: "c", value: 80 }],
+    };
+    await render(<SankeyChart width={300} {...dados} accessibilityLabel="Visitas" />);
+    const g = screen.getByRole("image");
+    expect(g.props.accessibilityLabel).toBe("Visitas. Visitantes Entraram 400; Entraram Compraram 80");
+    const { tips } = drawSankey(dados, 300);
+    await fireEvent(g, "responderGrant", { nativeEvent: { locationX: tips?.xs[1], locationY: tips?.ys?.[1] } });
+    expect(screen.getByText("Destino: Compraram")).toBeOnTheScreen();
+    await fireEvent(g, "responderRelease");
+    expect(screen.queryByText("Destino: Compraram")).toBeNull();
   });
 });

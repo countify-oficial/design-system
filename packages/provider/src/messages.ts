@@ -79,6 +79,11 @@ export interface CountifyMessages {
   normalRange: string;
   /** gráficos: o nome do controle que percorre os pontos (setas) e mostra a dica */
   chartPoint: string;
+  /** cabeçalhos da tabela do Sankey (cada linha é um fluxo) e o nome do controle que percorre os fluxos */
+  flowSource: string;
+  flowTarget: string;
+  flowValue: string;
+  chartFlow: string;
   /** link de copiar do CodeHighlight */
   copy: string;
   copied: string;
@@ -171,6 +176,10 @@ export const defaultMessages: CountifyMessages = {
   forecast: "Previsto",
   normalRange: "Faixa normal",
   chartPoint: "Ponto do gráfico",
+  flowSource: "Origem",
+  flowTarget: "Destino",
+  flowValue: "Valor",
+  chartFlow: "Fluxo do gráfico",
   copy: "Copiar",
   copied: "Copiado",
   dropFiles: "Arraste os arquivos ou clique para escolher",
