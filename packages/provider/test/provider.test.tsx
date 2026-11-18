@@ -75,6 +75,11 @@ describe("CountifyProvider (web)", () => {
     ]);
   });
 
+  it("textos do SearchInput: nome do campo e botão de limpar", async () => {
+    const { defaultMessages: m } = await import("../src/index");
+    expect([m.search, m.clearSearch]).toEqual(["Buscar", "Limpar busca"]);
+  });
+
   it("sem provider: claro, tema e textos padrão", () => {
     const { result } = renderHook(() => useCountifyTheme());
     expect(result.current.colorScheme).toBe("light");

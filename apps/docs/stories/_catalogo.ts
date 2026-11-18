@@ -62,6 +62,7 @@ export const descricoes: Record<string, string> = {
   "Campos/NumberInput": "Números com passo, limites e formato brasileiro.",
   "Campos/PasswordInput": "Senha com o botão de mostrar e ocultar.",
   "Campos/PinInput": "Código com uma caixa por caractere.",
+  "Campos/SearchInput": "Busca no topo da lista: lupa, botão de limpar, Esc e atalho de teclado.",
   "Campos/TextInput": "Campo de texto com rótulo, ajuda e erro.",
   "Campos/Textarea": "Texto de várias linhas, com altura automática.",
   "Escolhas/Checkbox": "Caixa de marcar, sozinha ou em grupo.",

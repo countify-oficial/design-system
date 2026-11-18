@@ -131,6 +131,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | TextInput | ok | ok | ok | |
 | Textarea | ok | ok | adaptado | no celular, sem autosize (o campo de várias linhas do sistema já cresce) |
 | PasswordInput | ok | ok | ok | |
+| SearchInput | ok | ok | adaptado | no celular, sem atalho de teclado (`shortcut`) nem Esc (não há teclado físico); teclado do sistema com a tecla "buscar" |
 | NumberInput | ok | ok | adaptado | no celular, teclado numérico do sistema; sem setas do teclado |
 | NativeSelect | ok | ok | N/A | o React Native não tem `<select>`; no celular, use Select (passo da Combobox), que abre a folha |
 | FileInput | ok | ok | N/A | igual ao FileButton: no celular, `expo-document-picker` |
