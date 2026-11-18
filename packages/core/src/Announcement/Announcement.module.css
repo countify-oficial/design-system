@@ -1,0 +1,43 @@
+/* o cartão do Alert (anel, canto 16, recuo 16) com o quadrado de ícone das listas do mockup (ThemeIcon) */
+.root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cf-space-3);
+  box-sizing: border-box;
+  padding: var(--cf-space-4);
+  border-radius: var(--cf-radius-md);
+  background-color: var(--cf-color-card);
+  box-shadow: var(--cf-shadow-xs);
+  color: var(--cf-color-text);
+  font-family: var(--cf-font-sans);
+  line-height: var(--cf-line-height);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--cf-space-1);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+.message {
+  color: var(--cf-color-text2);
+  font-size: var(--cf-font-size-sm);
+}
+
+.action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cf-space-2);
+  margin-top: var(--cf-space-1);
+}
+
+.closeButton {
+  margin: calc(-1 * var(--cf-space-3)) calc(-1 * var(--cf-space-3)) 0 0;
+}

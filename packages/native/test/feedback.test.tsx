@@ -3,7 +3,7 @@ import { colors } from "@countify-oficial/tokens";
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { StyleSheet, Text, type ViewStyle } from "react-native";
 import {
-  Alert, Avatar, Badge, Button, Card, Divider, EmptyState, Icon, Indicator, Kbd, Notification, Paper, Progress, RingProgress,
+  Alert, Announcement, Avatar, Badge, Button, Card, Divider, EmptyState, Icon, Indicator, Kbd, Notification, Paper, Progress, RingProgress,
   SemiCircleProgress, Skeleton, SkeletonLoader, ThemeIcon,
 } from "../src";
 
@@ -123,5 +123,35 @@ describe("Alert, Notification e EmptyState (React Native)", () => {
   it("EmptyState centralizado", async () => {
     await render(<EmptyState title="Nenhuma análise salva" description="Salve uma análise." />);
     expect(screen.getByText("Nenhuma análise salva")).toHaveStyle({ textAlign: "center", fontSize: 17 });
+  });
+});
+
+describe("Announcement (React Native)", () => {
+  it("cartão com anel, quadrado do tom, título, texto e ação; o × Dispensar esconde e chama onDismiss", async () => {
+    const aoDispensar = jest.fn();
+    await render(
+      <Announcement testID="a" title="Nova versão do agente" action={<Button size="sm" variant="subtle">Ver o que mudou</Button>} onDismiss={aoDispensar}>
+        A 1.2.0 conta pessoas em duas portas.
+      </Announcement>,
+    );
+    expect(screen.getByTestId("a")).toHaveStyle({ backgroundColor: l.card, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: l.divider });
+    expect(screen.getByText("Nova versão do agente")).toHaveStyle({ fontFamily: "Roboto_500Medium", color: l.text, fontSize: 17 });
+    expect(screen.getByText("A 1.2.0 conta pessoas em duas portas.")).toHaveStyle({ color: l.text2, fontSize: 15 });
+    expect(screen.getByRole("button", { name: "Ver o que mudou" })).toBeTruthy();
+    await fireEvent.press(screen.getByRole("button", { name: "Dispensar" }));
+    expect(aoDispensar).toHaveBeenCalledTimes(1);
+    expect(screen.queryByTestId("a")).toBeNull();
+  });
+
+  it("controlado: o app decide; defaultOpened={false} começa fechado; nome do × pelo provider", async () => {
+    await render(
+      <CountifyProvider messages={{ dismiss: "Dismiss" }}>
+        <Announcement testID="c" title="Fica" opened onDismiss={() => undefined} />
+        <Announcement testID="f" title="Fechado" defaultOpened={false} />
+      </CountifyProvider>,
+    );
+    await fireEvent.press(screen.getByRole("button", { name: "Dismiss" }));
+    expect(screen.getByTestId("c")).toBeTruthy();
+    expect(screen.queryByTestId("f")).toBeNull();
   });
 });

@@ -79,6 +79,7 @@ describe("CountifyProvider (web)", () => {
     const { result } = renderHook(() => useCountifyTheme());
     expect(result.current.colorScheme).toBe("light");
     expect(result.current.messages.close).toBe("Fechar");
+    expect(result.current.messages.dismiss).toBe("Dispensar");
   });
 
   it("textos do DataGrid: singular e plural", () => {

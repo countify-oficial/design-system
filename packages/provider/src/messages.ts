@@ -109,6 +109,8 @@ export interface CountifyMessages {
   cellsRejected: (n: number) => string;
   undone: string;
   redone: string;
+  /** Announcement: nome do botão × que dispensa a novidade */
+  dismiss: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -187,4 +189,5 @@ export const defaultMessages: CountifyMessages = {
   cellsRejected: (n) => (n === 1 ? "1 valor recusado" : `${n} valores recusados`),
   undone: "Edição desfeita",
   redone: "Edição refeita",
+  dismiss: "Dispensar",
 };

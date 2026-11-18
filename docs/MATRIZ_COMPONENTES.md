@@ -83,6 +83,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Alert | ok | ok | adaptado | no celular, `accessibilityLiveRegion` (Android) e papel `alert`; o contêiner não agrupa, para o botão de fechar continuar alcançável |
 | Notification | ok | ok | adaptado | igual ao Alert; a fila e a posição na tela ficam em `@countify-oficial/notifications` |
 | EmptyState | ok | ok | ok | |
+| Announcement | ok | ok | adaptado | a novidade que fica até ser dispensada ("Nova versão do agente"), num cartão com o ThemeIcon. Na web, região com o nome do título; ao dispensar, o foco vai para o próximo focável (ou o anterior) e `storageKey` lembra a dispensa no `localStorage`. No celular, sem `storageKey`: o app guarda a dispensa no armazenamento dele e passa `opened`; o contêiner não agrupa, para o × continuar alcançável |
 | HelpTip | ok | ok | adaptado | no celular a explicação abre numa folha (painel de 380 a partir de 768), sem `position`; fecha no botão, no véu ou no voltar do Android |
 
 ### Tipografia

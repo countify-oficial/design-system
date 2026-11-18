@@ -3,6 +3,7 @@ export { ActionBar, type ActionBarProps } from "./ActionBar/ActionBar";
 export { ActionIcon, type ActionIconOwnProps, type ActionIconProps, type ActionIconVariant } from "./ActionIcon/ActionIcon";
 export { Affix, type AffixProps } from "./Affix/Affix";
 export { Alert, type AlertProps } from "./Alert/Alert";
+export { Announcement, type AnnouncementProps } from "./Announcement/Announcement";
 export { Anchor, type AnchorProps } from "./Anchor/Anchor";
 export { AngleSlider, type AngleSliderProps } from "./AngleSlider/AngleSlider";
 export { AppShell, AppShellHeader, AppShellMain, AppShellNavItem, AppShellTabBar, type AppShellHeaderProps, type AppShellMainProps, type AppShellNavItemProps, type AppShellProps, type AppShellTabBarProps } from "./AppShell/AppShell";

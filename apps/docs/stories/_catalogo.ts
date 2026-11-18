@@ -89,6 +89,7 @@ export const descricoes: Record<string, string> = {
   "Dados/StatCard": "Cartão de indicador: número, unidade e variação.",
   "Dados/Table": "Tabela para o computador, com cabeçalho e linhas.",
   "Feedback/Alert": "Mensagem de destaque no meio do conteúdo.",
+  "Feedback/Announcement": "Novidade que fica na tela até a pessoa dispensar.",
   "Feedback/Avatar": "Foto ou iniciais de uma pessoa ou loja.",
   "Feedback/Badge": "Selo curto de estado ou contagem.",
   "Feedback/Divider": "Linha que separa conteúdos.",
