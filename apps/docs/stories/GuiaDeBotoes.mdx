@@ -36,6 +36,8 @@ Todos os botões da biblioteca, lado a lado. Todos funcionam: clique, use o Tab 
     <tr><td>Ação secundária ao lado da principal</td><td><code>Button variant="outline"</code></td><td>Cancelar, Voltar</td></tr>
     <tr><td>Ação de menor peso, ou destrutiva</td><td><code>Button variant="subtle"</code></td><td>Excluir análise (<code>color="down"</code>)</td></tr>
     <tr><td>Acrescentar um item a uma lista</td><td><code>Button variant="dashed"</code></td><td>Adicionar bloco</td></tr>
+    <tr><td>Ação discreta no meio do texto ou de um formulário, com cara de link</td><td><code>Button variant="link"</code></td><td>Esqueci a senha, Ver todas as lojas</td></tr>
+    <tr><td>Ações irmãs encostadas numa peça só</td><td><code>Button.Group</code></td><td>Anterior · Hoje · Próximo; Salvar + ▾</td></tr>
     <tr><td>Ação só com ícone</td><td><code>ActionIcon</code></td><td>Editar, Filtrar, Voltar</td></tr>
     <tr><td>Fechar um painel, aviso ou janela</td><td><code>CloseButton</code></td><td>o × do <code>Modal</code></td></tr>
     <tr><td>Ligar e desligar uma opção</td><td><code>Toggle</code></td><td>filtros por categoria</td></tr>
@@ -102,7 +104,7 @@ Cada variante tem um papel. Use **um** botão `filled` por tela: é ele que diz 
 
 ### Variantes e cores
 
-`variant` muda o peso visual (`filled`, `outline`, `subtle`, `dashed`); `color` muda o significado: `accent` (padrão),
+`variant` muda o peso visual (`filled`, `outline`, `subtle`, `dashed`, `link`); `color` muda o significado: `accent` (padrão),
 `down` (queda, exclusão), `up` (alta, sucesso) e `warn` (aviso).
 
 <Canvas
@@ -206,6 +208,66 @@ roteador), não um `onClick` com `navigate()`: assim o usuário pode abrir em ou
   }}
 />
 
+### Variante link
+
+`variant="link"` tem a aparência do `Anchor`: texto na cor (`accent` por padrão, ou a de `color`), sem fundo nem
+borda, sublinhado no hover e no foco. Continua um botão, com a altura e o alvo de toque do `Button` e as mesmas
+props (`size`, `leftSection`, `loading`…). Use para uma ação discreta; para navegar no meio de um parágrafo, prefira
+o `Anchor`.
+
+<Canvas
+  of={ButtonStories.VarianteLink}
+  source={{
+    language: "tsx",
+    code: `<Button variant="link">Esqueci a senha</Button>
+<Button variant="link" rightSection={<Icon name="chevron-right" size="sm" />}>Ver todas as lojas</Button>
+<Button variant="link" color="down">Remover filtro</Button>
+
+{/* para navegar, como link de verdade */}
+<Button component="a" href="/lojas" variant="link">Ver todas as lojas</Button>`,
+  }}
+/>
+
+### Button.Group
+
+Encosta botões numa peça só: sem vão, cantos só nas pontas e a borda compartilhada. É um `role="group"`, e o
+`aria-label` é **obrigatório** (o TypeScript cobra). Cada botão continua no Tab; o anel de foco fica por cima dos
+vizinhos. Para escolher **uma** opção entre várias, use o `SegmentedControl`; para uma barra com setas, a `Toolbar`.
+
+<Canvas
+  of={ButtonStories.Grupo}
+  source={{
+    language: "tsx",
+    code: `<Button.Group aria-label="Navegar no calendário">
+  <Button variant="outline" aria-label="Mês anterior"><Icon name="back" size="sm" /></Button>
+  <Button variant="outline">Hoje</Button>
+  <Button variant="outline" aria-label="Próximo mês"><Icon name="chevron-right" size="sm" /></Button>
+</Button.Group>
+
+{/* botão com variação: a ação e o menu dela */}
+<Button.Group aria-label="Salvar">
+  <Button>Salvar</Button>
+  <Button aria-label="Mais opções de salvar"><Icon name="chevron-down" size="sm" /></Button>
+</Button.Group>`,
+  }}
+/>
+
+Com `orientation="vertical"`, um embaixo do outro, na largura do maior:
+
+<Canvas
+  of={ButtonStories.GrupoVertical}
+  source={{
+    language: "tsx",
+    code: `<Button.Group aria-label="Exportar" orientation="vertical">
+  <Button variant="outline" leftSection={<Icon name="download" size="sm" />}>Planilha</Button>
+  <Button variant="outline" leftSection={<Icon name="download" size="sm" />}>PDF</Button>
+  <Button variant="outline" leftSection={<Icon name="printer" size="sm" />}>Imprimir</Button>
+</Button.Group>`,
+  }}
+/>
+
+No celular, o nome vai em `accessibilityLabel` (como na `Toolbar`).
+
 ### Em formulários
 
 O `Button` é `type="button"` por padrão, para não enviar o formulário sem querer. No botão que envia, passe
@@ -294,7 +356,7 @@ O estado também fica no HTML, para o CSS alcançar sem prop nova:
 <table>
   <thead><tr><th>Atributo</th><th>Quando</th></tr></thead>
   <tbody>
-    <tr><td><code>data-variant</code></td><td>sempre: <code>filled</code>, <code>outline</code>, <code>subtle</code> ou <code>dashed</code></td></tr>
+    <tr><td><code>data-variant</code></td><td>sempre: <code>filled</code>, <code>outline</code>, <code>subtle</code>, <code>dashed</code> ou <code>link</code></td></tr>
     <tr><td><code>data-color</code></td><td>sempre: <code>accent</code>, <code>down</code>, <code>up</code> ou <code>warn</code></td></tr>
     <tr><td><code>data-full-width</code></td><td>com <code>fullWidth</code></td></tr>
     <tr><td><code>data-loading</code> e <code>aria-busy</code></td><td>com <code>loading</code></td></tr>
@@ -706,7 +768,7 @@ Prefira as props (`variant`, `color`, `size`) a CSS próprio: elas já seguem os
 
 - Todo botão é um `<button type="button">` de verdade, ou o elemento de `component` com o comportamento certo.
 - Foco visível pelo teclado em todos.
-- `ActionIcon` exige `aria-label`; `CloseButton` e `Burger` já trazem o nome.
+- `ActionIcon` e `Button.Group` exigem `aria-label`; `CloseButton` e `Burger` já trazem o nome.
 - `loading` marca `aria-busy`; `Toggle` marca `aria-pressed`; `Burger` marca `aria-expanded`.
 - Alvo de toque de 44 px no mínimo, mesmo no tamanho `xs`.
 

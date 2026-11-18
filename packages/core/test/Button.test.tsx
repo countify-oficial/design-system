@@ -43,4 +43,36 @@ describe("Button", () => {
     render(<Button component="a" href="/nova" variant="dashed">+ Adicionar bloco</Button>);
     expect(screen.getByRole("link", { name: "+ Adicionar bloco" }).dataset["variant"]).toBe("dashed");
   });
+
+  it("variante link: data-variant, cor do papel, sem violações", async () => {
+    const { container } = render(<Button variant="link" color="down">Esqueci a senha</Button>);
+    const b = screen.getByRole("button", { name: "Esqueci a senha" });
+    expect([b.dataset["variant"], b.dataset["color"]]).toEqual(["link", "down"]);
+    expect(v(b, "--button-height-sm")).toBe("var(--cf-button-height-sm)");
+    await semViolacoes(container);
+  });
+});
+
+describe("Button.Group", () => {
+  it("role group com nome, horizontal por padrão, botões dentro", async () => {
+    const { container } = render(
+      <Button.Group aria-label="Período">
+        <Button variant="outline">Dia</Button>
+        <Button variant="outline">Semana</Button>
+        <Button variant="outline">Mês</Button>
+      </Button.Group>,
+    );
+    const g = screen.getByRole("group", { name: "Período" });
+    expect(g.dataset["orientation"]).toBe("horizontal");
+    expect(g.className).toMatch(/group/);
+    expect(Array.from(g.children).map((b) => b.textContent)).toEqual(["Dia", "Semana", "Mês"]);
+    await semViolacoes(container);
+  });
+
+  it("vertical e className do app", () => {
+    render(<Button.Group aria-label="Alinhamento" orientation="vertical" className="meu"><Button>Topo</Button></Button.Group>);
+    const g = screen.getByRole("group", { name: "Alinhamento" });
+    expect(g.dataset["orientation"]).toBe("vertical");
+    expect(g.classList.contains("meu")).toBe(true);
+  });
 });

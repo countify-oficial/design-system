@@ -54,7 +54,8 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 |---|---|---|---|---|
 | Icon | ok | ok | adaptado | os da Countify e, com outro nome, os do Tabler (`variant` outline ou filled), no traço do token; no celular, `react-native-svg` (`SvgXml`) com o mesmo desenho; a cor padrão vem do botão em volta (`ContentColor`), porque o React Native não herda cor; os do Tabler na web descem um a um, quando aparecem, e no celular vão no bundle |
 | Loader | ok | ok | adaptado | no celular, o girador do sistema (`ActivityIndicator`): pequeno até md, grande em lg e xl |
-| Button | ok | ok | adaptado | no celular é um `Pressable`; ao tocar, opacidade 0,8 em vez do véu do hover; numa coluna ocupa a largura toda |
+| Button | ok | ok | adaptado | no celular é um `Pressable`; ao tocar, opacidade 0,8 em vez do véu do hover; numa coluna ocupa a largura toda; `variant="link"` sem sublinhado (não há hover nem foco de teclado no toque) |
+| Button.Group | ok | ok | adaptado | na web, `role="group"` com `aria-label`; no celular, `View` com `role="group"` e o nome em `accessibilityLabel`; cantos e borda pelo lugar de cada botão no grupo |
 | ActionIcon | ok | ok | adaptado | no celular o nome vai em `accessibilityLabel` (na web, `aria-label`) |
 | CloseButton | ok | ok | adaptado | igual ao ActionIcon |
 | CopyButton | ok | ok | adaptado | no celular copia pelo `expo-clipboard` |

@@ -1,19 +1,22 @@
 import { useComponentProps } from "@countify-oficial/provider";
 import type { Responsive, Size } from "@countify-oficial/tokens";
-import type { ElementType, ReactNode } from "react";
+import type { ComponentPropsWithRef, ElementType, ReactNode } from "react";
 import { Loader } from "../Loader/Loader";
 import type { PolymorphicProps } from "../polymorphic";
-import { responsiveVars, useStyles, type StylesApiProps } from "../styles";
+import { cx, responsiveVars, useStyles, type StylesApiProps } from "../styles";
 import { UnstyledButton } from "../UnstyledButton/UnstyledButton";
 import classes from "./Button.module.css";
 
-/** filled: principal (um por tela); outline: Cancelar; subtle: só texto (Excluir, com color="down"); dashed: adicionar. */
-export type ButtonVariant = "filled" | "outline" | "subtle" | "dashed";
+/**
+ * filled: principal (um por tela); outline: Cancelar; subtle: só texto (Excluir, com color="down"); dashed: adicionar;
+ * link: com cara de link (texto na cor, sublinhado no hover e no foco), com a altura e o alvo de toque do botão.
+ */
+export type ButtonVariant = "filled" | "outline" | "subtle" | "dashed" | "link";
 /** accent: o azul do botão; down, up e warn: as cores de queda, alta e aviso. */
 export type ButtonColor = "accent" | "down" | "up" | "warn";
 
 export interface ButtonOwnProps extends StylesApiProps<"root" | "label" | "section" | "loader"> {
-  /** Padrão: filled. */
+  /** filled, outline, subtle, dashed ou link (aparência do Anchor, com a altura do botão). Padrão: filled. */
   variant?: ButtonVariant | undefined;
   /** Padrão: accent. */
   color?: ButtonColor | undefined;
@@ -38,7 +41,7 @@ export type ButtonProps<C extends ElementType = "button"> = PolymorphicProps<C, 
 const padrao: Responsive<Size> = { base: "md", sm: "sm" };
 
 /** Botão da Countify. Um <button>, ou o elemento de `component` (um link, por exemplo). */
-export function Button<C extends ElementType = "button">(props: ButtonProps<C>) {
+function ButtonRoot<C extends ElementType = "button">(props: ButtonProps<C>) {
   const {
     component, variant = "filled", color = "accent", size = padrao, radius = "sm", fullWidth, disabled, loading,
     leftSection, rightSection, children, className, style, classNames, styles, ...rest
@@ -71,3 +74,19 @@ export function Button<C extends ElementType = "button">(props: ButtonProps<C>) 
     </UnstyledButton>
   );
 }
+
+export interface ButtonGroupProps extends Omit<ComponentPropsWithRef<"div">, "aria-label"> {
+  /** O nome do grupo para o leitor de tela ("Período", "Alinhamento"). */
+  "aria-label": string;
+  /** Lado a lado (horizontal) ou um embaixo do outro (vertical). Padrão: horizontal. */
+  orientation?: "horizontal" | "vertical" | undefined;
+}
+
+/** Botões encostados (role group): sem vão, cantos só nas pontas e a borda compartilhada. */
+export function ButtonGroup(props: ButtonGroupProps) {
+  const { orientation = "horizontal", className, ...rest } = useComponentProps("ButtonGroup", {}, props);
+  return <div role="group" data-orientation={orientation} {...rest} className={cx(classes["group"], className)} />;
+}
+
+/** Botão da Countify. Button.Group encosta vários. */
+export const Button = Object.assign(ButtonRoot, { Group: ButtonGroup });

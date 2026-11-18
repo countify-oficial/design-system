@@ -85,6 +85,50 @@ describe("Button (React Native)", () => {
   });
 });
 
+describe("Button link e Button.Group (React Native)", () => {
+  it("link: texto na cor do papel, sem fundo nem borda, alvo de 44", async () => {
+    await render(<Button variant="link" size="sm">Esqueci a senha</Button>);
+    const b = screen.getByRole("button", { name: "Esqueci a senha" });
+    expect(b).toHaveStyle({ minHeight: 44 });
+    expect(b).not.toHaveStyle({ borderWidth: 1 });
+    expect(b).not.toHaveStyle({ backgroundColor: colors.light.button });
+    expect(screen.getByText("Esqueci a senha")).toHaveStyle({ color: colors.light.accent, fontFamily: "Roboto_500Medium" });
+  });
+
+  it("grupo horizontal: role group com nome; cantos só nas pontas e a borda compartilhada", async () => {
+    await render(
+      <Button.Group accessibilityLabel="Período">
+        <Button variant="outline">Dia</Button>
+        <Button variant="outline">Semana</Button>
+        <Button variant="outline">Mês</Button>
+      </Button.Group>,
+    );
+    const g = screen.getByLabelText("Período");
+    expect(g.props.role).toBe("group");
+    expect(g).toHaveStyle({ flexDirection: "row" });
+    const [dia, semana, mes] = ["Dia", "Semana", "Mês"].map((n) => screen.getByRole("button", { name: n }));
+    expect(dia).toHaveStyle({ borderTopRightRadius: 0, borderBottomRightRadius: 0, borderRadius: 12 });
+    expect(dia).not.toHaveStyle({ marginLeft: -1 });
+    expect(semana).toHaveStyle({ marginLeft: -1, borderTopLeftRadius: 0, borderTopRightRadius: 0 });
+    expect(mes).toHaveStyle({ marginLeft: -1, borderBottomLeftRadius: 0 });
+    expect(mes).not.toHaveStyle({ borderTopRightRadius: 0 });
+  });
+
+  it("grupo vertical; filled seguidos ganham a linha divisória", async () => {
+    await render(
+      <Button.Group accessibilityLabel="Ações" orientation="vertical">
+        <Button>Salvar</Button>
+        <Button>Salvar e sair</Button>
+      </Button.Group>,
+    );
+    expect(screen.getByLabelText("Ações")).toHaveStyle({ flexDirection: "column" });
+    expect(screen.getByRole("button", { name: "Salvar" })).toHaveStyle({ borderBottomLeftRadius: 0 });
+    expect(screen.getByRole("button", { name: "Salvar e sair" })).toHaveStyle({
+      marginTop: -1, borderTopRightRadius: 0, borderTopWidth: 1, borderColor: colors.light.onButton,
+    });
+  });
+});
+
 describe("ActionIcon, CloseButton, Toggle e CopyButton (React Native)", () => {
   it("ActionIcon: 44 × 44 com nome; default tem cartão e anel", async () => {
     await render(<ActionIcon accessibilityLabel="Editar painel" variant="default"><Icon name="edit" /></ActionIcon>);
