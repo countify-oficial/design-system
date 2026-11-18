@@ -1,6 +1,6 @@
 import { Stack, Text } from "@countify-oficial/core";
 import {
-  AreaChart, BarChart, BarList, ChartLegend, DonutChart, FunnelChart, Heatmap, LineChart, PieChart, RadarChart, ScatterChart, Sparkline,
+  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, FunnelChart, Heatmap, LineChart, PieChart, RadarChart, ScatterChart, Sparkline,
 } from "@countify-oficial/charts";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -13,7 +13,7 @@ const cartao = { padding: "var(--cf-space-5)", borderRadius: "var(--cf-radius-md
 const meta = {
   title: "Extensões/Charts",
   component: LineChart,
-  parameters: { docs: { description: { component: "Gráficos do mockup em SVG. Área, pizza, rosca, radar e minigráfico não existem na identidade: valores aprovados em 13/11/2026, a confirmar com o design." } } },
+  parameters: { docs: { description: { component: "Gráficos do mockup em SVG. Área, pizza, rosca, radar e minigráfico não existem na identidade: valores aprovados em 13/11/2026, a confirmar com o design. Barras com várias séries e o combinado usam as cores das séries (a confirmar). Linha, área, barras e combinado mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque." } } },
 } satisfies Meta;
 export default meta;
 // cada gráfico tem os seus dados obrigatórios: as histórias usam render
@@ -58,6 +58,51 @@ export const Barras: Story = {
         </Stack>
       ))}
     </div>
+  ),
+};
+const dias = ["seg", "ter", "qua", "qui", "sex", "sáb", "dom"];
+const lojas = [
+  { name: "Orla", values: [42, 38, 45, 50, 61, 88, 70] },
+  { name: "Jardins", values: [35, 40, 39, 47, 58, 92, 64] },
+  { name: "P. Velho", values: [20, 22, 25, 24, 30, 41, 33] },
+];
+const legendaLojas = lojas.map((l, i) => ({ label: l.name, type: "square" as const, color: (["series-1", "series-2", "series-3"] as const)[i] }));
+export const BarrasAgrupadas: Story = {
+  name: "Barras com várias séries, lado a lado (a confirmar)",
+  render: () => (
+    <Stack style={cartao}>
+      <ChartLegend items={legendaLojas} />
+      <BarChart series={lojas} labels={dias} axis height={236} aria-label="Tickets por dia: Orla, Jardins e Porto Velho" />
+    </Stack>
+  ),
+};
+export const BarrasEmpilhadas: Story = {
+  name: "Barras empilhadas (a confirmar)",
+  render: () => (
+    <Stack style={cartao}>
+      <ChartLegend items={legendaLojas} />
+      <BarChart series={lojas} stacked labels={dias} axis height={236} aria-label="Tickets por dia, somando as três lojas" />
+    </Stack>
+  ),
+};
+export const Combinado: Story = {
+  name: "Combinado: vendas, meta e conversão à direita (a confirmar)",
+  render: () => (
+    <Stack style={cartao}>
+      <ChartLegend items={[{ label: "Faturamento", type: "square", color: "border" }, { label: "Meta", type: "dashed" }, { label: "Conversão", color: "series-2" }]} />
+      <ComboChart
+        values={[5200, 4800, 6100, 5900, 7400, 9800, 8200]}
+        highlight="max"
+        labels={dias}
+        lines={[
+          { name: "Meta", values: [6000, 6000, 6000, 6000, 7000, 9000, 8000], dashed: true },
+          { name: "Conversão", values: [0.11, 0.1, 0.12, 0.12, 0.13, 0.15, 0.14], axis: "right" },
+        ]}
+        format={(v) => `R$ ${String(v / 1000).replace(".", ",")} mil`}
+        formatRight={(v) => `${String(Math.round(v * 1000) / 10).replace(".", ",")}%`}
+        aria-label="Faturamento por dia com a meta e a conversão: pico no sábado, R$ 9,8 mil"
+      />
+    </Stack>
   ),
 };
 export const Ranking: Story = {

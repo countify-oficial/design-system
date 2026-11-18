@@ -1,9 +1,10 @@
 import { VisuallyHidden } from "@countify-oficial/core";
 import { useId } from "@countify-oficial/hooks";
-import { chart, fontWeight } from "@countify-oficial/tokens";
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
-import type { Paint, Scene, Shape } from "./scene";
-import type { DataTable } from "./tables";
+import { useMessages } from "@countify-oficial/provider";
+import { chart, fontWeight, space } from "@countify-oficial/tokens";
+import { useEffect, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { nearest, type Paint, type Scene, type Shape } from "./scene";
+import { tipLines, type DataTable } from "./tables";
 import classes from "./Chart.module.css";
 
 const kebab = (s: string) => s.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
@@ -38,11 +39,17 @@ export interface ChartFrameProps {
   style?: CSSProperties | undefined;
 }
 
-/** Moldura dos gráficos: mede a largura, desenha a cena e põe a tabela de dados escondida para o leitor de tela. */
+/**
+ * Moldura dos gráficos: mede a largura, desenha a cena e põe a tabela de dados escondida para o leitor de tela.
+ * Nos gráficos por índice (linha, área, barras, combinado), a dica: o mouse ou o dedo escolhe o ponto mais perto; no
+ * teclado, o gráfico é um controle deslizante (setas, Home, End; Esc fecha) que fala os valores do ponto.
+ */
 export function Grafico({ desenhar, tabela, "aria-label": rotulo, width, className, style }: ChartFrameProps & { desenhar: (largura: number) => Scene; tabela: DataTable }) {
   const [caixa, setCaixa] = useState<HTMLElement | null>(null);
   const [medida, setMedida] = useState(0);
   const hachura = useId();
+  const messages = useMessages();
+  const [ativo, setAtivo] = useState<number | null>(null);
   useEffect(() => {
     if (!caixa || width !== undefined) return;
     const ro = new ResizeObserver(() => setMedida(caixa.clientWidth));
@@ -52,19 +59,66 @@ export function Grafico({ desenhar, tabela, "aria-label": rotulo, width, classNa
   const largura = width ?? medida;
   const cena = largura > 0 ? desenhar(largura) : null;
   const { size, stroke } = chart.hatch;
+  const dicas = cena?.tips;
+  const i = dicas && ativo !== null ? Math.min(ativo, dicas.xs.length - 1) : null;
+  const xa = i === null ? 0 : (dicas?.xs[i] ?? 0);
+  const tecla = (e: KeyboardEvent) => {
+    if (!dicas) return;
+    const ultimo = dicas.xs.length - 1;
+    const passos: Partial<Record<string, number | null>> = { ArrowRight: (i ?? -1) + 1, ArrowUp: (i ?? -1) + 1, ArrowLeft: (i ?? 1) - 1, ArrowDown: (i ?? 1) - 1, Home: 0, End: ultimo, Escape: null };
+    const novo = passos[e.key];
+    if (novo === undefined) return;
+    if (novo === null) {
+      setAtivo(null);
+      return;
+    }
+    e.preventDefault();
+    setAtivo(Math.max(0, Math.min(ultimo, novo)));
+  };
+  const desenho = cena && (
+    <svg width={largura} height={cena.height} viewBox={`0 0 ${String(largura)} ${String(cena.height)}`} aria-hidden className={classes["svg"]}>
+      {cena.hatch && (
+        <defs>
+          <pattern id={hachura} width={size} height={size} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width={stroke} height={size} style={{ fill: "var(--cf-color-hatch)" }} />
+          </pattern>
+        </defs>
+      )}
+      {cena.shapes.map((s, k) => forma(s, k, hachura))}
+      {dicas && i !== null && forma({ kind: "line", x1: xa, y1: dicas.top, x2: xa, y2: dicas.bottom, stroke: "text3", strokeWidth: chart.stroke.grid }, cena.shapes.length, hachura)}
+    </svg>
+  );
   return (
     <figure ref={setCaixa} aria-label={rotulo} className={[classes["root"], className].filter(Boolean).join(" ")} style={style}>
-      {cena && (
-        <svg width={largura} height={cena.height} viewBox={`0 0 ${String(largura)} ${String(cena.height)}`} aria-hidden className={classes["svg"]}>
-          {cena.hatch && (
-            <defs>
-              <pattern id={hachura} width={size} height={size} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <rect width={stroke} height={size} style={{ fill: "var(--cf-color-hatch)" }} />
-              </pattern>
-            </defs>
+      {dicas ? (
+        <div
+          role="slider"
+          tabIndex={0}
+          aria-label={messages.chartPoint}
+          aria-valuemin={0}
+          aria-valuemax={dicas.xs.length - 1}
+          aria-valuenow={i ?? 0}
+          aria-valuetext={tipLines(tabela, i ?? 0).join(", ")}
+          className={classes["explore"]}
+          onPointerDown={(e) => setAtivo(nearest(dicas.xs, e.clientX - e.currentTarget.getBoundingClientRect().left))}
+          onPointerMove={(e) => setAtivo(nearest(dicas.xs, e.clientX - e.currentTarget.getBoundingClientRect().left))}
+          onPointerLeave={() => setAtivo(null)}
+          onFocus={() => setAtivo((a) => a ?? 0)}
+          onBlur={() => setAtivo(null)}
+          onKeyDown={tecla}
+        >
+          {desenho}
+          {i !== null && (
+            // a dica fica do lado de dentro da linha-guia: à direita dela na 1ª metade, à esquerda na 2ª
+            <div aria-hidden className={classes["tip"]} style={xa < largura / 2 ? { top: dicas.top, left: xa + space[2] } : { top: dicas.top, right: largura - xa + space[2] }}>
+              {tipLines(tabela, i).map((l, k) => (
+                <div key={k}>{l}</div>
+              ))}
+            </div>
           )}
-          {cena.shapes.map((s, i) => forma(s, i, hachura))}
-        </svg>
+        </div>
+      ) : (
+        desenho
       )}
       <VisuallyHidden>
         <table>

@@ -233,7 +233,10 @@ Valores que a identidade já usa, agora com nome nos tokens:
     a 18% (o tom mais claro do mapa de calor); pizza e rosca de 200, com 2 de vão na cor do cartão e a espessura da
     rosca em 1/5 (como o anel); radar com a grade na `divider` e a série como a área; minigráfico de 40 de altura com a
     linha da série (traço 2, sem pontos); várias séries nos degraus 6, 4, 2 e 8 da escala azul no claro e 3, 5, 1 e 4 no
-    escuro.
+    escuro. Sem valor novo (proposta de 18/11/2026, **a confirmar**): barras com várias séries nessas cores, encostadas
+    dentro do grupo e com o vão de 4 entre os grupos; empilhadas com o canto 2 em cada pedaço; o combinado com a
+    barra cinza, a linha cheia como o real (traço 3, pontos de 4, cor da série seguinte; com pico, a 2ª) e a meta como o previsto; o
+    eixo da direita com os mesmos 44 do da esquerda; a dica é a do Tooltip e a linha-guia vai na `text3` com traço 1.
 34. **Código** (escolha de 13/11/2026, **a confirmar**): o mockup só mostra código em mono (`ui-monospace, Menlo,
     Consolas`), sem fundo e com o link "Copiar". O bloco usa o fundo `field`, canto 12 e recuo 16; as cores do realce
     são papéis que já existem: palavra-chave `accent`, texto `up`, número `warn`, comentário `text3`, propriedade
