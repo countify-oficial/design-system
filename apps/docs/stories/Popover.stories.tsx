@@ -1,4 +1,4 @@
-import { ActionIcon, Button, ColorInput, Group, HoverCard, Icon, Menu, Popover, Stack, Text, Tooltip } from "@countify-oficial/core";
+import { ActionIcon, Button, ColorInput, Group, HoverCard, Icon, Kbd, Menu, Paper, Popover, Stack, Text, Tooltip } from "@countify-oficial/core";
 import { palette } from "@countify-oficial/tokens";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
@@ -44,6 +44,30 @@ export const MenuComprido: Story = {
       <Menu.Target><Button variant="outline" rightSection={<Icon name="chevron-down" size="sm" />}>Loja</Button></Menu.Target>
       <Menu.Dropdown>
         {Array.from({ length: 30 }, (_, i) => <Menu.Item key={i}>{`Loja ${String(i + 1).padStart(2, "0")}`}</Menu.Item>)}
+      </Menu.Dropdown>
+    </Menu>
+  ),
+};
+
+// O menu de contexto é o mesmo Menu com trigger="context": fica junto do Menu para comparar os dois e reaproveitar os itens.
+export const MenuDeContexto: Story = {
+  name: "Menu de contexto (clique direito)",
+  render: () => (
+    <Menu trigger="context">
+      <Menu.Target>
+        <Paper withBorder style={{ padding: "var(--cf-space-4)", maxWidth: "var(--cf-side-panel-width)" }}>
+          <Stack gap="xs">
+            <Text size="sm" color="text2">Clique com o botão direito numa loja, ou foque uma e use <Kbd>Shift</Kbd> + <Kbd>F10</Kbd>.</Text>
+            {["Lume Jardins", "Lume Aldeota", "Lume Iguatemi"].map((loja) => <Button key={loja} variant="subtle">{loja}</Button>)}
+          </Stack>
+        </Paper>
+      </Menu.Target>
+      <Menu.Dropdown aria-label="Ações da loja">
+        <Menu.Item leftSection={<Icon name="edit" size="sm" />}>Editar</Menu.Item>
+        <Menu.Item leftSection={<Icon name="download" size="sm" />}>Exportar CSV</Menu.Item>
+        <Menu.Item disabled>Mover (sem permissão)</Menu.Item>
+        <Menu.Divider />
+        <Menu.Item color="down" leftSection={<Icon name="trash" size="sm" />}>Excluir</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   ),

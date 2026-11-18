@@ -1,6 +1,6 @@
 import { useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
 import { borderWidth, compactRowHeight, fontSize, nativeFontFamily, overlineTracking, space, state, type ColorRole } from "@countify-oficial/tokens";
-import type { ReactNode } from "react";
+import { cloneElement, createContext, useContext, type ReactElement, type ReactNode } from "react";
 import { Text as RNText, View, type GestureResponderEvent } from "react-native";
 import { ContentColor } from "../contentColor";
 import { Popover, PopoverDropdown, PopoverTarget, usePopoverContext, type PopoverProps } from "../Popover/Popover";
@@ -60,10 +60,32 @@ export function MenuDropdown({ children }: { children?: ReactNode }) {
   return <PopoverDropdown><View accessibilityRole="menu">{children}</View></PopoverDropdown>;
 }
 
-function MenuRoot(props: PopoverProps) {
-  const p = useComponentProps("Menu", {}, props);
-  return <Popover {...p} />;
+export interface MenuProps extends PopoverProps {
+  /** O que abre a folha. "click": o toque no Menu.Target. "context": menu de contexto; no celular não há clique direito, então abre no toque longo e o toque comum segue do alvo. Padrão: "click". */
+  trigger?: "click" | "context" | undefined;
+}
+
+const TriggerContext = createContext<"click" | "context">("click");
+
+type Alvo = ReactElement<{ onPress?: ((e: GestureResponderEvent) => void) | undefined; onLongPress?: ((e: GestureResponderEvent) => void) | undefined; accessibilityState?: object | undefined }>;
+
+/** O elemento que abre a folha: no toque ou, com trigger="context", no toque longo. */
+export function MenuTarget({ children }: { children: Alvo }) {
+  const trigger = useContext(TriggerContext);
+  const { setAberto, desligado } = usePopoverContext();
+  if (trigger === "click") return <PopoverTarget>{children}</PopoverTarget>;
+  return cloneElement(children, {
+    onLongPress: (e: GestureResponderEvent) => {
+      children.props.onLongPress?.(e);
+      if (!desligado) setAberto(true);
+    },
+  });
+}
+
+function MenuRoot(props: MenuProps) {
+  const { trigger = "click", ...p } = useComponentProps("Menu", {}, props);
+  return <TriggerContext value={trigger}><Popover {...p} /></TriggerContext>;
 }
 
 /** Menu de ações: no celular, uma folha com as ações em linhas de 56. */
-export const Menu = Object.assign(MenuRoot, { Target: PopoverTarget, Dropdown: MenuDropdown, Item: MenuItem, Label: MenuLabel, Divider: MenuDivider });
+export const Menu = Object.assign(MenuRoot, { Target: MenuTarget, Dropdown: MenuDropdown, Item: MenuItem, Label: MenuLabel, Divider: MenuDivider });

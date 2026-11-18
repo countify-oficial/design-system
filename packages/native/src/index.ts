@@ -57,7 +57,7 @@ export { Mark, type MarkProps } from "./Mark/Mark";
 export { Marquee, type MarqueeProps } from "./Marquee/Marquee";
 export { MaskInput, type MaskInputProps } from "./MaskInput/MaskInput";
 export { Mentions, type MentionsProps } from "./Mentions/Mentions";
-export { Menu, MenuDivider, MenuDropdown, MenuItem, MenuLabel, type MenuItemProps } from "./Menu/Menu";
+export { Menu, MenuDivider, MenuDropdown, MenuItem, MenuLabel, MenuTarget, type MenuItemProps, type MenuProps } from "./Menu/Menu";
 export { Modal, type ModalBaseProps, type ModalProps } from "./Modal/Modal";
 export { MultiSelect, type MultiSelectProps } from "./MultiSelect/MultiSelect";
 export { NavLink, type NavLinkProps } from "./NavLink/NavLink";

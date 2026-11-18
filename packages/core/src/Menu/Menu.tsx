@@ -15,10 +15,12 @@ import {
   useMergeRefs,
   useRole,
   useTypeahead,
+  type VirtualElement,
 } from "@floating-ui/react";
 import {
   cloneElement,
   createContext,
+  type KeyboardEvent,
   useContext,
   useRef,
   useState,
@@ -28,6 +30,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { flushSync } from "react-dom";
 import { usePopoverBase, type FloatingOptions } from "../Popover/usePopover";
 import { colorVar, useStyles, type StylesApiProps } from "../styles";
 import { UnstyledButton } from "../UnstyledButton/UnstyledButton";
@@ -38,6 +41,12 @@ export interface MenuProps extends FloatingOptions {
   closeOnItemClick?: boolean | undefined;
   disabled?: boolean | undefined;
   id?: string | undefined;
+  /**
+   * O que abre o menu. "click": o clique no Menu.Target (um botão). "context": menu de contexto; o Menu.Target vira a
+   * área-alvo e o menu abre no ponto do clique direito, ou no elemento focado com Shift+F10 ou a tecla Menu. Deixe
+   * algo focável dentro da área (ou a própria área com tabIndex) para quem usa o teclado. Padrão: "click".
+   */
+  trigger?: "click" | "context" | undefined;
   /** Menu.Target e Menu.Dropdown. */
   children?: ReactNode;
 }
@@ -51,6 +60,12 @@ type Valor = ReturnType<typeof usePopoverBase> & {
   rotulos: React.RefObject<(string | null)[]>;
   fecharAoEscolher: boolean;
   id: string;
+  contexto: boolean;
+  desligado: boolean;
+  abrirNoContexto: (
+    referencia: Element | VirtualElement,
+    porTeclado: boolean,
+  ) => void;
 };
 
 const MenuContext = createContext<Valor | null>(null);
@@ -61,15 +76,52 @@ function useMenuContext(): Valor {
   return c;
 }
 
-/** O botão que abre o menu (um só filho). */
-export function MenuTarget({
-  children,
-}: {
-  children: ReactElement<Record<string, unknown> & { ref?: Ref<unknown> }>;
-}) {
-  const { refs, getReferenceProps } = useMenuContext();
-  const ref = useMergeRefs([refs.setReference, children.props.ref]);
-  return cloneElement(children, getReferenceProps({ ...children.props, ref }));
+type Alvo = ReactElement<
+  Record<string, unknown> & {
+    ref?: Ref<unknown>;
+    onContextMenu?: (e: MouseEvent) => void;
+    onKeyDown?: (e: KeyboardEvent) => void;
+    onPointerDown?: (e: unknown) => void;
+  }
+>;
+
+/** O botão que abre o menu (um só filho); com trigger="context", a área onde o clique direito abre o menu. */
+export function MenuTarget({ children }: { children: Alvo }) {
+  const c = useMenuContext();
+  const ref = useMergeRefs([c.contexto ? null : c.refs.setReference, children.props.ref]);
+  // Shift+F10 abre pelo keydown; o navegador ainda pode mandar o contextmenu dele depois, que não deve mover o menu
+  const abertoPorTecla = useRef(false);
+  if (!c.contexto)
+    return cloneElement(children, c.getReferenceProps({ ...children.props, ref }));
+  const p = children.props;
+  return cloneElement(children, {
+    ref,
+    onPointerDown: (e: unknown) => {
+      abertoPorTecla.current = false;
+      p.onPointerDown?.(e);
+    },
+    onContextMenu: (e: MouseEvent) => {
+      p.onContextMenu?.(e);
+      if (c.desligado || e.defaultPrevented) return;
+      e.preventDefault();
+      if (abertoPorTecla.current) {
+        abertoPorTecla.current = false;
+        return;
+      }
+      const { clientX: x, clientY: y } = e;
+      // um ponto sem tamanho no cursor: o flip e o shift do usePopoverBase o mantêm na tela
+      const ponto = { x, y, top: y, left: x, right: x, bottom: y, width: 0, height: 0 };
+      c.abrirNoContexto({ getBoundingClientRect: () => ponto }, false);
+    },
+    onKeyDown: (e: KeyboardEvent) => {
+      p.onKeyDown?.(e);
+      if (c.desligado || e.defaultPrevented) return;
+      if (!((e.shiftKey && e.key === "F10") || e.key === "ContextMenu")) return;
+      e.preventDefault();
+      abertoPorTecla.current = true;
+      c.abrirNoContexto(e.target as Element, true);
+    },
+  });
 }
 
 /** A lista do menu. */
@@ -98,7 +150,15 @@ export function MenuDropdown(
       >
         <div
           ref={c.refs.setFloating}
-          {...c.getFloatingProps({ ...rest, id: c.id })}
+          {...c.getFloatingProps({
+            ...rest,
+            id: c.id,
+            // no menu de contexto o useRole fica desligado (não há botão que o nomeie); o papel vem daqui
+            ...(c.contexto && {
+              role: "menu",
+              onContextMenu: (e: MouseEvent) => e.preventDefault(),
+            }),
+          })}
           className={classe}
           style={{
             ...c.floatingStyles,
@@ -215,23 +275,29 @@ function MenuRoot(props: MenuProps) {
     id,
     children,
     position = "bottom-start",
+    trigger = "click",
     ...opcoes
   } = useComponentProps("Menu", {}, props);
+  const contexto = trigger === "context";
   const base = useId(id);
-  const p = usePopoverBase({ ...opcoes, position });
+  // o menu de contexto nasce colado no ponto do clique (sem a distância do botão)
+  const p = usePopoverBase({ ...opcoes, offset: opcoes.offset ?? (contexto ? 0 : undefined), position });
   const elementos = useRef<(HTMLElement | null)[]>([]);
   const rotulos = useRef<(string | null)[]>([]);
   const [ativo, setAtivo] = useState<number | null>(null);
+  // aberto pelo teclado, o foco vai ao primeiro item; pelo mouse, à lista (como no Menu de botão)
+  const [porTeclado, setPorTeclado] = useState(false);
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
-      useClick(p.context, { enabled: !disabled }),
+      useClick(p.context, { enabled: !disabled && !contexto }),
       useDismiss(p.context),
-      useRole(p.context, { role: "menu" }),
+      useRole(p.context, { role: "menu", enabled: !contexto }),
       useListNavigation(p.context, {
         listRef: elementos,
         activeIndex: ativo,
         onNavigate: setAtivo,
         loop: true,
+        focusItemOnOpen: contexto ? porTeclado : "auto",
       }),
       useTypeahead(p.context, {
         listRef: rotulos,
@@ -252,6 +318,14 @@ function MenuRoot(props: MenuProps) {
         rotulos,
         fecharAoEscolher: closeOnItemClick,
         id: base,
+        contexto,
+        desligado: !!disabled,
+        abrirNoContexto: (referencia, teclado) => {
+          // o useListNavigation lê focusItemOnOpen enquanto o menu está fechado: grava antes de abrir
+          flushSync(() => setPorTeclado(teclado));
+          p.refs.setPositionReference(referencia);
+          p.setAberto(true);
+        },
       }}
     >
       {children}

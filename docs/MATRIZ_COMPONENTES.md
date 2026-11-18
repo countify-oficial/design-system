@@ -161,6 +161,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | ActionBar | ok | ok | adaptado | igual ao Dialog |
 | Popover | ok | ok | adaptado | no celular abre numa folha que sobe (a identidade troca popover por folha) |
 | Menu | ok | ok | adaptado | no celular, uma folha com as ações em linhas de 56 |
+| Menu de contexto (`Menu trigger="context"`) | ok | ok | adaptado | no celular não há clique direito nem teclado: o toque longo no alvo abre a mesma folha do Menu (o gesto de "mais opções" do Android e do iOS), e o toque comum continua do alvo |
 | HoverCard | ok | ok | adaptado | no celular não há hover: abre numa folha com o toque longo |
 | Tooltip | ok | ok | adaptado | no celular aparece enquanto o dedo segura o alvo e vira a dica do leitor de tela |
 | ColorInput | ok | ok | adaptado | no celular o seletor abre numa folha |

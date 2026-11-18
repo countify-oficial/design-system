@@ -104,7 +104,7 @@ export const descricoes: Record<string, string> = {
   "Sobreposições/Computador": "Menu de barra, janela flutuante, tour e indicador.",
   "Sobreposições/Modal e Drawer": "Janela central e gaveta lateral.",
   "Sobreposições/Overlay": "Camada escura ou de carregamento por cima.",
-  "Sobreposições/Popover, Menu e Tooltip": "Balões presos a um elemento: conteúdo, menu e dica.",
+  "Sobreposições/Popover, Menu e Tooltip": "Balões presos a um elemento: conteúdo, menu (também o de contexto) e dica.",
   "Extensões/Carousel, Dropzone, Spotlight e CodeHighlight": "Carrossel, área de soltar arquivos, busca rápida e bloco de código.",
   "Extensões/Charts": "Gráficos em SVG: linha, área, barras, pizza, radar e mais.",
   "Extensões/Dates": "Calendário, seletor de data e de período, data e hora.",

@@ -7,7 +7,7 @@ import classes from "./Menubar.module.css";
 
 export type MenubarProps = StylesApiProps & Omit<ComponentPropsWithRef<"div">, "className" | "style" | "role">;
 
-export interface MenubarMenuProps extends Omit<MenuProps, "children"> {
+export interface MenubarMenuProps extends Omit<MenuProps, "children" | "trigger"> {
   /** O texto do menu na barra ("Arquivo"). */
   label: ReactNode;
   /** Os Menu.Item, Menu.Label e Menu.Divider. */

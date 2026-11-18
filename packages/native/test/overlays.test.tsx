@@ -71,6 +71,25 @@ describe("popover, menu e dica (React Native)", () => {
     expect(screen.queryByRole("menuitem")).toBeNull();
   });
 
+  it("Menu de contexto: abre a mesma folha no toque longo; o toque comum segue do alvo", async () => {
+    const abrirLoja = jest.fn();
+    const duplicar = jest.fn();
+    await render(
+      <Menu trigger="context">
+        <Menu.Target><Button onPress={abrirLoja}>Lume Jardins</Button></Menu.Target>
+        <Menu.Dropdown><Menu.Item onPress={duplicar}>Duplicar</Menu.Item></Menu.Dropdown>
+      </Menu>,
+    );
+    const alvo = screen.getByRole("button", { name: "Lume Jardins" });
+    await fireEvent.press(alvo);
+    expect(abrirLoja).toHaveBeenCalled();
+    expect(screen.queryByRole("menuitem")).toBeNull();
+    await fireEvent(alvo, "longPress");
+    await fireEvent.press(screen.getByRole("menuitem", { name: "Duplicar" }));
+    expect(duplicar).toHaveBeenCalled();
+    expect(screen.queryByRole("menuitem")).toBeNull();
+  });
+
   it("Tooltip: vira a dica do leitor de tela e aparece no toque longo", async () => {
     await render(<Tooltip label="Exportar CSV"><Button>Exportar</Button></Tooltip>);
     const b = screen.getByRole("button", { name: "Exportar" });
