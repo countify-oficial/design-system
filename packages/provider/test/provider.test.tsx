@@ -68,6 +68,13 @@ describe("CountifyProvider (web)", () => {
     expect(screen.getByText("Close · Carregando")).toBeTruthy();
   });
 
+  it("textos da DataTable: caixa da linha, contagem no singular e no plural, vazio", async () => {
+    const { defaultMessages: m } = await import("../src/index");
+    expect([m.selectRow("Lume Jardins"), m.selectedCount(1), m.selectedCount(3), m.selectPageRows, m.emptyTable]).toEqual([
+      "Selecionar Lume Jardins", "1 selecionada", "3 selecionadas", "Selecionar todas desta página", "Nada para mostrar",
+    ]);
+  });
+
   it("sem provider: claro, tema e textos padrão", () => {
     const { result } = renderHook(() => useCountifyTheme());
     expect(result.current.colorScheme).toBe("light");

@@ -33,6 +33,7 @@ export { ComboboxPopover, type ComboboxPopoverProps } from "./ComboboxPopover/Co
 export { Container, type ContainerProps } from "./Container/Container";
 export { CopyButton, type CopyButtonProps } from "./CopyButton/CopyButton";
 export { DataList, DataListItem, type DataListItemProps, type DataListProps } from "./DataList/DataList";
+export { DataTable, type DataTableColumn, type DataTableProps, type DataTableSort } from "./DataTable/DataTable";
 export { Dialog, type DialogProps } from "./Dialog/Dialog";
 export { Divider, type DividerProps } from "./Divider/Divider";
 export { Drawer, type DrawerPosition, type DrawerProps } from "./Drawer/Drawer";

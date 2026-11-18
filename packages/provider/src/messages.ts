@@ -91,6 +91,13 @@ export interface CountifyMessages {
   increase: (valor: string) => string;
   decrease: (valor: string) => string;
   noChange: string;
+  /** DataTable: caixa de cada linha ("Selecionar Lume Jardins"), a do cabeçalho, a contagem e o nome da barra de ações */
+  selectRow: (rotulo: string) => string;
+  selectPageRows: string;
+  selectedCount: (n: number) => string;
+  selectionActions: string;
+  /** DataTable sem linhas */
+  emptyTable: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -155,4 +162,9 @@ export const defaultMessages: CountifyMessages = {
   increase: (valor) => `alta de ${valor}`,
   decrease: (valor) => `queda de ${valor}`,
   noChange: "sem variação",
+  selectRow: (rotulo) => `Selecionar ${rotulo}`,
+  selectPageRows: "Selecionar todas desta página",
+  selectedCount: (n) => (n === 1 ? "1 selecionada" : `${n} selecionadas`),
+  selectionActions: "Ações das linhas selecionadas",
+  emptyTable: "Nada para mostrar",
 };
