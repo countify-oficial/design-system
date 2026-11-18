@@ -88,7 +88,7 @@ export function NotificationList(props: NotificationListProps) {
                   rightSection={
                     <View style={{ flexDirection: "row", alignItems: "center", gap: space[2] }}>
                       <RNText style={{ color: c.text2, fontSize: fontSize.sm, fontFamily: nativeFontFamily[400], fontVariant: ["tabular-nums"] }}>{hora}</RNText>
-                      {/* a confirmar: o mockup não desenha "não lido"; o ponto de 8 do Indicator, na cor de destaque */}
+                      {/* aprovado em 18/11/2026: o mockup não desenha "não lido"; o ponto de 8 do Indicator, na cor de destaque */}
                       {item.unread && <View testID="unread-dot" style={{ width: space[2], height: space[2], borderRadius: space[1], backgroundColor: c.accent }} />}
                     </View>
                   }

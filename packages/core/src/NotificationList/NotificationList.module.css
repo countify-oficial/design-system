@@ -32,7 +32,7 @@
   white-space: nowrap;
 }
 
-/* a confirmar: o mockup não desenha "não lido"; título em negrito e o ponto de 8 do Indicator, na cor de destaque */
+/* aprovado em 18/11/2026: o mockup não desenha "não lido"; título em negrito e o ponto de 8 do Indicator, na cor de destaque */
 .unread {
   font-weight: var(--cf-font-weight-bold);
 }

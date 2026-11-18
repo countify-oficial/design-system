@@ -220,6 +220,12 @@ describe("DataGrid", () => {
     focar(0, 1);
     fireEvent.paste(ativa(), { clipboardData: { getData: () => "'=SOMA(A1)" } });
     expect(texto(celula(0, 1))).toBe("=SOMA(A1)");
+    // espaço antes do = também conta (algumas planilhas o ignoram)
+    focar(0, 1);
+    fireEvent.paste(ativa(), { clipboardData: { getData: () => " =SOMA(A1)" } });
+    const setData2 = vi.fn();
+    fireEvent.copy(ativa(), { clipboardData: { setData: setData2 } });
+    expect(setData2).toHaveBeenCalledWith("text/plain", "' =SOMA(A1)");
   });
 
   it("copia a seleção com tab e quebra de linha", () => {

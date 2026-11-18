@@ -73,8 +73,9 @@ const valorDe = (row: DataGridRow | undefined, key: string): DataGridValue => (r
  * Grade de edição em massa, como uma planilha (só computador): navegação por teclado, edição na célula com validação,
  * desfazer e refazer, copiar e colar do Excel e só as linhas visíveis desenhadas (10.000 linhas sem travar).
  */
-// começo de texto que o Excel e as planilhas leem como fórmula
-const FORMULA = /^[=+\-@]/;
+// começo de texto que o Excel e as planilhas leem como fórmula, mesmo depois de espaços ou caracteres de controle
+// eslint-disable-next-line no-control-regex
+const FORMULA = /^[\s\u0000-\u001f]*[=+\-@]/;
 
 export function DataGrid<R extends DataGridRow>(props: DataGridProps<R>) {
   const {

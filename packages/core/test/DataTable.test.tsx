@@ -47,11 +47,12 @@ describe("DataTable", () => {
     expect(loja.getAttribute("aria-sort")).toBe("descending");
     expect(onSortChange).toHaveBeenLastCalledWith({ key: "nome", direction: "descending" });
 
-    fireEvent.click(screen.getByRole("button", { name: "Vendas" }));
-    expect(nomes()).toEqual(["Ávila Centro", "Lume Orla", "Lume Jardins", "Brisa"]);
-    expect(loja.getAttribute("aria-sort")).toBe("none");
+    // coluna de números: primeiro do maior para o menor, depois o contrário
     fireEvent.click(screen.getByRole("button", { name: "Vendas" }));
     expect(nomes()).toEqual(["Lume Jardins", "Lume Orla", "Ávila Centro", "Brisa"]);
+    expect(loja.getAttribute("aria-sort")).toBe("none");
+    fireEvent.click(screen.getByRole("button", { name: "Vendas" }));
+    expect(nomes()).toEqual(["Ávila Centro", "Lume Orla", "Lume Jardins", "Brisa"]);
   });
 
   it("ordenação controlada e comparação própria da coluna", () => {
@@ -88,7 +89,8 @@ describe("DataTable", () => {
     );
     expect(screen.getByText("5–6 de 40")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Vendas" }));
-    expect(onSortChange).toHaveBeenCalledWith({ key: "vendas", direction: "ascending" });
+    // coluna de números começa do maior para o menor
+    expect(onSortChange).toHaveBeenCalledWith({ key: "vendas", direction: "descending" });
     expect(nomes()).toEqual(["Lume Jardins", "Ávila Centro"]);
   });
 

@@ -24,7 +24,7 @@ export interface DataTableColumn<T> {
   width?: CSSProperties["width"];
   /** Conteúdo da célula. Padrão: `row[key]`; vazio (null, undefined ou "") vira "—", como no mockup. */
   render?: ((row: T) => ReactNode) | undefined;
-  /** O cabeçalho ordena ao clicar: crescente, depois decrescente. */
+  /** O cabeçalho ordena ao clicar: texto começa crescente (A a Z); coluna `numeric`, decrescente (do maior); o clique seguinte inverte. */
   sortable?: boolean | undefined;
   /**
    * Comparação crescente própria (negativo: `a` antes de `b`). Padrão: `row[key]`, números e datas pelo valor, texto
@@ -146,8 +146,11 @@ export function DataTable<T>(props: DataTableProps<T>) {
   const pagina = Math.min(paginaPedida, paginas);
   const visiveis = pageSize && !manual ? ordenadas.slice((pagina - 1) * pageSize, pagina * pageSize) : ordenadas;
 
+  // coluna de números começa do maior para o menor (como o Faturamento do W-Indicadores); texto, de A a Z
   const ordenar = (key: string) => {
-    setOrdem(ordem?.key === key && ordem.direction === "ascending" ? { key, direction: "descending" } : { key, direction: "ascending" });
+    const primeira = columns.find((c) => c.key === key)?.numeric ? "descending" : "ascending";
+    const outra = primeira === "ascending" ? "descending" : "ascending";
+    setOrdem({ key, direction: ordem?.key === key && ordem.direction === primeira ? outra : primeira });
     if (pageSize) setPagina(1);
   };
 

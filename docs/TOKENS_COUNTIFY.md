@@ -233,7 +233,7 @@ Valores que a identidade já usa, agora com nome nos tokens:
     a 18% (o tom mais claro do mapa de calor); pizza e rosca de 200, com 2 de vão na cor do cartão e a espessura da
     rosca em 1/5 (como o anel); radar com a grade na `divider` e a série como a área; minigráfico de 40 de altura com a
     linha da série (traço 2, sem pontos); várias séries nos degraus 6, 4, 2 e 8 da escala azul no claro e 3, 5, 1 e 4 no
-    escuro. Sem valor novo (proposta de 18/11/2026, **a confirmar**): barras com várias séries nessas cores, encostadas
+    escuro. Sem valor novo (aprovado em 18/11/2026): barras com várias séries nessas cores, encostadas
     dentro do grupo e com o vão de 4 entre os grupos; empilhadas com o canto 2 em cada pedaço; o combinado com a
     barra cinza, a linha cheia como o real (traço 3, pontos de 4, cor da série seguinte; com pico, a 2ª) e a meta como o previsto; o
     eixo da direita com os mesmos 44 do da esquerda; a dica é a do Tooltip e a linha-guia vai na `text3` com traço 1.
@@ -271,3 +271,16 @@ Valores que a identidade já usa, agora com nome nos tokens:
 42. **Cor dos blocos do "Carregando"** (aprovado em 14/11/2026): o Skeleton, o SkeletonLoader e o SkeletonMask usam o
     papel `chip` (#E8EDF3 no claro, #22334A no escuro) no lugar da `divider`. A divisória quase não aparecia sobre o
     cartão branco e sumia sobre o fundo. Canto de 4 e pulso (`state.pulseOpacity`, `duration.pulse`) continuam.
+
+## Componentes de 18/11/2026 (aprovados em 18/11/2026)
+
+43. **StatCard, Meter, NotificationList e DataGrid**, sem token novo, com o que já existe no lugar do que o mockup pede:
+    - StatCard: a linha do rótulo tem 24 de altura mínima (`space 6`, a altura com o "?") no lugar dos 22 do W-Hoje,
+      para os cartões com e sem ajuda ficarem alinhados.
+    - Meter `lg` (Conversão do W-Indicadores): o número usa o `tabTitle` (32) no lugar dos 40 do mockup; o traço do
+      esperado é o do Progress (16, passando 4) no lugar dos 18.
+    - NotificationList: o mockup não desenha "não lido"; o título fica em negrito e há um ponto de 8 (o do
+      Indicator) na cor `accent`, 8 depois da hora.
+    - DataGrid: linha da altura do campo `sm` mais a borda fina (45, ou 37 na densidade compacta); célula ativa com o
+      anel de foco por dentro na `accent`; seleção com fundo `accentTint`; editor `Input` sm com canto `xs`; a mensagem
+      de erro com o visual do Tooltip, presa à célula, e o anel do campo na `down`.

@@ -5,7 +5,7 @@
   line-height: var(--cf-line-height);
 }
 
-/* a confirmar: o mockup pede 22 de altura mínima na linha do rótulo; 24 é a altura dela com o "?" (alinha os cartões
+/* aprovado em 18/11/2026: o mockup pede 22 de altura mínima na linha do rótulo; 24 é a altura dela com o "?" (alinha os cartões
    com e sem ajuda) */
 .header {
   display: flex;

@@ -51,7 +51,7 @@ export function StatCard<C extends ElementType = typeof View>(props: StatCardPro
   const n = headings.number;
   return (
     <Card component={component as ElementType} gap={1} {...rest} style={[tema, style]}>
-      {/* a confirmar: o mockup pede 22 de altura mínima na linha do rótulo; 24 é a altura dela com o "?" */}
+      {/* aprovado em 18/11/2026: o mockup pede 22 de altura mínima na linha do rótulo; 24 é a altura dela com o "?" */}
       <View style={{ flexDirection: "row", alignItems: "center", gap: space[1], minHeight: space[6] }}>
         {comoTexto(label, [apoio, { flexShrink: 1 }])}
         {hasContent(help) && <HelpTip label={nomeDaAjuda}>{help}</HelpTip>}

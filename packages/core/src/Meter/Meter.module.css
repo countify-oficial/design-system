@@ -66,7 +66,7 @@
   gap: var(--cf-space-4);
 }
 
-/* a confirmar: o mockup pede o número em 40; o maior título dos tokens é o tabTitle, de 32 */
+/* aprovado em 18/11/2026: o mockup pede o número em 40; o maior título dos tokens é o tabTitle, de 32 */
 .root[data-size="lg"] .value {
   font-size: var(--cf-heading-tab-title-size);
   font-weight: var(--cf-heading-tab-title-weight);

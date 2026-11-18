@@ -13,7 +13,7 @@ const cartao = { padding: "var(--cf-space-5)", borderRadius: "var(--cf-radius-md
 const meta = {
   title: "Extensões/Charts",
   component: LineChart,
-  parameters: { docs: { description: { component: "Gráficos do mockup em SVG. Área, pizza, rosca, radar e minigráfico não existem na identidade: valores aprovados em 13/11/2026, a confirmar com o design. Barras com várias séries e o combinado usam as cores das séries (a confirmar). Linha, área, barras e combinado mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque." } } },
+  parameters: { docs: { description: { component: "Gráficos do mockup em SVG. Área, pizza, rosca, radar e minigráfico não existem na identidade: valores aprovados em 13/11/2026, a confirmar com o design. Barras com várias séries e o combinado usam as cores das séries (aprovadas em 18/11/2026). Linha, área, barras e combinado mostram a dica ao passar o mouse, no foco (setas, Home, End, Esc) e no toque." } } },
 } satisfies Meta;
 export default meta;
 // cada gráfico tem os seus dados obrigatórios: as histórias usam render
@@ -68,7 +68,7 @@ const lojas = [
 ];
 const legendaLojas = lojas.map((l, i) => ({ label: l.name, type: "square" as const, color: (["series-1", "series-2", "series-3"] as const)[i] }));
 export const BarrasAgrupadas: Story = {
-  name: "Barras com várias séries, lado a lado (a confirmar)",
+  name: "Barras com várias séries, lado a lado",
   render: () => (
     <Stack style={cartao}>
       <ChartLegend items={legendaLojas} />
@@ -77,7 +77,7 @@ export const BarrasAgrupadas: Story = {
   ),
 };
 export const BarrasEmpilhadas: Story = {
-  name: "Barras empilhadas (a confirmar)",
+  name: "Barras empilhadas",
   render: () => (
     <Stack style={cartao}>
       <ChartLegend items={legendaLojas} />
@@ -86,7 +86,7 @@ export const BarrasEmpilhadas: Story = {
   ),
 };
 export const Combinado: Story = {
-  name: "Combinado: vendas, meta e conversão à direita (a confirmar)",
+  name: "Combinado: vendas, meta e conversão à direita",
   render: () => (
     <Stack style={cartao}>
       <ChartLegend items={[{ label: "Faturamento", type: "square", color: "border" }, { label: "Meta", type: "dashed" }, { label: "Conversão", color: "series-2" }]} />
@@ -125,9 +125,9 @@ export const MapaDeCalor: Story = {
     />
   ),
 };
-export const Area: Story = { name: "Área (a confirmar)", render: () => <AreaChart labels={["seg", "ter", "qua", "qui", "sex", "sáb", "dom"]} series={[{ name: "Jardins", values: [120, 140, 180, 160, 220, 310, 260] }, { name: "Orla", values: [80, 90, 110, 100, 150, 240, 200] }]} /> };
+export const Area: Story = { name: "Área", render: () => <AreaChart labels={["seg", "ter", "qua", "qui", "sex", "sáb", "dom"]} series={[{ name: "Jardins", values: [120, 140, 180, 160, 220, 310, 260] }, { name: "Orla", values: [80, 90, 110, 100, 150, 240, 200] }]} /> };
 export const PizzaERosca: Story = {
-  name: "Pizza e rosca (a confirmar)",
+  name: "Pizza e rosca",
   render: () => {
     const dados = [{ label: "Calçados", value: 42 }, { label: "Bolsas", value: 28 }, { label: "Acessórios", value: 18 }, { label: "Outros", value: 12 }];
     return (
@@ -138,5 +138,5 @@ export const PizzaERosca: Story = {
     );
   },
 };
-export const Radar: Story = { name: "Radar (a confirmar)", render: () => <RadarChart axes={["Entradas", "Conversão", "Ticket", "Peças", "Meta"]} values={[80, 60, 70, 50, 90]} compare={[70, 65, 60, 60, 75]} /> };
-export const Minigrafico: Story = { name: "Minigráfico (a confirmar)", render: () => <div style={{ width: "var(--cf-side-panel-width)" }}><Sparkline values={[12, 18, 15, 22, 30, 26, 34]} aria-label="Últimos 7 dias, subindo" /></div> };
+export const Radar: Story = { name: "Radar", render: () => <RadarChart axes={["Entradas", "Conversão", "Ticket", "Peças", "Meta"]} values={[80, 60, 70, 50, 90]} compare={[70, 65, 60, 60, 75]} /> };
+export const Minigrafico: Story = { name: "Minigráfico", render: () => <div style={{ width: "var(--cf-side-panel-width)" }}><Sparkline values={[12, 18, 15, 22, 30, 26, 34]} aria-label="Últimos 7 dias, subindo" /></div> };

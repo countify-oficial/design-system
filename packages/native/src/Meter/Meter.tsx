@@ -57,7 +57,7 @@ export function Meter(props: MeterProps) {
   const p = porcento(value, min, max);
   const texto = `${formatNumber(p, { locale, decimalScale: 1 })}%`;
   const destaque = valueLabel === undefined ? texto : valueLabel;
-  // a confirmar: o mockup pede o número do lg em 40; o maior título dos tokens é o tabTitle, de 32
+  // aprovado em 18/11/2026: o mockup pede o número do lg em 40; o maior título dos tokens é o tabTitle, de 32
   const h = lg ? headings.tabTitle : headings.number;
   const legenda = { fontSize: fontSize.sm, lineHeight: lineHeightPx(fontSize.sm), fontFamily: nativeFontFamily[400], fontVariant: ["tabular-nums"] } as const;
   return (
