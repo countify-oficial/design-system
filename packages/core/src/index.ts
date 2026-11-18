@@ -32,6 +32,7 @@ export { Combobox, ComboboxAnchor, ComboboxDropdown, ComboboxEmpty, ComboboxGrou
 export { ComboboxPopover, type ComboboxPopoverProps } from "./ComboboxPopover/ComboboxPopover";
 export { Container, type ContainerProps } from "./Container/Container";
 export { CopyButton, type CopyButtonProps } from "./CopyButton/CopyButton";
+export { DataGrid, type DataGridChange, type DataGridColumn, type DataGridProps, type DataGridRow, type DataGridValue } from "./DataGrid/DataGrid";
 export { DataList, DataListItem, type DataListItemProps, type DataListProps } from "./DataList/DataList";
 export { DataTable, type DataTableColumn, type DataTableProps, type DataTableSort } from "./DataTable/DataTable";
 export { Dialog, type DialogProps } from "./Dialog/Dialog";

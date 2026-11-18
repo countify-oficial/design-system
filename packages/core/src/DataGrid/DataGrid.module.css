@@ -1,0 +1,61 @@
+/* A grade usa a moldura, o cabeçalho e as células do Table; aqui fica só o que a edição pede. A linha tem a altura do
+   campo sm (o editor cabe nela sem mudar a altura) mais a divisória de cima. */
+.root {
+  min-width: 0;
+}
+
+/* o cabeçalho fixo cobre a primeira linha: a rolagem até a célula ativa para logo abaixo dele */
+.scroll {
+  scroll-padding-block-start: calc(var(--cf-input-height-sm) + var(--cf-border-thin));
+}
+
+/* colunas de largura fixa: as linhas que entram ao rolar não mudam a largura delas */
+.grid {
+  table-layout: fixed;
+}
+
+.row {
+  height: calc(var(--cf-input-height-sm) + var(--cf-border-thin));
+}
+
+.cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+}
+
+.cell[data-align="center"] {
+  text-align: center;
+}
+
+.cell[data-align="end"] {
+  text-align: end;
+}
+
+/* seleção como o item selecionado da identidade (fundo accentTint); a célula ativa fica com o anel de foco */
+.cell[aria-selected="true"]:not([data-active]) {
+  background-color: var(--cf-color-accent-tint);
+}
+
+.cell:focus {
+  outline: none;
+}
+
+.cell[data-active] {
+  box-shadow: inset 0 0 0 var(--cf-focus-ring-width) var(--cf-color-accent);
+}
+
+/* em edição, o campo (Input sm) ocupa a célula inteira e traz o próprio anel: accent no foco, down no erro */
+.cell[data-editing] {
+  padding: 0;
+  box-shadow: none;
+}
+
+/* o texto em edição fica do mesmo lado do valor mostrado */
+.cell[data-align="center"] input {
+  text-align: center;
+}
+
+.cell[data-align="end"] input {
+  text-align: end;
+}

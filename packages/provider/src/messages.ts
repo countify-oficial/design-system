@@ -102,6 +102,13 @@ export interface CountifyMessages {
   yesterday: string;
   unread: string;
   noNotifications: string;
+  /** DataGrid: erro de número inválido na célula e avisos ao leitor de tela (copiar, colar, desfazer) */
+  invalidNumber: string;
+  cellsCopied: (n: number) => string;
+  cellsPasted: (n: number) => string;
+  cellsRejected: (n: number) => string;
+  undone: string;
+  redone: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -174,4 +181,10 @@ export const defaultMessages: CountifyMessages = {
   yesterday: "ontem",
   unread: "não lido",
   noNotifications: "Nenhum aviso",
+  invalidNumber: "Digite um número",
+  cellsCopied: (n) => (n === 1 ? "1 célula copiada" : `${n} células copiadas`),
+  cellsPasted: (n) => (n === 1 ? "1 célula colada" : `${n} células coladas`),
+  cellsRejected: (n) => (n === 1 ? "1 valor recusado" : `${n} valores recusados`),
+  undone: "Edição desfeita",
+  redone: "Edição refeita",
 };

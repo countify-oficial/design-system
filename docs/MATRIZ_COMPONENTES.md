@@ -111,6 +111,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Meter | ok | ok | adaptado | não existe no Mantine: o bloco da meta (W-Hoje) e da conversão (W-Indicadores, `size="lg"`) sobre o Progress. Na web a barra é `role="meter"` com `aria-valuetext`; o React Native não tem esse papel: no celular é `progressbar` com `accessibilityValue` (min, max, now e text) |
 | OverflowList | ok | ok | ok | conta pelos itens (`maxVisible`), não mede a largura |
 | Table | ok | ok | N/A | a identidade troca a tabela por lista no celular (`X-DocNavegacao`: "Lista com mais de dois números → Tabela") |
+| DataGrid | ok | ok | N/A | planilha de edição em massa (teclado, colar do Excel, 10.000 linhas): a identidade não tem planilha no celular, onde a tabela já vira lista; ajuste de estoque e preço no celular é tela de item (lista + formulário) |
 | DataList | ok | ok | ok | |
 | DataTable | ok | ok | N/A | é a `Table` pronta, e a tabela é só do computador. No celular, as mesmas linhas viram lista (`M-Lojas`, `M-Usuarios`, `M-Indicadores`), não cartões com as colunas: cada linha junta os campos em texto ("Ribeirão Preto · SP", "38% · 31 peças"), escolhidos por tela, sem cabeçalho que ordena, sem caixa de marcar e com "Ver todos" no lugar da paginação. Monte com `NavLink` (a linha de 64) ou `DataList`, e `EmptyState` e `Skeleton` |
 | Timeline | ok | ok | ok | |

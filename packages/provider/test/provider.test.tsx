@@ -80,6 +80,15 @@ describe("CountifyProvider (web)", () => {
     expect(result.current.colorScheme).toBe("light");
     expect(result.current.messages.close).toBe("Fechar");
   });
+
+  it("textos do DataGrid: singular e plural", () => {
+    const { result } = renderHook(() => useMessages());
+    const m = result.current;
+    expect([m.cellsCopied(1), m.cellsCopied(3), m.cellsPasted(1), m.cellsPasted(12), m.cellsRejected(1), m.cellsRejected(2)]).toEqual([
+      "1 célula copiada", "3 células copiadas", "1 célula colada", "12 células coladas", "1 valor recusado", "2 valores recusados",
+    ]);
+    expect([m.invalidNumber, m.undone, m.redone]).toEqual(["Digite um número", "Edição desfeita", "Edição refeita"]);
+  });
 });
 
 describe("formatNumber", () => {
