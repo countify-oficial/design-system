@@ -98,6 +98,10 @@ export interface CountifyMessages {
   selectionActions: string;
   /** DataTable sem linhas */
   emptyTable: string;
+  /** NotificationList: grupo de ontem (o de hoje é `today`), aviso não lido e lista vazia */
+  yesterday: string;
+  unread: string;
+  noNotifications: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -167,4 +171,7 @@ export const defaultMessages: CountifyMessages = {
   selectedCount: (n) => (n === 1 ? "1 selecionada" : `${n} selecionadas`),
   selectionActions: "Ações das linhas selecionadas",
   emptyTable: "Nada para mostrar",
+  yesterday: "ontem",
+  unread: "não lido",
+  noNotifications: "Nenhum aviso",
 };

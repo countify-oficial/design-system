@@ -114,6 +114,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | DataList | ok | ok | ok | |
 | DataTable | ok | ok | N/A | é a `Table` pronta, e a tabela é só do computador. No celular, as mesmas linhas viram lista (`M-Lojas`, `M-Usuarios`, `M-Indicadores`), não cartões com as colunas: cada linha junta os campos em texto ("Ribeirão Preto · SP", "38% · 31 peças"), escolhidos por tela, sem cabeçalho que ordena, sem caixa de marcar e com "Ver todos" no lugar da paginação. Monte com `NavLink` (a linha de 64) ou `DataList`, e `EmptyState` e `Skeleton` |
 | Timeline | ok | ok | ok | |
+| NotificationList | ok | ok | adaptado | a lista dos Avisos (W-Avisos e M-Avisos), agrupada por dia (`groupByDay` do provider, nas duas plataformas). Na web, uma parada no Tab e setas, Home e End entre os avisos; o escolhido com `aria-current`. No celular, cada dia num cartão com linhas separadas pela divisória (M-Avisos), sem setas (não há teclado); o toque avisa o app, que abre o detalhe |
 | Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |
 | Collapse | ok | ok | adaptado | na web anima pela grade (CSS); no celular, a altura medida com `Animated` |
 | Accordion | ok | ok | adaptado | no celular, `accessibilityState.expanded`; sem navegação por setas (não há teclado) |

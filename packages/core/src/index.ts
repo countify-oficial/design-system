@@ -72,6 +72,7 @@ export { MultiSelect, type MultiSelectProps } from "./MultiSelect/MultiSelect";
 export { NativeSelect, type NativeSelectItem, type NativeSelectProps } from "./NativeSelect/NativeSelect";
 export { NavLink, type NavLinkOwnProps, type NavLinkProps } from "./NavLink/NavLink";
 export { Notification, type NotificationOwnProps, type NotificationProps } from "./Notification/Notification";
+export { NotificationList, type NotificationListItem, type NotificationListProps } from "./NotificationList/NotificationList";
 export { NumberFormatter, type NumberFormatterProps } from "./NumberFormatter/NumberFormatter";
 export { NumberInput, type NumberInputProps } from "./NumberInput/NumberInput";
 export { OverflowList, type OverflowListProps } from "./OverflowList/OverflowList";

@@ -63,6 +63,7 @@ export { Modal, type ModalBaseProps, type ModalProps } from "./Modal/Modal";
 export { MultiSelect, type MultiSelectProps } from "./MultiSelect/MultiSelect";
 export { NavLink, type NavLinkProps } from "./NavLink/NavLink";
 export { Notification, type NotificationProps } from "./Notification/Notification";
+export { NotificationList, type NotificationListItem, type NotificationListProps } from "./NotificationList/NotificationList";
 export { NumberFormatter, type NumberFormatterProps } from "./NumberFormatter/NumberFormatter";
 export { NumberInput, type NumberInputProps } from "./NumberInput/NumberInput";
 export { OverflowList, type OverflowListProps } from "./OverflowList/OverflowList";

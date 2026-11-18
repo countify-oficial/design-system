@@ -81,6 +81,7 @@ export const descricoes: Record<string, string> = {
   "Dados/Image": "Imagem com proporção, canto e substituta.",
   "Dados/Marquee": "Faixa que rola sozinha.",
   "Dados/Meter": "Medidor de meta: valor, barra com o esperado e legendas.",
+  "Dados/NotificationList": "A lista dos Avisos: agrupada por dia, com o aviso escolhido em destaque.",
   "Dados/NumberFormatter": "Números, moedas e porcentagens no formato brasileiro.",
   "Dados/OverflowList": "Mostra o que cabe e resume o resto em +N.",
   "Dados/StatCard": "Cartão de indicador: número, unidade e variação.",
