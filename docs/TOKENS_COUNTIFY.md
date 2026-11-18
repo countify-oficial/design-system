@@ -284,3 +284,17 @@ Valores que a identidade já usa, agora com nome nos tokens:
     - DataGrid: linha da altura do campo `sm` mais a borda fina (45, ou 37 na densidade compacta); célula ativa com o
       anel de foco por dentro na `accent`; seleção com fundo `accentTint`; editor `Input` sm com canto `xs`; a mensagem
       de erro com o visual do Tooltip, presa à célula, e o anel do campo na `down`.
+
+44. **Grupo de botões, calendário de eventos e Sankey** (aprovados em 18/11/2026), sem token novo:
+    - `Button.Group`: botões encostados, cantos só nas pontas e a borda fina compartilhada; entre dois `filled` vizinhos,
+      uma linha de `borderWidth.thin` na cor do texto do botão (sem ela, viram um bloco só). Variante `link`: a cor do
+      papel, sem fundo nem borda, sublinhada no hover e no foco como o `Anchor` (no celular, sem sublinhado).
+    - `EventCalendar` (web): o dia é o círculo de 40 do Calendar; divisória fina na `divider` entre as semanas; eventos
+      em chips (tom padrão `accent`); "+N mais" em `xs`/500 na `text2`, com 24 de altura; o dia inteiro num Popover de
+      até `sidePanelWidth`. No celular, até 3 pontos de 8 (o `dot` do Badge) 4 abaixo do círculo, com a célula de 52, e a
+      lista do dia escolhido embaixo do mês.
+    - `SankeyChart`: a barra da etapa com a altura da barra de conversão do funil (16, canto 2, na `accent`), 16 de vão
+      entre etapas, as faixas na série a 18% (como a área) e o fluxo ativo da dica com mais uma camada a 36% (o 2º tom do
+      mapa de calor); rótulos 15 com o número em 700, 8 depois da barra; altura padrão 300.
+    - `Announcement`: o cartão do `Alert` com o `ThemeIcon` e o sino (`bell`) como ícone padrão.
+

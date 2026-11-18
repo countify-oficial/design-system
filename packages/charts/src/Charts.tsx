@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { useComponentProps, useMessages } from "@countify-oficial/provider";
 import { Grafico, type ChartFrameProps } from "./Chart";
 import {
-  drawArea, drawBar, drawBarList, drawCombo, drawFunnel, drawHeatmap, drawLine, drawPie, drawRadar, drawSankey, drawScatter, drawSparkline,
+  drawArea, drawBar, drawBarList, drawCombo, drawFunnel, drawHeatmap, drawLine, drawPie, cleanSankey, drawRadar, drawSankey, drawScatter, drawSparkline,
   type AreaChartData, type BarChartData, type BarListData, type ComboChartData, type FunnelChartData, type HeatmapData, type LineChartData, type PieChartData, type RadarChartData, type SankeyChartData, type ScatterChartData,
   type SparklineData,
 } from "./draw";
@@ -64,12 +65,16 @@ export type SankeyChartProps = SankeyChartData & ChartFrameProps;
 /**
  * Sankey: fluxos entre etapas (visitantes → entraram → compraram; recebido → exposto → vendido ou perdido), com a
  * espessura proporcional ao valor. Etapas como a barra do funil em pé, com o nome e o número; faixas na série a 18%.
- * A dica mostra o fluxo mais perto do mouse, do dedo ou das setas. Ciclo ou id desconhecido: erro. A confirmar com o design.
+ * A dica mostra o fluxo mais perto do mouse, do dedo ou das setas. Fluxo para etapa desconhecida, que fecharia um ciclo, ou etapa com id repetido: fica de fora, com aviso no console.
  */
 export function SankeyChart(props: SankeyChartProps) {
   const messages = useMessages();
   const p = useComponentProps("SankeyChart", {}, props);
-  return <Grafico {...p} desenhar={(w) => drawSankey(p, w, p.height)} tabela={sankeyTable(p, messages)} />;
+  // limpa uma vez (e avisa uma vez) para o desenho, a dica e a tabela verem os mesmos fluxos
+  const { nodes, links } = p;
+  const limpos = useMemo(() => cleanSankey({ nodes, links }), [nodes, links]);
+  const dados = { ...p, ...limpos };
+  return <Grafico {...p} desenhar={(w) => drawSankey(dados, w, p.height)} tabela={sankeyTable(dados, messages)} />;
 }
 
 export type ScatterChartProps = ScatterChartData & ChartFrameProps;

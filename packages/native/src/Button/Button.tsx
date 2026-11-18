@@ -102,7 +102,7 @@ function ButtonRoot<C extends ElementType = typeof Pressable>(props: ButtonProps
           variant === "dashed" && { borderWidth: borderWidth.thick, borderStyle: "dashed", borderColor: c.text3 },
           fullWidth && { alignSelf: "stretch" },
           encaixe && encaixar(encaixe),
-          // a confirmar: filled sem borda ficaria um bloco só; a linha entre eles é fina e na cor do texto do botão
+          // aprovado em 18/11/2026: filled sem borda ficaria um bloco só; a linha entre eles é fina e na cor do texto do botão
           encaixe && !encaixe.first && variant === "filled" && {
             [encaixe.orientation === "horizontal" ? "borderLeftWidth" : "borderTopWidth"]: borderWidth.thin,
             borderColor: cor.sobre,

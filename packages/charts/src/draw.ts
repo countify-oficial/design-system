@@ -342,7 +342,7 @@ export function drawFunnel(d: FunnelChartData, largura: number): Scene {
   );
 }
 
-// ---------- Sankey (a identidade não desenha: a barra do funil em pé e as faixas como a área; a confirmar com o design)
+// ---------- Sankey (a identidade não desenha: a barra do funil em pé e as faixas como a área; aprovado em 18/11/2026)
 
 export interface SankeyChartData {
   /** As etapas: id único (o que os fluxos citam) e o nome escrito ao lado da barra. Em cada coluna, a ordem é a de cima para baixo. */
@@ -357,17 +357,55 @@ export interface SankeyChartData {
   format?: ((v: number) => string) | undefined;
 }
 
-export function drawSankey(d: SankeyChartData, largura: number, altura: number = chart.height.line): Scene {
-  const format = d.format ?? fmtPadrao;
-  const n = d.nodes.length;
-  const ids = new Map(d.nodes.map((x, i) => [x.id, i]));
-  if (ids.size !== n) throw new Error("SankeyChart: há etapas com o mesmo id em nodes.");
-  const fluxos = d.links.map((l) => {
-    const s = ids.get(l.source);
-    const t = ids.get(l.target);
-    if (s === undefined || t === undefined) throw new Error(`SankeyChart: o fluxo "${l.source}" → "${l.target}" cita uma etapa que não está em nodes.`);
-    return { s, t, v: Math.max(0, l.value) || 0 };
+/**
+ * Os dados do Sankey sem o que não dá para desenhar: etapa com id repetido (fica a primeira), fluxo para uma etapa que
+ * não existe e fluxo que fecharia um ciclo (fica o que veio antes em links). O que sai é avisado no console; a tela não
+ * quebra quando o servidor manda um dado ruim. Devolve os mesmos objetos quando está tudo certo.
+ */
+export function cleanSankey<D extends SankeyChartData>(d: D): D {
+  const avisos: string[] = [];
+  const nodes = d.nodes.filter((x, i) => {
+    const primeira = d.nodes.findIndex((o) => o.id === x.id) === i;
+    if (!primeira) avisos.push(`etapa com id repetido "${x.id}" ("${x.label}")`);
+    return primeira;
   });
+  const ids = new Set(nodes.map((x) => x.id));
+  const saidas = new Map<string, string[]>();
+  // há caminho de "de" até "para" pelos fluxos já aceitos?
+  const alcanca = (de: string, para: string): boolean => {
+    const vistos = new Set<string>();
+    const pilha = [de];
+    for (let atual = pilha.pop(); atual !== undefined; atual = pilha.pop()) {
+      if (atual === para) return true;
+      if (vistos.has(atual)) continue;
+      vistos.add(atual);
+      pilha.push(...(saidas.get(atual) ?? []));
+    }
+    return false;
+  };
+  const links = d.links.filter((l) => {
+    if (!ids.has(l.source) || !ids.has(l.target)) {
+      avisos.push(`fluxo "${l.source}" → "${l.target}" cita uma etapa que não está em nodes`);
+      return false;
+    }
+    if (alcanca(l.target, l.source)) {
+      avisos.push(`fluxo "${l.source}" → "${l.target}" fecharia um ciclo`);
+      return false;
+    }
+    saidas.set(l.source, [...(saidas.get(l.source) ?? []), l.target]);
+    return true;
+  });
+  if (!avisos.length) return d;
+  console.warn(`SankeyChart: ignorado(s) ${avisos.join("; ")}.`);
+  return { ...d, nodes, links };
+}
+
+export function drawSankey(dados: SankeyChartData, largura: number, altura: number = chart.height.line): Scene {
+  const d = cleanSankey(dados);
+  const format = d.format ?? fmtPadrao;
+  const ids = new Map(d.nodes.map((x, i) => [x.id, i]));
+  // depois do cleanSankey, toda etapa citada existe
+  const fluxos = d.links.map((l) => ({ s: ids.get(l.source) ?? 0, t: ids.get(l.target) ?? 0, v: Math.max(0, l.value) || 0 }));
   // a coluna pela ordem topológica (Kahn): quem não entra na fila está num ciclo
   const prof = d.nodes.map(() => 0);
   const faltam = d.nodes.map((_, i) => fluxos.filter((l) => l.t === i).length);
@@ -381,15 +419,11 @@ export function drawSankey(d: SankeyChartData, largura: number, altura: number =
       if (faltam[l.t] === 0) fila.push(l.t);
     }
   }
-  if (fila.length < n) {
-    const presas = d.nodes.filter((_, i) => !fila.includes(i)).map((x) => x.label);
-    throw new Error(`SankeyChart: os fluxos formam um ciclo entre ${presas.join(", ")}. O Sankey só aceita fluxos que vão para a frente.`);
-  }
   const soma = (f: (l: (typeof fluxos)[number]) => boolean) => fluxos.reduce((t, l) => (f(l) ? t + l.v : t), 0);
   const valor = d.nodes.map((_, i) => Math.max(soma((l) => l.t === i), soma((l) => l.s === i)));
   const ultima = Math.max(0, ...prof);
   const colunas = Array.from({ length: ultima + 1 }, (_, c) => d.nodes.flatMap((_, i) => (prof[i] === c ? [i] : [])));
-  // a confirmar: a barra da etapa tem a altura da barra de conversão (16) e o vão entre etapas é o do funil (16)
+  // aprovado em 18/11/2026: a barra da etapa tem a altura da barra de conversão (16) e o vão entre etapas é o do funil (16)
   const barra = chart.funnel.height;
   const vao = space[4];
   // cada etapa ocupa ao menos as duas linhas do rótulo (nome e número), para os textos não se encostarem
@@ -455,7 +489,7 @@ export function drawSankey(d: SankeyChartData, largura: number, altura: number =
     shapes.push({ kind: "text", x: tx, y: b1, text: x.label, anchor: "start", fill: "text", size: fontSize.sm });
     shapes.push({ kind: "text", x: tx, y: b1 + LINHA_TEXTO, text: numeros[i] ?? "", anchor: "start", fill: "text", size: fontSize.sm, weight: 700 });
   });
-  // a confirmar: o fluxo ativo da dica ganha mais uma camada da série a 36% (o 2º tom do mapa de calor)
+  // aprovado em 18/11/2026: o fluxo ativo da dica ganha mais uma camada da série a 36% (o 2º tom do mapa de calor)
   const marks: Shape[] = faixas.map((fx) => ({ kind: "path", d: fx.d, fill: "accent", opacity: chart.heatmap.levels[1] }));
   return { height: total, shapes, tips: { xs: faixas.map((fx) => fx.x), ys: faixas.map((fx) => fx.y), top: 0, bottom: total, marks } };
 }

@@ -154,7 +154,7 @@
   border-end-end-radius: 0;
 }
 
-/* a confirmar: filled sem borda ficaria um bloco só; a linha entre eles é fina e na cor do texto do botão */
+/* aprovado em 18/11/2026: filled sem borda ficaria um bloco só; a linha entre eles é fina e na cor do texto do botão */
 .group[data-orientation="horizontal"] > [data-variant="filled"] + [data-variant="filled"] {
   box-shadow: inset var(--cf-border-thin) 0 0 0 var(--_on);
 }

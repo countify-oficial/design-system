@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { semViolacoes } from "@countify-oficial/test-utils";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
-  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, drawBar, drawCombo, drawBarList, drawHeatmap, drawLine, drawPie, drawRadar, drawSankey, drawScatter, FunnelChart, Heatmap, heatLevel, LineChart, niceMax,
+  AreaChart, BarChart, BarList, ChartLegend, ComboChart, DonutChart, drawBar, drawCombo, drawBarList, drawHeatmap, drawLine, drawPie, drawRadar, cleanSankey, drawSankey, drawScatter, FunnelChart, Heatmap, heatLevel, LineChart, niceMax,
   niceTicks, PieChart, RadarChart, SankeyChart, ScatterChart, Sparkline, type SankeyChartData, type Shape,
 } from "../src";
 import { nearest } from "../src/scene";
@@ -150,12 +150,25 @@ describe("Sankey", () => {
     expect(inicio(1)).toBeCloseTo((rec?.y ?? 0) + (rec?.height ?? 0) * 0.8, 0);
   });
 
-  it("recusa ciclo, id desconhecido e id repetido com erro claro", () => {
+  it("ignora ciclo, id desconhecido e id repetido, com aviso no console, sem quebrar", () => {
+    const aviso = vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const nodes = [{ id: "a", label: "A" }, { id: "b", label: "B" }];
-    expect(() => drawSankey({ nodes, links: [{ source: "a", target: "b", value: 1 }, { source: "b", target: "a", value: 1 }] }, 300)).toThrow(/ciclo entre A, B/);
-    expect(() => drawSankey({ nodes, links: [{ source: "a", target: "a", value: 1 }] }, 300)).toThrow(/ciclo/);
-    expect(() => drawSankey({ nodes, links: [{ source: "a", target: "x", value: 1 }] }, 300)).toThrow(/"a" → "x"/);
-    expect(() => drawSankey({ nodes: [...nodes, { id: "a", label: "C" }], links: [] }, 300)).toThrow(/mesmo id/);
+    const ida = { source: "a", target: "b", value: 1 };
+    // o fluxo de volta fecharia o ciclo: fica o que veio antes
+    expect(cleanSankey({ nodes, links: [ida, { source: "b", target: "a", value: 1 }] }).links).toEqual([ida]);
+    expect(aviso).toHaveBeenLastCalledWith(expect.stringMatching(/"b" → "a" fecharia um ciclo/));
+    expect(cleanSankey({ nodes, links: [{ source: "a", target: "a", value: 1 }] }).links).toEqual([]);
+    expect(cleanSankey({ nodes, links: [ida, { source: "a", target: "x", value: 1 }] }).links).toEqual([ida]);
+    expect(aviso).toHaveBeenLastCalledWith(expect.stringMatching(/"a" → "x" cita uma etapa/));
+    expect(cleanSankey({ nodes: [...nodes, { id: "a", label: "C" }], links: [] }).nodes).toEqual(nodes);
+    expect(aviso).toHaveBeenLastCalledWith(expect.stringMatching(/id repetido "a"/));
+    // o desenho também não quebra, e dados certos não avisam
+    expect(() => drawSankey({ nodes, links: [ida, { source: "b", target: "a", value: 1 }] }, 300)).not.toThrow();
+    aviso.mockClear();
+    const certos = { nodes, links: [ida] };
+    expect(cleanSankey(certos)).toBe(certos);
+    expect(aviso).not.toHaveBeenCalled();
+    aviso.mockRestore();
     // sem fluxos, só os nomes; vazio não quebra
     expect(retangulos(drawSankey({ nodes, links: [] }, 300).shapes)).toHaveLength(0);
     expect(drawSankey({ nodes: [], links: [] }, 300).shapes).toEqual([]);
