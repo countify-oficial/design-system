@@ -9,3 +9,249 @@ body,
 .cf-story {
   padding: var(--cf-space-4);
 }
+
+/* página de componente (.storybook/pagina.tsx): a moldura da documentação é clara, então as cores são as do modo claro */
+.cf-trilha {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #667085;
+}
+.cf-trilha a {
+  color: #225ba5;
+  text-decoration: none;
+}
+.cf-trilha a:hover {
+  text-decoration: underline;
+}
+.cf-resumo {
+  margin-top: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #475569;
+}
+
+/* índice de componentes (stories/Componentes.stories.tsx): dentro do provider, segue os tokens e o modo */
+.cf-indice {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.cf-indice-total {
+  margin: 0;
+  color: var(--cf-color-text2);
+}
+.cf-indice-categoria {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  font-size: var(--cf-heading-section-size);
+  font-weight: var(--cf-heading-section-weight);
+}
+.cf-indice-contagem {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-medium);
+  color: var(--cf-color-accent);
+  background: var(--cf-color-accent-tint);
+}
+.cf-indice-frase {
+  margin: 4px 0 16px;
+  color: var(--cf-color-text2);
+}
+.cf-indice-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.cf-cartao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cf-color-divider);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-color-card);
+  transition: border-color var(--cf-duration-fast, 120ms) ease-out, box-shadow var(--cf-duration-fast, 120ms) ease-out;
+}
+.cf-cartao:hover {
+  border-color: var(--cf-color-accent);
+  box-shadow: var(--cf-shadow-lg);
+}
+.cf-cartao:focus-within {
+  outline: 2px solid var(--cf-color-accent);
+  outline-offset: 2px;
+}
+.cf-cartao-previa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 168px;
+  overflow: hidden;
+  background: var(--cf-color-bg);
+  border-bottom: 1px solid var(--cf-color-divider);
+  pointer-events: none;
+}
+/* a miniatura: o exemplo de verdade, menor; o que não cabe some nas bordas */
+.cf-cartao-escala {
+  zoom: 0.62;
+  max-width: 160%;
+  max-height: 260px;
+  padding: 16px;
+}
+.cf-cartao-escala .cf-story {
+  padding: 0;
+  background: transparent;
+}
+.cf-cartao-corpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+}
+.cf-cartao-titulo {
+  margin: 0;
+  font-size: var(--cf-font-size-md);
+  font-weight: var(--cf-font-weight-bold);
+}
+.cf-cartao-titulo a {
+  color: var(--cf-color-text);
+  text-decoration: none;
+}
+/* o cartão inteiro clica no link do título */
+.cf-cartao-titulo a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.cf-cartao-titulo a:focus-visible {
+  outline: none;
+}
+.cf-cartao-texto {
+  flex: 1;
+  margin: 0;
+  font-size: var(--cf-font-size-sm);
+  color: var(--cf-color-text2);
+}
+.cf-cartao-ver {
+  margin-top: 8px;
+  font-size: var(--cf-font-size-sm);
+  font-weight: var(--cf-font-weight-medium);
+  color: var(--cf-color-accent);
+}
+
+/* páginas de Fundamentos (stories/_fundamentos.tsx): páginas de docs, moldura clara */
+.cf-fund-paleta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0 32px;
+}
+.cf-fund-escala-nome {
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.cf-fund-escala-tons {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  overflow: hidden;
+  border-radius: 12px;
+}
+.cf-fund-tom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: 8px;
+  font-family: "Roboto Mono", ui-monospace, monospace;
+  font-size: 11px;
+}
+.cf-fund-tabela {
+  width: 100%;
+}
+.cf-fund-tabela td {
+  vertical-align: middle;
+}
+.cf-fund-amostra {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border: 1px solid rgb(0 0 0 / 0.1);
+  border-radius: 6px;
+}
+.cf-fund-tipo-linha {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #eef2f6;
+  color: #182a42;
+}
+.cf-fund-tipo-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+}
+.cf-fund-pesos {
+  display: flex;
+  gap: 48px;
+  margin: 16px 0;
+  color: #182a42;
+}
+.cf-fund-barra {
+  display: inline-block;
+  height: 12px;
+  border-radius: 4px;
+  background: #8cbaf2;
+}
+.cf-fund-formas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 24px;
+  margin: 16px 0;
+}
+.cf-fund-forma {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cf-fund-forma > div {
+  height: 96px;
+  margin-bottom: 8px;
+  background: #ffffff;
+  border: 1px solid #e8edf3;
+}
+.cf-fund-icones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+.cf-fund-icone {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 16px 8px;
+  border: 1px solid #eef2f6;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.cf-fund-icone svg {
+  width: 28px;
+  height: 28px;
+}
+@media (max-width: 700px) {
+  .cf-fund-tipo-linha {
+    grid-template-columns: 1fr;
+  }
+}

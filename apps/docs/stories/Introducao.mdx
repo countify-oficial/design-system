@@ -1,0 +1,150 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introdução" />
+
+# Countify Design System
+
+Os componentes, os tokens e as regras de interface da Countify, para **React na web**, **Electron** e **React Native**,
+com a mesma API nos três. Tudo segue a identidade visual da Countify: cores, letra, espaços, cantos e os modos claro e
+escuro.
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong><a href="?path=/docs/fundamentos-cores--docs">Fundamentos</a></strong><br />Cores, tipografia, espaço, cantos, sombras e ícones: os valores que todos os componentes usam.</td>
+      <td><strong><a href="?path=/docs/componentes--docs">Componentes</a></strong><br />Todos os componentes por categoria, com prévia, exemplos e as props de cada um.</td>
+      <td><strong><a href="?path=/docs/botões-guia-de-uso--docs">Guia de botões</a></strong><br />Qual botão usar em cada situação, padrões prontos, texto do botão e teclado.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Pacotes
+
+<table>
+  <thead><tr><th>Pacote</th><th>O que tem</th><th>Onde roda</th></tr></thead>
+  <tbody>
+    <tr><td><code>@countify-oficial/tokens</code></td><td>Cores, letra, espaço, cantos, tamanhos, sombras e movimento, em TS e em variáveis CSS <code>--cf-*</code></td><td>web, Electron, React Native</td></tr>
+    <tr><td><code>@countify-oficial/provider</code></td><td><code>CountifyProvider</code>: tema, modo claro/escuro/automático e textos (i18n)</td><td>web, Electron, React Native</td></tr>
+    <tr><td><code>@countify-oficial/hooks</code></td><td><code>useDisclosure</code>, <code>useClipboard</code>, <code>useMediaQuery</code> e outros</td><td>web, Electron, React Native</td></tr>
+    <tr><td><code>@countify-oficial/core</code></td><td>Os componentes da web e do Electron</td><td>web, Electron</td></tr>
+    <tr><td><code>@countify-oficial/native</code></td><td>Os mesmos componentes, com a mesma API, para o React Native</td><td>React Native</td></tr>
+    <tr><td><code>@countify-oficial/dates</code>, <code>charts</code>, <code>notifications</code>, <code>modals</code>, <code>carousel</code>, <code>dropzone</code>, <code>spotlight</code>, <code>code-highlight</code></td><td>Extensões: instale só as que usar</td><td>varia por pacote</td></tr>
+    <tr><td><code>@countify-oficial/icons-tabler</code></td><td>Os ícones do Tabler (MIT), carregados só quando usados</td><td>web, Electron, React Native</td></tr>
+  </tbody>
+</table>
+
+## Instalação
+
+Os pacotes ficam no GitHub Packages da organização `countify-oficial`. O GitHub pede um token para instalar, mesmo nos
+pacotes públicos: crie um token clássico em **GitHub → Settings → Developer settings → Personal access tokens** com o
+escopo `read:packages` e grave no `~/.npmrc` da sua máquina (nunca no repositório):
+
+```ini
+//npm.pkg.github.com/:_authToken=SEU_TOKEN
+```
+
+No projeto, aponte o escopo para o GitHub, num `.npmrc` na raiz:
+
+```ini
+@countify-oficial:registry=https://npm.pkg.github.com
+```
+
+E instale com o gerenciador que o projeto usa:
+
+```bash
+# pnpm
+pnpm add @countify-oficial/core @countify-oficial/provider @countify-oficial/tokens
+
+# npm
+npm install @countify-oficial/core @countify-oficial/provider @countify-oficial/tokens
+
+# yarn
+yarn add @countify-oficial/core @countify-oficial/provider @countify-oficial/tokens
+```
+
+O React 19 é dependência par: o projeto precisa ter o `react` e o `react-dom`.
+
+## Configuração
+
+Carregue os estilos uma vez, na entrada do app, e envolva o app no `CountifyProvider`:
+
+```tsx
+import "@countify-oficial/tokens/fonts.css";
+import "@countify-oficial/tokens/tokens.css";
+import "@countify-oficial/core/styles.css";
+import { CountifyProvider } from "@countify-oficial/provider";
+import { createRoot } from "react-dom/client";
+
+createRoot(document.getElementById("root")!).render(
+  <CountifyProvider defaultColorScheme="auto">
+    <App />
+  </CountifyProvider>,
+);
+```
+
+Cada extensão tem o próprio CSS: ao instalar `@countify-oficial/dates`, por exemplo, importe também
+`@countify-oficial/dates/styles.css`.
+
+## Primeiro componente
+
+```tsx
+import { Button, Group, TextInput } from "@countify-oficial/core";
+
+export function NovaLoja() {
+  return (
+    <form>
+      <TextInput label="Nome da loja" placeholder="Lume Jardins" />
+      <Group justify="flex-end" gap="sm">
+        <Button variant="outline">Cancelar</Button>
+        <Button type="submit">Salvar</Button>
+      </Group>
+    </form>
+  );
+}
+```
+
+## Modo claro e escuro
+
+O `CountifyProvider` segue o sistema (`"auto"`) ou fixa um modo (`"light"`, `"dark"`). Os componentes trocam de cor
+sozinhos, pelos tokens. Para mudar o modo em tempo de execução:
+
+```tsx
+import { useCountifyTheme } from "@countify-oficial/provider";
+
+const { colorScheme, setColorScheme } = useCountifyTheme();
+setColorScheme(colorScheme === "dark" ? "light" : "dark");
+```
+
+Nesta documentação, o botão **Modo**, na barra de cima de cada exemplo, faz a mesma coisa.
+
+## React Native
+
+Mesmos nomes e mesmas props, importados de `@countify-oficial/native`. O provider e os tokens são os mesmos pacotes:
+o Metro escolhe a versão nativa sozinho.
+
+```tsx
+import { Button } from "@countify-oficial/native";
+```
+
+## Personalizar
+
+Padrões por componente, para o app inteiro, pelo tema do provider:
+
+```tsx
+import { createTheme } from "@countify-oficial/provider";
+
+const theme = createTheme({
+  components: {
+    Button: { defaultProps: { size: "sm" } },
+  },
+});
+
+<CountifyProvider theme={theme}>…</CountifyProvider>;
+```
+
+Cada componente também aceita `classNames` e `styles` em cada parte interna. Veja a seção **Anatomia** no
+[Guia de botões](?path=/docs/botões-guia-de-uso--docs).
+
+## Código-fonte
+
+O repositório é público em [github.com/countify-oficial/design-system](https://github.com/countify-oficial/design-system).

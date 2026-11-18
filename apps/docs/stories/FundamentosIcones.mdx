@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { Icones } from "./_fundamentos";
+
+<Meta title="Fundamentos/Ícones" />
+
+# Ícones
+
+O `Icon` desenha os ícones próprios da Countify (abaixo) e, com qualquer outro nome, um dos mais de 5.000 do
+[Tabler Icons](https://tabler.io/icons), no mesmo traço. Os do Tabler são baixados só quando aparecem na tela.
+
+```tsx
+import { Icon } from "@countify-oficial/core";
+
+<Icon name="search" />                         {/* da Countify */}
+<Icon name="chart-pie" size="sm" />            {/* do Tabler */}
+<Icon name="star" variant="filled" />          {/* versão cheia do Tabler */}
+<Icon name="alert-circle" label="Atenção" />   {/* com nome para o leitor de tela */}
+```
+
+Sem `label`, o ícone é decorativo e o leitor de tela o ignora. Num botão só de ícone, o nome vai no `ActionIcon`
+(`aria-label`), não no ícone.
+
+## Tamanhos
+
+`xs` 16, `sm` 18, `md` 22 (padrão), `lg` 28 e `xl` 32 px. Dentro de botões, use `sm`.
+
+## Ícones da Countify
+
+<Icones />

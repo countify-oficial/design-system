@@ -1,0 +1,738 @@
+import { Meta, Canvas, ArgTypes, Controls } from "@storybook/addon-docs/blocks";
+import * as ButtonStories from "./Button.stories";
+import * as ActionIconStories from "./ActionIcon.stories";
+import * as ToggleStories from "./Toggle.stories";
+import * as CopyButtonStories from "./CopyButton.stories";
+import * as FileButtonStories from "./FileButton.stories";
+import * as ToolbarStories from "./Toolbar.stories";
+import * as BurgerStories from "./Burger.stories";
+import * as UnstyledButtonStories from "./UnstyledButton.stories";
+import * as Padroes from "./PadroesDeBotoes.stories";
+
+<Meta of={Padroes} name="Docs" />
+
+# Botões
+
+Botões disparam uma ação: salvar, abrir, enviar, filtrar. A Countify tem uma família de botões que dividem a
+mesma base (`UnstyledButton`): foco visível pelo teclado, `disabled` que funciona também em links e as medidas dos
+tokens (alvo de toque de 44 px no mínimo).
+
+Esta página é o manual de uso. Cada componente tem também a sua página própria, com os controles para mexer nas props.
+Os exemplos seguem o modo claro ou escuro escolhido em **Modo**, na barra de cima.
+
+## Visão geral
+
+Todos os botões da biblioteca, lado a lado. Todos funcionam: clique, use o Tab e as setas.
+
+<Canvas of={Padroes.VisaoGeral} sourceState="none" />
+
+## Qual botão usar
+
+{/* tabelas em JSX: o MDX do Storybook não tem as tabelas do GFM */}
+<table>
+  <thead><tr><th>Situação</th><th>Componente</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td>A ação principal da tela</td><td><code>Button</code> (filled)</td><td>Salvar, Entrar, Imprimir</td></tr>
+    <tr><td>Ação secundária ao lado da principal</td><td><code>Button variant="outline"</code></td><td>Cancelar, Voltar</td></tr>
+    <tr><td>Ação de menor peso, ou destrutiva</td><td><code>Button variant="subtle"</code></td><td>Excluir análise (<code>color="down"</code>)</td></tr>
+    <tr><td>Acrescentar um item a uma lista</td><td><code>Button variant="dashed"</code></td><td>Adicionar bloco</td></tr>
+    <tr><td>Ação só com ícone</td><td><code>ActionIcon</code></td><td>Editar, Filtrar, Voltar</td></tr>
+    <tr><td>Fechar um painel, aviso ou janela</td><td><code>CloseButton</code></td><td>o × do <code>Modal</code></td></tr>
+    <tr><td>Ligar e desligar uma opção</td><td><code>Toggle</code></td><td>filtros por categoria</td></tr>
+    <tr><td>Copiar um texto</td><td><code>CopyButton</code> + um botão</td><td>Copiar código</td></tr>
+    <tr><td>Escolher arquivo</td><td><code>FileButton</code> + um botão</td><td>Enviar foto</td></tr>
+    <tr><td>Vários botões numa barra</td><td><code>Toolbar</code></td><td>ações de uma tabela</td></tr>
+    <tr><td>Abrir e fechar o menu</td><td><code>Burger</code></td><td>menu do celular</td></tr>
+    <tr><td>Área clicável sem aparência de botão</td><td><code>UnstyledButton</code></td><td>um cartão inteiro clicável</td></tr>
+  </tbody>
+</table>
+
+## Instalação
+
+```bash
+pnpm add @countify-oficial/core @countify-oficial/provider @countify-oficial/tokens
+```
+
+Carregue os estilos uma vez, na entrada do app, e envolva o app no `CountifyProvider`:
+
+```tsx
+import "@countify-oficial/tokens/fonts.css";
+import "@countify-oficial/tokens/tokens.css";
+import "@countify-oficial/core/styles.css";
+import { CountifyProvider } from "@countify-oficial/provider";
+
+createRoot(document.getElementById("root")!).render(
+  <CountifyProvider defaultColorScheme="auto">
+    <App />
+  </CountifyProvider>,
+);
+```
+
+---
+
+## Button
+
+```tsx
+import { Button } from "@countify-oficial/core";
+```
+
+### Playground
+
+Mude as props na tabela abaixo do exemplo e veja o botão mudar. O código acompanha.
+
+<Canvas of={ButtonStories.Padrao} sourceState="shown" />
+
+<Controls of={ButtonStories.Padrao} include={["children", "variant", "color", "size", "radius", "fullWidth", "disabled", "loading"]} />
+
+### Os quatro da identidade
+
+Cada variante tem um papel. Use **um** botão `filled` por tela: é ele que diz qual é o próximo passo.
+
+<Canvas
+  of={ButtonStories.DaIdentidade}
+  sourceState="shown"
+  source={{
+    language: "tsx",
+    code: `<Button fullWidth>Salvar</Button>
+<Button fullWidth variant="outline">Cancelar</Button>
+<Button fullWidth variant="subtle" color="down">Excluir análise</Button>
+<Button fullWidth variant="dashed" leftSection={<Icon name="plus" size="sm" />}>Adicionar bloco</Button>`,
+  }}
+/>
+
+### Variantes e cores
+
+`variant` muda o peso visual (`filled`, `outline`, `subtle`, `dashed`); `color` muda o significado: `accent` (padrão),
+`down` (queda, exclusão), `up` (alta, sucesso) e `warn` (aviso).
+
+<Canvas
+  of={ButtonStories.VariantesECores}
+  source={{
+    language: "tsx",
+    code: `<Button variant="filled" color="accent">accent</Button>
+<Button variant="outline" color="down">down</Button>
+<Button variant="subtle" color="up">up</Button>
+<Button variant="dashed" color="warn">warn</Button>`,
+  }}
+/>
+
+### Tamanhos
+
+De `xs` a `xl`. A altura sai dos tokens: xs e sm 44 px, md 52, lg 56, xl 64. Sem `size`, o botão fica `md` no celular e
+`sm` a partir de 768 px. O tamanho aceita um valor por ponto de quebra.
+
+<Canvas
+  of={ButtonStories.Tamanhos}
+  source={{
+    language: "tsx",
+    code: `<Button size="xs">xs</Button>
+<Button size="md">md</Button>
+<Button size="xl">xl</Button>
+
+{/* um tamanho por ponto de quebra */}
+<Button size={{ base: "lg", md: "sm" }}>Salvar</Button>`,
+  }}
+/>
+
+### Com ícones
+
+`leftSection` e `rightSection` recebem qualquer nó; o comum é um `Icon` com `size="sm"`.
+
+<Canvas
+  of={ButtonStories.ComIcones}
+  source={{
+    language: "tsx",
+    code: `<Button leftSection={<Icon name="download" size="sm" />}>Baixar</Button>
+<Button variant="outline" rightSection={<Icon name="chevron-right" size="sm" />}>
+  Continuar
+</Button>`,
+  }}
+/>
+
+### Desativado e carregando
+
+`loading` troca o ícone da esquerda pelo girador, desliga o botão e marca `aria-busy`. Não troque o botão por um
+`Loader` solto: o botão continua no lugar e o leitor de tela sabe que algo está acontecendo.
+
+<Canvas
+  of={ButtonStories.Estados}
+  source={{
+    language: "tsx",
+    code: `<Button>Normal</Button>
+<Button disabled>Desativado</Button>
+<Button loading>Salvando</Button>
+<Button variant="outline" loading>Carregando</Button>`,
+  }}
+/>
+
+Clique para ver o estado mudar:
+
+<Canvas
+  of={Padroes.CarregarAoClicar}
+  source={{
+    language: "tsx",
+    code: `function Salvar() {
+  const [salvando, setSalvando] = useState(false);
+  const salvar = async () => {
+    setSalvando(true);
+    try {
+      await api.salvar();
+    } finally {
+      setSalvando(false);
+    }
+  };
+  return (
+    <Button loading={salvando} onClick={salvar}>
+      {salvando ? "Salvando" : "Salvar"}
+    </Button>
+  );
+}`,
+  }}
+/>
+
+### Como link
+
+Com `component`, o botão vira outro elemento e aceita as props dele. Para navegar, use um link (`a`, ou o `Link` do seu
+roteador), não um `onClick` com `navigate()`: assim o usuário pode abrir em outra aba.
+
+<Canvas
+  of={ButtonStories.ComoLink}
+  source={{
+    language: "tsx",
+    code: `<Button component="a" href="#analises" variant="subtle">Ver análises</Button>
+
+{/* com o React Router */}
+<Button component={Link} to="/analises">Ver análises</Button>`,
+  }}
+/>
+
+### Em formulários
+
+O `Button` é `type="button"` por padrão, para não enviar o formulário sem querer. No botão que envia, passe
+`type="submit"`. A ação principal fica à direita; Cancelar, à esquerda dela.
+
+<Canvas
+  of={Padroes.RodapeDeFormulario}
+  source={{
+    language: "tsx",
+    code: `<form onSubmit={salvar}>
+  {/* campos */}
+  <Group justify="flex-end" gap="sm">
+    <Button variant="outline" onClick={fechar}>Cancelar</Button>
+    <Button type="submit">Salvar</Button>
+  </Group>
+</form>`,
+  }}
+/>
+
+Uma ação destrutiva fica longe das outras, em `subtle` com `color="down"`, e pede confirmação antes de agir:
+
+<Canvas
+  of={Padroes.AcaoDestrutiva}
+  source={{
+    language: "tsx",
+    code: `import { modals } from "@countify-oficial/modals";
+
+const excluir = () =>
+  modals.openConfirmModal({
+    title: "Excluir análise?",
+    children: "A análise e os blocos dela somem para todos.",
+    labels: { confirm: "Excluir", cancel: "Cancelar" },
+    onConfirm: () => api.excluir(id),
+  });
+
+<Group justify="space-between">
+  <Button variant="subtle" color="down" leftSection={<Icon name="trash" size="sm" />} onClick={excluir}>
+    Excluir análise
+  </Button>
+  <Group gap="sm">
+    <Button variant="outline">Cancelar</Button>
+    <Button>Salvar</Button>
+  </Group>
+</Group>`,
+  }}
+/>
+
+Para acrescentar itens a uma lista, o tracejado ocupando a largura toda:
+
+<Canvas
+  of={Padroes.AdicionarItem}
+  source={{
+    language: "tsx",
+    code: `<Button fullWidth variant="dashed" leftSection={<Icon name="plus" size="sm" />}>
+  Adicionar bloco
+</Button>`,
+  }}
+/>
+
+### Anatomia
+
+O `Button` tem quatro partes, e cada uma recebe `classNames` e `styles` pelo nome. No exemplo, as partes estão com
+contorno pelo próprio `styles`:
+
+<Canvas
+  of={Padroes.Anatomia}
+  source={{
+    language: "tsx",
+    code: `<Button
+  variant="outline"
+  size="xl"
+  leftSection={<Icon name="download" size="sm" />}
+  rightSection={<Icon name="chevron-down" size="sm" />}
+  styles={{
+    section: { outline: "2px dashed var(--cf-color-down)" },
+    label: { outline: "2px dashed var(--cf-color-up)" },
+  }}
+>
+  Exportar
+</Button>`,
+  }}
+/>
+
+O estado também fica no HTML, para o CSS alcançar sem prop nova:
+
+<table>
+  <thead><tr><th>Atributo</th><th>Quando</th></tr></thead>
+  <tbody>
+    <tr><td><code>data-variant</code></td><td>sempre: <code>filled</code>, <code>outline</code>, <code>subtle</code> ou <code>dashed</code></td></tr>
+    <tr><td><code>data-color</code></td><td>sempre: <code>accent</code>, <code>down</code>, <code>up</code> ou <code>warn</code></td></tr>
+    <tr><td><code>data-full-width</code></td><td>com <code>fullWidth</code></td></tr>
+    <tr><td><code>data-loading</code> e <code>aria-busy</code></td><td>com <code>loading</code></td></tr>
+    <tr><td><code>data-disabled</code></td><td>com <code>disabled</code> ou <code>loading</code></td></tr>
+  </tbody>
+</table>
+
+```css
+/* exemplo: deixar o texto do botão carregando mais claro */
+.meuBotao[data-loading] { opacity: 0.8; }
+```
+
+### Props do Button
+
+<ArgTypes of={ButtonStories} />
+
+---
+
+## ActionIcon
+
+Botão só com ícone. O `aria-label` é **obrigatório** (o TypeScript cobra): sem ele, o leitor de tela anuncia só
+"botão". Se o sentido do ícone não for óbvio, ponha também um `Tooltip`.
+
+```tsx
+import { ActionIcon, Icon } from "@countify-oficial/core";
+
+<ActionIcon aria-label="Editar painel" onClick={editar}>
+  <Icon name="edit" />
+</ActionIcon>
+```
+
+### Variantes
+
+`subtle` (padrão, sem fundo, como o Voltar), `default` (cartão com anel, como o Editar) e `filled` (fundo de chip).
+
+<Canvas
+  of={ActionIconStories.Variantes}
+  source={{
+    language: "tsx",
+    code: `<ActionIcon aria-label="Editar painel"><Icon name="edit" /></ActionIcon>
+<ActionIcon variant="default" aria-label="Editar painel"><Icon name="edit" /></ActionIcon>
+<ActionIcon variant="filled" aria-label="Editar painel"><Icon name="edit" /></ActionIcon>`,
+  }}
+/>
+
+### Tamanhos
+
+O quadrado tem as mesmas alturas do `Button`. O padrão é `sm` (44 px, o alvo de toque mínimo).
+
+<Canvas
+  of={ActionIconStories.Tamanhos}
+  source={{
+    language: "tsx",
+    code: `<ActionIcon size="xs" variant="default" aria-label="Editar"><Icon name="edit" /></ActionIcon>
+<ActionIcon size="lg" variant="default" aria-label="Editar"><Icon name="edit" /></ActionIcon>
+<ActionIcon size="xl" variant="default" aria-label="Editar"><Icon name="edit" /></ActionIcon>`,
+  }}
+/>
+
+### Cores e estados
+
+`color` aceita qualquer papel de cor dos tokens (`text`, `text2`, `accent`, `down`…). `disabled` e `loading`
+funcionam como no `Button`.
+
+<Canvas
+  of={ActionIconStories.Cores}
+  source={{
+    language: "tsx",
+    code: `<ActionIcon color="accent" aria-label="Editar"><Icon name="edit" /></ActionIcon>
+<ActionIcon color="down" aria-label="Apagar"><Icon name="trash" /></ActionIcon>`,
+  }}
+/>
+
+<Canvas
+  of={ActionIconStories.Estados}
+  source={{
+    language: "tsx",
+    code: `<ActionIcon aria-label="Editar"><Icon name="edit" /></ActionIcon>
+<ActionIcon aria-label="Editar" disabled><Icon name="edit" /></ActionIcon>
+<ActionIcon aria-label="Editar" loading><Icon name="edit" /></ActionIcon>`,
+  }}
+/>
+
+### Com dica
+
+Quando o ícone sozinho não é óbvio, envolva o botão num `Tooltip`. A dica aparece no mouse e no foco do teclado;
+o `aria-label` continua obrigatório.
+
+<Canvas
+  of={Padroes.IconeComDica}
+  source={{
+    language: "tsx",
+    code: `import { ActionIcon, Icon, Tooltip } from "@countify-oficial/core";
+
+<Tooltip label="Editar painel">
+  <ActionIcon variant="default" aria-label="Editar painel"><Icon name="edit" /></ActionIcon>
+</Tooltip>`,
+  }}
+/>
+
+### Props do ActionIcon
+
+<ArgTypes of={ActionIconStories} />
+
+---
+
+## CloseButton
+
+Um `ActionIcon` com o ícone × e o nome "Fechar" já prontos (o texto vem do `CountifyProvider`, então segue o idioma
+do app). Aceita as mesmas props do `ActionIcon`, menos `children`.
+
+<Canvas
+  of={ActionIconStories.BotaoDeFechar}
+  source={{
+    language: "tsx",
+    code: `import { CloseButton } from "@countify-oficial/core";
+
+<CloseButton onClick={fechar} />
+<CloseButton variant="default" />
+<CloseButton aria-label="Fechar aviso" disabled />`,
+  }}
+/>
+
+---
+
+## Toggle
+
+Botão que fica ligado ou desligado (`aria-pressed`), com o visual dos chips de escolha. Para escolher **uma** opção
+entre várias, prefira o `SegmentedControl`; para várias opções num formulário, o `Chip.Group`.
+
+<Canvas
+  of={ToggleStories.Grupo}
+  source={{
+    language: "tsx",
+    code: `import { Toggle } from "@countify-oficial/core";
+
+<Toggle defaultPressed>Todos</Toggle>
+<Toggle defaultPressed>Calçados</Toggle>
+<Toggle>Acessórios</Toggle>`,
+  }}
+/>
+
+### Controlado
+
+Com `pressed` e `onPressedChange`, o estado fica com você:
+
+<Canvas
+  of={Padroes.FiltroControlado}
+  source={{
+    language: "tsx",
+    code: `const [ligados, setLigados] = useState(["Calçados"]);
+const trocar = (opcao: string, ligado: boolean) =>
+  setLigados((l) => (ligado ? [...l, opcao] : l.filter((x) => x !== opcao)));
+
+<Group gap="sm">
+  {["Calçados", "Acessórios", "Roupas"].map((o) => (
+    <Toggle key={o} pressed={ligados.includes(o)} onPressedChange={(p) => trocar(o, p)}>
+      {o}
+    </Toggle>
+  ))}
+</Group>`,
+  }}
+/>
+
+### Com ícone
+
+<Canvas
+  of={ToggleStories.ComIcone}
+  source={{
+    language: "tsx",
+    code: `<Toggle>
+  <Icon name="bookmark" size="sm" />
+  Salvas
+</Toggle>`,
+  }}
+/>
+
+### Props do Toggle
+
+<ArgTypes of={ToggleStories} />
+
+---
+
+## CopyButton
+
+Não desenha nada: copia `value` e avisa por um tempo (`timeout`, padrão 2 s) que copiou. O botão é você quem
+escolhe, pela função filha. Na web, a área de transferência só funciona em página segura (https ou localhost).
+
+<Canvas
+  of={CopyButtonStories.Padrao}
+  source={{
+    language: "tsx",
+    code: `import { Button, CopyButton, Icon } from "@countify-oficial/core";
+
+<CopyButton value="K7Q-29XM">
+  {({ copied, copy }) => (
+    <Button
+      variant="outline"
+      onClick={copy}
+      leftSection={<Icon name={copied ? "check" : "key"} size="sm" />}
+    >
+      {copied ? "Código copiado" : "Copiar código"}
+    </Button>
+  )}
+</CopyButton>`,
+  }}
+/>
+
+Com um `ActionIcon`, troque também o nome para o leitor de tela:
+
+```tsx
+<CopyButton value={link}>
+  {({ copied, copy }) => (
+    <ActionIcon aria-label={copied ? "Link copiado" : "Copiar link"} onClick={copy}>
+      <Icon name={copied ? "check" : "copy"} />
+    </ActionIcon>
+  )}
+</CopyButton>
+```
+
+### Props do CopyButton
+
+<ArgTypes of={CopyButtonStories} />
+
+---
+
+## FileButton
+
+Abre a escolha de arquivo a partir de qualquer botão. A função filha recebe `{ onClick, disabled }`: espalhe as duas
+no botão. Com `multiple`, `onChange` recebe uma lista; sem, um arquivo ou `null`. Só na web e no Electron (no React
+Native não existe).
+
+<Canvas
+  of={FileButtonStories.UmArquivo}
+  source={{
+    language: "tsx",
+    code: `import { Button, FileButton, Icon } from "@countify-oficial/core";
+
+<FileButton accept="image/*" onChange={(arquivo) => setFoto(arquivo)}>
+  {(props) => (
+    <Button {...props} variant="outline" leftSection={<Icon name="upload" size="sm" />}>
+      Enviar foto
+    </Button>
+  )}
+</FileButton>`,
+  }}
+/>
+
+<Canvas
+  of={FileButtonStories.VariosArquivos}
+  source={{
+    language: "tsx",
+    code: `<FileButton multiple accept="image/*" onChange={(arquivos) => setFotos(arquivos)}>
+  {(props) => <Button {...props}>Enviar fotos</Button>}
+</FileButton>`,
+  }}
+/>
+
+Para arrastar e soltar, use o `Dropzone` de `@countify-oficial/dropzone`.
+
+### Props do FileButton
+
+<ArgTypes of={FileButtonStories} />
+
+---
+
+## Toolbar
+
+Agrupa botões numa barra (`role="toolbar"`). O Tab para uma vez só na barra; as setas, Home e End andam entre os
+botões. Dê um nome à barra com `aria-label`.
+
+<Canvas
+  of={ToolbarStories.Horizontal}
+  source={{
+    language: "tsx",
+    code: `import { ActionIcon, Button, Icon, Toolbar } from "@countify-oficial/core";
+
+<Toolbar aria-label="Ações da tabela">
+  <Button variant="outline" leftSection={<Icon name="download" size="sm" />}>Exportar</Button>
+  <ActionIcon variant="default" aria-label="Filtrar"><Icon name="sliders" /></ActionIcon>
+  <ActionIcon variant="default" aria-label="Ordenar"><Icon name="funnel" /></ActionIcon>
+  <ActionIcon variant="default" aria-label="Apagar" color="down"><Icon name="trash" /></ActionIcon>
+</Toolbar>`,
+  }}
+/>
+
+Na vertical, as setas para cima e para baixo andam entre os botões:
+
+<Canvas
+  of={ToolbarStories.Vertical}
+  source={{
+    language: "tsx",
+    code: `<Toolbar aria-label="Ações da tabela" orientation="vertical">
+  {/* botões */}
+</Toolbar>`,
+  }}
+/>
+
+### Props da Toolbar
+
+<ArgTypes of={ToolbarStories} />
+
+---
+
+## Burger
+
+Três traços que viram × quando `opened`. O nome ("Abrir menu" / "Fechar menu") e o `aria-expanded` mudam sozinhos.
+A identidade da Countify não esconde a navegação: use só onde o menu precisar mesmo ficar recolhido.
+
+<Canvas
+  of={BurgerStories.Interativo}
+  source={{
+    language: "tsx",
+    code: `import { Burger } from "@countify-oficial/core";
+
+const [aberto, setAberto] = useState(false);
+
+<Burger opened={aberto} onClick={() => setAberto(!aberto)} />`,
+  }}
+/>
+
+### Props do Burger
+
+<ArgTypes of={BurgerStories} />
+
+---
+
+## UnstyledButton
+
+A base de todos os botões acima: zera o estilo do navegador, mantém o anel de foco e trata `disabled` também em
+elementos que não são `<button>` (vira `aria-disabled` e o clique não faz nada). Use para áreas clicáveis com
+aparência própria, como um cartão inteiro.
+
+<Canvas
+  of={UnstyledButtonStories.Padrao}
+  source={{
+    language: "tsx",
+    code: `import { UnstyledButton } from "@countify-oficial/core";
+
+<UnstyledButton onClick={abrir}>
+  <Card>{/* conteúdo */}</Card>
+</UnstyledButton>`,
+  }}
+/>
+
+<Canvas
+  of={UnstyledButtonStories.ComoLink}
+  source={{
+    language: "tsx",
+    code: `<UnstyledButton component="a" href="#lojas">Ir para Lojas</UnstyledButton>
+<UnstyledButton component="a" href="#lojas" disabled>Ir para Lojas</UnstyledButton>`,
+  }}
+/>
+
+### Props do UnstyledButton
+
+<ArgTypes of={UnstyledButtonStories} />
+
+---
+
+## Personalizar
+
+### Padrões para o app inteiro
+
+Pelo tema do `CountifyProvider`, sem repetir a prop em cada botão:
+
+```tsx
+import { CountifyProvider, createTheme } from "@countify-oficial/provider";
+
+const theme = createTheme({
+  components: {
+    Button: { defaultProps: { size: "sm", radius: "md" } },
+    ActionIcon: { defaultProps: { variant: "default" } },
+  },
+});
+
+<CountifyProvider theme={theme}>
+  <App />
+</CountifyProvider>;
+```
+
+### Partes internas
+
+`classNames` e `styles` chegam em cada parte do componente. No `Button`, as partes são `root`, `label`, `section` e
+`loader`; nos outros, `root`.
+
+```tsx
+<Button
+  classNames={{ label: classes.rotulo }}
+  styles={{ section: { color: "var(--cf-color-up)" } }}
+>
+  Salvar
+</Button>
+```
+
+Prefira as props (`variant`, `color`, `size`) a CSS próprio: elas já seguem os tokens nos dois modos, claro e escuro.
+
+---
+
+## Texto do botão
+
+- Comece com um verbo e diga o que acontece: "Salvar", "Imprimir etiquetas", "Excluir análise".
+- Curto: de uma a três palavras. A explicação vai no texto em volta, não no botão.
+- O mesmo verbo do título: se a janela é "Excluir análise?", o botão é "Excluir", não "Sim".
+- Enquanto carrega, o gerúndio do mesmo verbo: "Salvar" vira "Salvando".
+- Sem ponto final, sem caixa alta no texto todo.
+
+## Acessibilidade
+
+- Todo botão é um `<button type="button">` de verdade, ou o elemento de `component` com o comportamento certo.
+- Foco visível pelo teclado em todos.
+- `ActionIcon` exige `aria-label`; `CloseButton` e `Burger` já trazem o nome.
+- `loading` marca `aria-busy`; `Toggle` marca `aria-pressed`; `Burger` marca `aria-expanded`.
+- Alvo de toque de 44 px no mínimo, mesmo no tamanho `xs`.
+
+### Teclado
+
+<table>
+  <thead><tr><th>Tecla</th><th>Componente</th><th>O que faz</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>todos</td><td>Vai para o próximo botão / volta ao anterior. O <code>&lt;button&gt;</code> desativado fica de fora; o link desativado recebe foco, mas o clique não faz nada.</td></tr>
+    <tr><td><kbd>Enter</kbd> ou <kbd>Espaço</kbd></td><td>todos</td><td>Aciona o botão. No <code>Toggle</code>, liga e desliga.</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td><code>Button component="a"</code></td><td>Segue o link (o Espaço não, como em qualquer link).</td></tr>
+    <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td><code>Toolbar</code></td><td>Anda entre os botões da barra (<kbd>↑</kbd> <kbd>↓</kbd> na vertical).</td></tr>
+    <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td><code>Toolbar</code></td><td>Vai para o primeiro / o último botão da barra.</td></tr>
+  </tbody>
+</table>
+
+## Faça e não faça
+
+<table>
+  <thead><tr><th>Faça</th><th>Não faça</th></tr></thead>
+  <tbody>
+    <tr><td>Um <code>filled</code> por tela, para a ação principal</td><td>Vários <code>filled</code> competindo lado a lado</td></tr>
+    <tr><td>Verbo no texto: "Salvar", "Excluir análise"</td><td>"OK", "Sim", "Clique aqui"</td></tr>
+    <tr><td><code>color="down"</code> e confirmação para excluir</td><td>Excluir sem perguntar, ou com <code>filled</code> vermelho no meio das outras ações</td></tr>
+    <tr><td><code>component="a"</code> (ou <code>Link</code>) para navegar</td><td><code>{"onClick={() => navigate(...)}"}</code> num botão</td></tr>
+    <tr><td><code>loading</code> enquanto espera a resposta</td><td>Trocar o botão por um girador solto</td></tr>
+    <tr><td><code>aria-label</code> que diz a ação ("Editar painel")</td><td><code>aria-label</code> que descreve o ícone ("Lápis")</td></tr>
+  </tbody>
+</table>

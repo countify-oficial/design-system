@@ -1,0 +1,38 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { Espacos, Formas } from "./_fundamentos";
+
+<Meta title="Fundamentos/Espaço e formas" />
+
+# Espaço e formas
+
+Todo espaço sai de uma grade de 4 px. Os componentes aceitam o nome do tamanho (`xs`–`xl`) ou o degrau da grade
+(`3` = 12 px) nas props de espaço:
+
+```tsx
+<Stack gap="md">…</Stack>      {/* 16 px */}
+<Group gap={3}>…</Group>        {/* 12 px */}
+```
+
+```css
+.bloco {
+  padding: var(--cf-space-4);          /* 16 px */
+  border-radius: var(--cf-radius-sm);  /* 12 px */
+}
+```
+
+## Espaço
+
+<Espacos />
+
+## Cantos e sombras
+
+Os cantos vão de 8 a 24 px. As sombras pequenas são um anel fino (cartões, campos); as grandes são elevadas (menus,
+janelas por cima da tela).
+
+<Formas />
+
+## Medidas de toque
+
+- Alvo de toque mínimo de **44 px**, em qualquer tamanho de botão ou campo.
+- Margem lateral da tela: 20 px no celular e 32 px a partir de 768 px.
+- Pontos de quebra: `sm` 768 px e `lg` 1280 px.

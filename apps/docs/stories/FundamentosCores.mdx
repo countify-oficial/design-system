@@ -1,0 +1,53 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { Paleta, Papeis } from "./_fundamentos";
+
+<Meta title="Fundamentos/Cores" />
+
+# Cores
+
+As cores da Countify vêm em duas camadas. A **paleta** tem cinco escalas de 10 tons (0 é o mais claro). Os **papéis**
+dizem para que cada cor serve (fundo, texto, destaque, alta, queda) e apontam para um tom diferente em cada modo.
+
+Nos componentes e no seu CSS, use sempre os **papéis**, nunca o tom da paleta direto: é o papel que troca sozinho entre
+o modo claro e o escuro.
+
+```css
+.minhaCaixa {
+  background: var(--cf-color-card);
+  color: var(--cf-color-text);
+  border: 1px solid var(--cf-color-divider);
+}
+```
+
+```tsx
+import { colors } from "@countify-oficial/tokens";
+
+colors.light.accent; // "#225BA5"
+colors.dark.accent;  // "#8CBAF2"
+```
+
+## Paleta
+
+A estrela (★) marca o azul principal: o tom 6 no claro e o 3 no escuro.
+
+<Paleta />
+
+## Papéis
+
+<Papeis />
+
+## Significado das cores
+
+<table>
+  <thead><tr><th>Papel</th><th>Quando usar</th></tr></thead>
+  <tbody>
+    <tr><td><code>accent</code></td><td>Ação principal, link, item escolhido, foco.</td></tr>
+    <tr><td><code>up</code></td><td>Alta, meta batida, sucesso.</td></tr>
+    <tr><td><code>down</code></td><td>Queda, erro, ação destrutiva (Excluir).</td></tr>
+    <tr><td><code>warn</code></td><td>Aviso que pede atenção, mas não é erro.</td></tr>
+    <tr><td><code>text</code>, <code>text2</code>, <code>text3</code></td><td>Texto principal, secundário e de apoio, nessa ordem de peso.</td></tr>
+    <tr><td><code>bg</code>, <code>card</code>, <code>field</code></td><td>Fundo da tela, superfície de cartão e fundo de campo.</td></tr>
+  </tbody>
+</table>
+
+Não dependa só da cor para passar uma informação: junte um ícone ou um texto ("−12%", "Erro").

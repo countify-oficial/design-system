@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { Pesos, Tipografia } from "./_fundamentos";
+
+<Meta title="Fundamentos/Tipografia" />
+
+# Tipografia
+
+A letra da interface é a **Roboto**, em três pesos, carregada pelo `@countify-oficial/tokens/fonts.css` (licença OFL).
+Números de indicador usam algarismos de mesma largura, para não pularem quando o valor muda.
+
+```tsx
+import { Text, Title } from "@countify-oficial/core";
+
+<Title order={1}>Contagem de estoque</Title>
+<Text size="sm" color="text2">Atualizado há 5 minutos</Text>
+```
+
+## Pesos
+
+<Pesos />
+
+## Escala
+
+Os títulos têm nome pelo uso (título de página, de seção…), não por número. Os textos vão de `xs` a `xl`.
+
+<Tipografia />
+
+## Regras
+
+- Um título de página por tela; seções abaixo dele.
+- Texto corrido em `md` (17 px no celular); textos de apoio em `sm` com a cor `text2`.
+- O rótulo de seção (`overline`) é o único em maiúsculas.
+- A letra do logotipo é só da marca: na interface, sempre Roboto.

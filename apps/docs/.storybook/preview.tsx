@@ -11,6 +11,7 @@ import "@countify-oficial/spotlight/styles.css";
 import "./preview.css";
 import { CountifyProvider, type ColorSchemeSetting } from "@countify-oficial/provider";
 import type { Preview } from "@storybook/react-vite";
+import { Pagina } from "./pagina";
 
 const preview: Preview = {
   tags: ["autodocs"],
@@ -30,7 +31,27 @@ const preview: Preview = {
     },
   },
   initialGlobals: { colorScheme: "auto" },
-  parameters: { a11y: { test: "error" }, controls: { expanded: true } },
+  parameters: {
+    a11y: { test: "error" },
+    controls: { expanded: true },
+    docs: {
+      page: Pagina,
+      // "Nesta página" sem os títulos de dentro dos exemplos; do índice de componentes, só as categorias
+      toc: { headingSelector: "h2, h3", ignoreSelector: ".sb-story :not(.cf-indice-categoria)", title: "Nesta página" },
+    },
+    options: {
+      storySort: {
+        order: [
+          "Introdução",
+          "Fundamentos", ["Cores", "Tipografia", "Espaço e formas", "Ícones"],
+          "Componentes",
+          // as mesmas categorias, na mesma ordem, do stories/_catalogo.ts
+          "Primitivos", "Layout", "Tipografia", "Botões", "Campos", "Escolhas", "Combobox", "Dados", "Feedback",
+          "Navegação", "Sobreposições", "Extensões",
+        ],
+      },
+    },
+  },
   decorators: [
     (Story, { globals }) => (
       <CountifyProvider colorScheme={globals["colorScheme"] as ColorSchemeSetting}>

@@ -6,9 +6,10 @@ const core = fileURLToPath(new URL("../../../packages/core/", import.meta.url));
 
 const config: StorybookConfig = {
   framework: "@storybook/react-vite",
-  stories: ["../stories/**/*.stories.tsx"],
+  stories: ["../stories/**/*.mdx", "../stories/**/*.stories.tsx"],
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
-  core: { disableTelemetry: true },
+  staticDirs: [{ from: "./marca", to: "/marca" }],
+  core: { disableTelemetry: true, disableWhatsNewNotifications: true },
   typescript: {
     // lê os tipos e os comentários das props direto do código do @countify-oficial/core, sem as props do HTML
     reactDocgen: "react-docgen-typescript",
