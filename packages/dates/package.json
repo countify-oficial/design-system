@@ -1,7 +1,7 @@
 {
   "name": "@countify-oficial/dates",
   "version": "0.6.0",
-  "description": "Datas da Countify: Calendar, DatePicker (dia e período), DateInput, DateTimePicker e TimeInput, na web e no React Native",
+  "description": "Datas da Countify: Calendar, EventCalendar, DatePicker (dia e período), DateInput, DateTimePicker e TimeInput, na web e no React Native",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",

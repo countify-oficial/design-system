@@ -1,8 +1,9 @@
 import { ActionIcon, Icon } from "@countify-oficial/native";
 import { useComponentProps, useCountifyTheme } from "@countify-oficial/provider";
 import { borderWidth, calendar, fontSize, nativeFontFamily, space, state } from "@countify-oficial/tokens";
+import type { ReactNode } from "react";
 import { Pressable, Text, View, type StyleProp, type ViewStyle } from "react-native";
-import { useCalendar, type CalendarBaseProps, type CalendarValueProps } from "./useCalendar";
+import { useCalendar, type CalendarBaseProps, type CalendarDay, type CalendarValueProps } from "./useCalendar";
 
 export type CalendarProps = CalendarBaseProps & CalendarValueProps & { style?: StyleProp<ViewStyle> };
 
@@ -10,10 +11,29 @@ export type CalendarProps = CalendarBaseProps & CalendarValueProps & { style?: S
 export function Calendar(props: CalendarProps) {
   const p = useComponentProps("Calendar", {}, props);
   const c = useCalendar(p);
+  return <CalendarView c={c} range={p.type === "range"} style={p.style} />;
+}
+
+/**
+ * O mês desenhado (o mesmo no Calendar e no EventCalendar). `marks` põe algo embaixo do número (os pontos dos eventos);
+ * `onPress` troca o toque no dia (padrão: escolher) e `label` o nome do dia.
+ */
+export function CalendarView({
+  c, range, style, marks, onPress = c.escolher, label = (d) => d.label,
+}: {
+  c: ReturnType<typeof useCalendar>;
+  range: boolean;
+  style?: StyleProp<ViewStyle>;
+  marks?: ((d: CalendarDay) => ReactNode) | undefined;
+  onPress?: ((date: Date) => void) | undefined;
+  label?: ((d: CalendarDay) => string) | undefined;
+}) {
   const { colors: cor } = useCountifyTheme();
   const meio = calendar.daySize / 2;
+  // com marcas, o dia ganha a linha delas (8) e o vão (4) embaixo do círculo
+  const altura = marks ? calendar.daySize + space[1] + space[2] : calendar.daySize;
   return (
-    <View style={[{ gap: space[2] }, p.style]}>
+    <View style={[{ gap: space[2] }, style]}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <ActionIcon accessibilityLabel={c.messages.previousMonth} radius="xl" disabled={!c.podeAntes} onPress={() => c.irMes(-1)}>
           <Icon name="back" size="sm" />
@@ -32,17 +52,17 @@ export function Calendar(props: CalendarProps) {
         {c.semanas.map((semana, i) => (
           <View key={i} style={{ flexDirection: "row" }}>
             {semana.map((d, j) => {
-              if (!d) return <View key={`v${String(j)}`} style={{ flex: 1, height: calendar.daySize }} />;
-              const papel = p.type === "range" ? d.range : null;
+              if (!d) return <View key={`v${String(j)}`} style={{ flex: 1, height: altura }} />;
+              const papel = range ? d.range : null;
               return (
                 <Pressable
                   key={d.key}
                   accessibilityRole="button"
-                  accessibilityLabel={d.label}
+                  accessibilityLabel={label(d)}
                   accessibilityState={{ selected: d.selected || papel === "in", disabled: d.disabled }}
                   disabled={d.disabled}
-                  onPress={() => c.escolher(d.date)}
-                  style={({ pressed }) => [{ flex: 1, height: calendar.daySize, alignItems: "center", justifyContent: "center" }, papel === "in" && { backgroundColor: cor.rangeTint }, pressed && { opacity: state.pressedOpacity }]}
+                  onPress={() => onPress(d.date)}
+                  style={({ pressed }) => [{ flex: 1, height: altura, alignItems: "center", justifyContent: marks ? "flex-start" : "center", gap: space[1] }, papel === "in" && { backgroundColor: cor.rangeTint }, pressed && { opacity: state.pressedOpacity }]}
                 >
                   {(papel === "start" || papel === "end") && (
                     <View style={{ position: "absolute", top: 0, bottom: 0, left: papel === "start" ? "50%" : 0, right: papel === "end" ? "50%" : 0, backgroundColor: cor.rangeTint }} />
@@ -65,6 +85,7 @@ export function Calendar(props: CalendarProps) {
                       {d.date.getDate()}
                     </Text>
                   </View>
+                  {marks?.(d)}
                 </Pressable>
               );
             })}

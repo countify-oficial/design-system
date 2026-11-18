@@ -1,0 +1,114 @@
+/* Calendário de eventos: a grade e o dia do Calendar (M-Periodo) com os eventos em chips (Badge light) */
+.weeks {
+  display: flex;
+  flex-direction: column;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: var(--cf-border-thin) solid var(--cf-color-divider);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cf-space-1);
+  min-width: 0;
+  padding: var(--cf-space-1);
+  outline: none;
+  cursor: pointer;
+}
+
+.cell:not([data-key]),
+.cell[aria-disabled="true"] {
+  cursor: default;
+}
+
+/* o dia é o do Calendar: círculo de 40, número 17, hoje com anel */
+.day {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--cf-calendar-day-size);
+  height: var(--cf-calendar-day-size);
+  border-radius: 50%;
+  font-size: var(--cf-font-size-md);
+  font-variant-numeric: tabular-nums;
+}
+
+.cell[data-today] .day {
+  box-shadow: inset 0 0 0 var(--cf-border-thick) var(--cf-color-text);
+}
+
+.cell[aria-disabled="true"] .day {
+  color: var(--cf-color-border-strong);
+}
+
+@media (hover: hover) {
+  .cell[data-key]:not([aria-disabled="true"]):hover .day {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.cell:focus-visible .day,
+.event:focus-visible,
+.more:focus-visible {
+  outline: var(--cf-focus-ring-width) solid var(--cf-color-accent);
+  outline-offset: var(--cf-focus-ring-offset);
+}
+
+/* as linhas de chip ficam reservadas em todo dia, para as semanas terem a mesma altura */
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-1);
+  align-self: stretch;
+  min-height: calc(var(--event-rows) * var(--cf-space-6) + (var(--event-rows) - 1) * var(--cf-space-1));
+}
+
+.event {
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (hover: hover) {
+  .event:hover,
+  .more:hover {
+    background-image: linear-gradient(var(--cf-hover-veil), var(--cf-hover-veil));
+  }
+}
+
+.more {
+  align-self: flex-start;
+  height: var(--cf-space-6);
+  padding-inline: var(--cf-space-2);
+  border-radius: var(--cf-radius-xs);
+  color: var(--cf-color-text2);
+  font-family: var(--cf-font-sans);
+  font-size: var(--cf-font-size-xs);
+  font-weight: var(--cf-font-weight-medium);
+}
+
+/* a lista do "+N mais": o dia e todos os eventos dele */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-1);
+  max-width: var(--cf-side-panel-width);
+}
+
+.listTitle {
+  margin-bottom: var(--cf-space-1);
+  font-weight: var(--cf-font-weight-bold);
+}
