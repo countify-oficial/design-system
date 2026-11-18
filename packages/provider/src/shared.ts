@@ -9,3 +9,4 @@ export { formatColor, hsvToRgb, parseColor, rgbToHsv, type ColorFormat, type HSV
 export { allItems, filterCombobox, normalizeSearch, parseComboboxData, type ComboboxData, type ComboboxGroup, type ComboboxItem, type ComboboxParsed } from "./combobox";
 export { findTreeNode, mentionQuery, selectAllState, treeCheckState, treeLeaves, treePath, type TreeNode } from "./tree";
 export { pageLabel, paginationRange } from "./pagination";
+export { groupByDay, type DayGroup, type GroupByDayOptions } from "./day";

@@ -85,6 +85,10 @@ export interface CountifyMessages {
   /** Carousel: o tipo da região e de cada item, para o leitor de tela */
   carousel: string;
   slide: string;
+  /** NotificationList: grupo de ontem (o de hoje é `today`), aviso não lido e lista vazia */
+  yesterday: string;
+  unread: string;
+  noNotifications: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -145,4 +149,7 @@ export const defaultMessages: CountifyMessages = {
   dropFiles: "Arraste os arquivos ou clique para escolher",
   carousel: "carrossel",
   slide: "item",
+  yesterday: "ontem",
+  unread: "não lido",
+  noNotifications: "Nenhum aviso",
 };

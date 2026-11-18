@@ -79,6 +79,7 @@ export const descricoes: Record<string, string> = {
   "Dados/DataList": "Pares de rótulo e valor, como uma ficha.",
   "Dados/Image": "Imagem com proporção, canto e substituta.",
   "Dados/Marquee": "Faixa que rola sozinha.",
+  "Dados/NotificationList": "A lista dos Avisos: agrupada por dia, com o aviso escolhido em destaque.",
   "Dados/NumberFormatter": "Números, moedas e porcentagens no formato brasileiro.",
   "Dados/OverflowList": "Mostra o que cabe e resume o resto em +N.",
   "Dados/Table": "Tabela para o computador, com cabeçalho e linhas.",

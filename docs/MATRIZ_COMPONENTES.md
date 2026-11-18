@@ -111,6 +111,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | Table | ok | ok | N/A | a identidade troca a tabela por lista no celular (`X-DocNavegacao`: "Lista com mais de dois números → Tabela") |
 | DataList | ok | ok | ok | |
 | Timeline | ok | ok | ok | |
+| NotificationList | ok | ok | adaptado | a lista dos Avisos (W-Avisos e M-Avisos), agrupada por dia (`groupByDay` do provider, nas duas plataformas). Na web, uma parada no Tab e setas, Home e End entre os avisos; o escolhido com `aria-current`. No celular, cada dia num cartão com linhas separadas pela divisória (M-Avisos), sem setas (não há teclado); o toque avisa o app, que abre o detalhe |
 | Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |
 | Collapse | ok | ok | adaptado | na web anima pela grade (CSS); no celular, a altura medida com `Animated` |
 | Accordion | ok | ok | adaptado | no celular, `accessibilityState.expanded`; sem navegação por setas (não há teclado) |

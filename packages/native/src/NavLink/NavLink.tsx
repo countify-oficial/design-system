@@ -21,6 +21,8 @@ export interface NavLinkProps {
   defaultOpened?: boolean | undefined;
   onChange?: ((opened: boolean) => void) | undefined;
   onPress?: ((e: GestureResponderEvent) => void) | undefined;
+  /** Nome para o leitor de tela. Padrão: o label, quando é texto (a descrição vira a dica). */
+  accessibilityLabel?: string | undefined;
   /** NavLinks de baixo; a linha abre e fecha. */
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
@@ -28,7 +30,7 @@ export interface NavLinkProps {
 
 /** Linha de navegação de 64: ícone, título, descrição e o que vai à direita. Com filhos, abre um nível abaixo. */
 export function NavLink(props: NavLinkProps) {
-  const { label, description, leftSection, rightSection, active, disabled, opened, defaultOpened, onChange, onPress, children, style } = useComponentProps("NavLink", {}, props);
+  const { label, description, leftSection, rightSection, active, disabled, opened, defaultOpened, onChange, onPress, accessibilityLabel, children, style } = useComponentProps("NavLink", {}, props);
   const { colors: c } = useCountifyTheme();
   const [aberto, setAberto] = useControllableState({ value: opened, defaultValue: defaultOpened ?? false, onChange });
   const temFilhos = children !== undefined && children !== null && children !== false;
@@ -37,8 +39,8 @@ export function NavLink(props: NavLinkProps) {
     <View>
       <UnstyledButton
         accessibilityRole={temFilhos ? "button" : "link"}
-        accessibilityLabel={typeof label === "string" ? label : undefined}
-        accessibilityHint={typeof description === "string" ? description : undefined}
+        accessibilityLabel={accessibilityLabel ?? (typeof label === "string" ? label : undefined)}
+        accessibilityHint={accessibilityLabel === undefined && typeof description === "string" ? description : undefined}
         accessibilityState={{ disabled: !!disabled, selected: !!active, ...(temFilhos ? { expanded: aberto } : {}) }}
         disabled={disabled}
         onPress={(e) => {
