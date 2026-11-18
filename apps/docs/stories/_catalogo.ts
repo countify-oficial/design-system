@@ -76,6 +76,7 @@ export const descricoes: Record<string, string> = {
   "Combobox/Select": "Lista de escolha com busca.",
   "Combobox/TreeSelect": "Escolha numa árvore de itens.",
   "Dados/Accordion": "Seções que abrem e fecham.",
+  "Dados/DataGrid": "Planilha para editar muitas linhas de uma vez: estoque, preços.",
   "Dados/DataList": "Pares de rótulo e valor, como uma ficha.",
   "Dados/Image": "Imagem com proporção, canto e substituta.",
   "Dados/Marquee": "Faixa que rola sozinha.",

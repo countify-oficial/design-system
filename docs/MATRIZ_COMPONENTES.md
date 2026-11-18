@@ -109,6 +109,7 @@ Componente × plataforma. **ok**: igual nas três. **adaptado**: mesma API, comp
 | RollingNumber | ok | ok | adaptado | no celular rola com `Animated` |
 | OverflowList | ok | ok | ok | conta pelos itens (`maxVisible`), não mede a largura |
 | Table | ok | ok | N/A | a identidade troca a tabela por lista no celular (`X-DocNavegacao`: "Lista com mais de dois números → Tabela") |
+| DataGrid | ok | ok | N/A | planilha de edição em massa (teclado, colar do Excel, 10.000 linhas): a identidade não tem planilha no celular, onde a tabela já vira lista; ajuste de estoque e preço no celular é tela de item (lista + formulário) |
 | DataList | ok | ok | ok | |
 | Timeline | ok | ok | ok | |
 | Spoiler | ok | ok | adaptado | no celular mede a altura pelo `onLayout` |

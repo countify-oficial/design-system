@@ -85,6 +85,13 @@ export interface CountifyMessages {
   /** Carousel: o tipo da região e de cada item, para o leitor de tela */
   carousel: string;
   slide: string;
+  /** DataGrid: erro de número inválido na célula e avisos ao leitor de tela (copiar, colar, desfazer) */
+  invalidNumber: string;
+  cellsCopied: (n: number) => string;
+  cellsPasted: (n: number) => string;
+  cellsRejected: (n: number) => string;
+  undone: string;
+  redone: string;
 }
 
 export const defaultMessages: CountifyMessages = {
@@ -145,4 +152,10 @@ export const defaultMessages: CountifyMessages = {
   dropFiles: "Arraste os arquivos ou clique para escolher",
   carousel: "carrossel",
   slide: "item",
+  invalidNumber: "Digite um número",
+  cellsCopied: (n) => (n === 1 ? "1 célula copiada" : `${n} células copiadas`),
+  cellsPasted: (n) => (n === 1 ? "1 célula colada" : `${n} células coladas`),
+  cellsRejected: (n) => (n === 1 ? "1 valor recusado" : `${n} valores recusados`),
+  undone: "Edição desfeita",
+  redone: "Edição refeita",
 };
