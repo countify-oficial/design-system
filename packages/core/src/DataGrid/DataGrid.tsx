@@ -73,6 +73,9 @@ const valorDe = (row: DataGridRow | undefined, key: string): DataGridValue => (r
  * Grade de edição em massa, como uma planilha (só computador): navegação por teclado, edição na célula com validação,
  * desfazer e refazer, copiar e colar do Excel e só as linhas visíveis desenhadas (10.000 linhas sem travar).
  */
+// começo de texto que o Excel e as planilhas leem como fórmula
+const FORMULA = /^[=+\-@]/;
+
 export function DataGrid<R extends DataGridRow>(props: DataGridProps<R>) {
   const {
     columns, rows: controladas, defaultRows, onChange, height, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby,
@@ -300,7 +303,12 @@ export function DataGrid<R extends DataGridRow>(props: DataGridProps<R>) {
     for (let r = sel.top; r <= sel.bottom; r++) {
       const celulas: string[] = [];
       // shortcut: tab e quebra de linha dentro do texto viram espaço (sem as aspas do Excel); se aparecer texto com quebra, citar
-      for (let c = sel.left; c <= sel.right; c++) celulas.push(paraTexto(valorDe(rows[r], columns[c]?.key ?? "")).replace(/[\t\r\n]/g, " "));
+      for (let c = sel.left; c <= sel.right; c++) {
+        const valor = valorDe(rows[r], columns[c]?.key ?? "");
+        const texto = paraTexto(valor).replace(/[\t\r\n]/g, " ");
+        // texto que começa com = + - @ vira fórmula ao colar no Excel: o apóstrofo o mantém como texto (números ficam como estão)
+        celulas.push(typeof valor === "string" && FORMULA.test(texto) ? `'${texto}` : texto);
+      }
       linhas.push(celulas.join("\t"));
     }
     e.clipboardData.setData("text/plain", linhas.join("\n"));
@@ -311,7 +319,9 @@ export function DataGrid<R extends DataGridRow>(props: DataGridProps<R>) {
     if (edicao || rows.length === 0) return;
     e.preventDefault();
     // shortcut: célula entre aspas do Excel (com tab ou quebra dentro) não é tratada; se precisar, ler o formato CSV
-    const bloco = e.clipboardData.getData("text/plain").replace(/\r?\n$/, "").split(/\r?\n/).map((l) => l.split("\t"));
+    // o apóstrofo que a cópia põe antes de = + - @ sai de novo ao colar aqui
+    const bloco = e.clipboardData.getData("text/plain").replace(/\r?\n$/, "").split(/\r?\n/)
+      .map((l) => l.split("\t").map((t) => (t.startsWith("'") && FORMULA.test(t.slice(1)) ? t.slice(1) : t)));
     const unico = bloco.length === 1 && bloco[0]?.length === 1;
     // um valor só preenche a seleção inteira; um bloco começa no canto da seleção
     const entradas = unico

@@ -205,6 +205,23 @@ describe("DataGrid", () => {
     expect([0, 1, 2].map((r) => texto(celula(r, 2)))).toEqual(["", "", ""]);
   });
 
+  it("cópia não leva fórmula para a planilha, e a colagem tira o apóstrofo de volta", () => {
+    montar(1);
+    focar(0, 1);
+    tecla("Enter");
+    fireEvent.change(editor(), { target: { value: "=HYPERLINK(\"x\")" } });
+    tecla("Enter");
+    focar(0, 1);
+    tecla("ArrowRight", { shiftKey: true });
+    const setData = vi.fn();
+    fireEvent.copy(ativa(), { clipboardData: { setData } });
+    // o texto ganha o apóstrofo; o número segue número
+    expect(setData).toHaveBeenCalledWith("text/plain", "'=HYPERLINK(\"x\")\t1000");
+    focar(0, 1);
+    fireEvent.paste(ativa(), { clipboardData: { getData: () => "'=SOMA(A1)" } });
+    expect(texto(celula(0, 1))).toBe("=SOMA(A1)");
+  });
+
   it("copia a seleção com tab e quebra de linha", () => {
     montar(3);
     focar(0, 1);

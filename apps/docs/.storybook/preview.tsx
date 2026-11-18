@@ -55,7 +55,7 @@ const preview: Preview = {
           "Componentes",
           // as mesmas categorias, na mesma ordem, do stories/_catalogo.ts
           "Primitivos", "Layout", "Tipografia", "Botões", "Campos", "Escolhas", "Combobox", "Dados", "Feedback",
-          "Navegação", "Sobreposições", "Extensões",
+          "Navegação", "Sobreposições", "Extensões", "Modelos",
         ],
       },
     },

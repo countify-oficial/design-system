@@ -15,6 +15,7 @@ export const categorias = [
   ["Navegação", "Andar entre telas e seções: abas, trilha, paginação, etapas e árvore."],
   ["Sobreposições", "Por cima da tela: janelas, gavetas, menus, dicas e camadas."],
   ["Extensões", "Pacotes à parte: datas, gráficos, avisos, janelas por função, carrossel e mais."],
+  ["Modelos", "Telas inteiras montadas só com os componentes, para usar de ponto de partida."],
 ] as const;
 
 /** Uma linha por página, como no índice. */
@@ -115,6 +116,7 @@ export const descricoes: Record<string, string> = {
   "Extensões/Dates": "Calendário, seletor de data e de período, data e hora.",
   "Extensões/Modals": "Janelas abertas por função, como a confirmação.",
   "Extensões/Notifications": "Avisos rápidos chamados de qualquer lugar.",
+  "Modelos/Painel de loja": "O painel de uma loja: indicadores, fluxo de pessoas, meta do mês e horários.",
 };
 
 // páginas cujo título não é o nome do que se importa
